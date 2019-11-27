@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.dao.PosOrderMapper">
+  <resultMap id="BaseResultMap" type="com.software.domain.PosOrder">
+    <id column="SaleOrderID" jdbcType="INTEGER" property="saleorderid" />
+    <result column="sumPrice" jdbcType="REAL" property="sumprice" />
+    <result column="gather" jdbcType="REAL" property="gather" />
+    <result column="change" jdbcType="REAL" property="change" />
+    <result column="time" jdbcType="TIME" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SaleOrderID, sumPrice, gather, change, time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pos_order
+    where SaleOrderID = #{saleorderid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pos_order
+    where SaleOrderID = #{saleorderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.software.domain.PosOrder">
+    insert into pos_order (SaleOrderID, sumPrice, gather, 
+      change, time)
+    values (#{saleorderid,jdbcType=INTEGER}, #{sumprice,jdbcType=REAL}, #{gather,jdbcType=REAL}, 
+      #{change,jdbcType=REAL}, #{time,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.software.domain.PosOrder">
+    insert into pos_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="saleorderid != null">
+        SaleOrderID,
+      </if>
+      <if test="sumprice != null">
+        sumPrice,
+      </if>
+      <if test="gather != null">
+        gather,
+      </if>
+      <if test="change != null">
+        change,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="saleorderid != null">
+        #{saleorderid,jdbcType=INTEGER},
+      </if>
+      <if test="sumprice != null">
+        #{sumprice,jdbcType=REAL},
+      </if>
+      <if test="gather != null">
+        #{gather,jdbcType=REAL},
+      </if>
+      <if test="change != null">
+        #{change,jdbcType=REAL},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.PosOrder">
+    update pos_order
+    <set>
+      <if test="sumprice != null">
+        sumPrice = #{sumprice,jdbcType=REAL},
+      </if>
+      <if test="gather != null">
+        gather = #{gather,jdbcType=REAL},
+      </if>
+      <if test="change != null">
+        change = #{change,jdbcType=REAL},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIME},
+      </if>
+    </set>
+    where SaleOrderID = #{saleorderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.software.domain.PosOrder">
+    update pos_order
+    set sumPrice = #{sumprice,jdbcType=REAL},
+      gather = #{gather,jdbcType=REAL},
+      change = #{change,jdbcType=REAL},
+      time = #{time,jdbcType=TIME}
+    where SaleOrderID = #{saleorderid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.dao.WarehourseOrderMapper">
+  <resultMap id="BaseResultMap" type="com.software.domain.WarehourseOrder">
+    <id column="orderID" jdbcType="INTEGER" property="orderid" />
+    <result column="viceOrderID" jdbcType="INTEGER" property="viceorderid" />
+    <result column="sourceID" jdbcType="INTEGER" property="sourceid" />
+    <result column="targerID" jdbcType="INTEGER" property="targerid" />
+    <result column="principalID" jdbcType="INTEGER" property="principalid" />
+    <result column="itemID" jdbcType="INTEGER" property="itemid" />
+    <result column="itemNum" jdbcType="INTEGER" property="itemnum" />
+    <result column="perPrice" jdbcType="REAL" property="perprice" />
+    <result column="sumPrice" jdbcType="REAL" property="sumprice" />
+    <result column="priceType" jdbcType="VARCHAR" property="pricetype" />
+    <result column="sourceType" jdbcType="VARCHAR" property="sourcetype" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderID, viceOrderID, sourceID, targerID, principalID, itemID, itemNum, perPrice, 
+    sumPrice, priceType, sourceType
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from warehourse_order
+    where orderID = #{orderid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from warehourse_order
+    where orderID = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.software.domain.WarehourseOrder">
+    insert into warehourse_order (orderID, viceOrderID, sourceID, 
+      targerID, principalID, itemID, 
+      itemNum, perPrice, sumPrice, 
+      priceType, sourceType)
+    values (#{orderid,jdbcType=INTEGER}, #{viceorderid,jdbcType=INTEGER}, #{sourceid,jdbcType=INTEGER}, 
+      #{targerid,jdbcType=INTEGER}, #{principalid,jdbcType=INTEGER}, #{itemid,jdbcType=INTEGER}, 
+      #{itemnum,jdbcType=INTEGER}, #{perprice,jdbcType=REAL}, #{sumprice,jdbcType=REAL}, 
+      #{pricetype,jdbcType=VARCHAR}, #{sourcetype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.software.domain.WarehourseOrder">
+    insert into warehourse_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderID,
+      </if>
+      <if test="viceorderid != null">
+        viceOrderID,
+      </if>
+      <if test="sourceid != null">
+        sourceID,
+      </if>
+      <if test="targerid != null">
+        targerID,
+      </if>
+      <if test="principalid != null">
+        principalID,
+      </if>
+      <if test="itemid != null">
+        itemID,
+      </if>
+      <if test="itemnum != null">
+        itemNum,
+      </if>
+      <if test="perprice != null">
+        perPrice,
+      </if>
+      <if test="sumprice != null">
+        sumPrice,
+      </if>
+      <if test="pricetype != null">
+        priceType,
+      </if>
+      <if test="sourcetype != null">
+        sourceType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="viceorderid != null">
+        #{viceorderid,jdbcType=INTEGER},
+      </if>
+      <if test="sourceid != null">
+        #{sourceid,jdbcType=INTEGER},
+      </if>
+      <if test="targerid != null">
+        #{targerid,jdbcType=INTEGER},
+      </if>
+      <if test="principalid != null">
+        #{principalid,jdbcType=INTEGER},
+      </if>
+      <if test="itemid != null">
+        #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="itemnum != null">
+        #{itemnum,jdbcType=INTEGER},
+      </if>
+      <if test="perprice != null">
+        #{perprice,jdbcType=REAL},
+      </if>
+      <if test="sumprice != null">
+        #{sumprice,jdbcType=REAL},
+      </if>
+      <if test="pricetype != null">
+        #{pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcetype != null">
+        #{sourcetype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.WarehourseOrder">
+    update warehourse_order
+    <set>
+      <if test="viceorderid != null">
+        viceOrderID = #{viceorderid,jdbcType=INTEGER},
+      </if>
+      <if test="sourceid != null">
+        sourceID = #{sourceid,jdbcType=INTEGER},
+      </if>
+      <if test="targerid != null">
+        targerID = #{targerid,jdbcType=INTEGER},
+      </if>
+      <if test="principalid != null">
+        principalID = #{principalid,jdbcType=INTEGER},
+      </if>
+      <if test="itemid != null">
+        itemID = #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="itemnum != null">
+        itemNum = #{itemnum,jdbcType=INTEGER},
+      </if>
+      <if test="perprice != null">
+        perPrice = #{perprice,jdbcType=REAL},
+      </if>
+      <if test="sumprice != null">
+        sumPrice = #{sumprice,jdbcType=REAL},
+      </if>
+      <if test="pricetype != null">
+        priceType = #{pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcetype != null">
+        sourceType = #{sourcetype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where orderID = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.software.domain.WarehourseOrder">
+    update warehourse_order
+    set viceOrderID = #{viceorderid,jdbcType=INTEGER},
+      sourceID = #{sourceid,jdbcType=INTEGER},
+      targerID = #{targerid,jdbcType=INTEGER},
+      principalID = #{principalid,jdbcType=INTEGER},
+      itemID = #{itemid,jdbcType=INTEGER},
+      itemNum = #{itemnum,jdbcType=INTEGER},
+      perPrice = #{perprice,jdbcType=REAL},
+      sumPrice = #{sumprice,jdbcType=REAL},
+      priceType = #{pricetype,jdbcType=VARCHAR},
+      sourceType = #{sourcetype,jdbcType=VARCHAR}
+    where orderID = #{orderid,jdbcType=INTEGER}
+  </update>
+</mapper>

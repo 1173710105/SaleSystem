@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.dao.ItemMapper">
+  <resultMap id="BaseResultMap" type="com.software.domain.Item">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="specification" jdbcType="VARCHAR" property="specification" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="retailPrice" jdbcType="REAL" property="retailprice" />
+    <result column="wholesalePrice" jdbcType="REAL" property="wholesaleprice" />
+    <result column="purchasePrice" jdbcType="REAL" property="purchaseprice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, name, type, specification, picture, retailPrice, wholesalePrice, purchasePrice
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from item
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from item
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.software.domain.Item">
+    insert into item (ID, name, type, 
+      specification, picture, retailPrice, 
+      wholesalePrice, purchasePrice)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{specification,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{retailprice,jdbcType=REAL}, 
+      #{wholesaleprice,jdbcType=REAL}, #{purchaseprice,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.software.domain.Item">
+    insert into item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="specification != null">
+        specification,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="retailprice != null">
+        retailPrice,
+      </if>
+      <if test="wholesaleprice != null">
+        wholesalePrice,
+      </if>
+      <if test="purchaseprice != null">
+        purchasePrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="retailprice != null">
+        #{retailprice,jdbcType=REAL},
+      </if>
+      <if test="wholesaleprice != null">
+        #{wholesaleprice,jdbcType=REAL},
+      </if>
+      <if test="purchaseprice != null">
+        #{purchaseprice,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.Item">
+    update item
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="retailprice != null">
+        retailPrice = #{retailprice,jdbcType=REAL},
+      </if>
+      <if test="wholesaleprice != null">
+        wholesalePrice = #{wholesaleprice,jdbcType=REAL},
+      </if>
+      <if test="purchaseprice != null">
+        purchasePrice = #{purchaseprice,jdbcType=REAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.software.domain.Item">
+    update item
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      specification = #{specification,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      retailPrice = #{retailprice,jdbcType=REAL},
+      wholesalePrice = #{wholesaleprice,jdbcType=REAL},
+      purchasePrice = #{purchaseprice,jdbcType=REAL}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

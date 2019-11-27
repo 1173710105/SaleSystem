@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.dao.WarehourseMapper">
+  <resultMap id="BaseResultMap" type="com.software.domain.Warehourse">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="principalID" jdbcType="INTEGER" property="principalid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, name, location, principalID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from warehourse
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from warehourse
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.software.domain.Warehourse">
+    insert into warehourse (ID, name, location, 
+      principalID)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
+      #{principalid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.software.domain.Warehourse">
+    insert into warehourse
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="principalid != null">
+        principalID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="principalid != null">
+        #{principalid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.Warehourse">
+    update warehourse
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="principalid != null">
+        principalID = #{principalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.software.domain.Warehourse">
+    update warehourse
+    set name = #{name,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      principalID = #{principalid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
