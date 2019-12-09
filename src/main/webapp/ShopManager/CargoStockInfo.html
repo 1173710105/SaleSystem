@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 店长端进货页面 -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>客户信息</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="css/common.css"> -->
+    <!-- <link rel="stylesheet" href="css/PresentAnounce.css"> -->
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <style>
+        .table th,
+        .table td {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 添加进货模态框，一次添加多批货物 -->
+    <div class="modal fade" id="stockAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">添加进货</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <div class="row">
+                                <div class="col-md-3">
+                                    <caption>存储位置</caption>
+                                    <select class="form-control input-sm" id="cargoStockPosition">
+                                        <option>1号仓</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <caption>货源地</caption>
+                                    <select class="form-control input-sm" id="cargoStockPosition">
+                                        <option>总仓库</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <caption>负责人</caption>
+                                    <input type="text" class="form-control input-sm" id="cargoManager">
+                                </div>
+                            </div>
+                            <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <caption>货品名称</caption>
+                            <input type="text" class="form-control input-sm" id="cargoName">
+                        </div>
+                        <div class="col-md-6">
+                            <caption>货品编码</caption>
+                            <input type="text" class="form-control input-sm" id="cargoId">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <caption>货品数量</caption>
+                            <input type="text" class="form-control input-sm" id="cargoNum">
+                        </div>
+                        <div class="col-md-3">
+                            <caption>进货价</caption>
+                            <input type="text" class="form-control input-sm" id="cargoSinglePrice">
+                        </div>
+                        <div class="col-md-3">
+                            <caption>总价格</caption>
+                            <input type="text" class="form-control input-sm" id="cargoTotalPrice">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-10 col-md-2">
+                            <button type="button" class="btn btn-sm btn-primary">添加</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>货品名称</th>
+                                    <th>货品编码</th>
+                                    <th>货品数量</th>
+                                    <th>单价</th>
+                                    <th>总价</th>
+                                    <th>存储位置</th>
+                                    <th>货源地</th>
+                                    <th>负责人</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>进货总价: </h4>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-4">
+                <caption>
+                    当前位置>进货管理
+                </caption>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-sm form-inline" data-toggle="modal"
+                    data-target="#stockAddModal">添加进货</button>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-2">
+                        <h6>进货批次编号 </h6>
+                        <input type="text" class="form-control input-sm">
+                    </div>
+                    <div class="col-md-2">
+                        <h6>货品编号</h6>
+                        <input type="text" class="form-control input-sm">
+                    </div>
+                    <div class="col-md-2">
+                        <h6>货源地</h6>
+                        <select class="form-control input-sm" id="cargoStockPosition">
+                            <option>任意</option>
+                            <option>总仓库</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <h6>负责人</h6>
+                        <input type="text" class="form-control input-sm">
+                    </div>
+                    <div class="col-md-2">
+                            <h6>状态</h6>
+                            <select class="form-control input-sm" id="cargoStockPosition">
+                                <option>无</option>
+                                    <option>未申请</option>
+                                    <option>审核中</option>
+                                    <option>已通过</option>
+                                </select>
+                        </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-sm btn-default" type="button">查询</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr>
+        <div align="center">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>进货批次编号</th>
+                        <th>总进货价</th>
+                        <th>总数量</th>
+                        <th>存储位置</th>
+                        <th>货源地</th>
+                        <th>负责人</th>
+                        <th>状态</th>
+                        <th>更新时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>255</td>
+                        <td>10</td>
+                        <td>1号仓</td>
+                        <td>总仓库</td>
+                        <td>王建国</td>
+                        <td>未申请</td>
+                        <td>2019-11-20 15:53</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                data-target="#stockAddModal">编辑</button>
+                            <button type="button" class="btn btn-sm btn-primary">发起申请</button>
+                            <button type="button" class="btn btn-sm btn-danger" id="delete_btn">删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>230</td>
+                        <td>15</td>
+                        <td>1号仓</td>
+                        <td>总仓库</td>
+                        <td>王建国</td>
+                        <td>审核中</td>
+                        <td>2019-11-20 15:53</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" id="delete_btn">删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>1号仓</td>
+                        <td>总经销店</td>
+                        <td>王建国</td>
+                        <td>已通过</td>
+                        <td>2019-11-20 15:53</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" id="delete_btn">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<script>
+    $('#delete_btn').click(function () {
+        var r = confirm("是否删除？");
+        if (r == true) {
+            alert("删除成功");
+        }
+    });
+</script>
