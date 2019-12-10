@@ -1,8 +1,8 @@
 package com.software.dao;
 
-import com.software.domain.new_table;
+import com.software.domain.Item;
 
-public interface new_tableMapper {
+public interface ItemMapper {
     /**
      *
      * @mbg.generated
@@ -13,29 +13,29 @@ public interface new_tableMapper {
      *
      * @mbg.generated
      */
-    int insert(new_table record);
+    int insert(Item record);
 
     /**
      *
      * @mbg.generated
      */
-    int insertSelective(new_table record);
+    int insertSelective(Item record);
 
     /**
      *
      * @mbg.generated
      */
-    new_table selectByPrimaryKey(Integer id);
+    Item selectByPrimaryKey(Integer id);
 
     /**
      *
      * @mbg.generated
      */
-    int updateByPrimaryKeySelective(new_table record);
+    int updateByPrimaryKeySelective(Item record);
 
     /**
      *
      * @mbg.generated
      */
-    int updateByPrimaryKey(new_table record);
+    int updateByPrimaryKey(Item record);
 }
