@@ -1,77 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.software.dao.StaffMapper">
-  <resultMap id="BaseResultMap" type="com.software.domain.Staff">
+<mapper namespace="com.software.dao.GeneralManagerMapper">
+  <resultMap id="BaseResultMap" type="com.software.domain.GeneralManager">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="hourseID" jdbcType="INTEGER" property="hourseid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, password, hourseID, name, gender, phone, email
+    ID, password, name, gender, phone, email
   </sql>
-  <update id="createNewTable" parameterType="String">  
-        CREATE TABLE ${tablename} (
-		  `ID` varchar(100) NOT NULL COMMENT '员工ID',
-		  `password` varchar(100) NOT NULL COMMENT '密码',
-		  `hourseID` int(11) NOT NULL COMMENT '员工所属子仓库ID',
-		  `name` varchar(45) NOT NULL COMMENT '员工姓名',
-		  `gender` varchar(45) NOT NULL COMMENT '员工性别',
-		  `phone` varchar(45) NOT NULL COMMENT '员工手机',
-		  `email` varchar(45) NOT NULL COMMENT '员工电子邮件',
-		  PRIMARY KEY (`ID`)
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='子仓库员工信息';
-  </update> 
-  <select id="selectByPrimaryKey" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.software.domain.GeneralManager" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from #{tablename}
+    from general_manager
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="select" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
-		select *
-		from ${tablename}
-		<where>
-			<if test="id!=null and id!=''">
-				and ID = #{id}
-			</if>
-			<if test="name!=null and name!=''">
-				and name = #{name}
-			</if>
-			<if test="phone!=null and phone!=''">
-				and phone = #{phone}
-			</if>
-			<if test="email!=null and email!=''">
-				and email = #{email}
-			</if>
-		</where>
-	</select>
-  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Staff">
-    delete from ${tablename}
+  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.GeneralManager">
+    delete from general_manager
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.software.domain.Staff">
-    insert into ${tablename} (ID, password, hourseID, 
-      name, gender, phone, 
-      email)
-    values (#{id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{hourseid,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.software.domain.GeneralManager">
+    insert into general_manager (ID, password, name, 
+      gender, phone, email
+      )
+    values (#{id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.software.domain.Staff">
-    insert into ${tablename}
+  <insert id="insertSelective" parameterType="com.software.domain.GeneralManager">
+    insert into general_manager
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
       </if>
       <if test="password != null">
         password,
-      </if>
-      <if test="hourseid != null">
-        hourseID,
       </if>
       <if test="name != null">
         name,
@@ -93,9 +59,6 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="hourseid != null">
-        #{hourseid,jdbcType=INTEGER},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -110,14 +73,11 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.Staff">
-    update ${tablename}
+  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.GeneralManager">
+    update general_manager
     <set>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="hourseid != null">
-        hourseID = #{hourseid,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -134,10 +94,9 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.software.domain.Staff">
-    update ${tablename}
+  <update id="updateByPrimaryKey" parameterType="com.software.domain.GeneralManager">
+    update general_manager
     set password = #{password,jdbcType=VARCHAR},
-      hourseID = #{hourseid,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},

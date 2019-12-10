@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.dao.SaleorderCommonMapper">
+  <resultMap id="BaseResultMap" type="com.software.domain.SaleorderCommon">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="warehourseID" jdbcType="INTEGER" property="warehourseid" />
+    <result column="clientID" jdbcType="INTEGER" property="clientid" />
+    <result column="principalID" jdbcType="VARCHAR" property="principalid" />
+    <result column="createTime" jdbcType="VARCHAR" property="createtime" />
+    <result column="checkTime" jdbcType="VARCHAR" property="checktime" />
+    <result column="gatherTime" jdbcType="VARCHAR" property="gathertime" />
+    <result column="returnTime" jdbcType="VARCHAR" property="returntime" />
+    <result column="posTime" jdbcType="VARCHAR" property="postime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="sumPrice" jdbcType="REAL" property="sumprice" />
+    <result column="gather" jdbcType="REAL" property="gather" />
+    <result column="change" jdbcType="REAL" property="change" />
+    <result column="margin" jdbcType="REAL" property="margin" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="exception" jdbcType="VARCHAR" property="exception" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, warehourseID, clientID, principalID, createTime, checkTime, gatherTime, returnTime, 
+    posTime, status, sumPrice, gather, change, margin, type, note, exception
+  </sql>
+  <update id="createNewTable" parameterType="String">  
+        CREATE TABLE ${tablename} (
+		  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录订单ID',
+		  `warehourseID` int(11) NOT NULL COMMENT '仓库（门店）ID',
+		  `clientID` int(11) NOT NULL COMMENT '客户ID',
+		  `principalID` varchar(45) NOT NULL COMMENT '负责人ID',
+		  `createTime` varchar(45) DEFAULT NULL COMMENT '创建时间',
+		  `checkTime` varchar(45) DEFAULT NULL COMMENT '审核时间',
+		  `gatherTime` varchar(45) DEFAULT NULL COMMENT '收款时间',
+		  `returnTime` varchar(45) DEFAULT NULL COMMENT '退款时间',
+		  `posTime` varchar(45) DEFAULT NULL COMMENT 'pos时间',
+		  `status` int(11) NOT NULL,
+		  `sumPrice` float DEFAULT NULL COMMENT '总价',
+		  `gather` float DEFAULT NULL COMMENT '收款',
+		  `change` float DEFAULT NULL COMMENT '找零',
+		  `margin` float DEFAULT NULL COMMENT '利润',
+		  `type` varchar(45) DEFAULT NULL COMMENT '订单类型',
+		  `note` varchar(45) DEFAULT NULL COMMENT '备注信息',
+		  `exception` varchar(45) DEFAULT NULL COMMENT '异动信息',
+		  PRIMARY KEY (`ID`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录销售单里面的共同信息';
+  </update> 
+  <select id="selectByPrimaryKey" parameterType="com.software.domain.SaleorderCommon" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${tablename}
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="select" parameterType="com.software.domain.SaleorderCommon" resultMap="BaseResultMap">
+		select *
+		from ${tablename}
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="warehourseid!=null and warehourseid!=''">
+				and warehourseID = #{warehourseid}
+			</if>
+			<if test="clientid!=null and clientid!=''">
+				and clientID = #{clientid}
+			</if>
+			<if test="principalid!=null and principalid!=''">
+				and principalID = #{principalid}
+			</if>
+			<if test="type!=null and type!=''">
+				and type = #{type}
+			</if>
+			<if test="status!=null and status!=''">
+				and status = #{status}
+			</if>
+		</where>
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.SaleorderCommon">
+    delete from ${tablename}
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.software.domain.SaleorderCommon">
+    insert into ${tablename} (ID, warehourseID, clientID, 
+      principalID, createTime, checkTime, 
+      gatherTime, returnTime, posTime, 
+      status, sumPrice, gather, 
+      change, margin, type, note, 
+      exception)
+    values (#{id,jdbcType=INTEGER}, #{warehourseid,jdbcType=INTEGER}, #{clientid,jdbcType=INTEGER}, 
+      #{principalid,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{checktime,jdbcType=VARCHAR}, 
+      #{gathertime,jdbcType=VARCHAR}, #{returntime,jdbcType=VARCHAR}, #{postime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{sumprice,jdbcType=REAL}, #{gather,jdbcType=REAL}, 
+      #{change,jdbcType=REAL}, #{margin,jdbcType=REAL}, #{type,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
+      #{exception,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.software.domain.SaleorderCommon">
+    insert into ${tablename}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="warehourseid != null">
+        warehourseID,
+      </if>
+      <if test="clientid != null">
+        clientID,
+      </if>
+      <if test="principalid != null">
+        principalID,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="checktime != null">
+        checkTime,
+      </if>
+      <if test="gathertime != null">
+        gatherTime,
+      </if>
+      <if test="returntime != null">
+        returnTime,
+      </if>
+      <if test="postime != null">
+        posTime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="sumprice != null">
+        sumPrice,
+      </if>
+      <if test="gather != null">
+        gather,
+      </if>
+      <if test="change != null">
+        change,
+      </if>
+      <if test="margin != null">
+        margin,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="exception != null">
+        exception,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="warehourseid != null">
+        #{warehourseid,jdbcType=INTEGER},
+      </if>
+      <if test="clientid != null">
+        #{clientid,jdbcType=INTEGER},
+      </if>
+      <if test="principalid != null">
+        #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="checktime != null">
+        #{checktime,jdbcType=VARCHAR},
+      </if>
+      <if test="gathertime != null">
+        #{gathertime,jdbcType=VARCHAR},
+      </if>
+      <if test="returntime != null">
+        #{returntime,jdbcType=VARCHAR},
+      </if>
+      <if test="postime != null">
+        #{postime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sumprice != null">
+        #{sumprice,jdbcType=REAL},
+      </if>
+      <if test="gather != null">
+        #{gather,jdbcType=REAL},
+      </if>
+      <if test="change != null">
+        #{change,jdbcType=REAL},
+      </if>
+      <if test="margin != null">
+        #{margin,jdbcType=REAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="exception != null">
+        #{exception,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.SaleorderCommon">
+    update ${tablename}
+    <set>
+      <if test="warehourseid != null">
+        warehourseID = #{warehourseid,jdbcType=INTEGER},
+      </if>
+      <if test="clientid != null">
+        clientID = #{clientid,jdbcType=INTEGER},
+      </if>
+      <if test="principalid != null">
+        principalID = #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="checktime != null">
+        checkTime = #{checktime,jdbcType=VARCHAR},
+      </if>
+      <if test="gathertime != null">
+        gatherTime = #{gathertime,jdbcType=VARCHAR},
+      </if>
+      <if test="returntime != null">
+        returnTime = #{returntime,jdbcType=VARCHAR},
+      </if>
+      <if test="postime != null">
+        posTime = #{postime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sumprice != null">
+        sumPrice = #{sumprice,jdbcType=REAL},
+      </if>
+      <if test="gather != null">
+        gather = #{gather,jdbcType=REAL},
+      </if>
+      <if test="change != null">
+        change = #{change,jdbcType=REAL},
+      </if>
+      <if test="margin != null">
+        margin = #{margin,jdbcType=REAL},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="exception != null">
+        exception = #{exception,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.software.domain.SaleorderCommon">
+    update ${tablename}
+    set warehourseID = #{warehourseid,jdbcType=INTEGER},
+      clientID = #{clientid,jdbcType=INTEGER},
+      principalID = #{principalid,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=VARCHAR},
+      checkTime = #{checktime,jdbcType=VARCHAR},
+      gatherTime = #{gathertime,jdbcType=VARCHAR},
+      returnTime = #{returntime,jdbcType=VARCHAR},
+      posTime = #{postime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      sumPrice = #{sumprice,jdbcType=REAL},
+      gather = #{gather,jdbcType=REAL},
+      change = #{change,jdbcType=REAL},
+      margin = #{margin,jdbcType=REAL},
+      type = #{type,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      exception = #{exception,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

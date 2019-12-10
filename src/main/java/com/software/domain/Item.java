@@ -1,6 +1,8 @@
 package com.software.domain;
 
-public class Item {
+public class Item 
+{
+	private String tablename;
     /**
      * 商品ID ID
      */
@@ -17,12 +19,12 @@ public class Item {
     private String type;
 
     /**
-     * 商品说明信息 specification
+     * 商品信息说明 specification
      */
     private String specification;
 
     /**
-     * 存放图片路径 picture
+     * 商品图片 picture
      */
     private String picture;
 
@@ -40,164 +42,103 @@ public class Item {
      * 进货价 purchasePrice
      */
     private Float purchaseprice;
+    
+	public Item() {
+		super();
+	}
 
-    /**
-     * 商品ID
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return ID 商品ID
-     */
-    public Integer getId() {
+	public Item(String tablename, Integer id, String name, String type, String specification, String picture,
+			Float retailprice, Float wholesaleprice, Float purchaseprice) {
+		super();
+		this.tablename = tablename;
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.specification = specification;
+		this.picture = picture;
+		this.retailprice = retailprice;
+		this.wholesaleprice = wholesaleprice;
+		this.purchaseprice = purchaseprice;
+	}
+
+	public String getTablename() {
+		return tablename;
+	}
+	
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
+	}
+	
+	public Integer getId() {
         return id;
     }
 
-    /**
-     * 商品ID
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param id 商品ID
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * 商品名字
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return name 商品名字
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * 商品名字
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param name 商品名字
-     */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
 
-    /**
-     * 商品类型
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return type 商品类型
-     */
     public String getType() {
         return type;
     }
 
-    /**
-     * 商品类型
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param type 商品类型
-     */
     public void setType(String type) {
         this.type = type == null ? null : type.trim();
     }
 
-    /**
-     * 商品说明信息
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return specification 商品说明信息
-     */
     public String getSpecification() {
         return specification;
     }
 
-    /**
-     * 商品说明信息
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param specification 商品说明信息
-     */
     public void setSpecification(String specification) {
         this.specification = specification == null ? null : specification.trim();
     }
 
-    /**
-     * 存放图片路径
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return picture 存放图片路径
-     */
     public String getPicture() {
         return picture;
     }
 
-    /**
-     * 存放图片路径
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param picture 存放图片路径
-     */
     public void setPicture(String picture) {
         this.picture = picture == null ? null : picture.trim();
     }
 
-    /**
-     * 零售价
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return retailPrice 零售价
-     */
     public Float getRetailprice() {
         return retailprice;
     }
 
-    /**
-     * 零售价
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param retailprice 零售价
-     */
     public void setRetailprice(Float retailprice) {
         this.retailprice = retailprice;
     }
 
-    /**
-     * 批发价
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return wholesalePrice 批发价
-     */
     public Float getWholesaleprice() {
         return wholesaleprice;
     }
 
-    /**
-     * 批发价
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param wholesaleprice 批发价
-     */
     public void setWholesaleprice(Float wholesaleprice) {
         this.wholesaleprice = wholesaleprice;
     }
 
-    /**
-     * 进货价
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return purchasePrice 进货价
-     */
     public Float getPurchaseprice() {
         return purchaseprice;
     }
 
-    /**
-     * 进货价
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param purchaseprice 进货价
-     */
     public void setPurchaseprice(Float purchaseprice) {
         this.purchaseprice = purchaseprice;
     }
+
+	@Override
+	public String toString() {
+		return "Item [tableName=" + tablename + ", id=" + id + ", name=" + name + ", type=" + type + ", specification="
+				+ specification + ", picture=" + picture + ", retailprice=" + retailprice + ", wholesaleprice="
+				+ wholesaleprice + ", purchaseprice=" + purchaseprice + "]";
+	}
+	
+    
 }

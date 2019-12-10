@@ -2,46 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.software.dao.WarehourseDetailMapper">
   <resultMap id="BaseResultMap" type="com.software.domain.WarehourseDetail">
-    <id column="warehourseID" jdbcType="INTEGER" property="warehourseid" />
-    <result column="ItemID" jdbcType="INTEGER" property="itemid" />
+    <id column="itemID" jdbcType="INTEGER" property="itemid" />
     <result column="itemNum" jdbcType="INTEGER" property="itemnum" />
   </resultMap>
   <sql id="Base_Column_List">
-    warehourseID, ItemID, itemNum
+    itemID, itemNum
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <update id="createNewTable" parameterType="String">  
+        CREATE TABLE ${tablename} (
+		  `itemID` int(11) NOT NULL COMMENT '商品ID',
+		  `itemNum` int(11) NOT NULL COMMENT '商品数量',
+		  PRIMARY KEY (`itemID`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='子仓库货品详细信息';
+  </update> 
+  <select id="selectByPrimaryKey" parameterType="com.software.domain.WarehourseDetail" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from warehourse_detail
-    where warehourseID = #{warehourseid,jdbcType=INTEGER}
+    from ${tablename}
+    where itemID = #{itemid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from warehourse_detail
-    where warehourseID = #{warehourseid,jdbcType=INTEGER}
+   <select id="select" parameterType="com.software.domain.WarehourseDetail" resultMap="BaseResultMap">
+		select *
+		from ${tablename}
+		<where>
+			<if test="itemid!=null and itemid!=''">
+				and itemID = #{itemid}
+			</if>
+		</where>
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.WarehourseDetail">
+    delete from ${tablename}
+    where itemID = #{itemid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.software.domain.WarehourseDetail">
-    insert into warehourse_detail (warehourseID, ItemID, itemNum
-      )
-    values (#{warehourseid,jdbcType=INTEGER}, #{itemid,jdbcType=INTEGER}, #{itemnum,jdbcType=INTEGER}
-      )
+    insert into ${tablename} (itemID, itemNum)
+    values (#{itemid,jdbcType=INTEGER}, #{itemnum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.WarehourseDetail">
-    insert into warehourse_detail
+    insert into ${tablename}
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="warehourseid != null">
-        warehourseID,
-      </if>
       <if test="itemid != null">
-        ItemID,
+        itemID,
       </if>
       <if test="itemnum != null">
         itemNum,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="warehourseid != null">
-        #{warehourseid,jdbcType=INTEGER},
-      </if>
       <if test="itemid != null">
         #{itemid,jdbcType=INTEGER},
       </if>
@@ -51,21 +58,17 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.WarehourseDetail">
-    update warehourse_detail
+    update ${tablename}
     <set>
-      <if test="itemid != null">
-        ItemID = #{itemid,jdbcType=INTEGER},
-      </if>
       <if test="itemnum != null">
         itemNum = #{itemnum,jdbcType=INTEGER},
       </if>
     </set>
-    where warehourseID = #{warehourseid,jdbcType=INTEGER}
+    where itemID = #{itemid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.software.domain.WarehourseDetail">
-    update warehourse_detail
-    set ItemID = #{itemid,jdbcType=INTEGER},
-      itemNum = #{itemnum,jdbcType=INTEGER}
-    where warehourseID = #{warehourseid,jdbcType=INTEGER}
+    update ${tablename}
+    set itemNum = #{itemnum,jdbcType=INTEGER}
+    where itemID = #{itemid,jdbcType=INTEGER}
   </update>
 </mapper>

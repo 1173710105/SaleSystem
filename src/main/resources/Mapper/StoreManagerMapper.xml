@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.software.dao.ClientMapper">
-  <resultMap id="BaseResultMap" type="com.software.domain.Client">
-    <id column="ID" jdbcType="INTEGER" property="id" />
+<mapper namespace="com.software.dao.StoreManagerMapper">
+  <resultMap id="BaseResultMap" type="com.software.domain.StoreManager">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, name, gender, phone, email, label
+    ID, password, name, gender, phone, email
   </sql>
-  <select id="selectByPrimaryKey" parameterType="com.software.domain.Client" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from client
-    where ID = #{id,jdbcType=INTEGER}
+    from store_manager
+    where ID = #{id,jdbcType=VARCHAR}
   </select>
-	<select id="select" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
+  <select id="select" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
 		select *
-		from client
+		from store_manager
 		<where>
 			<if test="id!=null and id!=''">
 				and ID = #{id}
@@ -34,28 +34,28 @@
 			<if test="email!=null and email!=''">
 				and email = #{email}
 			</if>
-			<if test="label!=null and label!=''">
-				and label = #{label}
-			</if>
 		</where>
 	</select>
-  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Client">
-    delete from client
-    where ID = #{id,jdbcType=INTEGER}
+  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.StoreManager">
+    delete from store_manager
+    where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.software.domain.Client">
-    insert into client (ID, name, gender, 
-      phone, email, label
+  <insert id="insert" parameterType="com.software.domain.StoreManager">
+    insert into store_manager (ID, password, name, 
+      gender, phone, email
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
+    values (#{id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.software.domain.Client">
-    insert into client
+  <insert id="insertSelective" parameterType="com.software.domain.StoreManager">
+    insert into store_manager
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
+      </if>
+      <if test="password != null">
+        password,
       </if>
       <if test="name != null">
         name,
@@ -69,13 +69,13 @@
       <if test="email != null">
         email,
       </if>
-      <if test="label != null">
-        label,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -89,14 +89,14 @@
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
-        #{label,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.Client">
-    update client
+  <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.StoreManager">
+    update store_manager
     <set>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -109,19 +109,16 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
-        label = #{label,jdbcType=VARCHAR},
-      </if>
     </set>
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.software.domain.Client">
-    update client
-    set name = #{name,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.software.domain.StoreManager">
+    update store_manager
+    set password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      label = #{label,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=INTEGER}
+      email = #{email,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -1,41 +1,27 @@
 package com.software.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.software.domain.WarehourseDetail;
 
-public interface WarehourseDetailMapper {
-    /**
-     *
-     * @mbg.generated
-     */
-    int deleteByPrimaryKey(Integer warehourseid);
+@Mapper
+public interface WarehourseDetailMapper 
+{
+    int deleteByPrimaryKey(WarehourseDetail record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int insert(WarehourseDetail record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int insertSelective(WarehourseDetail record);
 
-    /**
-     *
-     * @mbg.generated
-     */
-    WarehourseDetail selectByPrimaryKey(Integer warehourseid);
-
-    /**
-     *
-     * @mbg.generated
-     */
+    WarehourseDetail selectByPrimaryKey(WarehourseDetail record);
+    
+    List<WarehourseDetail> select(WarehourseDetail record);
+    
     int updateByPrimaryKeySelective(WarehourseDetail record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int updateByPrimaryKey(WarehourseDetail record);
+    
+    int createNewTable(String tablename);
 }

@@ -10,13 +10,31 @@
   <sql id="Base_Column_List">
     ID, name, location, principalID
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.software.domain.Warehourse" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from warehourse
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+   <select id="select" parameterType="com.software.domain.Warehourse" resultMap="BaseResultMap">
+		select *
+		from warehourse
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="name!=null and name!=''">
+				and name = #{name}
+			</if>
+			<if test="location!=null and location!=''">
+				and location = #{location}
+			</if>
+			<if test="principalid!=null and principalid!=''">
+				and principalID = #{principalid}
+			</if>
+		</where>
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Warehourse">
     delete from warehourse
     where ID = #{id,jdbcType=INTEGER}
   </delete>
