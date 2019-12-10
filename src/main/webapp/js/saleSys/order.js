@@ -70,6 +70,7 @@ defaultSetting = {
         + '"exception":"' + combineOrder.exception + '",'
         + '"note":"' + combineOrder.note + '"}';
    url = "";
+   console.log(param);
    return sendJsonAjax(url, param);
  }
 

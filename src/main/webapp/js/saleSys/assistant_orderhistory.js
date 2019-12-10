@@ -61,13 +61,15 @@ $('#pos-btn').click(function () {
 
 //搜索处理
 $('#search-btn').click(function () {
-    var orderid = $('#search-order-id').val().toString();
-    var clientid = $('#search-client-id').val().toString();
-    var principalid = this.getCookie("id").toString();
-    param = {
-        
+    var s_viceid = $('#search-order-id').val().toString();
+    var s_clientid = $('#search-client-id').val().toString();
+    var s_principalid = this.getCookie("id").toString();
+    order = {
+        viceid : s_viceid,
+        clientid : s_clientid,
+        principalid : s_principalid
     }
-    var queryList = queryOrder()
+    var queryList = queryOrder(order);
 });
 
 //详情按钮
