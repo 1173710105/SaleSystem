@@ -4,10 +4,13 @@ import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.software.domain.GeneralManager;
 import com.software.domain.Staff;
@@ -18,8 +21,8 @@ import com.software.service.StaffService;
 import com.software.service.StoreManagerService;
 import com.software.service.SubBranchDetailMapService;
 
-@Controller
-@RequestMapping("")
+@RestController
+@RequestMapping("/exam")
 public class LoginController 
 {
 	@Autowired
@@ -34,32 +37,43 @@ public class LoginController
 	@Autowired
 	private SubBranchDetailMapService subBranchDetailMapService;
 	
-	public String login()
+	@RequestMapping(value = {"/administrator/login","/teacher/login","/student/login"})
+	public String login(@RequestBody Map<String,Object> params)
 	{
-		String id = "id";
-		String password = "password";
-		String authority = "authority";
-		if (authority.equals("总经理")) 
+		String id = (String) params.get("id");
+		String password = (String) params.get("password");
+		String authority = (String) params.get("type");
+		System.out.println(authority);
+		if (authority.equals("general-manager")) 
 		{
 			GeneralManager gManager = generalManagerLogin(id, password);
-			if (gManager==null) 
+			if (gManager.getId().equals("account error")) 
 			{
 				//登录失败
+				return "wrongid";
+			}
+			else if (gManager.getId().equals("password error")) 
+			{
+				//登录失败
+				return "wrongpwd";
 			}
 			else
 			{
-				// 保存到cookie中，这一步可有可无
-				SubBranchDetailMap result = new SubBranchDetailMap();
-				result.setWarehoursedetailtable("base_warehourse_item");
-				result.setWarehoursedetailtable("base_warehourse_detail");
+				return "true";
 			}
 		}
-		else if(authority.equals("店长"))
+		else if(authority.equals("shop-manager"))
 		{
 			StoreManager storeManager = storeManagerLogin(id, password);
-			if (storeManager==null) 
+			if (storeManager.getId().equals("account error")) 
 			{
 				//登录失败
+				return "wrongid";
+			}
+			else if(storeManager.getId().equals("password error")) 
+			{
+				return "wrongpwd";
+
 			}
 			//登录成功，获取该店长与门店之间的关系
 			SubBranchDetailMap map = new SubBranchDetailMap();
@@ -69,19 +83,26 @@ public class LoginController
 			if (result==null) 
 			{
 				//"有此人，但未与门店建立关系";
+				return "wrongid";
 			}
 			else
 			{
 				//将result保存到cookie中去
+				return "true";
 			}
 		}
-		else if(authority.equals("店员"))
+		else if(authority.equals("clerk"))
 		{
 			//将对应门店的信息保存到cookie
 			Staff staff = staffLogin(id, password);
-			if (staff==null) 
+			if (staff.getId().equals("account error")) 
 			{
 				//登录失败
+				return "wrongid";
+			}
+			else if(staff.getId().equals("password error"))
+			{
+				return "wrongpwd";
 			}
 			//登录成功，获取该店员与门店之间的关系
 			
@@ -92,13 +113,18 @@ public class LoginController
 			if (result==null) 
 			{
 				// 员工没有对应的门店
+				return "wrongid";
 			}
 			else
 			{
 				//将result保存到cookie中去
+				return "true";
 			}
 		}
-		return null;
+		else
+		{
+			return "wrongid";
+		}
 	}
 	
 	private GeneralManager generalManagerLogin(String id, String password)
@@ -108,13 +134,16 @@ public class LoginController
 		GeneralManager result = generalManagerService.selectByPrimaryKey(manager);
 		if (result==null) 
 		{
-			//查无此人，账号不对
-			return null;
+			result = new GeneralManager();
+			result.setId("account error");
+			return result;
 		}
 		else if(!result.getPassword().equals(password))
 		{
 			// 密码不对
-			return null;
+			result = new GeneralManager();
+			result.setId("password error");
+			return result;
 		}
 		else 
 		{
@@ -129,17 +158,22 @@ public class LoginController
 		StoreManager result = storeManagerService.selectByPrimaryKey(storeManager);
 		if (result==null) 
 		{
-			//查无此人，账号不对
+			result = new StoreManager();
+			result.setId("account error");
 			return null;
 		}
 		else if(!result.getPassword().equals(password))
 		{
 			// 密码不对
+			result = new StoreManager();
+			result.setId("password error");
 			return null;
 		}
 		else if(result.getLabel().equals("invalid")) 
 		{
 			//店长无效
+			result = new StoreManager();
+			result.setId("account error");
 			return null;
 		}
 		else 
@@ -161,17 +195,23 @@ public class LoginController
 			if (result==null) 
 			{
 				//在这个表中查无此人，账号不对
-				return null;
+				result = new Staff();
+				result.setId("account error");
+				return result;
 			}
 			else if(!result.getPassword().equals(password))
 			{
 				//在这个表中密码不对
-				return null;
+				result = new Staff();
+				result.setId("password error");
+				return result;
 			}
 			else if(result.getLabel().equals("invalid")) 
 			{
-				//员工无效
-				return null;
+				//在这个表中查无此人，账号不对
+				result = new Staff();
+				result.setId("account error");
+				return result;
 			}
 			else 
 			{
