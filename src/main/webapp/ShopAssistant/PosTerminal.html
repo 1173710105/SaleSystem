@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>客户信息</title>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="css/common.css"> -->
+    <!-- <link rel="stylesheet" href="css/PresentAnounce.css"> -->
+    <style>
+        .table th,
+        .table td {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="span6">
+                                <h3>货品编号</h3>
+                            </div>
+                            <div class="span6">
+                                <input id="cargo-id" type="text" class="input-md form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span6">
+                                <h3>货品名称</h3>
+                            </div>
+                            <div class="span6">
+                                <input id="cargo-name" type="text" class="input-md form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span6">
+                                <h3>货品价格</h3>
+                            </div>
+                            <div class="span6">
+                                <input id="cargo-retail-price" class="input-md form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span6">
+                                <h3>货品数量</h3>
+                            </div>
+                            <div class="span6">
+                                <input id="cargo-num" class="input-md form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button id="add-btn" class="btn btn-md btn-primary">添加</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                                <div class="col-md-6">
+                                        <h3>客户编号</h3>
+                                        <input id="client-id" class="form-control input-md">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3>客户名称</h3>
+                                        <input id="client-name" class="form-control input-md">
+                                    </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>货品名称</th>
+                                    <th>货品编码</th>
+                                    <th>数量</th>
+                                    <th>单价</th>
+                                    <th>总价</th>
+                                </tr>
+                            </thead>
+                            <tbody id="temp-cargo-list">
+                            </tbody>
+                        </table>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>实收</h3>
+                        <input id="actual-recive" class="form-control input-lg">
+                    </div>
+                    <div class="col-md-6">
+                        <h3>找零</h3>
+                        <input id="change" class="form-control input-lg">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>总价</h3>
+                        <input id="total-price" class="form-control input-lg">
+                    </div>
+                    <div class="col-md-6">
+                        <button id="submit-btn" class="btn btn-lg btn-primary">结清</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/saleSys/cookie.js"></script>
+<script type="text/javascript" src="../js/saleSys/cargo.js"></script>
+<script type="text/javascript" src="../js/saleSys/order.js"></script>
+<script type="text/javascript" src="../js/saleSys/assistant_pos.js"></script>
+</html>

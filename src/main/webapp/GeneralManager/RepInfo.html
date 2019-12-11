@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>货品信息</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="css/common.css"> -->
+    <!-- <link rel="stylesheet" href="css/PresentAnounce.css"> -->
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <style>
+        .table th,
+        .table td {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+
+        .middle {
+        float: none;
+        display: inline-block;
+        vertical-align: middle;
+        }                    
+
+    </style>
+</head>
+
+<body>
+    <!-- 添加仓库模态框 -->
+    <div class="modal fade" id="repModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">仓库编辑</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <caption>编号</caption>
+                            <input type="text" readonly="readonly" class="form-control" id="cargoId" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <caption>名称</caption>
+                            <input type="text" class="form-control" id="cargoName">
+                        </div>
+                        <div class="col-md-6">
+                            <caption>地址</caption>
+                            <input type="text" class="form-control" id="cargoName">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <caption>负责人</caption>
+                            <input type="text" class="form-control" id="retailPrice">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="content">
+            <div class="row">
+                <div class="col-md-4">
+                    <caption>
+                        当前位置>仓库管理
+                    </caption>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#repModal">添加仓库</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h6>仓库名称 </h6>
+                            <input type="text" class="form-control input-sm">
+                        </div>
+                        <div class="col-md-5">
+                            <h6>仓库编号</h6>
+                            <input type="text" class="form-control input-sm">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-sm btn-default" type="button">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div align="center">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>名称</th>
+                            <th>地址</th>
+                            <th>负责人</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>分仓1</td>
+                            <td>xx街道</td>
+                            <td>老王</td>
+                            <td>2019-11-20 15:53</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                    data-target="#repModal">编辑</button>
+                                <button type="button" id="delete_btn" class="btn btn-sm btn-danger">删除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>分仓2</td>
+                            <td>xx街道</td>
+                            <td>老王</td>
+                            <td>2019-11-20 15:53</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#cargoModal">编辑</button>
+                                <button type="button" id="delete_btn" class="btn btn-danger btn-sm">删除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</body>
+
+<script>
+    $('#delete_btn').click(function () {
+        var r = confirm("是否删除？");
+        if (r == true) {
+            alert("删除成功");
+        }
+    });
+</script>
