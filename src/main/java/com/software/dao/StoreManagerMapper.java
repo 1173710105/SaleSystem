@@ -7,8 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.software.domain.StoreManager;
 
 @Mapper
-public interface StoreManagerMapper 
-{
+public interface StoreManagerMapper {
     int deleteByPrimaryKey(StoreManager record);
 
     int insert(StoreManager record);
@@ -18,7 +17,7 @@ public interface StoreManagerMapper
     StoreManager selectByPrimaryKey(StoreManager record);
 
     List<StoreManager> select(StoreManager record);
-
+    
     int updateByPrimaryKeySelective(StoreManager record);
 
     int updateByPrimaryKey(StoreManager record);

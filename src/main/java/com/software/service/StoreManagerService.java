@@ -19,6 +19,4 @@ public interface StoreManagerService
 	public void updateByPrimaryKeySelective(StoreManager record);
 	
 	public void updateByPrimaryKey(StoreManager record);
-	
-	public StoreManager login(StoreManager record);
 }

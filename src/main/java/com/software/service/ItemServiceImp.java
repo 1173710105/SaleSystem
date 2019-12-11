@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.software.dao.ItemMapper;
 import com.software.domain.Item;
 
+
 @Service
 public class ItemServiceImp implements ItemService {
 
@@ -63,5 +64,4 @@ public class ItemServiceImp implements ItemService {
 	{
 		im.createNewTable(record.getTablename());
 	}
-
 }

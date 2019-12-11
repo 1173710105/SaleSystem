@@ -17,45 +17,46 @@ public class WarehourseServiceImp implements WarehourseService {
 	@Override
 	public void deleteByPrimaryKey(Warehourse record) 
 	{
-		// 需要删除，附加表单吗？？？
+		mapper.deleteByPrimaryKey(record);
+	}
 
+	@Override
+	public void delete(Warehourse record) 
+	{
+		mapper.delete(record);
 	}
 
 	@Override
 	public void insert(Warehourse record) 
 	{
-		// TODO Auto-generated method stub
-
+		mapper.insert(record);
 	}
 
 	@Override
 	public void insertSelective(Warehourse record) {
-		// TODO Auto-generated method stub
-
+		mapper.insertSelective(record);
 	}
 
 	@Override
 	public Warehourse selectByPrimaryKey(Warehourse record) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.selectByPrimaryKey(record);
 	}
 
 	@Override
 	public List<Warehourse> select(Warehourse record) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.select(record);
 	}
 
 	@Override
-	public void updateByPrimaryKeySelective(Warehourse record) {
-		// TODO Auto-generated method stub
-
+	public void updateByPrimaryKeySelective(Warehourse record) 
+	{
+		mapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
-	public void updateByPrimaryKey(Warehourse record) {
-		// TODO Auto-generated method stub
-
+	public void updateByPrimaryKey(Warehourse record) 
+	{
+		mapper.updateByPrimaryKey(record);
 	}
 
 }

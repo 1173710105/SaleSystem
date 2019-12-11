@@ -3,7 +3,6 @@ package com.software.domain;
 public class Staff 
 {
 	private String tablename;
-	
     /**
      * 员工ID ID
      */
@@ -39,11 +38,16 @@ public class Staff
      */
     private String email;
 
+    /**
+     *  label
+     */
+    private String label;
+
     
     public String getTablename() {
 		return tablename;
 	}
-    
+
 	public void setTablename(String tablename) {
 		this.tablename = tablename;
 	}
@@ -104,10 +108,11 @@ public class Staff
         this.email = email == null ? null : email.trim();
     }
 
-	@Override
-	public String toString() {
-		return "Staff [tablename=" + tablename + ", id=" + id + ", password=" + password + ", hourseid=" + hourseid
-				+ ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", email=" + email + "]";
-	}
-    
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
+    }
 }

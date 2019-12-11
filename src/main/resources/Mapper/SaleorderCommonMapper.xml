@@ -46,6 +46,9 @@
 		  PRIMARY KEY (`ID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录销售单里面的共同信息';
   </update> 
+  <delete id="dropTable" parameterType="String">
+   		drop table ${tablename}
+  </delete>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.SaleorderCommon" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -11,7 +11,8 @@ import com.software.domain.SubBranchDetailMap;
 
 
 @Service
-public class SubBranchDetailMapServiceImp implements SubBranchDetailMapService {
+public class SubBranchDetailMapServiceImp implements SubBranchDetailMapService 
+{
 
 	@Autowired
 	private SubBranchDetailMapMapper mapper;
@@ -20,6 +21,12 @@ public class SubBranchDetailMapServiceImp implements SubBranchDetailMapService {
 	public void deleteByPrimaryKey(SubBranchDetailMap record) 
 	{
 		mapper.deleteByPrimaryKey(record);
+	}
+	
+	@Override
+	public void delete(SubBranchDetailMap record) 
+	{
+		mapper.delete(record);
 	}
 
 	@Override

@@ -22,5 +22,4 @@ public interface StaffService
     
     public void createNewTable(Staff record);
     
-    public Staff login(Staff record);
 }

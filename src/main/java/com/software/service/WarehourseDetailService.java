@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.software.domain.WarehourseDetail;
 
+
 public interface WarehourseDetailService 
 {
 	public void deleteByPrimaryKey(WarehourseDetail record);

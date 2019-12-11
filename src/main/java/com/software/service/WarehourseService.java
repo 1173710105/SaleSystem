@@ -8,6 +8,8 @@ public interface WarehourseService
 {
 	public void deleteByPrimaryKey(Warehourse record);
 	
+	public void delete(Warehourse record);
+
 	public void insert(Warehourse record);
 	
 	public void insertSelective(Warehourse record);

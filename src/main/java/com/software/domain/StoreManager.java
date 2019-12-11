@@ -31,6 +31,11 @@ public class StoreManager {
      */
     private String email;
 
+    /**
+     *  label
+     */
+    private String label;
+
     public String getId() {
         return id;
     }
@@ -77,5 +82,13 @@ public class StoreManager {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
     }
 }

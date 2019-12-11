@@ -1,7 +1,9 @@
 package com.software.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
 import com.software.domain.Item;
 
 @Mapper
@@ -22,4 +24,6 @@ public interface ItemMapper
     int updateByPrimaryKey(Item record);
     
     int createNewTable(String tablename);
+    
+    int dropTable(String tablename);
 }

@@ -57,25 +57,4 @@ public class StoreManagerServiceImp implements StoreManagerService
 	{
 		smm.updateByPrimaryKey(record);
 	}
-
-	@Override
-	public StoreManager login(StoreManager record) 
-	{
-		StoreManager storeManager = new StoreManager();
-		storeManager.setId(record.getId());
-		StoreManager result = smm.selectByPrimaryKey(storeManager);
-		if(result==null)
-		{
-			return null;
-		}
-		else if (result.getPassword().equals(record.getPassword())) 
-		{
-			return result;
-		}
-		else 
-		{
-			return null;
-		}
-	}
-
 }

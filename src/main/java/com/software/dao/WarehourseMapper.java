@@ -7,9 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 import com.software.domain.Warehourse;
 
 @Mapper
-public interface WarehourseMapper 
-{
+public interface WarehourseMapper {
     int deleteByPrimaryKey(Warehourse record);
+    
+    int delete(Warehourse record);
 
     int insert(Warehourse record);
 
@@ -18,7 +19,7 @@ public interface WarehourseMapper
     Warehourse selectByPrimaryKey(Warehourse record);
 
     List<Warehourse> select(Warehourse record);
-
+    
     int updateByPrimaryKeySelective(Warehourse record);
 
     int updateByPrimaryKey(Warehourse record);

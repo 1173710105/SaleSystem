@@ -8,9 +8,10 @@
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, password, name, gender, phone, email
+    ID, password, name, gender, phone, email, label
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
     select 
@@ -18,7 +19,7 @@
     from store_manager
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="select" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
+    <select id="select" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
 		select *
 		from store_manager
 		<where>
@@ -34,6 +35,9 @@
 			<if test="email!=null and email!=''">
 				and email = #{email}
 			</if>
+			<if test="label!=null and label!=''">
+				and label = #{label}
+			</if>
 		</where>
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.StoreManager">
@@ -42,11 +46,11 @@
   </delete>
   <insert id="insert" parameterType="com.software.domain.StoreManager">
     insert into store_manager (ID, password, name, 
-      gender, phone, email
-      )
+      gender, phone, email, 
+      label)
     values (#{id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
-      )
+      #{gender,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{label,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.StoreManager">
     insert into store_manager
@@ -69,6 +73,9 @@
       <if test="email != null">
         email,
       </if>
+      <if test="label != null">
+        label,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -88,6 +95,9 @@
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -109,6 +119,9 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -118,7 +131,8 @@
       name = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
+      email = #{email,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

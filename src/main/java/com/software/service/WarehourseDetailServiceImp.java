@@ -61,5 +61,4 @@ public class WarehourseDetailServiceImp implements WarehourseDetailService {
 	{
 		wdm.createNewTable(record.getTablename());
 	}
-
 }

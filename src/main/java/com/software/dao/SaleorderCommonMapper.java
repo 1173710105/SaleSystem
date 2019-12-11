@@ -2,8 +2,11 @@ package com.software.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.software.domain.SaleorderCommon;
 
+@Mapper
 public interface SaleorderCommonMapper {
     int deleteByPrimaryKey(SaleorderCommon record);
 
@@ -20,4 +23,7 @@ public interface SaleorderCommonMapper {
     int updateByPrimaryKey(SaleorderCommon record);
     
     int createTable(String tablename);
+    
+    int dropTable(String tablename);
+
 }

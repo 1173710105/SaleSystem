@@ -5,10 +5,12 @@
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="location" jdbcType="VARCHAR" property="location" />
-    <result column="principalID" jdbcType="INTEGER" property="principalid" />
+    <result column="principalID" jdbcType="VARCHAR" property="principalid" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, name, location, principalID
+    ID, name, location, principalID, time, label
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.Warehourse" resultMap="BaseResultMap">
     select 
@@ -16,7 +18,7 @@
     from warehourse
     where ID = #{id,jdbcType=INTEGER}
   </select>
-   <select id="select" parameterType="com.software.domain.Warehourse" resultMap="BaseResultMap">
+  <select id="select" parameterType="com.software.domain.Warehourse" resultMap="BaseResultMap">
 		select *
 		from warehourse
 		<where>
@@ -32,17 +34,42 @@
 			<if test="principalid!=null and principalid!=''">
 				and principalID = #{principalid}
 			</if>
+			<if test="label!=null and label!=''">
+				and label = #{label}
+			</if>
 		</where>
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Warehourse">
     delete from warehourse
     where ID = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="delete" parameterType="com.software.domain.Warehourse">
+    delete from warehourse
+    <where>
+		<if test="id!=null and id!=''">
+			and ID = #{id}
+		</if>
+		<if test="name!=null and name!=''">
+			and name = #{name}
+		</if>
+		<if test="location!=null and location!=''">
+			and location = #{location}
+		</if>
+		<if test="principalid!=null and principalid!=''">
+			and principalID = #{principalid}
+		</if>
+		<if test="label!=null and label!=''">
+			and label = #{label}
+		</if>
+	</where>
+  </delete>
   <insert id="insert" parameterType="com.software.domain.Warehourse">
     insert into warehourse (ID, name, location, 
-      principalID)
+      principalID, time, label
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
-      #{principalid,jdbcType=INTEGER})
+      #{principalid,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.Warehourse">
     insert into warehourse
@@ -59,6 +86,12 @@
       <if test="principalid != null">
         principalID,
       </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -71,7 +104,13 @@
         #{location,jdbcType=VARCHAR},
       </if>
       <if test="principalid != null">
-        #{principalid,jdbcType=INTEGER},
+        #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -85,7 +124,13 @@
         location = #{location,jdbcType=VARCHAR},
       </if>
       <if test="principalid != null">
-        principalID = #{principalid,jdbcType=INTEGER},
+        principalID = #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
@@ -94,7 +139,9 @@
     update warehourse
     set name = #{name,jdbcType=VARCHAR},
       location = #{location,jdbcType=VARCHAR},
-      principalID = #{principalid,jdbcType=INTEGER}
+      principalID = #{principalid,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

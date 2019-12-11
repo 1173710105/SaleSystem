@@ -25,6 +25,9 @@
 		  PRIMARY KEY (`viceID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录订单里面的商品信息';
   </update> 
+  <delete id="dropTable" parameterType="String">
+   		drop table ${tablename}
+   </delete>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.SaleorderItem" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

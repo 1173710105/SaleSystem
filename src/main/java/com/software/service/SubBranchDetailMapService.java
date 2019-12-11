@@ -8,6 +8,8 @@ public interface SubBranchDetailMapService
 {
 	public void deleteByPrimaryKey(SubBranchDetailMap record);
 
+	public void delete(SubBranchDetailMap record);
+
     public void insert(SubBranchDetailMap record);
 
     public void insertSelective(SubBranchDetailMap record);
@@ -19,5 +21,4 @@ public interface SubBranchDetailMapService
     public void updateByPrimaryKeySelective(SubBranchDetailMap record);
 
     public void updateByPrimaryKey(SubBranchDetailMap record);
-
 }

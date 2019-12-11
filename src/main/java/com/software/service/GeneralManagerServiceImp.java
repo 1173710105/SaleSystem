@@ -47,26 +47,4 @@ public class GeneralManagerServiceImp implements GeneralManagerService
 		gmm.updateByPrimaryKey(record);
 
 	}
-
-	@Override
-	public GeneralManager login(GeneralManager record) 
-	{
-		GeneralManager gManager = new GeneralManager();
-		gManager.setId(record.getId());
-		
-		GeneralManager result = gmm.selectByPrimaryKey(gManager);
-		if(result==null)
-		{
-			return null;
-		}
-		else if (result.getPassword().equals(record.getPassword())) 
-		{
-			return result;
-		}
-		else 
-		{
-			return null;
-		}
-	}
-
 }

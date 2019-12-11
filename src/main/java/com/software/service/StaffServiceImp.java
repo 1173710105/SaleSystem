@@ -63,24 +63,4 @@ public class StaffServiceImp implements StaffService {
 		sm.createNewTable(record.getTablename());
 	}
 
-	@Override
-	public Staff login(Staff record) 
-	{
-		Staff staff = new Staff();
-		staff.setId(record.getId());
-		Staff result = sm.selectByPrimaryKey(staff);
-		if(result==null)
-		{
-			return null;
-		}
-		else if (result.getPassword().equals(record.getPassword())) 
-		{
-			return result;
-		}
-		else 
-		{
-			return null;
-		}
-	}
-
 }

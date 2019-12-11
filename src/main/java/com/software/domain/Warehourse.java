@@ -19,7 +19,17 @@ public class Warehourse {
     /**
      * 负责人ID，店长ID principalID
      */
-    private Integer principalid;
+    private String principalid;
+
+    /**
+     *  time
+     */
+    private String time;
+
+    /**
+     *  label
+     */
+    private String label;
 
     public Integer getId() {
         return id;
@@ -45,11 +55,27 @@ public class Warehourse {
         this.location = location == null ? null : location.trim();
     }
 
-    public Integer getPrincipalid() {
+    public String getPrincipalid() {
         return principalid;
     }
 
-    public void setPrincipalid(Integer principalid) {
-        this.principalid = principalid;
+    public void setPrincipalid(String principalid) {
+        this.principalid = principalid == null ? null : principalid.trim();
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time == null ? null : time.trim();
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
     }
 }

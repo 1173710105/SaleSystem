@@ -16,7 +16,7 @@ public interface StaffMapper
     int insertSelective(Staff record);
 
     Staff selectByPrimaryKey(Staff record);
-
+    
     List<Staff> select(Staff record);
 
     int updateByPrimaryKeySelective(Staff record);
@@ -24,5 +24,6 @@ public interface StaffMapper
     int updateByPrimaryKey(Staff record);
     
     int createNewTable(String tablename);
-
+    
+    int dropTable(String tablename);
 }

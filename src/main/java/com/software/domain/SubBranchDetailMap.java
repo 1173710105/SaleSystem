@@ -1,8 +1,7 @@
 package com.software.domain;
 
-public class SubBranchDetailMap 
-{
-	/**
+public class SubBranchDetailMap {
+    /**
      *  ID
      */
     private Integer id;
@@ -46,6 +45,11 @@ public class SubBranchDetailMap
      *  time
      */
     private String time;
+
+    /**
+     *  label
+     */
+    private String label;
 
     public Integer getId() {
         return id;
@@ -117,5 +121,13 @@ public class SubBranchDetailMap
 
     public void setTime(String time) {
         this.time = time == null ? null : time.trim();
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
     }
 }

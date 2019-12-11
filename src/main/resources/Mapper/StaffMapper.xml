@@ -9,12 +9,14 @@
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, password, hourseID, name, gender, phone, email
+    ID, password, hourseID, name, gender, phone, email, label
   </sql>
-  <update id="createNewTable" parameterType="String">  
-        CREATE TABLE ${tablename} (
+  
+    <update id="createNewTable" parameterType="String">  
+       CREATE TABLE ${tablename} (
 		  `ID` varchar(100) NOT NULL COMMENT '员工ID',
 		  `password` varchar(100) NOT NULL COMMENT '密码',
 		  `hourseID` int(11) NOT NULL COMMENT '员工所属子仓库ID',
@@ -22,16 +24,20 @@
 		  `gender` varchar(45) NOT NULL COMMENT '员工性别',
 		  `phone` varchar(45) NOT NULL COMMENT '员工手机',
 		  `email` varchar(45) NOT NULL COMMENT '员工电子邮件',
+		  `label` varchar(45) NOT NULL,
 		  PRIMARY KEY (`ID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='子仓库员工信息';
   </update> 
+  <delete id="dropTable" parameterType="String">
+   		drop table ${tablename}
+   </delete>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from #{tablename}
+    from ${tablename}
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="select" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
+   <select id="select" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
 		select *
 		from ${tablename}
 		<where>
@@ -47,6 +53,9 @@
 			<if test="email!=null and email!=''">
 				and email = #{email}
 			</if>
+			<if test="label!=null and label!=''">
+				and label = #{label}
+			</if>
 		</where>
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Staff">
@@ -56,10 +65,10 @@
   <insert id="insert" parameterType="com.software.domain.Staff">
     insert into ${tablename} (ID, password, hourseID, 
       name, gender, phone, 
-      email)
+      email, label)
     values (#{id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{hourseid,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR})
+      #{email,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.Staff">
     insert into ${tablename}
@@ -85,6 +94,9 @@
       <if test="email != null">
         email,
       </if>
+      <if test="label != null">
+        label,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -107,6 +119,9 @@
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -131,6 +146,9 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -141,7 +159,8 @@
       name = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
+      email = #{email,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

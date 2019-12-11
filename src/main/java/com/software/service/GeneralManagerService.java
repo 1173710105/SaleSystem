@@ -16,5 +16,4 @@ public interface GeneralManagerService
 
     public void updateByPrimaryKey(GeneralManager record);
     
-    public GeneralManager login(GeneralManager record);
 }

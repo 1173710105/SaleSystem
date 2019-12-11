@@ -42,33 +42,21 @@ public class Item
      * 进货价 purchasePrice
      */
     private Float purchaseprice;
+
+    /**
+     *  time
+     */
+    private String time;
+
     
-	public Item() {
-		super();
-	}
-
-	public Item(String tablename, Integer id, String name, String type, String specification, String picture,
-			Float retailprice, Float wholesaleprice, Float purchaseprice) {
-		super();
-		this.tablename = tablename;
-		this.id = id;
-		this.name = name;
-		this.type = type;
-		this.specification = specification;
-		this.picture = picture;
-		this.retailprice = retailprice;
-		this.wholesaleprice = wholesaleprice;
-		this.purchaseprice = purchaseprice;
-	}
-
-	public String getTablename() {
+    public String getTablename() {
 		return tablename;
 	}
-	
+
 	public void setTablename(String tablename) {
 		this.tablename = tablename;
 	}
-	
+
 	public Integer getId() {
         return id;
     }
@@ -133,12 +121,18 @@ public class Item
         this.purchaseprice = purchaseprice;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time == null ? null : time.trim();
+    }
+
 	@Override
 	public String toString() {
-		return "Item [tableName=" + tablename + ", id=" + id + ", name=" + name + ", type=" + type + ", specification="
+		return "Item [tablename=" + tablename + ", id=" + id + ", name=" + name + ", type=" + type + ", specification="
 				+ specification + ", picture=" + picture + ", retailprice=" + retailprice + ", wholesaleprice="
-				+ wholesaleprice + ", purchaseprice=" + purchaseprice + "]";
+				+ wholesaleprice + ", purchaseprice=" + purchaseprice + ", time=" + time + "]";
 	}
-	
-    
 }
