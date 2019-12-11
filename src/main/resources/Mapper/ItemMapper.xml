@@ -10,30 +10,69 @@
     <result column="retailPrice" jdbcType="REAL" property="retailprice" />
     <result column="wholesalePrice" jdbcType="REAL" property="wholesaleprice" />
     <result column="purchasePrice" jdbcType="REAL" property="purchaseprice" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, name, type, specification, picture, retailPrice, wholesalePrice, purchasePrice
+    ID, name, type, specification, picture, retailPrice, wholesalePrice, purchasePrice, 
+    time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <update id="createNewTable" parameterType="String">  
+        CREATE TABLE ${tablename} (
+		  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品ID',
+		  `name` varchar(100) NOT NULL COMMENT '商品名字',
+		  `type` varchar(45) NOT NULL COMMENT '商品类型',
+		  `specification` varchar(500) DEFAULT NULL COMMENT '商品信息说明',
+		  `picture` varchar(100) DEFAULT NULL COMMENT '商品图片',
+		  `retailPrice` float DEFAULT NULL COMMENT '零售价',
+		  `wholesalePrice` float DEFAULT NULL COMMENT '批发价',
+		  `purchasePrice` float DEFAULT NULL COMMENT '进货价',
+		  `time` varchar(45) NOT NULL,
+		  PRIMARY KEY (`ID`)
+		) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='仓库商品信息表';
+  </update> 
+  <delete id="dropTable" parameterType="String">
+   		drop table ${tablename}
+   </delete>
+  <select id="selectByPrimaryKey" parameterType="com.software.domain.Item" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from item
+    from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from item
+  <select id="select" parameterType="com.software.domain.Item" resultMap="BaseResultMap">
+		select *
+		from ${tablename}
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="name!=null and name!=''">
+				and name = #{name}
+			</if>
+			<if test="type!=null and type!=''">
+				and type = #{type}
+			</if>
+			<if test="specification!=null and specification!=''">
+				and specification = #{specification}
+			</if>
+		</where>
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Item">
+    delete from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.software.domain.Item">
-    insert into item (ID, name, type, 
+    insert into ${tablename} (ID, name, type, 
       specification, picture, retailPrice, 
-      wholesalePrice, purchasePrice)
+      wholesalePrice, purchasePrice, time
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{specification,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{retailprice,jdbcType=REAL}, 
-      #{wholesaleprice,jdbcType=REAL}, #{purchaseprice,jdbcType=REAL})
+      #{wholesaleprice,jdbcType=REAL}, #{purchaseprice,jdbcType=REAL}, #{time,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.Item">
-    insert into item
+    insert into ${tablename}
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
@@ -58,6 +97,9 @@
       </if>
       <if test="purchaseprice != null">
         purchasePrice,
+      </if>
+      <if test="time != null">
+        time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -85,10 +127,13 @@
       <if test="purchaseprice != null">
         #{purchaseprice,jdbcType=REAL},
       </if>
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.Item">
-    update item
+    update ${tablename}
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -111,18 +156,22 @@
       <if test="purchaseprice != null">
         purchasePrice = #{purchaseprice,jdbcType=REAL},
       </if>
+      <if test="time != null">
+        time = #{time,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.software.domain.Item">
-    update item
+    update ${tablename}
     set name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       specification = #{specification,jdbcType=VARCHAR},
       picture = #{picture,jdbcType=VARCHAR},
       retailPrice = #{retailprice,jdbcType=REAL},
       wholesalePrice = #{wholesaleprice,jdbcType=REAL},
-      purchasePrice = #{purchaseprice,jdbcType=REAL}
+      purchasePrice = #{purchaseprice,jdbcType=REAL},
+      time = #{time,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

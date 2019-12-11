@@ -1,42 +1,50 @@
 package com.software.domain;
 
-public class Client {
+public class GeneralManager {
     /**
-     * 客户ID ID
+     * 总经理ID ID
      */
-    private Integer id;
+    private String id;
 
     /**
-     * 客户名字 name
+     *  password
+     */
+    private String password;
+
+    /**
+     * 姓名 name
      */
     private String name;
 
     /**
-     * 客户性别 gender
+     * 性别 gender
      */
     private String gender;
 
     /**
-     * 客户电话号码 phone
+     * 总经理phone phone
      */
     private String phone;
 
     /**
-     * 客户邮件 email
+     * 总经理Email email
      */
     private String email;
 
-    /**
-     * 客户标签 label
-     */
-    private String label;
-
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public String getName() {
@@ -69,13 +77,5 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label == null ? null : label.trim();
     }
 }

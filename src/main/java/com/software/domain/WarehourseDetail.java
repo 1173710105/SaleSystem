@@ -1,78 +1,59 @@
 package com.software.domain;
 
-public class WarehourseDetail {
+public class WarehourseDetail 
+{
+	private String tablename;
     /**
-     * 仓库货品ID warehourseID
-     */
-    private Integer warehourseid;
-
-    /**
-     * 商品ID ItemID
+     * 物品ID itemID
      */
     private Integer itemid;
 
     /**
-     * 商品数量 itemNum
+     * 物品数量 itemNum
      */
     private Integer itemnum;
 
     /**
-     * 仓库货品ID
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return warehourseID 仓库货品ID
+     *  time
      */
-    public Integer getWarehourseid() {
-        return warehourseid;
-    }
+    private String time;
 
-    /**
-     * 仓库货品ID
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param warehourseid 仓库货品ID
-     */
-    public void setWarehourseid(Integer warehourseid) {
-        this.warehourseid = warehourseid;
-    }
+    
+    public String getTablename() {
+		return tablename;
+	}
 
-    /**
-     * 商品ID
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return ItemID 商品ID
-     */
-    public Integer getItemid() {
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
+	}
+
+	public Integer getItemid() {
         return itemid;
     }
 
-    /**
-     * 商品ID
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param itemid 商品ID
-     */
     public void setItemid(Integer itemid) {
         this.itemid = itemid;
     }
 
-    /**
-     * 商品数量
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @return itemNum 商品数量
-     */
     public Integer getItemnum() {
         return itemnum;
     }
 
-    /**
-     * 商品数量
-     * @author www12
-     * @date 2019-11-27 20:20:28
-     * @param itemnum 商品数量
-     */
     public void setItemnum(Integer itemnum) {
         this.itemnum = itemnum;
     }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time == null ? null : time.trim();
+    }
+
+	@Override
+	public String toString() {
+		return "WarehourseDetail [tablename=" + tablename + ", itemid=" + itemid + ", itemnum=" + itemnum + ", time="
+				+ time + "]";
+	}
 }

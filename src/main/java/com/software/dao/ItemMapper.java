@@ -1,41 +1,29 @@
 package com.software.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.software.domain.Item;
 
-public interface ItemMapper {
-    /**
-     *
-     * @mbg.generated
-     */
-    int deleteByPrimaryKey(Integer id);
+@Mapper
+public interface ItemMapper 
+{
+    int deleteByPrimaryKey(Item record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int insert(Item record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int insertSelective(Item record);
 
-    /**
-     *
-     * @mbg.generated
-     */
-    Item selectByPrimaryKey(Integer id);
-
-    /**
-     *
-     * @mbg.generated
-     */
+    Item selectByPrimaryKey(Item record);
+    
+    List<Item> select(Item record);
+    
     int updateByPrimaryKeySelective(Item record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int updateByPrimaryKey(Item record);
+    
+    int createNewTable(String tablename);
+    
+    int dropTable(String tablename);
 }

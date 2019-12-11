@@ -1,42 +1,55 @@
 package com.software.domain;
 
-public class Client {
+public class StoreManager {
     /**
-     * 客户ID ID
+     *  ID
      */
-    private Integer id;
+    private String id;
 
     /**
-     * 客户名字 name
+     *  password
+     */
+    private String password;
+
+    /**
+     * 店长姓名 name
      */
     private String name;
 
     /**
-     * 客户性别 gender
+     * 性别 gender
      */
     private String gender;
 
     /**
-     * 客户电话号码 phone
+     * 店长手机号 phone
      */
     private String phone;
 
     /**
-     * 客户邮件 email
+     * 店长email email
      */
     private String email;
 
     /**
-     * 客户标签 label
+     *  label
      */
     private String label;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public String getName() {

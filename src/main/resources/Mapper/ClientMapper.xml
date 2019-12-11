@@ -12,13 +12,34 @@
   <sql id="Base_Column_List">
     ID, name, gender, phone, email, label
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.software.domain.Client" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from client
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<select id="select" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
+		select *
+		from client
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="name!=null and name!=''">
+				and name = #{name}
+			</if>
+			<if test="phone!=null and phone!=''">
+				and phone = #{phone}
+			</if>
+			<if test="email!=null and email!=''">
+				and email = #{email}
+			</if>
+			<if test="label!=null and label!=''">
+				and label = #{label}
+			</if>
+		</where>
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Client">
     delete from client
     where ID = #{id,jdbcType=INTEGER}
   </delete>

@@ -1,41 +1,25 @@
 package com.software.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.software.domain.Client;
 
-public interface ClientMapper {
-    /**
-     *
-     * @mbg.generated
-     */
-    int deleteByPrimaryKey(Integer id);
+@Mapper
+public interface ClientMapper 
+{
+    int deleteByPrimaryKey(Client record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int insert(Client record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int insertSelective(Client record);
 
-    /**
-     *
-     * @mbg.generated
-     */
-    Client selectByPrimaryKey(Integer id);
-
-    /**
-     *
-     * @mbg.generated
-     */
+    Client selectByPrimaryKey(Client record);
+    
+    List<Client> select(Client record);
+    
     int updateByPrimaryKeySelective(Client record);
 
-    /**
-     *
-     * @mbg.generated
-     */
     int updateByPrimaryKey(Client record);
 }
