@@ -70,6 +70,7 @@ $('#search-btn').click(function () {
         principalid : s_principalid
     }
     var queryList = queryOrder(order);
+    loadOrderList(queryList);
 });
 
 //详情按钮
