@@ -3,8 +3,8 @@ package com.software.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-
 import com.software.domain.Item;
+
 
 @Mapper
 public interface ItemMapper 
@@ -22,8 +22,4 @@ public interface ItemMapper
     int updateByPrimaryKeySelective(Item record);
 
     int updateByPrimaryKey(Item record);
-    
-    int createNewTable(String tablename);
-    
-    int dropTable(String tablename);
 }

@@ -2,8 +2,8 @@ package com.software.domain;
 
 public class SaleorderItem 
 {
-	private String tablename;
 
+	private String tablename;
     /**
      * 副ID，记录物品 viceID
      */
@@ -18,6 +18,11 @@ public class SaleorderItem
      * 物品ID itemID
      */
     private Integer itemid;
+
+    /**
+     *  itemName
+     */
+    private String itemname;
 
     /**
      * 物品数量 itemNum
@@ -72,6 +77,14 @@ public class SaleorderItem
         this.itemid = itemid;
     }
 
+    public String getItemname() {
+        return itemname;
+    }
+
+    public void setItemname(String itemname) {
+        this.itemname = itemname == null ? null : itemname.trim();
+    }
+
     public Integer getItemnum() {
         return itemnum;
     }
@@ -103,11 +116,4 @@ public class SaleorderItem
     public void setPricetype(String pricetype) {
         this.pricetype = pricetype == null ? null : pricetype.trim();
     }
-
-	@Override
-	public String toString() {
-		return "SaleorderItem [tablename=" + tablename + ", viceid=" + viceid + ", id=" + id + ", itemid=" + itemid
-				+ ", itemnum=" + itemnum + ", perprice=" + perprice + ", sumprice=" + sumprice + ", pricetype="
-				+ pricetype + "]";
-	}
 }

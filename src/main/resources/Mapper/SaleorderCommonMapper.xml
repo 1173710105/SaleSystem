@@ -4,8 +4,11 @@
   <resultMap id="BaseResultMap" type="com.software.domain.SaleorderCommon">
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="warehourseID" jdbcType="INTEGER" property="warehourseid" />
+    <result column="warehourseName" jdbcType="VARCHAR" property="warehoursename" />
     <result column="clientID" jdbcType="INTEGER" property="clientid" />
+    <result column="clientName" jdbcType="VARCHAR" property="clientname" />
     <result column="principalID" jdbcType="VARCHAR" property="principalid" />
+    <result column="principalName" jdbcType="VARCHAR" property="principalname" />
     <result column="createTime" jdbcType="VARCHAR" property="createtime" />
     <result column="checkTime" jdbcType="VARCHAR" property="checktime" />
     <result column="gatherTime" jdbcType="VARCHAR" property="gathertime" />
@@ -21,15 +24,19 @@
     <result column="exception" jdbcType="VARCHAR" property="exception" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, warehourseID, clientID, principalID, createTime, checkTime, gatherTime, returnTime, 
-    posTime, status, sumPrice, gather, change, margin, type, note, exception
+    ID, warehourseID, warehourseName, clientID, clientName, principalID, principalName, 
+    createTime, checkTime, gatherTime, returnTime, posTime, status, sumPrice, gather, 
+    change, margin, type, note, exception
   </sql>
-  <update id="createNewTable" parameterType="String">  
+    <update id="createNewTable" parameterType="String">  
         CREATE TABLE ${tablename} (
 		  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录订单ID',
 		  `warehourseID` int(11) NOT NULL COMMENT '仓库（门店）ID',
+		  `warehourseName` varchar(45) NOT NULL,
 		  `clientID` int(11) NOT NULL COMMENT '客户ID',
+		  `clientName` varchar(45) NOT NULL,
 		  `principalID` varchar(45) NOT NULL COMMENT '负责人ID',
+		  `principalName` varchar(45) NOT NULL,
 		  `createTime` varchar(45) DEFAULT NULL COMMENT '创建时间',
 		  `checkTime` varchar(45) DEFAULT NULL COMMENT '审核时间',
 		  `gatherTime` varchar(45) DEFAULT NULL COMMENT '收款时间',
@@ -55,43 +62,21 @@
     from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  <select id="select" parameterType="com.software.domain.SaleorderCommon" resultMap="BaseResultMap">
-		select *
-		from ${tablename}
-		<where>
-			<if test="id!=null and id!=''">
-				and ID = #{id}
-			</if>
-			<if test="warehourseid!=null and warehourseid!=''">
-				and warehourseID = #{warehourseid}
-			</if>
-			<if test="clientid!=null and clientid!=''">
-				and clientID = #{clientid}
-			</if>
-			<if test="principalid!=null and principalid!=''">
-				and principalID = #{principalid}
-			</if>
-			<if test="type!=null and type!=''">
-				and type = #{type}
-			</if>
-			<if test="status!=null and status!=''">
-				and status = #{status}
-			</if>
-		</where>
-	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.SaleorderCommon">
     delete from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.software.domain.SaleorderCommon">
-    insert into ${tablename} (ID, warehourseID, clientID, 
-      principalID, createTime, checkTime, 
+    insert into ${tablename} (ID, warehourseID, warehourseName, 
+      clientID, clientName, principalID, 
+      principalName, createTime, checkTime, 
       gatherTime, returnTime, posTime, 
       status, sumPrice, gather, 
       change, margin, type, note, 
       exception)
-    values (#{id,jdbcType=INTEGER}, #{warehourseid,jdbcType=INTEGER}, #{clientid,jdbcType=INTEGER}, 
-      #{principalid,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{checktime,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{warehourseid,jdbcType=INTEGER}, #{warehoursename,jdbcType=VARCHAR}, 
+      #{clientid,jdbcType=INTEGER}, #{clientname,jdbcType=VARCHAR}, #{principalid,jdbcType=VARCHAR}, 
+      #{principalname,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{checktime,jdbcType=VARCHAR}, 
       #{gathertime,jdbcType=VARCHAR}, #{returntime,jdbcType=VARCHAR}, #{postime,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{sumprice,jdbcType=REAL}, #{gather,jdbcType=REAL}, 
       #{change,jdbcType=REAL}, #{margin,jdbcType=REAL}, #{type,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
@@ -106,11 +91,20 @@
       <if test="warehourseid != null">
         warehourseID,
       </if>
+      <if test="warehoursename != null">
+        warehourseName,
+      </if>
       <if test="clientid != null">
         clientID,
       </if>
+      <if test="clientname != null">
+        clientName,
+      </if>
       <if test="principalid != null">
         principalID,
+      </if>
+      <if test="principalname != null">
+        principalName,
       </if>
       <if test="createtime != null">
         createTime,
@@ -159,11 +153,20 @@
       <if test="warehourseid != null">
         #{warehourseid,jdbcType=INTEGER},
       </if>
+      <if test="warehoursename != null">
+        #{warehoursename,jdbcType=VARCHAR},
+      </if>
       <if test="clientid != null">
         #{clientid,jdbcType=INTEGER},
       </if>
+      <if test="clientname != null">
+        #{clientname,jdbcType=VARCHAR},
+      </if>
       <if test="principalid != null">
         #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="principalname != null">
+        #{principalname,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=VARCHAR},
@@ -212,11 +215,20 @@
       <if test="warehourseid != null">
         warehourseID = #{warehourseid,jdbcType=INTEGER},
       </if>
+      <if test="warehoursename != null">
+        warehourseName = #{warehoursename,jdbcType=VARCHAR},
+      </if>
       <if test="clientid != null">
         clientID = #{clientid,jdbcType=INTEGER},
       </if>
+      <if test="clientname != null">
+        clientName = #{clientname,jdbcType=VARCHAR},
+      </if>
       <if test="principalid != null">
         principalID = #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="principalname != null">
+        principalName = #{principalname,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=VARCHAR},
@@ -263,8 +275,11 @@
   <update id="updateByPrimaryKey" parameterType="com.software.domain.SaleorderCommon">
     update ${tablename}
     set warehourseID = #{warehourseid,jdbcType=INTEGER},
+      warehourseName = #{warehoursename,jdbcType=VARCHAR},
       clientID = #{clientid,jdbcType=INTEGER},
+      clientName = #{clientname,jdbcType=VARCHAR},
       principalID = #{principalid,jdbcType=VARCHAR},
+      principalName = #{principalname,jdbcType=VARCHAR},
       createTime = #{createtime,jdbcType=VARCHAR},
       checkTime = #{checktime,jdbcType=VARCHAR},
       gatherTime = #{gathertime,jdbcType=VARCHAR},

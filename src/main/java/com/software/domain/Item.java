@@ -1,8 +1,6 @@
 package com.software.domain;
 
-public class Item 
-{
-	private String tablename;
+public class Item {
     /**
      * 商品ID ID
      */
@@ -29,35 +27,11 @@ public class Item
     private String picture;
 
     /**
-     * 零售价 retailPrice
-     */
-    private Float retailprice;
-
-    /**
-     * 批发价 wholesalePrice
-     */
-    private Float wholesaleprice;
-
-    /**
-     * 进货价 purchasePrice
-     */
-    private Float purchaseprice;
-
-    /**
      *  time
      */
     private String time;
 
-    
-    public String getTablename() {
-		return tablename;
-	}
-
-	public void setTablename(String tablename) {
-		this.tablename = tablename;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -97,30 +71,6 @@ public class Item
         this.picture = picture == null ? null : picture.trim();
     }
 
-    public Float getRetailprice() {
-        return retailprice;
-    }
-
-    public void setRetailprice(Float retailprice) {
-        this.retailprice = retailprice;
-    }
-
-    public Float getWholesaleprice() {
-        return wholesaleprice;
-    }
-
-    public void setWholesaleprice(Float wholesaleprice) {
-        this.wholesaleprice = wholesaleprice;
-    }
-
-    public Float getPurchaseprice() {
-        return purchaseprice;
-    }
-
-    public void setPurchaseprice(Float purchaseprice) {
-        this.purchaseprice = purchaseprice;
-    }
-
     public String getTime() {
         return time;
     }
@@ -128,11 +78,4 @@ public class Item
     public void setTime(String time) {
         this.time = time == null ? null : time.trim();
     }
-
-	@Override
-	public String toString() {
-		return "Item [tablename=" + tablename + ", id=" + id + ", name=" + name + ", type=" + type + ", specification="
-				+ specification + ", picture=" + picture + ", retailprice=" + retailprice + ", wholesaleprice="
-				+ wholesaleprice + ", purchaseprice=" + purchaseprice + ", time=" + time + "]";
-	}
 }

@@ -1,6 +1,7 @@
 package com.software.domain;
 
-public class SubBranchDetailMap {
+public class SubBranchDetailMap 
+{
     /**
      *  ID
      */
