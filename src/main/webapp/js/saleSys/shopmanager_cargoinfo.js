@@ -21,6 +21,7 @@ $('#search-btn').click(function () {
         type : s_cargotype
     }
     var queryList = queryCargo(cargo);
+    tempCargoList = queryList;
     loadOrderList(queryList);
 });
 
@@ -33,11 +34,27 @@ $('#add-btn').click(function() {
 $('#save-btn').click(function() {
     //添加新货品
     if ($('#cargo-id').val() == "") {
-        
+        newCargo = {
+            name : $('#cargo-name').val(),
+            type : $('#cargo-type').val(),
+            specification : $('#cargo-format').val(),
+            retailprice : $('#retail-price').val(),
+            wholesaleprice :  $('#wholesale-price').val()
+        }
+        insertCargo(newCargo);
     } 
     //编辑货品
     else {
-
+        newCargo = {
+            id : $('#cargo-id').val(),
+            name : $('#cargo-name').val(),
+            type : $('#cargo-type').val(),
+            specification : $('#cargo-format').val(),
+            purchaseprice : $('#purchase-price').val(),
+            retailprice : $('#retail-price').val(),
+            wholesaleprice :  $('#wholesale-price').val()
+        }
+        updateCargo(newCargo);
     }
 })
 
@@ -56,7 +73,7 @@ $('#edit-btn').click(function() {
     $('#cargo-id').val(cargo.id);
     $('#cargo-name').val(cargo.name);
     $('#cargo-type').val(cargo.type);
-    $('#cargo-owner').val(cargo.specification);
+    $('#cargo-format').val(cargo.specification);
     $('#retail-price').val(cargo.retailprice);
     $('#purchase-price').val(cargo.purchaseprice);
     $('#wholesale-price').val(cargo.wholesaleprice);

@@ -61,7 +61,7 @@ function sendJsonAjax(url, param) {
  }
 
  //添加货品
-function addCargo(cargo) {
+function insertCargo(cargo) {
     if (cargo == null) {
         return;
     }

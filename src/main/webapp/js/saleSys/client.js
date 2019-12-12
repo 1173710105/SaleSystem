@@ -57,7 +57,7 @@ function queryClient(client) {
 }
 
 //增加客户
-function addClient(client) {
+function insertClient(client) {
     if (client == null) {
         return null;
     }
