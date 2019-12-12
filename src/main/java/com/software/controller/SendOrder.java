@@ -1,6 +1,6 @@
 package com.software.controller;
 
-public class Order {
+public class SendOrder {
 	private String tablename;
     /**
      * 记录订单ID ID

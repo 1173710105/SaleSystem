@@ -1,5 +1,6 @@
 package com.software.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,19 +11,44 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order")
 public class OrderController {
 	@RequestMapping("/query")
-	public Order queryOrder(@RequestBody Map<String, Object> params){
-		Integer orderid = (Integer) params.get("orderid");
-		Integer viceid = (Integer) params.get("viceid");
-		Integer clientid = (Integer) params.get("clientid");
-		Integer principalid = (Integer) params.get("principalid");
-		Integer itemnum = (Integer) params.get("itemnum");
-		Float perprice = (Float) params.get("perprice");
-		Float sumprice = (Float) params.get("sumprice");
-		Float margin = (Float) params.get("margin");
-		System.out.println(orderid);
-		Order result = new Order();
-		//根据查询结果确定result
-		
-		return result;
+	public SendOrder queryOrder(@RequestBody ReceiveOrder param){
+		SendOrder result = new SendOrder();
+		return result;//返回查找结果
+	}
+	
+	@RequestMapping("/insert")
+	public String insertOrder(@RequestBody List<ReceiveOrder> param){
+		String result = null;
+		return result;//返回成功/失败信息
+	}
+	
+	@RequestMapping("/update")
+	public String updateOrder(@RequestBody ReceiveOrder param){
+		String result = null;
+		return result;//返回成功/失败信息
+	}
+	
+	@RequestMapping("/delete")
+	public String deleteOrder(@RequestBody Map<String, String> param){
+		String result = null;
+		return result;//返回成功/失败信息
+	}
+	
+	@RequestMapping("/check")
+	public String checkOrder(@RequestBody Map<String, String> param){
+		String result = null;
+		return result;//返回成功/失败信息
+	}
+	
+	@RequestMapping("/pay")
+	public String payOrder(@RequestBody Map<String, String> param){
+		String result = null;
+		return result;//返回成功/失败信息
+	}
+	
+	@RequestMapping("/return")
+	public String returnOrder(@RequestBody Map<String, String> param){
+		String result = null;
+		return result;//返回成功/失败信息
 	}
 }
