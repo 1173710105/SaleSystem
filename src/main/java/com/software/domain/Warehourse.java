@@ -2,24 +2,19 @@ package com.software.domain;
 
 public class Warehourse {
     /**
-     * 仓库ID ID
+     *  ID
      */
     private Integer id;
 
     /**
-     * 仓库名字 name
+     *  name
      */
     private String name;
 
     /**
-     * 仓库位置 location
+     *  location
      */
     private String location;
-
-    /**
-     * 负责人ID，店长ID principalID
-     */
-    private String principalid;
 
     /**
      *  time
@@ -53,14 +48,6 @@ public class Warehourse {
 
     public void setLocation(String location) {
         this.location = location == null ? null : location.trim();
-    }
-
-    public String getPrincipalid() {
-        return principalid;
-    }
-
-    public void setPrincipalid(String principalid) {
-        this.principalid = principalid == null ? null : principalid.trim();
     }
 
     public String getTime() {

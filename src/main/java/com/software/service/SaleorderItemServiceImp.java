@@ -50,9 +50,9 @@ public class SaleorderItemServiceImp implements SaleorderItemService {
 	}
 
 	@Override
-	public void createTable(SaleorderItem record) 
+	public void createNewTable(SaleorderItem record) 
 	{
-		mapper.createTable(record.getTablename());
+		mapper.createNewTable(record.getTablename());
 	}
 
 }

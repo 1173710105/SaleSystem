@@ -21,5 +21,5 @@ public interface SaleorderCommonService
 	
 	public void updateByPrimaryKey(SaleorderCommon record);
 	
-	public void createTable(SaleorderCommon record);
+	public void createNewTable(SaleorderCommon record);
 }

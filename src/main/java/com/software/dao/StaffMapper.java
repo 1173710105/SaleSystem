@@ -9,7 +9,7 @@ import com.software.domain.Staff;
 @Mapper
 public interface StaffMapper 
 {
-    int deleteByPrimaryKey(Staff record);
+	int deleteByPrimaryKey(Staff record);
 
     int insert(Staff record);
 

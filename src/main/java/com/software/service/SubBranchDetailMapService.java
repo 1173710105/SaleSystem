@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.software.domain.SubBranchDetailMap;
 
+
 public interface SubBranchDetailMapService 
 {
 	public void deleteByPrimaryKey(SubBranchDetailMap record);
