@@ -36,5 +36,4 @@ public interface StoreAndStaffManagerService
 	public void StoreUpdateByPrimaryKeySelective(StoreManager record);
 	
 	public void StoreUpdateByPrimaryKey(StoreManager record);
-    
 }
