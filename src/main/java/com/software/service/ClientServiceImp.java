@@ -9,7 +9,8 @@ import com.software.dao.ClientMapper;
 import com.software.domain.Client;
 
 @Service
-public class ClientServiceImp implements ClientService {
+public class ClientServiceImp implements ClientService 
+{
 
 	@Autowired
 	private ClientMapper cm;

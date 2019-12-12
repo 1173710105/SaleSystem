@@ -22,4 +22,6 @@ public interface StaffService
     
     public void createNewTable(Staff record);
     
+    public void dropTable(Staff record);
+    
 }

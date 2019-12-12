@@ -1,6 +1,7 @@
 package com.software.domain;
 
-public class Client {
+public class Client 
+{
     /**
      * 客户ID ID
      */
@@ -25,6 +26,16 @@ public class Client {
      * 客户邮件 email
      */
     private String email;
+
+    /**
+     *  note
+     */
+    private String note;
+
+    /**
+     *  type
+     */
+    private String type;
 
     /**
      * 客户标签 label
@@ -69,6 +80,22 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public String getLabel() {

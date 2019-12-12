@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.software.domain.SubBranchDetailMap;
 
 @Mapper
-public interface SubBranchDetailMapMapper {
+public interface SubBranchDetailMapMapper 
+{
     int deleteByPrimaryKey(SubBranchDetailMap record);
 
     int delete(SubBranchDetailMap record);
@@ -17,7 +18,7 @@ public interface SubBranchDetailMapMapper {
     int insertSelective(SubBranchDetailMap record);
 
     SubBranchDetailMap selectByPrimaryKey(SubBranchDetailMap record);
-    
+
     List<SubBranchDetailMap> select(SubBranchDetailMap record);
     
     int updateByPrimaryKeySelective(SubBranchDetailMap record);
