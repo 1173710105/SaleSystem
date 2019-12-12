@@ -10,13 +10,13 @@ import com.software.domain.Client;
 public interface ClientMapper 
 {
     int deleteByPrimaryKey(Client record);
-    
+
     int insert(Client record);
 
     int insertSelective(Client record);
 
     Client selectByPrimaryKey(Client record);
-
+    
     List<Client> select(Client record);
     
     int updateByPrimaryKeySelective(Client record);

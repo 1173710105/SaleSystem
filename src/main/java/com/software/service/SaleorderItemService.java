@@ -2,10 +2,7 @@ package com.software.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.software.domain.SaleorderItem;
-
 
 public interface SaleorderItemService 
 {
@@ -23,5 +20,5 @@ public interface SaleorderItemService
 
     public void updateByPrimaryKey(SaleorderItem record);
 
-    public void createNewTable(SaleorderItem record);
+    public void createTable(SaleorderItem record);
 }

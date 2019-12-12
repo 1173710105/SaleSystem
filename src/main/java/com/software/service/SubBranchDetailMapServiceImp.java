@@ -9,6 +9,7 @@ import com.software.dao.SubBranchDetailMapMapper;
 import com.software.domain.SubBranchDetailMap;
 
 
+
 @Service
 public class SubBranchDetailMapServiceImp implements SubBranchDetailMapService 
 {

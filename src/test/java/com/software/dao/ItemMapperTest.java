@@ -19,23 +19,17 @@ public class ItemMapperTest
 	@Test
 	public void test() 
 	{
-//		try {
-//			Item item = new Item();
-//			item.setTablename("base_warehourse_item");
-//			mapper.select(item);
-//			System.out.println(111);
-//		} 
-//		catch (Exception e) 
-//		{
-//			System.out.println(222);
-//		}
-	}
-	
-	@Test
-	public void testCreateNewTable()
-	{
-//		mapper.createNewTable("sub_warehourse_item_0001");
-//		mapper.createNewTable("sub_warehourse_item_0002");
+		try {
+			Item item = new Item();
+			item.setTablename("base_warehourse_item");
+			mapper.select(item);
+			System.out.println(111);
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(222);
+		}
+		
 	}
 
 }

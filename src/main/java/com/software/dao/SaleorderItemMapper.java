@@ -23,7 +23,7 @@ public interface SaleorderItemMapper
 
     int updateByPrimaryKey(SaleorderItem record);
 
-    int createNewTable(String tablename);
+    int createTable(String tablename);
     
     int dropTable(String tablename);
 }

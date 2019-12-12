@@ -12,24 +12,9 @@ public class SubBranchDetailMap {
     private Integer warehourseid;
 
     /**
-     *  warehourseName
-     */
-    private String warehoursename;
-
-    /**
-     *  warehourseLocation
-     */
-    private String warehourselocation;
-
-    /**
      * 子仓库负责人ID principalID
      */
     private String principalid;
-
-    /**
-     *  principalName
-     */
-    private String principalname;
 
     /**
      * 子仓库商品表的名称 itemTable
@@ -57,16 +42,14 @@ public class SubBranchDetailMap {
     private String warehoursedetailtable;
 
     /**
-     * 更新时间 time
+     *  time
      */
     private String time;
 
     /**
-     * 标志是否有效 label
+     *  label
      */
     private String label;
-    
-    private String flag;
 
     public Integer getId() {
         return id;
@@ -84,36 +67,12 @@ public class SubBranchDetailMap {
         this.warehourseid = warehourseid;
     }
 
-    public String getWarehoursename() {
-        return warehoursename;
-    }
-
-    public void setWarehoursename(String warehoursename) {
-        this.warehoursename = warehoursename == null ? null : warehoursename.trim();
-    }
-
-    public String getWarehourselocation() {
-        return warehourselocation;
-    }
-
-    public void setWarehourselocation(String warehourselocation) {
-        this.warehourselocation = warehourselocation == null ? null : warehourselocation.trim();
-    }
-
     public String getPrincipalid() {
         return principalid;
     }
 
     public void setPrincipalid(String principalid) {
         this.principalid = principalid == null ? null : principalid.trim();
-    }
-
-    public String getPrincipalname() {
-        return principalname;
-    }
-
-    public void setPrincipalname(String principalname) {
-        this.principalname = principalname == null ? null : principalname.trim();
     }
 
     public String getItemtable() {
@@ -171,12 +130,4 @@ public class SubBranchDetailMap {
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
     }
-
-	public String getFlag() {
-		return flag;
-	}
-
-	public void setFlag(String flag) {
-		this.flag = flag;
-	}
 }

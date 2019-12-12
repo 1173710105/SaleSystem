@@ -7,12 +7,10 @@
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, name, gender, phone, email, note, type, label
+    ID, name, gender, phone, email, label
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.Client" resultMap="BaseResultMap">
     select 
@@ -20,7 +18,7 @@
     from client
     where ID = #{id,jdbcType=INTEGER}
   </select>
-     <select id="select" parameterType="com.software.domain.Client" resultMap="BaseResultMap">
+	<select id="select" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
 		select *
 		from client
 		<where>
@@ -30,20 +28,11 @@
 			<if test="name!=null and name!=''">
 				and name = #{name}
 			</if>
-			<if test="gender!=null and gender!=''">
-				and gender = #{gender}
-			</if>
 			<if test="phone!=null and phone!=''">
 				and phone = #{phone}
 			</if>
 			<if test="email!=null and email!=''">
 				and email = #{email}
-			</if>
-			<if test="note!=null and note!=''">
-				and note = #{note}
-			</if>
-			<if test="type!=null and type!=''">
-				and type = #{type}
 			</if>
 			<if test="label!=null and label!=''">
 				and label = #{label}
@@ -56,11 +45,11 @@
   </delete>
   <insert id="insert" parameterType="com.software.domain.Client">
     insert into client (ID, name, gender, 
-      phone, email, note, 
-      type, label)
+      phone, email, label
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
-      #{type,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR})
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.Client">
     insert into client
@@ -79,12 +68,6 @@
       </if>
       <if test="email != null">
         email,
-      </if>
-      <if test="note != null">
-        note,
-      </if>
-      <if test="type != null">
-        type,
       </if>
       <if test="label != null">
         label,
@@ -106,12 +89,6 @@
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
-        #{note,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
       <if test="label != null">
         #{label,jdbcType=VARCHAR},
       </if>
@@ -132,12 +109,6 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
-        note = #{note,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
-      </if>
       <if test="label != null">
         label = #{label,jdbcType=VARCHAR},
       </if>
@@ -150,8 +121,6 @@
       gender = #{gender,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      note = #{note,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>

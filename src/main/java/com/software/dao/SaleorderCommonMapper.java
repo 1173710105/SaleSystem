@@ -22,7 +22,7 @@ public interface SaleorderCommonMapper {
 
     int updateByPrimaryKey(SaleorderCommon record);
     
-    int createNewTable(String tablename);
+    int createTable(String tablename);
     
     int dropTable(String tablename);
 

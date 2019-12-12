@@ -1,7 +1,5 @@
 package com.software.service;
 
-import org.springframework.stereotype.Service;
-
 import com.software.domain.GeneralManager;
 
 public interface GeneralManagerService 
