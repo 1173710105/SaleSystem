@@ -160,21 +160,21 @@ public class LoginController
 		{
 			result = new StoreManager();
 			result.setId("account error");
-			return null;
+			return result;
 		}
 		else if(!result.getPassword().equals(password))
 		{
 			// 密码不对
 			result = new StoreManager();
 			result.setId("password error");
-			return null;
+			return result;
 		}
 		else if(result.getLabel().equals("invalid")) 
 		{
 			//店长无效
 			result = new StoreManager();
 			result.setId("account error");
-			return null;
+			return result;
 		}
 		else 
 		{

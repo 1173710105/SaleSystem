@@ -20,17 +20,17 @@ $("#login-btn").click(
             url = url + "administrator/login"
             destination = destination + "ShopAssistant/HomeIndex.html"
             param = '{"id":"' + account + '","password":"'
-                + password + '"}';
+                + password + '","type":"'+type+'"}';
         } else if (type == "shop-manager") {
             url = url + "teacher/login"
             destination = destination + "ShopManager/HomeIndex.html"
             param = '{"id":"' + account + '","password":"' + password
-                + '"}';
+                + '","type":"'+type+'"}';
         } else {
             url = url + "student/login"
             destination = destination + "GeneralManager/HomeIndex.html"
             param = '{"id":"' + account + '","password":"' + password
-                + '"}';
+                + '","type":"'+type+'"}';
         }
         if (account == null || account == "") {
             alert("账户不能为空");
@@ -50,7 +50,7 @@ $("#login-btn").click(
                     //用户名 name
                     //职位 position
                     top.location.href = destination;
-                } else if (str == "false") {
+                } else if (str == "wrongpwd") {
                     alert("密码错误，请重新输入");
                 } else {
                     alert("没有此账号")

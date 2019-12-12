@@ -1,9 +1,6 @@
-package com.software.domain;
+package com.software.controller;
 
-import java.util.List;
-
-public class SaleorderCommon 
-{
+public class Order {
 	private String tablename;
     /**
      * 记录订单ID ID
@@ -90,20 +87,8 @@ public class SaleorderCommon
      */
     private String exception;
 
-    /**
-     * 订单中商品列表
-     */
-    private List<SaleorderItem> items;
     
-    public List<SaleorderItem> getItems() {
-		return items;
-	}
-
-	public void setItems(List<SaleorderItem> items) {
-		this.items = items;
-	}
-
-	public String getTablename() {
+    public String getTablename() {
 		return tablename;
 	}
 
@@ -249,11 +234,11 @@ public class SaleorderCommon
 
 	@Override
 	public String toString() {
-		return "SaleorderCommon [tablename=" + tablename + ", id=" + id + ", warehourseid=" + warehourseid
+		return "SaleorderCommom [tablename=" + tablename + ", id=" + id + ", warehourseid=" + warehourseid
 				+ ", clientid=" + clientid + ", principalid=" + principalid + ", createtime=" + createtime
 				+ ", checktime=" + checktime + ", gathertime=" + gathertime + ", returntime=" + returntime
 				+ ", postime=" + postime + ", status=" + status + ", sumprice=" + sumprice + ", gather=" + gather
 				+ ", change=" + change + ", margin=" + margin + ", type=" + type + ", note=" + note + ", exception="
-				+ exception + ", items=" + items + "]";
+				+ exception + "]";
 	}
 }

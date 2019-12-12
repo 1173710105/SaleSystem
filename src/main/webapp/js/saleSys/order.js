@@ -69,7 +69,7 @@ defaultSetting = {
         + '"status":"' + combineOrder.status + '",'
         + '"exception":"' + combineOrder.exception + '",'
         + '"note":"' + combineOrder.note + '"}';
-   url = "";
+   url = "/order/query";
    console.log(param);
    return sendJsonAjax(url, param);
  }
@@ -101,7 +101,7 @@ defaultSetting = {
         + '"status":"' + combineOrder.status + '",'
         + '"exception":"' + combineOrder.exception + '",'
         + '"note":"' + combineOrder.note + '"}';
-    url = "";
+    url = "/order/create";
     return sendJsonAjax(url, param);
  } 
 
@@ -132,7 +132,7 @@ defaultSetting = {
         + '"status":"' + combineOrder.status + '",'
         + '"exception":"' + combineOrder.exception + '",'
         + '"note":"' + combineOrder.note + '"}';
-    url = "";
+    url = "/order/update";
  }
 
  //删除订单
@@ -165,7 +165,7 @@ defaultSetting = {
         + '"status":"' + combineOrder.status + '",'
         + '"exception":"' + combineOrder.exception + '",'
         + '"note":"' + combineOrder.note + '"}';
-    url = "";
+    url = "/order/delete";
     return sendJsonAjax(url, param);
  }
 
