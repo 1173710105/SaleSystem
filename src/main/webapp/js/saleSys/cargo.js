@@ -10,7 +10,7 @@ defaultSetting = {
     picture : '',
     retailprice : '',
     wholesaleprice : '',
-    purchaseprice : ''
+    purchaseprice : '' //进货价
 }
 
 function sendJsonAjax(url, param) {
@@ -106,4 +106,24 @@ function updateCargo(cargo) {
        + '"purchaseprice":"' + combineCargo.purchaseprice +'"}';
    url = "";
   return sendJsonAjax(url, param);
+}
+
+/**
+ * 计算货品毛利润
+ * @param {List} cargoList 货品列表 
+ * @param {List} cargoNumL 数量列表
+ * @param {List} type 价格种类,1表示零售,2表示批发
+ */
+function calculateMargin(cargoList, cargoNumL, type) {
+    var margin = 0;
+    if (type == 1) {
+        for (var i = 0; i < cargoList.length; i++) {
+            margin += (cargoList[i].retailprice - cargoList[i].purchaseprice) * cargoNumL[i];
+        }
+    } else if (type == 2) {
+        for (var i = 0; i < cargoList.length; i++) {
+            margin += (cargoList[i].wholesaleprice - cargoList[i].purchaseprice) * cargoNumL[i];
+        }
+    }
+    return margin;
 }

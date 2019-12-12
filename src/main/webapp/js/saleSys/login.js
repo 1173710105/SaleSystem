@@ -19,18 +19,24 @@ $("#login-btn").click(
             //TODO 登陆器
             url = url + "administrator/login"
             destination = destination + "ShopAssistant/HomeIndex.html"
-            param = '{"id":"' + account + '","password":"'
-                + password + '","type":"'+type+'"}';
+            param = 
+                '{"id":"' + account + '",'
+                + '"password":"' + password + '",'
+                + '"type":"clerk"}';
         } else if (type == "shop-manager") {
             url = url + "teacher/login"
             destination = destination + "ShopManager/HomeIndex.html"
-            param = '{"id":"' + account + '","password":"' + password
-                + '","type":"'+type+'"}';
+            param = 
+            '{"id":"' + account + '",'
+            + '"password":"' + password + '",'
+            + '"type":"shop-manager"}';
         } else {
             url = url + "student/login"
             destination = destination + "GeneralManager/HomeIndex.html"
-            param = '{"id":"' + account + '","password":"' + password
-                + '","type":"'+type+'"}';
+            param = 
+            '{"id":"' + account + '",'
+            + '"password":"' + password + '",'
+            + '"type":"general-manager"}';
         }
         if (account == null || account == "") {
             alert("账户不能为空");
