@@ -30,11 +30,11 @@ public class LoginController
 	private LoginManagerService loginManagerService;
 	
 	@RequestMapping(value = {"/administrator/login","/teacher/login","/student/login"})
-	public String login(@RequestBody ReceiveUser param)
+	public String login(@RequestBody Map<String,Object> params)
 	{
-		String id = param.getId();
-		String password = param.getPassword();
-		String authority = param.getType();
+		String id = (String) params.get("id");
+		String password = (String) params.get("password");
+		String authority = (String) params.get("type");
 		System.out.println(authority);
 		
 		System.out.println(loginManagerService.login(id, password, authority).getFlag());
