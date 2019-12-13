@@ -3,6 +3,8 @@ package com.software.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+
+import com.software.domain.SaleorderCommon;
 import com.software.domain.SaleorderItem;
 
 
@@ -10,6 +12,8 @@ import com.software.domain.SaleorderItem;
 public interface SaleorderItemMapper 
 {
     int deleteByPrimaryKey(SaleorderItem record);
+
+    int deleteByID(SaleorderItem record);
 
     int insert(SaleorderItem record);
 

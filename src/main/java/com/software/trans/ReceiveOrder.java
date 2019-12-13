@@ -3,12 +3,14 @@ package com.software.trans;
 import java.util.List;
 
 import com.software.domain.SaleorderCommon;
+import com.software.domain.SaleorderItem;
 
 public class ReceiveOrder 
 {
 	private String commontablename;
 	private String itemtablename;
 	private String warehoursedetailtablename;
+	private String itemtopricetable;
 	private String orderid;
 	private String viceid;
 	private String warehourseid;
@@ -19,6 +21,7 @@ public class ReceiveOrder
 	private String principalname;
 	private String itemid;
 	private String itemnum;
+	private String itemname;
 	private String perprice;
 	private String sumprice;
 	private String gather;
@@ -29,6 +32,7 @@ public class ReceiveOrder
 	private String gathertime;
 	private String returntime;
 	private String postime;
+	private String ordersumprice;
 	private String status;
 	private String type;
 	private String exception;
@@ -190,6 +194,33 @@ public class ReceiveOrder
 	public void setItemtablename(String itemtablename) {
 		this.itemtablename = itemtablename;
 	}
+	
+	public String getWarehoursedetailtablename() {
+		return warehoursedetailtablename;
+	}
+	public void setWarehoursedetailtablename(String warehoursedetailtablename) {
+		this.warehoursedetailtablename = warehoursedetailtablename;
+	}
+	public String getItemname() {
+		return itemname;
+	}
+	public void setItemname(String itemname) {
+		this.itemname = itemname;
+	}
+	
+	
+	public String getItemtopricetable() {
+		return itemtopricetable;
+	}
+	public void setItemtopricetable(String itemtopricetable) {
+		this.itemtopricetable = itemtopricetable;
+	}
+	public String getOrdersumprice() {
+		return ordersumprice;
+	}
+	public void setOrdersumprice(String ordersumprice) {
+		this.ordersumprice = ordersumprice;
+	}
 	@Override
 	public String toString() {
 		return "ReceiveOrder [commontablename=" + commontablename + ", itemtablename=" + itemtablename + ", orderid="
@@ -206,15 +237,42 @@ public class ReceiveOrder
 	{
 		SaleorderCommon common = new SaleorderCommon();
 		common.setTablename(this.commontablename);
+		common.setId(Integer.valueOf(this.orderid));
 		common.setWarehourseid(Integer.valueOf(this.warehourseid));
 		common.setWarehoursename(this.warehoursename);
 		common.setClientid(Integer.valueOf(this.clientid));
 		common.setClientname(this.clientname);
 		common.setPrincipalid(this.principalid);
 		common.setPrincipalname(this.principalname);
+		common.setCreatetime(this.createtime);
+		common.setChecktime(this.checktime);
+		common.setGathertime(this.checktime);
+		common.setReturntime(this.returntime);
+		common.setPostime(this.postime);
 		common.setStatus(Integer.valueOf(this.status));
+		common.setSumprice(Float.valueOf(this.ordersumprice));
+		common.setGather(Float.valueOf(this.gather));
+		common.setChange(Float.valueOf(this.change));
+		common.setMargin(Float.valueOf(this.margin));
 		common.setType(this.type);
+		common.setNote(this.note);
+		common.setException(this.exception);
 		return common;
+	}
+	
+	public SaleorderItem toItem()
+	{
+		SaleorderItem item = new SaleorderItem();
+		item.setTablename(this.itemtablename);
+		item.setId(Integer.valueOf(this.orderid));
+		item.setViceid(Integer.valueOf(this.viceid));
+		item.setItemid(Integer.valueOf(this.itemid));
+		item.setItemname(this.itemname);
+		item.setItemnum(Integer.valueOf(this.itemnum));
+		item.setPerprice(Float.valueOf(this.perprice));
+		item.setSumprice(Float.valueOf(this.sumprice));
+		item.setPricetype(this.type);
+		return item;
 	}
     
 }

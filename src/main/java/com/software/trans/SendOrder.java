@@ -2,114 +2,45 @@ package com.software.trans;
 
 import java.util.List;
 
+import com.software.domain.SaleorderCommon;
 import com.software.domain.SaleorderItem;
 
-public class SendOrder {
-	private String tablename;
-    /**
-     * 记录订单ID ID
-     */
+import net.bytebuddy.asm.Advice.This;
+
+public class SendOrder 
+{
+ 
     private Integer id;
-
-    /**
-     * 仓库（门店）ID warehourseID
-     */
     private Integer warehourseid;
-
-    /**
-     * 客户ID clientID
-     */
+    private String warehoursename;
     private Integer clientid;
-
-    /**
-     * 负责人ID principalID
-     */
+    private String clientname;
     private String principalid;
-
-    /**
-     * 创建时间 createTime
-     */
+    private String principalname;
     private String createtime;
-
-    /**
-     * 审核时间 checkTime
-     */
     private String checktime;
-
-    /**
-     * 收款时间 gatherTime
-     */
     private String gathertime;
-
-    /**
-     * 退款时间 returnTime
-     */
     private String returntime;
-
-    /**
-     * pos时间 posTime
-     */
     private String postime;
-
-    /**
-     *  status
-     */
     private Integer status;
-
-    /**
-     * 总价 sumPrice
-     */
     private Float sumprice;
-
-    /**
-     * 收款 gather
-     */
     private Float gather;
-
-    /**
-     * 找零 change
-     */
     private Float change;
-
-    /**
-     * 利润 margin
-     */
     private Float margin;
-
-    /**
-     * 订单类型 type
-     */
     private String type;
-
-    /**
-     * 备注信息 note
-     */
     private String note;
-
-    /**
-     * 异动信息 exception
-     */
     private String exception;
-
-    /**
-     * 子订单列表
-     */
     private List<SaleorderItem> items;
     
-    public List<SaleorderItem> getItems() {
+    
+    public List<SaleorderItem> getItems() 
+    {
 		return items;
 	}
 
-	public void setItems(List<SaleorderItem> items) {
+	public void setItems(List<SaleorderItem> items) 
+	{
 		this.items = items;
-	}
-
-	public String getTablename() {
-		return tablename;
-	}
-
-	public void setTablename(String tablename) {
-		this.tablename = tablename;
 	}
 
 	public Integer getId() {
@@ -247,13 +178,52 @@ public class SendOrder {
     public void setException(String exception) {
         this.exception = exception == null ? null : exception.trim();
     }
-
-	@Override
-	public String toString() {
-		return "SendOrder [tablename=" + tablename + ", id=" + id + ", warehourseid=" + warehourseid + ", clientid="
-				+ clientid + ", principalid=" + principalid + ", createtime=" + createtime + ", checktime=" + checktime
-				+ ", gathertime=" + gathertime + ", returntime=" + returntime + ", postime=" + postime + ", status="
-				+ status + ", sumprice=" + sumprice + ", gather=" + gather + ", change=" + change + ", margin=" + margin
-				+ ", type=" + type + ", note=" + note + ", exception=" + exception + ", items=" + items + "]";
+    
+    public String getWarehoursename() {
+		return warehoursename;
 	}
+
+	public void setWarehoursename(String warehoursename) {
+		this.warehoursename = warehoursename;
+	}
+
+	public String getClientname() {
+		return clientname;
+	}
+
+	public void setClientname(String clientname) {
+		this.clientname = clientname;
+	}
+
+	public String getPrincipalname() {
+		return principalname;
+	}
+
+	public void setPrincipalname(String principalname) {
+		this.principalname = principalname;
+	}
+
+	public void initByCommon(SaleorderCommon common)
+    {
+    	this.id = common.getId();
+    	this.warehourseid = common.getWarehourseid();
+    	this.warehoursename = common.getWarehoursename();
+    	this.clientid = common.getId();
+    	this.clientname = common.getClientname();
+    	this.principalid = common.getPrincipalid();
+    	this.principalname = common.getPrincipalname();
+    	this.createtime = common.getCreatetime();
+    	this.checktime = common.getChecktime();
+    	this.gathertime = common.getGathertime();
+    	this.returntime = common.getReturntime();
+    	this.postime = common.getPostime();
+    	this.status = common.getStatus();
+    	this.sumprice = common.getSumprice();
+    	this.gather = common.getGather();
+    	this.change = common.getChange();
+    	this.margin = common.getMargin();
+    	this.type = common.getType();
+    	this.note = common.getNote();
+    	this.exception = common.getException();
+    }
 }

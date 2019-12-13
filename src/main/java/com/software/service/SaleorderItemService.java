@@ -8,6 +8,8 @@ public interface SaleorderItemService
 {
 	public void deleteByPrimaryKey(SaleorderItem record);
 
+	public void deleteByID(SaleorderItem record);
+	
     public void insert(SaleorderItem record);
 
     public void insertSelective(SaleorderItem record);
