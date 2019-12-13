@@ -16,6 +16,7 @@ public class ItemToPrice
     /**
      *  retailPrice
      */
+    
     private Float retailprice;
 
     /**
