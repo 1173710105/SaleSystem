@@ -151,6 +151,7 @@ public class LoginController
 		}
 	}
 	
+	
 	private StoreManager storeManagerLogin(String id, String password) 
 	{
 		StoreManager storeManager = new StoreManager();
