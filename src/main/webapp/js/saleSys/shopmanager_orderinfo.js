@@ -1,5 +1,8 @@
+//缓存列表
+tempOrder
+
 window.onload = function () {
-    var historyList = queryWarehourseOrder({ sourceid: getCookie("id") });//TODO 获取门店id
+    var historyList = queryOrder({ sourceid: getCookie("id") });//TODO 获取门店id
     // loadWarehourseOrderList(historyList);
     // for (var i = 0; i < historyList.length; i++) {
     //     tempWareOrderMap.set(historyList[i].id, historyList[i]);
@@ -18,34 +21,36 @@ function loadOrderList(ol) {
         var td1 = document.createElement("td");
         td1.innerHTML = ol[i].type;
         var td2 = document.createElement("td");
-        td2.innerHTML = ol[i].clientid;
+        td2.innerHTML = ol[i].clientname;
         var td3 = document.createElement("td");
-        td3.innerHTML = ol[i].sourceid;
+        td3.innerHTML = ol[i].sumprice;
         var td4 = document.createElement("td");
-        td4.innerHTML = ol[i].receiverprincipleid;
+        td4.innerHTML = ol[i].status;
         var td5 = document.createElement("td");
-        td5.innerHTML = ol[i].status;
+        td5.innerHTML = ol[i].principalname;
         var td6 = document.createElement("td");
-        td6.innerHTML = ol[i].createtime;
+        td6.innerHTML = ol[i].warehoursename;
         var td7 = document.createElement("td");
-        //未申请
-        //添加编辑按钮,发起申请按钮,删除按钮
-        if  ol[i].status == "") {
+        td7.innerHTML = ol[i].createtime;
+        var td8 = document.createElement("td");
+        //草稿
+        //添加审核按钮,编辑按钮,删除按钮
+        if (ol[i].status == "1") {
             var editButton = document.createElement("button");
             editButton.type = "button";
-            editButton.id = "edit-btn";
+            editButton.id = "check-btn";
             editButton.setAttribute("value", ol[i].id); //将货品id封装在value中
             editButton.className = "btn btn-sm btn-primary";
-            editButton.innerHTML = "编辑";
-            td7.appendChild(editButton);
+            editButton.innerHTML = "审核";
+            td8.appendChild(editButton);
 
             var applyButton = document.createElement("button");
             applyButton.type = "button";
-            applyButton.id = "apply-btn";
+            applyButton.id = "edit-btn";
             applyButton.setAttribute("value", ol[i].id); //将货品id封装在value中
             applyButton.className = "btn btn-sm btn-primary";
-            applyButton.innerHTML = "发起申请";
-            td7.appendChild(applyButton);
+            applyButton.innerHTML = "编辑";
+            td8.appendChild(applyButton);
 
             var deleButton = document.createElement("button");
             deleButton.type = "button";
@@ -53,20 +58,65 @@ function loadOrderList(ol) {
             deleButton.setAttribute("value", ol[i].id); //将货品id封装在value中
             deleButton.className = "btn btn-sm btn-danger";
             deleButton.innerHTML = "删除";
-            td7.appendChild(deleButton);
+            td8.appendChild(deleButton);
         }
-        //审核中 已通过
-        //添加详情按钮
-        else if  ol[i].status == "" || ol[i].status == "") {
-            var detailButton = document.createElement("button");
-            detailButton.type = "button";
-            detailButton.id = "detail-btn";
-            detailButton.setAttribute("value", ol[i].id); //将货品id封装在value中
-            detailButton.className = "btn btn-sm btn-primary";
-            detailButton.innerHTML = "详情";
-            td7.appendChild(detailButton);
-        }
+        //已审核，未付款
+        //添加详情按钮，付款按钮，退货按钮
+        else if (ol[i].status == "") {
+            var editButton = document.createElement("button");
+            editButton.type = "button";
+            editButton.id = "detail-btn";
+            editButton.setAttribute("value", ol[i].id); //将货品id封装在value中
+            editButton.className = "btn btn-sm btn-primary";
+            editButton.innerHTML = "详情";
+            td8.appendChild(editButton);
 
+            var applyButton = document.createElement("button");
+            applyButton.type = "button";
+            applyButton.id = "pay-btn";
+            applyButton.setAttribute("value", ol[i].id); //将货品id封装在value中
+            applyButton.className = "btn btn-sm btn-primary";
+            applyButton.innerHTML = "付款";
+            td8.appendChild(applyButton);
+
+            var deleButton = document.createElement("button");
+            deleButton.type = "button";
+            deleButton.id = "return-btn";
+            deleButton.setAttribute("value", ol[i].id); //将货品id封装在value中
+            deleButton.className = "btn btn-sm btn-danger";
+            deleButton.innerHTML = "退货";
+            td8.appendChild(deleButton);
+        }
+        //已审核，已付款
+        //添加详情按钮，退货按钮
+        else if (ol[i].status == "") {
+            var editButton = document.createElement("button");
+            editButton.type = "button";
+            editButton.id = "detail-btn";
+            editButton.setAttribute("value", ol[i].id); //将货品id封装在value中
+            editButton.className = "btn btn-sm btn-primary";
+            editButton.innerHTML = "详情";
+            td8.appendChild(editButton);
+
+            var deleButton = document.createElement("button");
+            deleButton.type = "button";
+            deleButton.id = "return-btn";
+            deleButton.setAttribute("value", ol[i].id); //将货品id封装在value中
+            deleButton.className = "btn btn-sm btn-danger";
+            deleButton.innerHTML = "退货";
+            td8.appendChild(deleButton);
+        }
+        //已退货
+        //添加详情按钮
+        else if (ol[i].status == "") {
+            var editButton = document.createElement("button");
+            editButton.type = "button";
+            editButton.id = "detail-btn";
+            editButton.setAttribute("value", ol[i].id); //将货品id封装在value中
+            editButton.className = "btn btn-sm btn-primary";
+            editButton.innerHTML = "详情";
+            td8.appendChild(editButton);
+        }
         tr.appendChild(td0);
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -75,25 +125,91 @@ function loadOrderList(ol) {
         tr.appendChild(td5);
         tr.appendChild(td6);
         tr.appendChild(td7);
+        tr.appendChild(td8);
         editTable.appendChild(tr);
     }
 }
 
 //刷新模态框，传入list对象
+function loadMadal(ol, type) {
+    var common = ol[0];
+    $('#client-id').val(common.get("clientid"));
+    $('#client-name').val(common.get("clientname"));
+    $('#order-type').val(common.get("type"));
+    $('#order-position').val(common.get("warehoursename"));
+    $('#principal-name').val(common.get("principalname"));
+
+    var editTable = document.getElementById("temp-cargo-tbody");
+    for (cargo in ol) {
+        var tr = document.createElement("tr");
+        tr.setAttribute("id", ol[i].get("id"));
+        var td0 = document.createElement("td");
+        td0.innerHTML = ol[i].get("itemname");
+        var td1 = document.createElement("td");
+        td1.innerHTML = ol[i].get("itemid");
+        var td2 = document.createElement("td");
+        td2.innerHTML = ol[i].get("itemnum");
+        var td3 = document.createElement("td");
+        td3.innerHTML = ol[i].get("perprice");
+        var td4 = document.createElement("td");
+        td4.innerHTML = ol[i].get("sumprice");
+        var td5 = document.createElement("td");
+        var deleButton = document.createElement("button");
+        deleButton.type = "button";
+        deleButton.id = "temp-delete-btn";
+        deleButton.setAttribute("value", ol[i].get("id")); //将货品id封装在value中
+        deleButton.className = "btn btn-sm btn-danger";
+        deleButton.innerHTML = "删除";
+        td5.appendChild(deleButton);
+        tr.appendChild(td0);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tr.appendChild(td5);
+        editTable.appendChild(tr);
+    }
+}
 
 //条件搜索
+$('#search-btn').click(function() {
+    var order = {
+        id : $('#search-order-id').val(),
+        clientid : $('#search-client-id').val(),
+        type : $('#search-cargo-type').val(),
+        paystatus : $('#search-pay').val(),
+        checkstatus : $('#search-status').val(),
+    }
+    var queryList = queryOrder(order);
+    loadOrderList(queryList);
+});
 
 //添加订单
+$('#add-order-btn').click(function() {
+    $('#orderModifyModal').modal('show');
+    $('#principal-name').val(getCookie("name"));
+    $('#order-postion').val(getCookie("warehourseid")); //获得仓库
+});
+
 
 //审核订单
 $('#check_btn').click(function () {
     var r = confirm("是否审核通过？");
     if (r == true) {
+        var id = $(this).val();
+        checkOrder(id);
         alert("审核通过");
     }
 });
 
 //订单付款
+$('#pay-btn').click(function() {
+    $('#orderPayModal').modal('show');
+    var id = $(this).val();
+    $('#pay-client-name').val();
+    $('#pay-pricinpal-name').val();
+    $('#pay-total-price').val();
+});
 
 //订单删除
 $('#delete_btn').click(function () {
@@ -118,3 +234,7 @@ $('#delete_btn').click(function () {
 //保存订单
 
 //数据转换，将接收数据转换为list<map>
+//将单个对象转换
+function object2map(order) {
+
+}

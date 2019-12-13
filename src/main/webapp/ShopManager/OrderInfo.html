@@ -254,22 +254,21 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary btn-sm form-inline" data-toggle="modal"
-                    data-target="#orderModifyModal">创建订单</button>
+                <button type="button" class="btn btn-primary btn-sm form-inline" id="add-order-btn">创建订单</button>
             </div>
             <div class="col-md-10">
                 <div class="row">
                     <div class="col-md-2">
                         <h6>订单编号 </h6>
-                        <input type="text" class="form-control input-sm">
+                        <input type="text" class="form-control input-sm" id="search-order-id">
                     </div>
                     <div class="col-md-2">
                         <h6>客户编号</h6>
-                        <input type="text" class="form-control input-sm">
+                        <input type="text" class="form-control input-sm" id="search-client-id">
                     </div>
                     <div class="col-md-2">
                         <h6>订单种类</h6>
-                        <select class="form-control input-sm" id="cargoType">
+                        <select class="form-control input-sm" id="search-cargo-type">
                             <option>任意</option>
                             <option>零售</option>
                             <option>批发</option>
@@ -277,7 +276,7 @@
                     </div>
                     <div class="col-md-2">
                         <h6>订单状态</h6>
-                        <select class="form-control input-sm" id="cargoType">
+                        <select class="form-control input-sm" id="search-status">
                             <option>任意</option>
                             <option>未审核</option>
                             <option>审核中</option>
@@ -287,14 +286,14 @@
                     </div>
                     <div class="col-md-2">
                         <h6>付款状态</h6>
-                        <select class="form-control input-sm" id="cargoType">
+                        <select class="form-control input-sm" id="search-pay">
                             <option>任意</option>
                             <option>未付款</option>
                             <option>已付款</option>
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-sm btn-default" type="button">查询</button>
+                        <button class="btn btn-sm btn-default" type="button" id="search-btn">查询</button>
                     </div>
                 </div>
             </div>
@@ -313,7 +312,7 @@
                             <th>付款</th>
                             <th>负责人</th>
                             <th>地点</th>
-                            <th>更新时间</th>
+                            <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
