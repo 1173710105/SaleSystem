@@ -23,12 +23,6 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 	}
 
 	@Override
-	public void delete(Warehourse record) 
-	{
-		service.delete(record);
-	}
-
-	@Override
 	public void insertSelective(Warehourse record) 
 	{
 		service.insertSelective(record);

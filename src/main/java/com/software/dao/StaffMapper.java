@@ -23,6 +23,8 @@ public interface StaffMapper
 
     int updateByPrimaryKey(Staff record);
     
+    int count(Staff record);
+    
     int createNewTable(String tablename);
     
     int dropTable(String tablename);
