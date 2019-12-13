@@ -1,98 +1,126 @@
 package com.software.trans;
 
+import java.util.List;
+
 public class ReceiveOrder 
 {
-	private Integer orderid;
-	private Integer viceid;
-	private Integer warehourseid;
-	private Integer clientid;
-	private Integer principalid;
-	private Integer itemid;
-	private Integer itemnum;
-	private Float perprice;
-	private Float sumprice;
-	private Float gather;
-	private Float change;
-	private Float margin;
+	
+	private String commontablename;
+	private String itemtablename;
+	private String warehoursedetailtablename;
+	private String orderid;
+	private String viceid;
+	private String warehourseid;
+	private String warehoursename;
+	private String clientid;
+	private String clientname;
+	private String principalid;
+	private String principalname;
+	private String itemid;
+	private String itemnum;
+	private String perprice;
+	private String sumprice;
+	private String gather;
+	private String change;
+	private String margin;
 	private String createtime;
 	private String checktime;
 	private String gathertime;
 	private String returntime;
 	private String postime;
-	private Integer status;
+	private String status;
 	private String type;
 	private String exception;
 	private String note;
-	public Integer getOrderid() {
+	
+	public String getOrderid() {
 		return orderid;
 	}
-	public void setOrderid(Integer orderid) {
+	public void setOrderid(String orderid) {
 		this.orderid = orderid;
 	}
-	public Integer getViceid() {
+	public String getViceid() {
 		return viceid;
 	}
-	public void setViceid(Integer viceid) {
+	public void setViceid(String viceid) {
 		this.viceid = viceid;
 	}
-	public Integer getWarehourseid() {
+	public String getWarehourseid() {
 		return warehourseid;
 	}
-	public void setWarehourseid(Integer warehourseid) {
+	public void setWarehourseid(String warehourseid) {
 		this.warehourseid = warehourseid;
 	}
-	public Integer getClientid() {
+	public String getWarehoursename() {
+		return warehoursename;
+	}
+	public void setWarehoursename(String warehoursename) {
+		this.warehoursename = warehoursename;
+	}
+	public String getClientid() {
 		return clientid;
 	}
-	public void setClientid(Integer clientid) {
+	public void setClientid(String clientid) {
 		this.clientid = clientid;
 	}
-	public Integer getPrincipalid() {
+	public String getClientname() {
+		return clientname;
+	}
+	public void setClientname(String clientname) {
+		this.clientname = clientname;
+	}
+	public String getPrincipalid() {
 		return principalid;
 	}
-	public void setPrincipalid(Integer principalid) {
+	public void setPrincipalid(String principalid) {
 		this.principalid = principalid;
 	}
-	public Integer getItemid() {
+	public String getPrincipalname() {
+		return principalname;
+	}
+	public void setPrincipalname(String principalname) {
+		this.principalname = principalname;
+	}
+	public String getItemid() {
 		return itemid;
 	}
-	public void setItemid(Integer itemid) {
+	public void setItemid(String itemid) {
 		this.itemid = itemid;
 	}
-	public Integer getItemnum() {
+	public String getItemnum() {
 		return itemnum;
 	}
-	public void setItemnum(Integer itemnum) {
+	public void setItemnum(String itemnum) {
 		this.itemnum = itemnum;
 	}
-	public Float getPerprice() {
+	public String getPerprice() {
 		return perprice;
 	}
-	public void setPerprice(Float perprice) {
+	public void setPerprice(String perprice) {
 		this.perprice = perprice;
 	}
-	public Float getSumprice() {
+	public String getSumprice() {
 		return sumprice;
 	}
-	public void setSumprice(Float sumprice) {
+	public void setSumprice(String sumprice) {
 		this.sumprice = sumprice;
 	}
-	public Float getGather() {
+	public String getGather() {
 		return gather;
 	}
-	public void setGather(Float gather) {
+	public void setGather(String gather) {
 		this.gather = gather;
 	}
-	public Float getChange() {
+	public String getChange() {
 		return change;
 	}
-	public void setChange(Float change) {
+	public void setChange(String change) {
 		this.change = change;
 	}
-	public Float getMargin() {
+	public String getMargin() {
 		return margin;
 	}
-	public void setMargin(Float margin) {
+	public void setMargin(String margin) {
 		this.margin = margin;
 	}
 	public String getCreatetime() {
@@ -125,10 +153,10 @@ public class ReceiveOrder
 	public void setPostime(String postime) {
 		this.postime = postime;
 	}
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public String getType() {
@@ -149,15 +177,30 @@ public class ReceiveOrder
 	public void setNote(String note) {
 		this.note = note;
 	}
+	public String getCommontablename() {
+		return commontablename;
+	}
+	public void setCommontablename(String commontablename) {
+		this.commontablename = commontablename;
+	}
+	public String getItemtablename() {
+		return itemtablename;
+	}
+	public void setItemtablename(String itemtablename) {
+		this.itemtablename = itemtablename;
+	}
 	@Override
 	public String toString() {
-		return "RecieveOrder [orderid=" + orderid + ", viceid=" + viceid + ", warehourseid=" + warehourseid
-				+ ", clientid=" + clientid + ", principalid=" + principalid + ", itemid=" + itemid + ", itemnum="
-				+ itemnum + ", perprice=" + perprice + ", sumprice=" + sumprice + ", gather=" + gather + ", change="
-				+ change + ", margin=" + margin + ", createtime=" + createtime + ", checktime=" + checktime
-				+ ", gathertime=" + gathertime + ", returntime=" + returntime + ", postime=" + postime + ", status="
-				+ status + ", type=" + type + ", exception=" + exception + ", note=" + note + "]";
+		return "ReceiveOrder [commontablename=" + commontablename + ", itemtablename=" + itemtablename + ", orderid="
+				+ orderid + ", viceid=" + viceid + ", warehourseid=" + warehourseid + ", warehoursename="
+				+ warehoursename + ", clientid=" + clientid + ", clientname=" + clientname + ", principalid="
+				+ principalid + ", principalname=" + principalname + ", itemid=" + itemid + ", itemnum=" + itemnum
+				+ ", perprice=" + perprice + ", sumprice=" + sumprice + ", gather=" + gather + ", change=" + change
+				+ ", margin=" + margin + ", createtime=" + createtime + ", checktime=" + checktime + ", gathertime="
+				+ gathertime + ", returntime=" + returntime + ", postime=" + postime + ", status=" + status + ", type="
+				+ type + ", exception=" + exception + ", note=" + note + "]";
 	}
+	
 	
     
 }
