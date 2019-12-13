@@ -7,20 +7,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.software.topservice.SaleOrderManagerService;
 import com.software.trans.ReceiveOrder;
 import com.software.trans.SendOrder;
 
 @RestController
 @RequestMapping("/order")
-public class OrderController {
+public class OrderController 
+{
+	@Autowired
+	private	SaleOrderManagerService service;
+	
 	@RequestMapping("/query")
 	public List<SendOrder> queryOrder(@RequestBody ReceiveOrder param)
 	{
-		
-		List<SendOrder> result = null;
+		List<SendOrder> result = service.select(param);
 		return result;//返回查找结果
 	}
 	
@@ -29,24 +35,23 @@ public class OrderController {
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String createtime = df.format(new Date());// new Date()为获取当前系统时间
-		for(ReceiveOrder r:param){
-			r.setCreatetime(createtime);
-		}
+		param.get(0).setCreatetime(createtime);
 		
-		String result = null;
-		return result;//返回成功/失败信息
+		service.insert(param);;
+		return "success";//返回成功/失败信息
 	}
 	
 	@RequestMapping("/update")
-	public String updateOrder(@RequestBody List<ReceiveOrder> param){
-		String result = null;
-		return result;//返回成功/失败信息
+	public String updateOrder(@RequestBody List<ReceiveOrder> param)
+	{
+		service.update(param);
+		return "success";//返回成功/失败信息
 	}
 	
 	@RequestMapping("/delete")
 	public String deleteOrder(@RequestBody ReceiveOrder param){
-		String result = null;
-		return result;//返回成功/失败信息
+		service.delete(param);;
+		return "success";//返回成功/失败信息
 	}
 	
 	@RequestMapping("/check")
@@ -55,8 +60,8 @@ public class OrderController {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String checktime = df.format(new Date());// new Date()为获取当前系统时间
 		param.setChecktime(checktime);
-		
-		String result = null;
+		param.setStatus("4");
+		String result = service.checkOrder(param);
 		return result;//返回成功/失败信息
 	}
 	
@@ -68,8 +73,8 @@ public class OrderController {
 		param.setGathertime(gathertime);
 		param.setStatus("5");
 		
-		String result = null;
-		return result;//返回成功/失败信息
+		service.payOrder(param);;
+		return "success";//返回成功/失败信息
 	}
 	
 	@RequestMapping("/return")
@@ -80,7 +85,7 @@ public class OrderController {
 		param.setReturntime(returntime);
 		param.setStatus("6");
 		
-		String result = null;
-		return result;//返回成功/失败信息
+		service.returnOrder(param);
+		return "success";//返回成功/失败信息
 	}
 }
