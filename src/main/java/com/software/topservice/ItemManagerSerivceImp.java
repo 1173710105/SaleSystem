@@ -43,14 +43,12 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Override
 	public void insertSelective(ReceiveCargo record) 
 	{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-		String date = df.format(new Date());// new Date()为获取当前系统时间
-		
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+//		String date = df.format(new Date());// new Date()为获取当前系统时间
+//		
 		Item exampleItem = record.toItem();
-		exampleItem.setTime(date);
 		
 		ItemToPrice examplePrice = record.toPrice();
-		examplePrice.setTime(date);
 		
 		itemService.insertSelective(exampleItem);
 		priceService.insertSelective(examplePrice);
@@ -89,14 +87,12 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Override
 	public void updateByPrimaryKeySelective(ReceiveCargo record) 
 	{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-		String date = df.format(new Date());// new Date()为获取当前系统时间
-		
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+//		String date = df.format(new Date());// new Date()为获取当前系统时间
+//		
 		Item exampleItem = record.toItem();
-		exampleItem.setTime(date);
 		
 		ItemToPrice examplePrice = record.toPrice();
-		examplePrice.setTime(date);
 		
 		itemService.updateByPrimaryKeySelective(exampleItem);
 		priceService.updateByPrimaryKey(examplePrice);

@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.software.domain.Warehourse;
 
 @Mapper
-public interface WarehourseMapper {
+public interface WarehourseMapper 
+{
     int deleteByPrimaryKey(Warehourse record);
     
     int delete(Warehourse record);
