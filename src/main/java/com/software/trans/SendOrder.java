@@ -21,7 +21,23 @@ public class SendOrder {
      */
     private Integer clientid;
 
-    /**
+    public String getPaystatus() {
+		return paystatus;
+	}
+
+	public void setPaystatus(String paystatus) {
+		this.paystatus = paystatus;
+	}
+
+	public String getCheckstatus() {
+		return checkstatus;
+	}
+
+	public void setCheckstatus(String checkstatus) {
+		this.checkstatus = checkstatus;
+	}
+
+	/**
      * 负责人ID principalID
      */
     private String principalid;
@@ -56,6 +72,16 @@ public class SendOrder {
      */
     private Integer status;
 
+    /**
+     * 付款状态
+     */
+    private String paystatus;
+    
+    /**
+     * 审核状态
+     */
+    private String checkstatus;
+    
     /**
      * 总价 sumPrice
      */
@@ -253,7 +279,8 @@ public class SendOrder {
 		return "SendOrder [tablename=" + tablename + ", id=" + id + ", warehourseid=" + warehourseid + ", clientid="
 				+ clientid + ", principalid=" + principalid + ", createtime=" + createtime + ", checktime=" + checktime
 				+ ", gathertime=" + gathertime + ", returntime=" + returntime + ", postime=" + postime + ", status="
-				+ status + ", sumprice=" + sumprice + ", gather=" + gather + ", change=" + change + ", margin=" + margin
-				+ ", type=" + type + ", note=" + note + ", exception=" + exception + ", items=" + items + "]";
+				+ status + ", paystatus=" + paystatus + ", checkstatus=" + checkstatus + ", sumprice=" + sumprice
+				+ ", gather=" + gather + ", change=" + change + ", margin=" + margin + ", type=" + type + ", note="
+				+ note + ", exception=" + exception + ", items=" + items + "]";
 	}
 }
