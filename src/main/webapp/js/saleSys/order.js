@@ -22,8 +22,6 @@ defaultSetting = {
     postime: '',
     status: '',
     type: '',
-    paystatus: '',
-    checkstatus: '',
     exception: '',
     note: ''
 };
@@ -134,30 +132,39 @@ function updateOrder(order) {
     if (order == null) {
         return;
     }
-    combineOrder = $.extend({}, defaultSetting, order);
-    param =
-    '{'
-    + '"orderid":"' + combineOrder.orderid + '",'
-    + '"viceid":"' + combineOrder.viceid + '",'
-    + '"warehorseid":"' + combineOrder.warehorseid + '",'
-    + '"clientid:"' + combineOrder.clientid + '",'
-    + '"principalid":"' + combineOrder.principalid + '",'
-    + '"itemid":"' + combineOrder.itemid + '",'
-    + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
-    + '"perprice":"' + combineOrder.perprice + '",'
-    + '"sumprice":"' + combineOrder.sumprice + '",'
-    + '"gather":"' + combineOrder.gather + '",'
-    + '"change":"' + combineOrder.change + '",'
-    + '"margin":"' + combineOrder.margin + '",'
-    + '"createtime":"' + combineOrder.createtime + '",'
-    + '"checktime":"' + combineOrder.checktime + '",'
-    + '"gathertime":"' + combineOrder.gathertime + '",'
-    + '"returntime":"' + combineOrder.returntime + '",'
-    + '"postime":"' + combineOrder.postime + '",'
-    + '"status":"' + combineOrder.status + '",'
-    + '"type":"' + combineOrder.type + '",'
-    + '"exception":"' + combineOrder.exception + '",'
-    + '"note":"' + combineOrder.note + '"}';
+    jsonList = [];
+    for (var i = 0 ; i < order.length; i++) {
+        combineOrder = $.extend({}, defaultSetting, order[i]);
+        param = 
+        '{'
+        + '"orderid":"' + combineOrder.orderid + '",'
+        + '"viceid":"' + combineOrder.viceid + '",'
+        + '"warehorseid":"' + combineOrder.warehorseid + '",'
+        + '"clientid:"' + combineOrder.clientid + '",'
+        + '"principalid":"' + combineOrder.principalid + '",'
+        + '"itemid":"' + combineOrder.itemid + '",'
+        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
+        + '"perprice":"' + combineOrder.perprice + '",'
+        + '"sumprice":"' + combineOrder.sumprice + '",'
+        + '"gather":"' + combineOrder.gather + '",'
+        + '"change":"' + combineOrder.change + '",'
+        + '"margin":"' + combineOrder.margin + '",'
+        + '"createtime":"' + combineOrder.createtime + '",'
+        + '"checktime":"' + combineOrder.checktime + '",'
+        + '"gathertime":"' + combineOrder.gathertime + '",'
+        + '"returntime":"' + combineOrder.returntime + '",'
+        + '"postime":"' + combineOrder.postime + '",'
+        + '"status":"' + combineOrder.status + '",'
+        + '"type":"' + combineOrder.type + '",'
+        + '"exception":"' + combineOrder.exception + '",'
+        + '"note":"' + combineOrder.note + '"}';
+        jsonList.push(param);
+    }
+    param = '[';
+    for (var i = 0 ; i < jsonList.length-1; i++) {
+        param += (jsonList[i] + ',');
+    }
+    param += (jsonList[jsonList.length-1] + ']');
     url = "";
     return sendJsonAjax(url, param);
 }
@@ -185,12 +192,34 @@ function checkOrder(id) {
 }
 
 //将订单付款
-function parOrder(id) {
+function parOrder(order) {
     if (id == "") {
         return;
     }
+    combineOrder = $.extend({}, defaultSetting, order);
     param =
-        '{"viceid":"' + id.toString() + '"}';
+        '{'
+        + '"orderid":"' + combineOrder.orderid + '",'
+        + '"viceid":"' + combineOrder.viceid + '",'
+        + '"warehorseid":"' + combineOrder.warehorseid + '",'
+        + '"clientid:"' + combineOrder.clientid + '",'
+        + '"principalid":"' + combineOrder.principalid + '",'
+        + '"itemid":"' + combineOrder.itemid + '",'
+        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
+        + '"perprice":"' + combineOrder.perprice + '",'
+        + '"sumprice":"' + combineOrder.sumprice + '",'
+        + '"gather":"' + combineOrder.gather + '",'
+        + '"change":"' + combineOrder.change + '",'
+        + '"margin":"' + combineOrder.margin + '",'
+        + '"createtime":"' + combineOrder.createtime + '",'
+        + '"checktime":"' + combineOrder.checktime + '",'
+        + '"gathertime":"' + combineOrder.gathertime + '",'
+        + '"returntime":"' + combineOrder.returntime + '",'
+        + '"postime":"' + combineOrder.postime + '",'
+        + '"status":"' + combineOrder.status + '",'
+        + '"type":"' + combineOrder.type + '",'
+        + '"exception":"' + combineOrder.exception + '",'
+        + '"note":"' + combineOrder.note + '"}';
     url = "";
     return sendJsonAjax(url, param);
 }

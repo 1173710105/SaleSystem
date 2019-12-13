@@ -210,11 +210,20 @@ $('#check_btn').click(function () {
 
 //订单付款
 //Map<orderid : List<Map<key:value>>>
-$('#ac-btn').click(function() {
-    
+$('#ac-pay-btn').click(function() {
+    var 
 });
 
-//
+//实时更新找回价格
+$('#pay-actual-charge').blur(function() {
+    var actual = parseFloat($('#pay-actual-charge').val());
+    var total = parseFloat($('#pay-total-price').val());
+    if(actual < total) {
+        $('#pay-change').val("实付不足");
+        return;
+    }
+    $('#pay-change').val(actual - total);
+});
 
 //订单删除
 $('#delete_btn').click(function () {
