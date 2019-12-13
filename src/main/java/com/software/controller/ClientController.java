@@ -27,7 +27,14 @@ public class ClientController {
 	}
 	
 	@RequestMapping("/query")
-	public List<com.software.domain.Client> queryClient(@RequestBody ReceiveClient pamram){
+	public List<com.software.domain.Client> queryClient(@RequestBody ReceiveClient param){
+		com.software.domain.Client client = new com.software.domain.Client();
+		client.setId(Integer.valueOf(param.getId()));
+		client.setName(param.getName());
+		client.setGender(param.getGender());
+		client.setPhone(param.getPhone());
+		client.setLabel(param.getLabel());
+		
 		List<com.software.domain.Client> result = null;
 		return result;
 	}
