@@ -40,6 +40,12 @@ public class ClientManagerServiceImp implements ClientManagerService {
 
 	@Override
 	public List<Client> select(Client record) 
+	{		
+		return service.select(record);
+	}
+	
+	@Override
+	public List<Client> selectValid(Client record) 
 	{
 		List<Client> result = service.select(record);
 		List<Client> afterFilter = new ArrayList<Client>();
@@ -52,7 +58,7 @@ public class ClientManagerServiceImp implements ClientManagerService {
 		}
 		return afterFilter;
 	}
-
+	
 	@Override
 	public void updateByPrimaryKeySelective(Client record) {
 		service.updateByPrimaryKeySelective(record);
