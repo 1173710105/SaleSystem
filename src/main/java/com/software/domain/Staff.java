@@ -19,11 +19,6 @@ public class Staff
     private Integer hourseid;
 
     /**
-     * 仓库名字 hourseName
-     */
-    private String hoursename;
-
-    /**
      * 员工姓名 name
      */
     private String name;
@@ -44,11 +39,20 @@ public class Staff
     private String email;
 
     /**
-     * 标志是否有效 label
+     *  label
      */
     private String label;
 
-    public String getId() {
+    
+    public String getTablename() {
+		return tablename;
+	}
+
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
+	}
+
+	public String getId() {
         return id;
     }
 
@@ -70,14 +74,6 @@ public class Staff
 
     public void setHourseid(Integer hourseid) {
         this.hourseid = hourseid;
-    }
-
-    public String getHoursename() {
-        return hoursename;
-    }
-
-    public void setHoursename(String hoursename) {
-        this.hoursename = hoursename == null ? null : hoursename.trim();
     }
 
     public String getName() {
@@ -119,14 +115,4 @@ public class Staff
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
     }
-
-	public String getTablename() {
-		return tablename;
-	}
-
-	public void setTablename(String tablename) {
-		this.tablename = tablename;
-	}
-    
-    
 }

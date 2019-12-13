@@ -63,10 +63,4 @@ public class StaffServiceImp implements StaffService {
 		sm.createNewTable(record.getTablename());
 	}
 
-	@Override
-	public void dropTable(Staff record) 
-	{
-		sm.dropTable(record.getTablename());
-	}
-
 }

@@ -45,6 +45,5 @@ public class GeneralManagerServiceImp implements GeneralManagerService
 	@Override
 	public void updateByPrimaryKey(GeneralManager record) {
 		gmm.updateByPrimaryKey(record);
-
 	}
 }
