@@ -9,9 +9,9 @@ window.onload = function () {
 }
 
 //订单货品暂存列表
-cargoList = [];
+var cargoList = [];
 //订单货品数量暂存列表
-cargoNum = [];
+var cargoNum = [];
 
 $("#cargo-id").blur(function () {
     var cargoId = $(this).val();

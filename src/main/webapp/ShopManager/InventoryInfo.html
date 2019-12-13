@@ -30,7 +30,6 @@
 </head>
 
 <body>
-    <!-- 模态框结束 -->
         <div class="content">
             <div class="row">
                 <div class="col-md-4">
@@ -42,34 +41,34 @@
             </div>
             <div class="row">
                 <div class="col-md-5">
-                        <button type="button" class="btn btn-primary btn-sm">更新盘点</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="update-btn">更新盘点</button>
                 </div>
                 <div class="col-md-7">
                     <div class="row">
                         <div class="col-md-4">
                             <h6>货品名称 </h6>
-                            <input type="text" class="form-control input-sm">
+                            <input type="text" class="form-control input-sm" id="search-cargo-name">
                         </div>
                         <div class="col-md-4">
                             <h6>货品编号</h6>
-                            <input type="text" class="form-control input-sm">
+                            <input type="text" class="form-control input-sm" id="search-cargo-id">
                         </div>
                         <div class="col-md-2">
                             <h6>货品种类</h6>
-                            <select class="form-control input-sm" id="cargoType">
-                                <option>任意</option>
-                                <option>五金类</option>
-                                <option>生活用品类</option>
-                                <option>家具类</option>
-                                <option>图书类</option>
-                                <option>体育健身类</option>
-                                <option>摄影器材类</option>
-                                <option>服装内衣类</option>
-                                <option>食品类</option>
+                            <select class="form-control input-sm" id="search-cargo-type">
+                                    <option value="任意">任意</option>
+                                    <option value="五金类">五金类</option>
+                                    <option value="生活用品类">生活用品类</option>
+                                    <option value="家具类">家具类</option>
+                                    <option value="图书类">图书类</option>
+                                    <option value="体育健身类">体育健身类</option>
+                                    <option value="摄影器材类">摄影器材类</option>
+                                    <option value="服装内衣类">服装内衣类</option>
+                                    <option value="食品类">食品类</option>
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-sm btn-default" type="button">查询</button>
+                            <button class="btn btn-sm btn-default" type="button" id="search-btn">查询</button>
                         </div>
                     </div>
                 </div>
@@ -89,7 +88,7 @@
                             <th>更新时间</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="inventory-tbody">
                         <tr>
                             <td>1</td>
                             <td>康师傅方便面</td>
@@ -117,12 +116,3 @@
             </div>
         </div>
 </body>
-
-<script>
-    $('#delete_btn').click(function () {
-        var r = confirm("是否删除？");
-        if (r == true) {
-            alert("删除成功");
-        }
-    });
-</script>

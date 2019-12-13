@@ -155,3 +155,23 @@ function deleteWarehourseOrder(id) {
     url = "";
     return sendJsonAjax(url, param);
 }
+
+//将仓库单设置为审核中状态
+function applyWarehourseOrder(id) {
+    if(id == "") {
+        return;
+    }
+    param = '{"id":"' + id + '"}';
+    url = "";
+    return sendJsonAjax(url, param);
+}
+
+//将仓库单设置为通过状态
+function passWarehourseOrder(id) {
+    if(id == "") {
+        return;
+    }
+    param = '{"id":"' + id + '"}';
+    url = "";
+    return sendJsonAjax(url, param);
+}
