@@ -278,8 +278,8 @@ public class ReceiveWarehourseOrder
 	
 	public WarehourseOrderItem toWarehourseOrderItem(){
 		WarehourseOrderItem item = new WarehourseOrderItem();
-		item.setViceid(Integer.valueOf(this.getViceid()));
 		item.setId(this.getId());
+		item.setViceid(Integer.valueOf(this.getViceid()));
 		item.setItemid(Integer.valueOf(this.getItemid()));
 		item.setItemname(this.getItemname());
 		item.setItemnum(Integer.valueOf(this.getItemnum()));

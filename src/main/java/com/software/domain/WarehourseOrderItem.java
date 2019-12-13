@@ -1,6 +1,7 @@
 package com.software.domain;
 
-public class WarehourseOrderItem {
+public class WarehourseOrderItem 
+{
     /**
      * 订单副ID viceID
      */
