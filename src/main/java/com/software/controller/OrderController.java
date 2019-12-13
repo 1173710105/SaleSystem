@@ -28,7 +28,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/update")
-	public String updateOrder(@RequestBody ReceiveOrder param){
+	public String updateOrder(@RequestBody List<ReceiveOrder> param){
 		String result = null;
 		return result;//返回成功/失败信息
 	}
