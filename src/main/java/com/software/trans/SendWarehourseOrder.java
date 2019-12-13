@@ -2,72 +2,25 @@ package com.software.trans;
 
 import java.util.List;
 
+import com.software.domain.SaleorderCommon;
+import com.software.domain.WarehourseOrderCommon;
 import com.software.domain.WarehourseOrderItem;
 
 public class SendWarehourseOrder {
-	/**
-     * 查看表ID ID
-     */
+	
     private Integer id;
-
-    /**
-     * 货源地ID sourceID
-     */
     private Integer sourceid;
-
-    /**
-     * 目的地ID targetID
-     */
+    private String sourcename;
     private Integer targetid;
-
-    /**
-     * 发起人ID senderPrincipalID
-     */
-    private String senderprincipalid;
-
-    /**
-     * 接受人ID receiverPrincipalID
-     */
-    private String receiverprincipalid;
-
-    /**
-     * 货品货源地类型 sourceType
-     */
-    private String sourcetype;
-
-    /**
-     * 货品目的地类型 targetType
-     */
-    private String targettype;
-
-    /**
-     * 总价 sumPrice
-     */
+    private String targetname;
+    private String principalid;
+    private String principalname;
+    private String type;
     private Float sumprice;
-
-    /**
-     * 价格类型 priceType
-     */
-    private String pricetype;
-
-    /**
-     * 创建时间 createTime
-     */
     private String createtime;
-
-    /**
-     * 审核时间 checkTime
-     */
     private String checktime;
-
-    /**
-     * 记录销售单状态 status
-     */
     private String status;
     
-    /**
-     * 货单货品列表
-     */
     private List<WarehourseOrderItem> items;
 
 	public Integer getId() {
@@ -86,6 +39,14 @@ public class SendWarehourseOrder {
 		this.sourceid = sourceid;
 	}
 
+	public String getSourcename() {
+		return sourcename;
+	}
+
+	public void setSourcename(String sourcename) {
+		this.sourcename = sourcename;
+	}
+
 	public Integer getTargetid() {
 		return targetid;
 	}
@@ -94,36 +55,36 @@ public class SendWarehourseOrder {
 		this.targetid = targetid;
 	}
 
-	public String getSenderprincipalid() {
-		return senderprincipalid;
+	public String getTargetname() {
+		return targetname;
 	}
 
-	public void setSenderprincipalid(String senderprincipalid) {
-		this.senderprincipalid = senderprincipalid;
+	public void setTargetname(String targetname) {
+		this.targetname = targetname;
 	}
 
-	public String getReceiverprincipalid() {
-		return receiverprincipalid;
+	public String getPrincipalid() {
+		return principalid;
 	}
 
-	public void setReceiverprincipalid(String receiverprincipalid) {
-		this.receiverprincipalid = receiverprincipalid;
+	public void setPrincipalid(String principalid) {
+		this.principalid = principalid;
 	}
 
-	public String getSourcetype() {
-		return sourcetype;
+	public String getPrincipalname() {
+		return principalname;
 	}
 
-	public void setSourcetype(String sourcetype) {
-		this.sourcetype = sourcetype;
+	public void setPrincipalname(String principalname) {
+		this.principalname = principalname;
 	}
 
-	public String getTargettype() {
-		return targettype;
+	public String getType() {
+		return type;
 	}
 
-	public void setTargettype(String targettype) {
-		this.targettype = targettype;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Float getSumprice() {
@@ -132,14 +93,6 @@ public class SendWarehourseOrder {
 
 	public void setSumprice(Float sumprice) {
 		this.sumprice = sumprice;
-	}
-
-	public String getPricetype() {
-		return pricetype;
-	}
-
-	public void setPricetype(String pricetype) {
-		this.pricetype = pricetype;
 	}
 
 	public String getCreatetime() {
@@ -176,12 +129,15 @@ public class SendWarehourseOrder {
 
 	@Override
 	public String toString() {
-		return "SendWarehourseOrder [id=" + id + ", sourceid=" + sourceid + ", targetid=" + targetid
-				+ ", senderprincipalid=" + senderprincipalid + ", receiverprincipalid=" + receiverprincipalid
-				+ ", sourcetype=" + sourcetype + ", targettype=" + targettype + ", sumprice=" + sumprice
-				+ ", pricetype=" + pricetype + ", createtime=" + createtime + ", checktime=" + checktime + ", status="
-				+ status + ", items=" + items + "]";
+		return "SendWarehourseOrder [id=" + id + ", sourceid=" + sourceid + ", sourcename=" + sourcename + ", targetid="
+				+ targetid + ", targetname=" + targetname + ", principalid=" + principalid + ", principalname="
+				+ principalname + ", type=" + type + ", sumprice=" + sumprice + ", createtime=" + createtime
+				+ ", checktime=" + checktime + ", status=" + status + ", items=" + items + "]";
 	}
-    
+
+	
+	public void initByCommon(WarehourseOrderCommon common){
+		
+	}
     
 }
