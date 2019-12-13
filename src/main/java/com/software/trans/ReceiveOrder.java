@@ -2,9 +2,10 @@ package com.software.trans;
 
 import java.util.List;
 
+import com.software.domain.SaleorderCommon;
+
 public class ReceiveOrder 
 {
-	
 	private String commontablename;
 	private String itemtablename;
 	private String warehoursedetailtablename;
@@ -201,6 +202,19 @@ public class ReceiveOrder
 				+ type + ", exception=" + exception + ", note=" + note + "]";
 	}
 	
-	
+	public SaleorderCommon toCommon()
+	{
+		SaleorderCommon common = new SaleorderCommon();
+		common.setTablename(this.commontablename);
+		common.setWarehourseid(Integer.valueOf(this.warehourseid));
+		common.setWarehoursename(this.warehoursename);
+		common.setClientid(Integer.valueOf(this.clientid));
+		common.setClientname(this.clientname);
+		common.setPrincipalid(this.principalid);
+		common.setPrincipalname(this.principalname);
+		common.setStatus(Integer.valueOf(this.status));
+		common.setType(this.type);
+		return common;
+	}
     
 }
