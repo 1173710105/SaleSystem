@@ -22,8 +22,6 @@ defaultSetting = {
     postime: '',
     status: '',
     type: '',
-    paystatus: '',
-    checkstatus : '',
     exception: '',
     note: ''
 };
