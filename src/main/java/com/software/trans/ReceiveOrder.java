@@ -1,18 +1,24 @@
 package com.software.trans;
 
+import java.util.List;
+
 public class ReceiveOrder 
 {
-	private Integer orderid;
-	private Integer viceid;
-	private Integer warehourseid;
-	private Integer clientid;
-	private Integer principalid;
-	private Integer itemid;
-	private Integer itemnum;
-	private Float perprice;
-	private Float sumprice;
-	private Float gather;
-	private Float change;
+	private String tablename;
+	private String orderid;
+	private String viceid;
+	private String warehourseid;
+	private String warehoursename;
+	private String clientid;
+	private String clientname;
+	private String principalid;
+	private String principalname;
+	private String itemid;
+	private String itemnum;
+	private String perprice;
+	private String sumprice;
+	private String gather;
+	private String change;
 	private Float margin;
 	private String createtime;
 	private String checktime;
@@ -23,6 +29,7 @@ public class ReceiveOrder
 	private String type;
 	private String exception;
 	private String note;
+	
 	public Integer getOrderid() {
 		return orderid;
 	}
