@@ -15,6 +15,7 @@ public class ReceiveCargo
 	private String wholesaleprice;
 	private String purchaseprice;
 	private String time;
+	private String label;
 	
 	public String getId() {
 		return id;
@@ -78,6 +79,13 @@ public class ReceiveCargo
 		this.time = time;
 	}
 	
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
 	public void initByItem(Item item)
 	{
 		this.id = item.getId()+"";
@@ -85,10 +93,13 @@ public class ReceiveCargo
 		this.type = item.getType();
 		this.specification = item.getSpecification();
 		this.picture = item.getPicture();
+		this.time = item.getTime();
+		this.label = item.getLabel();
 	}
 	
 	public void initByPrice(ItemToPrice price)
 	{
+		this.tablename = price.getTablename();
 		this.retailprice = price.getRetailprice()+"";
 		this.purchaseprice = price.getPurchaseprice()+"";
 		this.wholesaleprice = price.getWholesaleprice()+"";
@@ -102,6 +113,7 @@ public class ReceiveCargo
 		item.setType(this.type);
 		item.setSpecification(this.specification);
 		item.setPicture(this.picture);
+		item.setTime(this.time);
 		return item;
 	}
 	
@@ -114,6 +126,7 @@ public class ReceiveCargo
 		price.setRetailprice(Float.valueOf(this.retailprice));
 		price.setPurchaseprice(Float.valueOf(this.purchaseprice));
 		price.setWholesaleprice(Float.valueOf(this.wholesaleprice));
+		price.setTime(time);
 		return price;
 	}
 	@Override
