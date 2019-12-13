@@ -8,9 +8,10 @@
     <result column="wholesalePrice" jdbcType="REAL" property="wholesaleprice" />
     <result column="purchasePrice" jdbcType="REAL" property="purchaseprice" />
     <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, name, retailPrice, wholesalePrice, purchasePrice, time
+    ID, name, retailPrice, wholesalePrice, purchasePrice, time, label
   </sql>
   <update id="createNewTable" parameterType="String">  
         CREATE TABLE ${tablename} (
@@ -20,6 +21,7 @@
 		  `wholesalePrice` float DEFAULT NULL,
 		  `purchasePrice` float DEFAULT NULL,
 		  `time` varchar(45) DEFAULT NULL,
+		  `label` varchar(45) NOT NULL,
 		  PRIMARY KEY (`ID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品大价格的映射';
   </update> 
@@ -32,29 +34,17 @@
     from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  <select id="select" parameterType="com.software.domain.ItemToPrice" resultMap="BaseResultMap">
-		select *
-		from ${tablename}
-		<where>
-			<if test="id!=null and id!=''">
-				and ID = #{id}
-			</if>
-			<if test="name!=null and name!=''">
-				and name = #{name}
-			</if>
-		</where>
-	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.ItemToPrice">
     delete from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.software.domain.ItemToPrice">
     insert into ${tablename} (ID, name, retailPrice, 
-      wholesalePrice, purchasePrice, time
-      )
+      wholesalePrice, purchasePrice, time, 
+      label)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{retailprice,jdbcType=REAL}, 
-      #{wholesaleprice,jdbcType=REAL}, #{purchaseprice,jdbcType=REAL}, #{time,jdbcType=VARCHAR}
-      )
+      #{wholesaleprice,jdbcType=REAL}, #{purchaseprice,jdbcType=REAL}, #{time,jdbcType=VARCHAR}, 
+      #{label,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.ItemToPrice">
     insert into ${tablename}
@@ -77,6 +67,9 @@
       <if test="time != null">
         time,
       </if>
+      <if test="label != null">
+        label,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -96,6 +89,9 @@
       </if>
       <if test="time != null">
         #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -117,6 +113,9 @@
       <if test="time != null">
         time = #{time,jdbcType=VARCHAR},
       </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -126,7 +125,8 @@
       retailPrice = #{retailprice,jdbcType=REAL},
       wholesalePrice = #{wholesaleprice,jdbcType=REAL},
       purchasePrice = #{purchaseprice,jdbcType=REAL},
-      time = #{time,jdbcType=VARCHAR}
+      time = #{time,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

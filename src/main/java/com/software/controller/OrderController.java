@@ -6,12 +6,15 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.software.trans.ReceiveOrder;
+import com.software.trans.SendOrder;
 
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 	@RequestMapping("/query")
-	public SendOrder queryOrder(@RequestBody ReceiveOrder param){
+	public SendOrder queryOrder(@RequestBody ReceiveOrder param)
+	{
 		Integer orderid;
 		Integer viceid;
 		Integer warehourseid;
@@ -63,7 +66,8 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/pay")
-	public String payOrder(@RequestBody Map<String, String> param){
+	public String payOrder(@RequestBody Map<String, String> param)
+	{
 		String result = null;
 		return result;//返回成功/失败信息
 	}

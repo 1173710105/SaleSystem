@@ -1,6 +1,7 @@
-package com.software.controller;
+package com.software.trans;
 
-public class ReceiveOrder {
+public class ReceiveOrder 
+{
 	private Integer orderid;
 	private Integer viceid;
 	private Integer warehourseid;

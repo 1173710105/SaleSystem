@@ -31,6 +31,11 @@ public class Item {
      */
     private String time;
 
+    /**
+     *  label
+     */
+    private String label;
+
     public Integer getId() {
         return id;
     }
@@ -77,5 +82,13 @@ public class Item {
 
     public void setTime(String time) {
         this.time = time == null ? null : time.trim();
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
     }
 }

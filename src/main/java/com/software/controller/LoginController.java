@@ -22,6 +22,7 @@ import com.software.service.StaffService;
 import com.software.service.StoreManagerService;
 import com.software.service.SubBranchDetailMapService;
 import com.software.topservice.LoginManagerService;
+import com.software.trans.ReceiveUser;
 
 @RestController
 @RequestMapping("/exam")
