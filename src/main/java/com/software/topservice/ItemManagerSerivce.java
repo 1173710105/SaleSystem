@@ -6,7 +6,7 @@ import com.software.domain.Item;
 
 public interface ItemManagerSerivce 
 {
-	public void deleteByPrimaryKey(Item record);
+//	public void deleteByPrimaryKey(car);
 
     public void insertSelective(Item record);
     
