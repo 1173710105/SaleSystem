@@ -1,4 +1,8 @@
-package com.software.controller;
+package com.software.trans;
+
+import java.util.List;
+
+import com.software.domain.SaleorderItem;
 
 public class SendOrder {
 	private String tablename;
@@ -87,8 +91,20 @@ public class SendOrder {
      */
     private String exception;
 
+    /**
+     * 子订单列表
+     */
+    private List<SaleorderItem> items;
     
-    public String getTablename() {
+    public List<SaleorderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<SaleorderItem> items) {
+		this.items = items;
+	}
+
+	public String getTablename() {
 		return tablename;
 	}
 
@@ -234,11 +250,10 @@ public class SendOrder {
 
 	@Override
 	public String toString() {
-		return "SaleorderCommom [tablename=" + tablename + ", id=" + id + ", warehourseid=" + warehourseid
-				+ ", clientid=" + clientid + ", principalid=" + principalid + ", createtime=" + createtime
-				+ ", checktime=" + checktime + ", gathertime=" + gathertime + ", returntime=" + returntime
-				+ ", postime=" + postime + ", status=" + status + ", sumprice=" + sumprice + ", gather=" + gather
-				+ ", change=" + change + ", margin=" + margin + ", type=" + type + ", note=" + note + ", exception="
-				+ exception + "]";
+		return "SendOrder [tablename=" + tablename + ", id=" + id + ", warehourseid=" + warehourseid + ", clientid="
+				+ clientid + ", principalid=" + principalid + ", createtime=" + createtime + ", checktime=" + checktime
+				+ ", gathertime=" + gathertime + ", returntime=" + returntime + ", postime=" + postime + ", status="
+				+ status + ", sumprice=" + sumprice + ", gather=" + gather + ", change=" + change + ", margin=" + margin
+				+ ", type=" + type + ", note=" + note + ", exception=" + exception + ", items=" + items + "]";
 	}
 }
