@@ -2,7 +2,7 @@ package com.software.domain;
 
 public class ItemToPrice 
 {
-	private String tablename; 
+	private String tablename;
     /**
      *  ID
      */
@@ -16,7 +16,6 @@ public class ItemToPrice
     /**
      *  retailPrice
      */
-    
     private Float retailprice;
 
     /**
@@ -33,6 +32,11 @@ public class ItemToPrice
      *  time
      */
     private String time;
+
+    /**
+     *  label
+     */
+    private String label;
 
     public String getTablename() {
 		return tablename;
@@ -88,5 +92,13 @@ public class ItemToPrice
 
     public void setTime(String time) {
         this.time = time == null ? null : time.trim();
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
     }
 }

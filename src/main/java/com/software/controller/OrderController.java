@@ -10,15 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.software.trans.ReceiveOrder;
 import com.software.trans.SendOrder;
 
-
-
-
-
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 	@RequestMapping("/query")
-	public SendOrder queryOrder(@RequestBody ReceiveOrder param){
+	public SendOrder queryOrder(@RequestBody ReceiveOrder param)
+	{
 		Integer orderid;
 		Integer viceid;
 		Integer warehourseid;
