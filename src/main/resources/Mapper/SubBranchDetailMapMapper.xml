@@ -4,7 +4,10 @@
   <resultMap id="BaseResultMap" type="com.software.domain.SubBranchDetailMap">
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="warehourseID" jdbcType="INTEGER" property="warehourseid" />
+    <result column="warehourseName" jdbcType="VARCHAR" property="warehoursename" />
+    <result column="warehourseLocation" jdbcType="VARCHAR" property="warehourselocation" />
     <result column="principalID" jdbcType="VARCHAR" property="principalid" />
+    <result column="principalName" jdbcType="VARCHAR" property="principalname" />
     <result column="itemTable" jdbcType="VARCHAR" property="itemtable" />
     <result column="saleOrderItemTable" jdbcType="VARCHAR" property="saleorderitemtable" />
     <result column="saleOrderCommonTable" jdbcType="VARCHAR" property="saleordercommontable" />
@@ -14,8 +17,9 @@
     <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, warehourseID, principalID, itemTable, saleOrderItemTable, saleOrderCommonTable, 
-    staffTable, warehourseDetailTable, time, label
+    ID, warehourseID, warehourseName, warehourseLocation, principalID, principalName, 
+    itemTable, saleOrderItemTable, saleOrderCommonTable, staffTable, warehourseDetailTable, 
+    time, label
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.SubBranchDetailMap" resultMap="BaseResultMap">
     select 
@@ -23,7 +27,7 @@
     from sub_branch_detail_map
     where ID = #{id,jdbcType=INTEGER}
   </select>
-    <select id="select" parameterType="com.software.domain.SubBranchDetailMap" resultMap="BaseResultMap">
+   <select id="select" parameterType="com.software.domain.SubBranchDetailMap" resultMap="BaseResultMap">
 		select *
 		from sub_branch_detail_map
 		<where>
@@ -33,11 +37,17 @@
 			<if test="warehourseid!=null and warehourseid!=''">
 				and warehourseID = #{warehourseid}
 			</if>
+			<if test="warehoursename!=null and warehoursename!=''">
+				and warehourseName = #{warehoursename}
+			</if>
+			<if test="warehourselocation!=null and warehourselocation!=''">
+				and warehourseLocation = #{warehourselocation}
+			</if>
 			<if test="principalid!=null and principalid!=''">
 				and principalID = #{principalid}
 			</if>
-			<if test="label!=null and label!=''">
-				and label = #{label}
+			<if test="principalname!=null and principalname!=''">
+				and principalName = #{principalname}
 			</if>
 		</where>
 	</select>
@@ -45,29 +55,14 @@
     delete from sub_branch_detail_map
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="delete" parameterType="com.software.domain.SubBranchDetailMap">
-    delete from sub_branch_detail_map
-    <where>
-		<if test="id!=null and id!=''">
-			and ID = #{id}
-		</if>
-		<if test="warehourseid!=null and warehourseid!=''">
-			and warehourseID = #{warehourseid}
-		</if>
-		<if test="principalid!=null and principalid!=''">
-			and principalID = #{principalid}
-		</if>
-		<if test="label!=null and label!=''">
-			and label = #{label}
-		</if>
-	</where>
-  </delete>
   <insert id="insert" parameterType="com.software.domain.SubBranchDetailMap">
-    insert into sub_branch_detail_map (ID, warehourseID, principalID, 
+    insert into sub_branch_detail_map (ID, warehourseID, warehourseName, 
+      warehourseLocation, principalID, principalName, 
       itemTable, saleOrderItemTable, saleOrderCommonTable, 
       staffTable, warehourseDetailTable, time, 
       label)
-    values (#{id,jdbcType=INTEGER}, #{warehourseid,jdbcType=INTEGER}, #{principalid,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{warehourseid,jdbcType=INTEGER}, #{warehoursename,jdbcType=VARCHAR}, 
+      #{warehourselocation,jdbcType=VARCHAR}, #{principalid,jdbcType=VARCHAR}, #{principalname,jdbcType=VARCHAR}, 
       #{itemtable,jdbcType=VARCHAR}, #{saleorderitemtable,jdbcType=VARCHAR}, #{saleordercommontable,jdbcType=VARCHAR}, 
       #{stafftable,jdbcType=VARCHAR}, #{warehoursedetailtable,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
       #{label,jdbcType=VARCHAR})
@@ -81,8 +76,17 @@
       <if test="warehourseid != null">
         warehourseID,
       </if>
+      <if test="warehoursename != null">
+        warehourseName,
+      </if>
+      <if test="warehourselocation != null">
+        warehourseLocation,
+      </if>
       <if test="principalid != null">
         principalID,
+      </if>
+      <if test="principalname != null">
+        principalName,
       </if>
       <if test="itemtable != null">
         itemTable,
@@ -113,8 +117,17 @@
       <if test="warehourseid != null">
         #{warehourseid,jdbcType=INTEGER},
       </if>
+      <if test="warehoursename != null">
+        #{warehoursename,jdbcType=VARCHAR},
+      </if>
+      <if test="warehourselocation != null">
+        #{warehourselocation,jdbcType=VARCHAR},
+      </if>
       <if test="principalid != null">
         #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="principalname != null">
+        #{principalname,jdbcType=VARCHAR},
       </if>
       <if test="itemtable != null">
         #{itemtable,jdbcType=VARCHAR},
@@ -145,8 +158,17 @@
       <if test="warehourseid != null">
         warehourseID = #{warehourseid,jdbcType=INTEGER},
       </if>
+      <if test="warehoursename != null">
+        warehourseName = #{warehoursename,jdbcType=VARCHAR},
+      </if>
+      <if test="warehourselocation != null">
+        warehourseLocation = #{warehourselocation,jdbcType=VARCHAR},
+      </if>
       <if test="principalid != null">
         principalID = #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="principalname != null">
+        principalName = #{principalname,jdbcType=VARCHAR},
       </if>
       <if test="itemtable != null">
         itemTable = #{itemtable,jdbcType=VARCHAR},
@@ -175,7 +197,10 @@
   <update id="updateByPrimaryKey" parameterType="com.software.domain.SubBranchDetailMap">
     update sub_branch_detail_map
     set warehourseID = #{warehourseid,jdbcType=INTEGER},
+      warehourseName = #{warehoursename,jdbcType=VARCHAR},
+      warehourseLocation = #{warehourselocation,jdbcType=VARCHAR},
       principalID = #{principalid,jdbcType=VARCHAR},
+      principalName = #{principalname,jdbcType=VARCHAR},
       itemTable = #{itemtable,jdbcType=VARCHAR},
       saleOrderItemTable = #{saleorderitemtable,jdbcType=VARCHAR},
       saleOrderCommonTable = #{saleordercommontable,jdbcType=VARCHAR},
