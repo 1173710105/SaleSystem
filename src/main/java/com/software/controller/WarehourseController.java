@@ -1,5 +1,7 @@
 package com.software.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +29,8 @@ public class WarehourseController
 		warehourse.setId(Integer.valueOf(param.get("id")));
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
-		warehourse.setPrincipalid(param.get("principalid"));
 		warehourse.setLabel("valid");
-		
-		Warehourse result = null;
+		Warehourse result = service.selectByPrimaryKey(warehourse);
 		return result;
 	}
 	
@@ -40,10 +40,8 @@ public class WarehourseController
 		warehourse.setId(Integer.valueOf(param.get("id")));
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
-		warehourse.setPrincipalid(param.get("principalid"));
 		warehourse.setLabel("valid");
-		
-		List<Warehourse> result = null;
+		List<Warehourse> result = service.select(warehourse);
 		return result;
 	}
 	
@@ -53,9 +51,11 @@ public class WarehourseController
 		warehourse.setId(Integer.valueOf(param.get("id")));
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
-		warehourse.setPrincipalid(param.get("principalid"));
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String date = df.format(new Date());// new Date()为获取当前系统时间
+		warehourse.setTime(date);
 		warehourse.setLabel("valid");
-		
+		service.insertSelective(warehourse);
 		return "success";
 	}
 	
@@ -65,8 +65,11 @@ public class WarehourseController
 		warehourse.setId(Integer.valueOf(param.get("id")));
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
-		warehourse.setPrincipalid(param.get("principalid"));
-		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String date = df.format(new Date());// new Date()为获取当前系统时间
+		warehourse.setTime(date);
+		warehourse.setLabel("invalid");
+		service.updateByPrimaryKeySelective(warehourse);
 		return "success";
 	}
 	
@@ -76,9 +79,11 @@ public class WarehourseController
 		warehourse.setId(Integer.valueOf(param.get("id")));
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
-		warehourse.setPrincipalid(param.get("principalid"));
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String date = df.format(new Date());// new Date()为获取当前系统时间
+		warehourse.setTime(date);
 		warehourse.setLabel("valid");
-		
+		service.updateByPrimaryKeySelective(warehourse);
 		return "success";
 	}
 }

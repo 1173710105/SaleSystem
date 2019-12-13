@@ -73,7 +73,10 @@ public class StaffController {
 	@RequestMapping("/add")
 	public String addStaff(@RequestBody Map<String, String> param){
 		String tablename = param.get("tablename");
-		String id = param.get("id");
+		String mid = tablename.substring(tablename.length()-4, tablename.length());
+		String prefix = "3";
+		String last = String.format("%04d", service.count(null));
+		String id = prefix+mid+last;
 		String password = param.get("password");
 		Integer hourseid = Integer.valueOf(param.get("hourseid"));
 		String name = param.get("name");
