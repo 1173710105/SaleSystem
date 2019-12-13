@@ -1,4 +1,4 @@
-package com.software.controller;
+package com.software.trans;
 
 public class ReceiveClient {
 	private String id;

@@ -1,6 +1,7 @@
-package com.software.controller;
+package com.software.trans;
 
 public class ReceiveCargo {
+	private String tablename;
 	private String id;
 	private String name;
 	private String type;
@@ -11,6 +12,12 @@ public class ReceiveCargo {
 	private String purchaseprice;
 	public String getId() {
 		return id;
+	}
+	public String getTablename() {
+		return tablename;
+	}
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
 	}
 	public void setId(String id) {
 		this.id = id;
@@ -59,9 +66,9 @@ public class ReceiveCargo {
 	}
 	@Override
 	public String toString() {
-		return "ReceiveCargo [id=" + id + ", name=" + name + ", type=" + type + ", specification=" + specification
-				+ ", picture=" + picture + ", retailprice=" + retailprice + ", wholesaleprice=" + wholesaleprice
-				+ ", purchaseprice=" + purchaseprice + "]";
+		return "ReceiveCargo [tablename=" + tablename + ", id=" + id + ", name=" + name + ", type=" + type
+				+ ", specification=" + specification + ", picture=" + picture + ", retailprice=" + retailprice
+				+ ", wholesaleprice=" + wholesaleprice + ", purchaseprice=" + purchaseprice + "]";
 	}
 	
 	
