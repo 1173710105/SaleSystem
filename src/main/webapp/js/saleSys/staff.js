@@ -40,43 +40,43 @@ function queryStaffById(id) {
 }
 
 //通过条件筛选员工
-function queryClient(staff) {
+function queryStaff(staff) {
     if (staff == null) {
         return null;
     }
-    combineClient = $.extend({},defaultSetting, staff);
+    combineStaff = $.extend({},defaultSetting, staff);
     param = 
        '{'
-        + '"id":"' + combineClient.id + '",'
-        + '"name":"' + combineClient.name + '",'
-        + '"gender:"' + combineClient.gender + '",'
-        + '"phone":"' + combineClient.phone + '",'
-        + '"email":"' + combineClient.email + '",'
-        + '"hourseid":"' + combineClient.hourseid + '"}';
+        + '"id":"' + combineStaff.id + '",'
+        + '"name":"' + combineStaff.name + '",'
+        + '"gender:"' + combineStaff.gender + '",'
+        + '"phone":"' + combineStaff.phone + '",'
+        + '"email":"' + combineStaff.email + '",'
+        + '"hourseid":"' + combineStaff.hourseid + '"}';
     url = "";
     return sendJsonAjax(url, param);
 }
 
 //增加员工
-function addClient(staff) {
+function insertStaff(staff) {
     if (staff == null) {
         return null;
     }
-    combineClient = $.extend({},defaultSetting, staff);
+    combineStaff = $.extend({},defaultSetting, staff);
     param = 
     '{'
-    + '"id":"' + combineClient.id + '",'
-    + '"name":"' + combineClient.name + '",'
-    + '"gender:"' + combineClient.gender + '",'
-    + '"phone":"' + combineClient.phone + '",'
-    + '"email":"' + combineClient.email + '",'
-    + '"hourseid":"' + combineClient.hourseid + '"}';
+    + '"id":"' + combineStaff.id + '",'
+    + '"name":"' + combineStaff.name + '",'
+    + '"gender:"' + combineStaff.gender + '",'
+    + '"phone":"' + combineStaff.phone + '",'
+    + '"email":"' + combineStaff.email + '",'
+    + '"hourseid":"' + combineStaff.hourseid + '"}';
     url = "";
     return sendJsonAjax(url, param);
 }
 
 //删除员工
-function deleteClient(id) {
+function deleteStaff(id) {
     if (id == "") {
         return null;
     }
@@ -87,19 +87,19 @@ function deleteClient(id) {
 }
 
 //更新员工
-function updateClient(staff) {
+function updateStaff(staff) {
     if (staff == null) {
         return null;
     }
-    combineClient = $.extend({},defaultSetting, staff);
+    combineStaff = $.extend({},defaultSetting, staff);
     param = 
     '{'
-    + '"id":"' + combineClient.id + '",'
-    + '"name":"' + combineClient.name + '",'
-    + '"gender:"' + combineClient.gender + '",'
-    + '"phone":"' + combineClient.phone + '",'
-    + '"email":"' + combineClient.email + '",'
-    + '"hourseid":"' + combineClient.hourseid + '"}';
+    + '"id":"' + combineStaff.id + '",'
+    + '"name":"' + combineStaff.name + '",'
+    + '"gender:"' + combineStaff.gender + '",'
+    + '"phone":"' + combineStaff.phone + '",'
+    + '"email":"' + combineStaff.email + '",'
+    + '"hourseid":"' + combineStaff.hourseid + '"}';
     url = "";
     return sendJsonAjax(url, param);
 }

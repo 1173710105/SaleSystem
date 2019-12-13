@@ -1,9 +1,9 @@
-var tempClientList = new Map();
+var tempClientMap = new Map();
 
 window.onload = function () {
     var clientList = queryClient({ id: "" });
     for (var i = 0; i < clientList.length; i++) {
-        this.tempClientList.set(clientList[i].id, clientList[i]);
+        this.tempClientMap.set(clientList[i].id, clientList[i]);
     }
 }
 
@@ -20,38 +20,63 @@ $('#search-btn').click(function () {
     }
     var cl = queryClient(client);
     for (var i = 0; i < cl.length; i++) {
-        this.tempClientList.set(cl[i].id, cl[i]);
+        this.tempClientMap.set(cl[i].id, cl[i]);
     }
     loadClientList(cl);
 });
 
 //添加
 $('#add-btn').click(function() {
-
+    $('#clientModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "用户添加";
 });
 
 //编辑
 $('#edit-btn').click(function() {
-    
+    $('#clientModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "用户编辑";
-    
+    var client = tempClientMap.get($(this).id);
+    $('client-id').val(client.id);
+    $('client-name').val(client.name);
+    $('client-gender').val(client.gender);
+    $('client-phone').val(client.phone);
+    $('client-email').val(client.email);
+    $('client-type').val(client.type);
+    $('client-label').val(client.label);
 });
 
 
 //保存模态框内容
 $('#save-btn').click(function() {
-
+    client = {
+        id : $('client-id').val(),
+        name : $('client-name').val(),
+        gender : $('client-gender').val(),
+        phone : $('client-phone').val(),
+        email : $('client-email').val(),
+        type : $('client-type').val(),
+        label : $('client-label').val()
+    }
+    if($('client-id').val() == "") {
+        insertClient(client);
+    } else {
+        updateClient(client);
+    }
 });
 
 //删除
 $('#delete-btn').click(function() {
-
+    var r = confirm("是否删除？");
+    if (r == true) {
+        //实现
+        deleteClient({id : $('client-id').val()});
+        alert("删除成功");
+    }
 });
 
 //加载列表
 function loadClientList(cl) {
-    var editTable = document.getElementById("temp-worder-tbody");
+    var editTable = document.getElementById("client-tbody");
     for (var i = 0; i < cl.length; i++) {
         var tr = document.createElement("tr");
         tr.setAttribute("id", cl[i].id);
