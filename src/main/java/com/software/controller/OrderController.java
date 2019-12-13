@@ -13,31 +13,11 @@ import com.software.trans.SendOrder;
 @RequestMapping("/order")
 public class OrderController {
 	@RequestMapping("/query")
-	public SendOrder queryOrder(@RequestBody ReceiveOrder param)
+	public List<SendOrder> queryOrder(@RequestBody ReceiveOrder param)
 	{
-		Integer orderid;
-		Integer viceid;
-		Integer warehourseid;
-		Integer clientid;
-		Integer principalid;
-		Integer itemid;
-		Integer itemnum;
-		Float perprice;
-		Float sumprice;
-		Float gather;
-		Float change;
-		Float margin;
-		String createtime;
-		String checktime;
-		String gathertime;
-		String returntime;
-		String postime;
-		Integer status;
-		String type;
-		String exception;
-		String note;
 		
-		SendOrder result = new SendOrder();
+		
+		List<SendOrder> result = null;
 		return result;//返回查找结果
 	}
 	
