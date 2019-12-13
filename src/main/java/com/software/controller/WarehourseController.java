@@ -3,16 +3,23 @@ package com.software.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.software.domain.Staff;
 import com.software.domain.Warehourse;
+import com.software.service.WarehourseService;
+import com.software.topservice.WarehourseManagerService;
 
 @RestController
 @RequestMapping("/warehourse")
-public class WarehourseController {
+public class WarehourseController 
+{
+	@Autowired
+	private WarehourseManagerService service;
+	
 	@RequestMapping("/queryById")
 	public Warehourse queryWarehourseById(@RequestBody Map<String, String> param){
 		Warehourse warehourse = new Warehourse();
