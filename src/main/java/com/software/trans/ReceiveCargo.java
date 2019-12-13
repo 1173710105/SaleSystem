@@ -1,6 +1,7 @@
 package com.software.trans;
 
-public class ReceiveCargo {
+public class ReceiveCargo 
+{
 	private String tablename;
 	private String id;
 	private String name;
@@ -64,12 +65,18 @@ public class ReceiveCargo {
 	public void setPurchaseprice(String purchaseprice) {
 		this.purchaseprice = purchaseprice;
 	}
+	public void initBy()
+	{
+		
+	}
+	
 	@Override
 	public String toString() {
 		return "ReceiveCargo [tablename=" + tablename + ", id=" + id + ", name=" + name + ", type=" + type
 				+ ", specification=" + specification + ", picture=" + picture + ", retailprice=" + retailprice
 				+ ", wholesaleprice=" + wholesaleprice + ", purchaseprice=" + purchaseprice + "]";
 	}
+	
 	
 	
 }
