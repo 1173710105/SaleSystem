@@ -230,15 +230,41 @@ function payOrder(order) {
 }
 
 //将订单退货
-function returnOrder(id, exception, note) {
+function returnOrder(tid, tprincipalid, texception, tnote) {
     if (id == "") {
         return;
     }
-    param =
-        '{"viceid":"' + id + '",'
-        + '"exception":"' + exception + '",'
-        + '"note":"' + note + '"}';
-
+    order = {
+        viceid : tid,
+        principalid : tprincipalid,
+        exception : texception,
+        note : tnote
+    }
+        combineOrder = $.extend({}, defaultSetting, order);
+        param =
+        '{'
+        + '"orderid":"' + combineOrder.orderid + '",'
+        + '"viceid":"' + combineOrder.viceid + '",'
+        + '"warehorseid":"' + combineOrder.warehorseid + '",'
+        + '"clientid:"' + combineOrder.clientid + '",'
+        + '"principalid":"' + combineOrder.principalid + '",'
+        + '"itemid":"' + combineOrder.itemid + '",'
+        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
+        + '"perprice":"' + combineOrder.perprice + '",'
+        + '"sumprice":"' + combineOrder.sumprice + '",'
+        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
+        + '"gather":"' + combineOrder.gather + '",'
+        + '"change":"' + combineOrder.change + '",'
+        + '"margin":"' + combineOrder.margin + '",'
+        + '"createtime":"' + combineOrder.createtime + '",'
+        + '"checktime":"' + combineOrder.checktime + '",'
+        + '"gathertime":"' + combineOrder.gathertime + '",'
+        + '"returntime":"' + combineOrder.returntime + '",'
+        + '"postime":"' + combineOrder.postime + '",'
+        + '"status":"' + combineOrder.status + '",'
+        + '"type":"' + combineOrder.type + '",'
+        + '"exception":"' + combineOrder.exception + '",'
+        + '"note":"' + combineOrder.note + '"}';
     url = "";
     return sendJsonAjax(url, param);
 }

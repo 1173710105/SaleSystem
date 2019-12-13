@@ -182,20 +182,20 @@ function loadMadal(ol, type) {
 }
 
 //条件搜索
-$('#search-btn').click(function() {
+$('#search-btn').click(function () {
     var order = {
-        id : $('#search-order-id').val(),
-        clientid : $('#search-client-id').val(),
-        type : $('#search-cargo-type').val(),
-        paystatus : $('#search-pay').val(),
-        checkstatus : $('#search-status').val(),
+        id: $('#search-order-id').val(),
+        clientid: $('#search-client-id').val(),
+        type: $('#search-cargo-type').val(),
+        paystatus: $('#search-pay').val(),
+        checkstatus: $('#search-status').val(),
     }
     var queryList = queryOrder(order);
     loadOrderList(queryList);
 });
 
 //弹出添加订单
-$('#add-order-btn').click(function() {
+$('#add-order-btn').click(function () {
     $('#orderModifyModal').modal('show');
     $('#principal-name').val(getCookie("name"));
     $('#order-postion').val(getCookie("warehourseid")); //获得仓库
@@ -214,22 +214,22 @@ $('#check_btn').click(function () {
 
 //订单付款
 //Map<orderid : List<Map<key:value>>>
-$('#ac-pay-btn').click(function() {
+$('#ac-pay-btn').click(function () {
     var gather = $('#pay-actual-charge').val();
     var change = $('#pay-change').val();
     order = {
-        viceid : $('#pay-order-id').val(),
-        change : change,
-        gather : gather
+        viceid: $('#pay-order-id').val(),
+        change: change,
+        gather: gather
     }
     payOrder(order);
 });
 
 //实时更新找回价格
-$('#pay-actual-charge').blur(function() {
+$('#pay-actual-charge').blur(function () {
     var actual = parseFloat($('#pay-actual-charge').val());
     var total = parseFloat($('#pay-total-price').val());
-    if(actual < total) {
+    if (actual < total) {
         $('#pay-change').val("实付不足");
         return;
     }
@@ -247,17 +247,17 @@ $('#delete_btn').click(function () {
 });
 
 //货品删除
-$('#temp-delete-btn').click(function() {
+$('#temp-delete-btn').click(function () {
     var cl;
-    if($('#order-id').val() == "") {
+    if ($('#order-id').val() == "") {
         cl = tempOrderMap.get("temp");
     } else {
         cl = tempOrderMap.get($('#order-id').val());
     }
     var itemid = $(this).val();
-    for(var i = 0; i < cl.length; i++) {
-        if(cl[i].get("itemid") == itemid) {
-            cl.splice(i,1);
+    for (var i = 0; i < cl.length; i++) {
+        if (cl[i].get("itemid") == itemid) {
+            cl.splice(i, 1);
         }
     }
     loadMadal(cl, 0); ///设置type
@@ -265,12 +265,14 @@ $('#temp-delete-btn').click(function() {
 
 
 //订单退货
-$('#ack-return-btn').click(function() {
-    
+$('#ack-return-btn').click(function () {
+    var id = $('#pay-order-id').val();
+    var note = $('#return-note').val();
+    var reply = returnOrder(id, getCookie("id"), "", note);
 });
 
 //弹出订单详情
-$('#detail-btn').click(function() {
+$('#detail-btn').click(function () {
     console.log('aaa');
     $('#orderModifyModal').modal('show');
     var orderid = $(this).val();
@@ -278,12 +280,14 @@ $('#detail-btn').click(function() {
 });
 
 //弹出编辑订单
-$('#edit-btn').click(function() {
-
+$('#edit-btn').click(function () {
+    $('#orderModifyModal').modal('show');
+    var orderid = $(this).val();
+    loadMadal(tempOrderMap.get(orderid), 1);
 });
 
 //弹出订单付款
-$('#pay-btn').click(function() {
+$('#pay-btn').click(function () {
     $('#orderPayModal').modal('show');
     var orderid = $(this).val();
     var order = tempOrderMap.get(orderid);
@@ -315,12 +319,19 @@ $('#pay-btn').click(function() {
 });
 
 //弹出订单退货
-$('#return-btn').click(function() {
+$('#return-btn').click(function () {
     var orderid = $(this).val();
     $('#saleReturnModal').modal('show');
     $('#return-order-id').val(tempOrderMap.get(orderid)[0].get("viceid"));
-    $('#return-client-name').val(tempOrderMap.get(orderid)[0].get("viceid"));
-    $('#return-pricipal-name').val(tempOrderMap.get(orderid)[0].get("viceid"));
+    $('#return-client-name').val(tempOrderMap.get(orderid)[0].get("clientname"));
+    $('#return-pricipal-name').val(tempOrderMap.get(orderid)[0].get("principalname"));
+    //判断是否付款
+    if (tempOrderMap.get(orderid)[0].get("status") == '3') {
+        $('#payed-state').val("0");
+    } else if (tempOrderMap.get(orderid)[0].get("status") == '4') {
+        $('#payed-state').val("1");
+    }
+    $('#return-total-price').val(tempOrderMap.get(orderid)[0].get("totalprice"));
 });
 
 //保存订单货品修改
@@ -331,6 +342,34 @@ $('#return-btn').click(function() {
 
 //数据转换，将接收数据转换为list<map>，每一个map是一个子列表
 //将单个对象转换
+/**
+ * 
+ * @param {Object} order 接收到的sendorder对象
+ */
 function object2map(order) {
+    var l = [];
+    for (var i = 0; i < order.items.length; i++) {
+        var m = new Map();
+        m.set("viceid", order.id);
+        m.set("warehourseid", order.warehourseid);
+        m.set("warehoursename", order.warehoursename);
+        m.set("clientid", order.clientid);
+        m.set("clientname", order.clientname);
+        m.set("principalid", order.principalid);
+        m.set("principalname", order.principalname);
+        m.set("createtime", order.createtime);
+        m.set("status", order.status.toString());
+        m.set("totalprice", order.sumprice.toString());
+        m.set("type", order.type);
+        m.set("margin", order.margin.toString());
+        m.set("note", order.note);
+        m.set("exception",order.exception);
+        m.set("itemid", order.items[i].itemid);
+        m.set("itemname", order.items[i].itemname);
+        m.set("itemnum", order,items[i].itemnum);
+        m.set("perprice", );
+        m.set("sumprice", );
+    }
+
 
 }
