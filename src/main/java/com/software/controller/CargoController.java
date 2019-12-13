@@ -15,8 +15,7 @@ import com.software.trans.ReceiveCargo;
 public class CargoController {
 	
 	@RequestMapping("/queryById")
-	public ReceiveCargo queryCargoById(@RequestBody Map<String, String> param){
-		Integer id = Integer.valueOf(param.get("id"));
+	public ReceiveCargo queryCargoById(@RequestBody ReceiveCargo param){
 		
 		ReceiveCargo result = new ReceiveCargo();
 		return result;
@@ -31,6 +30,19 @@ public class CargoController {
 	
 	@RequestMapping("/add")
 	public String addCargo(@RequestBody ReceiveCargo param){
+		
+		
+		return "success";
+	}
+	
+	@RequestMapping("/delete")
+	public String deleteCargo(@RequestBody ReceiveCargo param){
+		
+		return "success";
+	}
+	
+	@RequestMapping("/update")
+	public String updateCargo(@RequestBody ReceiveCargo param){
 		
 		
 		return "success";
