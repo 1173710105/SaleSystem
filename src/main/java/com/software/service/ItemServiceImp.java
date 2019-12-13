@@ -10,7 +10,8 @@ import com.software.domain.Item;
 
 
 @Service
-public class ItemServiceImp implements ItemService {
+public class ItemServiceImp implements ItemService 
+{
 
 	@Autowired
 	private ItemMapper im;
@@ -57,11 +58,5 @@ public class ItemServiceImp implements ItemService {
 	public void updateByPrimaryKey(Item record) 
 	{
 		im.updateByPrimaryKey(record);
-	}
-
-	@Override
-	public void createNewTable(Item record) 
-	{
-		im.createNewTable(record.getTablename());
 	}
 }

@@ -3,11 +3,14 @@ package com.software.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import com.software.domain.SaleorderCommon;
 
 import com.software.domain.SaleorderCommon;
 
 @Mapper
 public interface SaleorderCommonMapper {
+
+
     int deleteByPrimaryKey(SaleorderCommon record);
 
     int insert(SaleorderCommon record);

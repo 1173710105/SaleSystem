@@ -19,6 +19,4 @@ public interface ItemService
     public void updateByPrimaryKeySelective(Item record);
 
     public void updateByPrimaryKey(Item record);
-    
-    public void createNewTable(Item record);
 }

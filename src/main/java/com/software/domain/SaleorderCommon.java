@@ -16,14 +16,29 @@ public class SaleorderCommon
     private Integer warehourseid;
 
     /**
+     *  warehourseName
+     */
+    private String warehoursename;
+
+    /**
      * 客户ID clientID
      */
     private Integer clientid;
 
     /**
+     *  clientName
+     */
+    private String clientname;
+
+    /**
      * 负责人ID principalID
      */
     private String principalid;
+
+    /**
+     *  principalName
+     */
+    private String principalname;
 
     /**
      * 创建时间 createTime
@@ -127,6 +142,14 @@ public class SaleorderCommon
         this.warehourseid = warehourseid;
     }
 
+    public String getWarehoursename() {
+        return warehoursename;
+    }
+
+    public void setWarehoursename(String warehoursename) {
+        this.warehoursename = warehoursename == null ? null : warehoursename.trim();
+    }
+
     public Integer getClientid() {
         return clientid;
     }
@@ -135,12 +158,28 @@ public class SaleorderCommon
         this.clientid = clientid;
     }
 
+    public String getClientname() {
+        return clientname;
+    }
+
+    public void setClientname(String clientname) {
+        this.clientname = clientname == null ? null : clientname.trim();
+    }
+
     public String getPrincipalid() {
         return principalid;
     }
 
     public void setPrincipalid(String principalid) {
         this.principalid = principalid == null ? null : principalid.trim();
+    }
+
+    public String getPrincipalname() {
+        return principalname;
+    }
+
+    public void setPrincipalname(String principalname) {
+        this.principalname = principalname == null ? null : principalname.trim();
     }
 
     public String getCreatetime() {

@@ -71,9 +71,9 @@
  --> 	
 <!--  	<table tableName="base_warehourse_detail" domainObjectName="WarehourseDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  --> 	
-<!--        	<table tableName="sub_branch_detail_map" domainObjectName="SubBranchDetailMap" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+<!--    <table tableName="sub_branch_detail_map" domainObjectName="SubBranchDetailMap" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  --> 	
-<!--      	<table tableName="warehourse" domainObjectName="Warehourse" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+<!--    <table tableName="warehourse" domainObjectName="Warehourse" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  --> 	
 <!--  		<table tableName="sub_staff_example" domainObjectName="Staff" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  -->
@@ -87,6 +87,12 @@
  --> 		
 <!--  	 <table tableName="client" domainObjectName="Client" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  --> 	
- 	<table tableName="sub_staff_example" domainObjectName="Staff" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
- 	</context>
+<!--  	<table tableName="sub_staff_example" domainObjectName="Staff" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+ --> 	
+<!--  	 <table tableName="sub_saleorder_common_example" domainObjectName="SaleorderCommon" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+     <table tableName="sub_saleorder_item_example" domainObjectName="SaleorderItem" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+ 	 -->
+ 	      <table tableName="item" domainObjectName="Item" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+ 	 	  <table tableName="base_warehourse_itemtoprice" domainObjectName="ItemToPrice" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+ 	 	</context>
 </generatorConfiguration>
