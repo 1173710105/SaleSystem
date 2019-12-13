@@ -103,7 +103,7 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	}
 
 	@Override
-	public Map<Integer, String> typeMenu(ReceiveCargo record) 
+	public Map<Integer, String> typeMenu() 
 	{
 		Item item = new Item();
 		item.setLabel("valid");
