@@ -2,7 +2,8 @@
  * 货物有关请求和操作
  */
 
-defaultSetting = {
+defaultSetting = 
+{
     id : '',
     name : '',
     type : '',

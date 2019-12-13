@@ -56,7 +56,7 @@ $("#login-btn").click(
                     //用户名 name
                     //职位 position
                     top.location.href = destination;
-                } else if (str == "false") {
+                } else if (str == "wrongpwd") {
                     alert("密码错误，请重新输入");
                 } else {
                     alert("没有此账号")
