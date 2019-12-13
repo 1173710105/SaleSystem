@@ -1,5 +1,5 @@
-//缓存列表
-tempOrder
+//缓存映射
+var tempOrderMap = new Map();
 
 window.onload = function () {
     var historyList = queryOrder({ sourceid: getCookie("id") });//TODO 获取门店id
@@ -203,18 +203,14 @@ $('#check_btn').click(function () {
 });
 
 //订单付款
-$('#pay-btn').click(function() {
-    $('#orderPayModal').modal('show');
-    var id = $(this).val();
-    $('#pay-client-name').val();
-    $('#pay-pricinpal-name').val();
-    $('#pay-total-price').val();
-});
+//Map<orderid : List<Map<key:value>>>
+
 
 //订单删除
 $('#delete_btn').click(function () {
     var r = confirm("是否删除？");
     if (r == true) {
+        
         alert("删除成功");
     }
 });
@@ -226,6 +222,35 @@ $('#delete_btn').click(function () {
 //弹出编辑订单
 
 //弹出订单付款
+$('#pay-btn').click(function() {
+    $('#orderPayModal').modal('show');
+    var orderid = $(this).val();
+    var order = tempOrderMap.get(orderid);
+    $('#pay-client-name').val(order[0].get("clientname"));
+    $('#pay-pricinpal-name').val(order[0].get("pricinpalname"));
+    $('#pay-total-price').val(order[0].get("sumprice"));
+    var editTable = document.getElementById("temp-cargo-tbody");
+    for (cargo in order) {
+        var tr = document.createElement("tr");
+        tr.setAttribute("id", ol[i].get("id"));
+        var td0 = document.createElement("td");
+        td0.innerHTML = ol[i].get("itemname");
+        var td1 = document.createElement("td");
+        td1.innerHTML = ol[i].get("itemid");
+        var td2 = document.createElement("td");
+        td2.innerHTML = ol[i].get("itemnum");
+        var td3 = document.createElement("td");
+        td3.innerHTML = ol[i].get("perprice");
+        var td4 = document.createElement("td");
+        td4.innerHTML = ol[i].get("sumprice");
+        tr.appendChild(td0);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        editTable.appendChild(tr);
+    }
+});
 
 //弹出订单退货
 
