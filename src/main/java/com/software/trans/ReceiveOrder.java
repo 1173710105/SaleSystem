@@ -4,7 +4,10 @@ import java.util.List;
 
 public class ReceiveOrder 
 {
-	private String tablename;
+	
+	private String commontablename;
+	private String itemtablename;
+	private String warehoursedetailtablename;
 	private String orderid;
 	private String viceid;
 	private String warehourseid;
@@ -29,12 +32,7 @@ public class ReceiveOrder
 	private String type;
 	private String exception;
 	private String note;
-	public String getTablename() {
-		return tablename;
-	}
-	public void setTablename(String tablename) {
-		this.tablename = tablename;
-	}
+	
 	public String getOrderid() {
 		return orderid;
 	}
@@ -179,16 +177,28 @@ public class ReceiveOrder
 	public void setNote(String note) {
 		this.note = note;
 	}
+	public String getCommontablename() {
+		return commontablename;
+	}
+	public void setCommontablename(String commontablename) {
+		this.commontablename = commontablename;
+	}
+	public String getItemtablename() {
+		return itemtablename;
+	}
+	public void setItemtablename(String itemtablename) {
+		this.itemtablename = itemtablename;
+	}
 	@Override
 	public String toString() {
-		return "ReceiveOrder [tablename=" + tablename + ", orderid=" + orderid + ", viceid=" + viceid
-				+ ", warehourseid=" + warehourseid + ", warehoursename=" + warehoursename + ", clientid=" + clientid
-				+ ", clientname=" + clientname + ", principalid=" + principalid + ", principalname=" + principalname
-				+ ", itemid=" + itemid + ", itemnum=" + itemnum + ", perprice=" + perprice + ", sumprice=" + sumprice
-				+ ", gather=" + gather + ", change=" + change + ", margin=" + margin + ", createtime=" + createtime
-				+ ", checktime=" + checktime + ", gathertime=" + gathertime + ", returntime=" + returntime
-				+ ", postime=" + postime + ", status=" + status + ", type=" + type + ", exception=" + exception
-				+ ", note=" + note + "]";
+		return "ReceiveOrder [commontablename=" + commontablename + ", itemtablename=" + itemtablename + ", orderid="
+				+ orderid + ", viceid=" + viceid + ", warehourseid=" + warehourseid + ", warehoursename="
+				+ warehoursename + ", clientid=" + clientid + ", clientname=" + clientname + ", principalid="
+				+ principalid + ", principalname=" + principalname + ", itemid=" + itemid + ", itemnum=" + itemnum
+				+ ", perprice=" + perprice + ", sumprice=" + sumprice + ", gather=" + gather + ", change=" + change
+				+ ", margin=" + margin + ", createtime=" + createtime + ", checktime=" + checktime + ", gathertime="
+				+ gathertime + ", returntime=" + returntime + ", postime=" + postime + ", status=" + status + ", type="
+				+ type + ", exception=" + exception + ", note=" + note + "]";
 	}
 	
 	

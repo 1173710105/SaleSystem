@@ -15,8 +15,6 @@ public class OrderController {
 	@RequestMapping("/query")
 	public List<SendOrder> queryOrder(@RequestBody ReceiveOrder param)
 	{
-		
-		
 		List<SendOrder> result = null;
 		return result;//返回查找结果
 	}
@@ -28,7 +26,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/update")
-	public String updateOrder(@RequestBody ReceiveOrder param){
+	public String updateOrder(@RequestBody List<ReceiveOrder> param){
 		String result = null;
 		return result;//返回成功/失败信息
 	}
