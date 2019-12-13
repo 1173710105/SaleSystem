@@ -19,6 +19,8 @@ public interface TopStoreManagerService
      */
     public StoreManager selectByPrimaryKey(StoreManager record);
 
+    
+ 
     /**
      * 网页给什么，填什么
      * @param record
