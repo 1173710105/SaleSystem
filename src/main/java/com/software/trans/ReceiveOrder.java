@@ -4,6 +4,7 @@ import java.util.List;
 
 public class ReceiveOrder 
 {
+	
 	private String commontablename;
 	private String itemtablename;
 	private String warehoursedetailtablename;
