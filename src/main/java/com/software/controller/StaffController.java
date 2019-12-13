@@ -1,7 +1,5 @@
 package com.software.controller;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.util.List;
 import java.util.Map;
 
@@ -9,31 +7,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
-import ch.qos.logback.core.net.server.Client;
+import com.software.domain.Staff;
 
 @RestController
-@RequestMapping("/client")
-public class ClientController {
-	
+@RequestMapping("/staff")
+public class StaffController {
 	@RequestMapping("/queryById")
-	public com.software.domain.Client queryClientById(@RequestBody Map<String, String> param){
+	public Staff queryClientById(@RequestBody Map<String, String> param){
 		String id = param.get("id");
-		com.software.domain.Client result = null;
+		Staff result = null;
 		
 		
 		return result;
 	}
 	
 	@RequestMapping("/query")
-	public List<com.software.domain.Client> queryClient(@RequestBody ReceiveClient pamram){
-		List<com.software.domain.Client> result = null;
+	public List<Staff> queryClient(@RequestBody Staff pamram){
+		List<Staff> result = null;
 		return result;
 	}
 	
 	@RequestMapping("/add")
-	public String addClient(@RequestBody ReceiveClient param){
+	public String addClient(@RequestBody com.software.domain.Client param){
 		return "success";
 	}
 	
@@ -44,7 +39,7 @@ public class ClientController {
 	}
 	
 	@RequestMapping("/update")
-	public String updateClient(@RequestBody ReceiveClient param){
+	public String updateClient(@RequestBody com.software.domain.Client param){
 		return "success";
 	}
 }
