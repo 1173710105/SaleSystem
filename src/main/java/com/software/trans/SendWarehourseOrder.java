@@ -69,4 +69,119 @@ public class SendWarehourseOrder {
      * 货单货品列表
      */
     private List<WarehourseOrderItem> items;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getSourceid() {
+		return sourceid;
+	}
+
+	public void setSourceid(Integer sourceid) {
+		this.sourceid = sourceid;
+	}
+
+	public Integer getTargetid() {
+		return targetid;
+	}
+
+	public void setTargetid(Integer targetid) {
+		this.targetid = targetid;
+	}
+
+	public String getSenderprincipalid() {
+		return senderprincipalid;
+	}
+
+	public void setSenderprincipalid(String senderprincipalid) {
+		this.senderprincipalid = senderprincipalid;
+	}
+
+	public String getReceiverprincipalid() {
+		return receiverprincipalid;
+	}
+
+	public void setReceiverprincipalid(String receiverprincipalid) {
+		this.receiverprincipalid = receiverprincipalid;
+	}
+
+	public String getSourcetype() {
+		return sourcetype;
+	}
+
+	public void setSourcetype(String sourcetype) {
+		this.sourcetype = sourcetype;
+	}
+
+	public String getTargettype() {
+		return targettype;
+	}
+
+	public void setTargettype(String targettype) {
+		this.targettype = targettype;
+	}
+
+	public Float getSumprice() {
+		return sumprice;
+	}
+
+	public void setSumprice(Float sumprice) {
+		this.sumprice = sumprice;
+	}
+
+	public String getPricetype() {
+		return pricetype;
+	}
+
+	public void setPricetype(String pricetype) {
+		this.pricetype = pricetype;
+	}
+
+	public String getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(String createtime) {
+		this.createtime = createtime;
+	}
+
+	public String getChecktime() {
+		return checktime;
+	}
+
+	public void setChecktime(String checktime) {
+		this.checktime = checktime;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public List<WarehourseOrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<WarehourseOrderItem> items) {
+		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		return "SendWarehourseOrder [id=" + id + ", sourceid=" + sourceid + ", targetid=" + targetid
+				+ ", senderprincipalid=" + senderprincipalid + ", receiverprincipalid=" + receiverprincipalid
+				+ ", sourcetype=" + sourcetype + ", targettype=" + targettype + ", sumprice=" + sumprice
+				+ ", pricetype=" + pricetype + ", createtime=" + createtime + ", checktime=" + checktime + ", status="
+				+ status + ", items=" + items + "]";
+	}
+    
+    
 }

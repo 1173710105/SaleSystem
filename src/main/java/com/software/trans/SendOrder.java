@@ -187,8 +187,10 @@ public class SendOrder
 		this.warehoursename = warehoursename;
 	}
 
+
 	public String getClientname() {
 		return clientname;
+
 	}
 
 	public void setClientname(String clientname) {
