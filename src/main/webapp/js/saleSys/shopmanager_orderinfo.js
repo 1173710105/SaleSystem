@@ -367,9 +367,9 @@ function object2map(order) {
         m.set("itemid", order.items[i].itemid);
         m.set("itemname", order.items[i].itemname);
         m.set("itemnum", order,items[i].itemnum);
-        m.set("perprice", );
-        m.set("sumprice", );
+        m.set("perprice", order,items[i].perprice);
+        m.set("sumprice", order,items[i].sumprice);
+        l.push(m);
     }
-
-
+    return l;
 }
