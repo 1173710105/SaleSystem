@@ -9,7 +9,6 @@ import com.software.domain.Warehourse;
 @Mapper
 public interface WarehourseMapper 
 {
-
     int deleteByPrimaryKey(Warehourse record);
 
     int insert(Warehourse record);
