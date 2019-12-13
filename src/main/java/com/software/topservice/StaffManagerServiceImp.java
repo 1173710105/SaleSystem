@@ -38,4 +38,10 @@ public class StaffManagerServiceImp implements StaffManagerService
 	{
 		service.updateByPrimaryKeySelective(record);
 	}
+	
+	@Override
+	public int count(Staff staff)
+	{
+		return service.count(record);
+	}
 }

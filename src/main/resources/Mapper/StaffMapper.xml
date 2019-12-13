@@ -37,6 +37,9 @@
     from ${tablename}
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="count" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
+  	 	SELECT COUNT(*) FROM ${tablename}
+  </select>  
    <select id="select" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
 		select *
 		from ${tablename}

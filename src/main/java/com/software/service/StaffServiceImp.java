@@ -63,4 +63,10 @@ public class StaffServiceImp implements StaffService {
 		sm.createNewTable(record.getTablename());
 	}
 
+	@Override
+	public int count(Staff record) 
+	{
+		return sm.count(record);
+	}
+
 }
