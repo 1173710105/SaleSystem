@@ -1,9 +1,10 @@
-//缓存映射
+//缓存映射，每加载一个list，将里面order对象转为map存入
+//规定，新建订单将以key “temp” 表示
 var tempOrderMap = new Map();
 
 window.onload = function () {
     var historyList = queryOrder({ sourceid: getCookie("id") });//TODO 获取门店id
-    // loadWarehourseOrderList(historyList);
+    // loadOrderList(historyList);
     // for (var i = 0; i < historyList.length; i++) {
     //     tempWareOrderMap.set(historyList[i].id, historyList[i]);
     // }
@@ -136,9 +137,10 @@ function loadOrderList(ol) {
     }
 }
 
-//刷新模态框，传入list对象
+//刷新模态框，传入list对象,这里对象是转化后的map
 function loadMadal(ol, type) {
     var common = ol[0];
+    $('#order-id').val(common.get("viceid"));
     $('#client-id').val(common.get("clientid"));
     $('#client-name').val(common.get("clientname"));
     $('#order-type').val(common.get("type"));
@@ -163,7 +165,7 @@ function loadMadal(ol, type) {
         var deleButton = document.createElement("button");
         deleButton.type = "button";
         deleButton.id = "temp-delete-btn";
-        deleButton.setAttribute("value", ol[i].get("id")); //将货品id封装在value中
+        deleButton.setAttribute("value", ol[i].get("itemid")); //将货品id封装在value中
         deleButton.className = "btn btn-sm btn-danger";
         deleButton.innerHTML = "删除";
         td5.appendChild(deleButton);
@@ -175,6 +177,8 @@ function loadMadal(ol, type) {
         tr.appendChild(td5);
         editTable.appendChild(tr);
     }
+
+    //是否显示退货备注
 }
 
 //条件搜索
@@ -211,7 +215,14 @@ $('#check_btn').click(function () {
 //订单付款
 //Map<orderid : List<Map<key:value>>>
 $('#ac-pay-btn').click(function() {
-    var 
+    var gather = $('#pay-actual-charge').val();
+    var change = $('#pay-change').val();
+    order = {
+        viceid : $('#pay-order-id').val(),
+        change : change,
+        gather : gather
+    }
+    payOrder(order);
 });
 
 //实时更新找回价格
@@ -229,21 +240,41 @@ $('#pay-actual-charge').blur(function() {
 $('#delete_btn').click(function () {
     var r = confirm("是否删除？");
     if (r == true) {
-        
+        var orderid = $(this).val();
+        deleteOrder(orderid);
         alert("删除成功");
     }
 });
 
 //货品删除
+$('#temp-delete-btn').click(function() {
+    var cl;
+    if($('#order-id').val() == "") {
+        cl = tempOrderMap.get("temp");
+    } else {
+        cl = tempOrderMap.get($('#order-id').val());
+    }
+    var itemid = $(this).val();
+    for(var i = 0; i < cl.length; i++) {
+        if(cl[i].get("itemid") == itemid) {
+            cl.splice(i,1);
+        }
+    }
+    loadMadal(cl, 0); ///设置type
+});
+
 
 //订单退货
-$('ack-return-btn').click(function() {
-
+$('#ack-return-btn').click(function() {
+    
 });
 
 //弹出订单详情
-$('detail-btn').click(function() {
-
+$('#detail-btn').click(function() {
+    console.log('aaa');
+    $('#orderModifyModal').modal('show');
+    var orderid = $(this).val();
+    loadMadal(tempOrderMap.get(orderid), 1);
 });
 
 //弹出编辑订单
@@ -256,6 +287,7 @@ $('#pay-btn').click(function() {
     $('#orderPayModal').modal('show');
     var orderid = $(this).val();
     var order = tempOrderMap.get(orderid);
+    $('#pay-order-id').val(orderid);
     $('#pay-client-name').val(order[0].get("clientname"));
     $('#pay-pricinpal-name').val(order[0].get("pricinpalname"));
     $('#pay-total-price').val(order[0].get("sumprice"));
@@ -284,7 +316,11 @@ $('#pay-btn').click(function() {
 
 //弹出订单退货
 $('#return-btn').click(function() {
-
+    var orderid = $(this).val();
+    $('#saleReturnModal').modal('show');
+    $('#return-order-id').val(tempOrderMap.get(orderid)[0].get("viceid"));
+    $('#return-client-name').val(tempOrderMap.get(orderid)[0].get("viceid"));
+    $('#return-pricipal-name').val(tempOrderMap.get(orderid)[0].get("viceid"));
 });
 
 //保存订单货品修改
@@ -293,7 +329,7 @@ $('#return-btn').click(function() {
 //保存订单
 
 
-//数据转换，将接收数据转换为list<map>
+//数据转换，将接收数据转换为list<map>，每一个map是一个子列表
 //将单个对象转换
 function object2map(order) {
 

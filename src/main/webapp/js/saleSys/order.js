@@ -4,7 +4,7 @@
 
 defaultSetting = {
     orderid: '',
-    viceid: '',
+    viceid: '',  //订单编号
     warehourseid: '',
     clientid: '',
     principalid: '',
@@ -12,6 +12,7 @@ defaultSetting = {
     itemnum: '',
     perprice: '',
     sumprice: '',
+    ordersumprice: '',
     gather: '',
     change: '',
     margin: '',
@@ -61,6 +62,7 @@ function queryOrder(order) {
         + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
         + '"perprice":"' + combineOrder.perprice + '",'
         + '"sumprice":"' + combineOrder.sumprice + '",'
+        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
         + '"gather":"' + combineOrder.gather + '",'
         + '"change":"' + combineOrder.change + '",'
         + '"margin":"' + combineOrder.margin + '",'
@@ -100,6 +102,7 @@ function insertOrder(order) {
         + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
         + '"perprice":"' + combineOrder.perprice + '",'
         + '"sumprice":"' + combineOrder.sumprice + '",'
+        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
         + '"gather":"' + combineOrder.gather + '",'
         + '"change":"' + combineOrder.change + '",'
         + '"margin":"' + combineOrder.margin + '",'
@@ -146,6 +149,7 @@ function updateOrder(order) {
         + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
         + '"perprice":"' + combineOrder.perprice + '",'
         + '"sumprice":"' + combineOrder.sumprice + '",'
+        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
         + '"gather":"' + combineOrder.gather + '",'
         + '"change":"' + combineOrder.change + '",'
         + '"margin":"' + combineOrder.margin + '",'
@@ -192,34 +196,35 @@ function checkOrder(id) {
 }
 
 //将订单付款
-function parOrder(order) {
+function payOrder(order) {
     if (id == "") {
         return;
     }
     combineOrder = $.extend({}, defaultSetting, order);
     param =
-        '{'
-        + '"orderid":"' + combineOrder.orderid + '",'
-        + '"viceid":"' + combineOrder.viceid + '",'
-        + '"warehorseid":"' + combineOrder.warehorseid + '",'
-        + '"clientid:"' + combineOrder.clientid + '",'
-        + '"principalid":"' + combineOrder.principalid + '",'
-        + '"itemid":"' + combineOrder.itemid + '",'
-        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
-        + '"perprice":"' + combineOrder.perprice + '",'
-        + '"sumprice":"' + combineOrder.sumprice + '",'
-        + '"gather":"' + combineOrder.gather + '",'
-        + '"change":"' + combineOrder.change + '",'
-        + '"margin":"' + combineOrder.margin + '",'
-        + '"createtime":"' + combineOrder.createtime + '",'
-        + '"checktime":"' + combineOrder.checktime + '",'
-        + '"gathertime":"' + combineOrder.gathertime + '",'
-        + '"returntime":"' + combineOrder.returntime + '",'
-        + '"postime":"' + combineOrder.postime + '",'
-        + '"status":"' + combineOrder.status + '",'
-        + '"type":"' + combineOrder.type + '",'
-        + '"exception":"' + combineOrder.exception + '",'
-        + '"note":"' + combineOrder.note + '"}';
+    '{'
+    + '"orderid":"' + combineOrder.orderid + '",'
+    + '"viceid":"' + combineOrder.viceid + '",'
+    + '"warehorseid":"' + combineOrder.warehorseid + '",'
+    + '"clientid:"' + combineOrder.clientid + '",'
+    + '"principalid":"' + combineOrder.principalid + '",'
+    + '"itemid":"' + combineOrder.itemid + '",'
+    + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
+    + '"perprice":"' + combineOrder.perprice + '",'
+    + '"sumprice":"' + combineOrder.sumprice + '",'
+    + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
+    + '"gather":"' + combineOrder.gather + '",'
+    + '"change":"' + combineOrder.change + '",'
+    + '"margin":"' + combineOrder.margin + '",'
+    + '"createtime":"' + combineOrder.createtime + '",'
+    + '"checktime":"' + combineOrder.checktime + '",'
+    + '"gathertime":"' + combineOrder.gathertime + '",'
+    + '"returntime":"' + combineOrder.returntime + '",'
+    + '"postime":"' + combineOrder.postime + '",'
+    + '"status":"' + combineOrder.status + '",'
+    + '"type":"' + combineOrder.type + '",'
+    + '"exception":"' + combineOrder.exception + '",'
+    + '"note":"' + combineOrder.note + '"}';
     url = "";
     return sendJsonAjax(url, param);
 }
