@@ -21,12 +21,6 @@ public class WarehourseServiceImp implements WarehourseService {
 	}
 
 	@Override
-	public void delete(Warehourse record) 
-	{
-		mapper.delete(record);
-	}
-
-	@Override
 	public void insert(Warehourse record) 
 	{
 		mapper.insert(record);

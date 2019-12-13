@@ -8,8 +8,6 @@ public interface WarehourseManagerService
 {
 	public void deleteByPrimaryKey(Warehourse record);
     
-	public void delete(Warehourse record);
-
 	public void insertSelective(Warehourse record);
 
 	public Warehourse selectByPrimaryKey(Warehourse record);

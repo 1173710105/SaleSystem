@@ -15,5 +15,5 @@ public interface StaffManagerService
 
     public void updateByPrimaryKeySelective(Staff record);
     
-    public int count(Staff staff);
+    public int count(Staff record);
 }

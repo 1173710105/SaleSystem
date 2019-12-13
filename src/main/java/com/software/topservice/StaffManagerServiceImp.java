@@ -40,7 +40,7 @@ public class StaffManagerServiceImp implements StaffManagerService
 	}
 	
 	@Override
-	public int count(Staff staff)
+	public int count(Staff record)
 	{
 		return service.count(record);
 	}
