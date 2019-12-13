@@ -12,39 +12,39 @@ public class WarehourseOrderCommon {
     private Integer sourceid;
 
     /**
+     *  sourceName
+     */
+    private String sourcename;
+
+    /**
      * 目的地ID targetID
      */
     private Integer targetid;
 
     /**
-     * 发起人ID senderPrincipalID
+     *  targetName
      */
-    private String senderprincipalid;
+    private String targetname;
 
     /**
-     * 接受人ID receiverPrincipalID
+     * 发起人ID principalID
      */
-    private String receiverprincipalid;
+    private String principalid;
 
     /**
-     * 货品货源地类型 sourceType
+     * 接受人ID principalName
      */
-    private String sourcetype;
+    private String principalname;
 
     /**
-     * 货品目的地类型 targetType
+     * 货品货源地类型 type
      */
-    private String targettype;
+    private String type;
 
     /**
      * 总价 sumPrice
      */
     private Float sumprice;
-
-    /**
-     * 价格类型 priceType
-     */
-    private String pricetype;
 
     /**
      * 创建时间 createTime
@@ -77,6 +77,14 @@ public class WarehourseOrderCommon {
         this.sourceid = sourceid;
     }
 
+    public String getSourcename() {
+        return sourcename;
+    }
+
+    public void setSourcename(String sourcename) {
+        this.sourcename = sourcename == null ? null : sourcename.trim();
+    }
+
     public Integer getTargetid() {
         return targetid;
     }
@@ -85,36 +93,36 @@ public class WarehourseOrderCommon {
         this.targetid = targetid;
     }
 
-    public String getSenderprincipalid() {
-        return senderprincipalid;
+    public String getTargetname() {
+        return targetname;
     }
 
-    public void setSenderprincipalid(String senderprincipalid) {
-        this.senderprincipalid = senderprincipalid == null ? null : senderprincipalid.trim();
+    public void setTargetname(String targetname) {
+        this.targetname = targetname == null ? null : targetname.trim();
     }
 
-    public String getReceiverprincipalid() {
-        return receiverprincipalid;
+    public String getPrincipalid() {
+        return principalid;
     }
 
-    public void setReceiverprincipalid(String receiverprincipalid) {
-        this.receiverprincipalid = receiverprincipalid == null ? null : receiverprincipalid.trim();
+    public void setPrincipalid(String principalid) {
+        this.principalid = principalid == null ? null : principalid.trim();
     }
 
-    public String getSourcetype() {
-        return sourcetype;
+    public String getPrincipalname() {
+        return principalname;
     }
 
-    public void setSourcetype(String sourcetype) {
-        this.sourcetype = sourcetype == null ? null : sourcetype.trim();
+    public void setPrincipalname(String principalname) {
+        this.principalname = principalname == null ? null : principalname.trim();
     }
 
-    public String getTargettype() {
-        return targettype;
+    public String getType() {
+        return type;
     }
 
-    public void setTargettype(String targettype) {
-        this.targettype = targettype == null ? null : targettype.trim();
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public Float getSumprice() {
@@ -123,14 +131,6 @@ public class WarehourseOrderCommon {
 
     public void setSumprice(Float sumprice) {
         this.sumprice = sumprice;
-    }
-
-    public String getPricetype() {
-        return pricetype;
-    }
-
-    public void setPricetype(String pricetype) {
-        this.pricetype = pricetype == null ? null : pricetype.trim();
     }
 
     public String getCreatetime() {

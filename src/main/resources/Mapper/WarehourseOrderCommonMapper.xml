@@ -4,20 +4,20 @@
   <resultMap id="BaseResultMap" type="com.software.domain.WarehourseOrderCommon">
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="sourceID" jdbcType="INTEGER" property="sourceid" />
+    <result column="sourceName" jdbcType="VARCHAR" property="sourcename" />
     <result column="targetID" jdbcType="INTEGER" property="targetid" />
-    <result column="senderPrincipalID" jdbcType="VARCHAR" property="senderprincipalid" />
-    <result column="receiverPrincipalID" jdbcType="VARCHAR" property="receiverprincipalid" />
-    <result column="sourceType" jdbcType="VARCHAR" property="sourcetype" />
-    <result column="targetType" jdbcType="VARCHAR" property="targettype" />
+    <result column="targetName" jdbcType="VARCHAR" property="targetname" />
+    <result column="principalID" jdbcType="VARCHAR" property="principalid" />
+    <result column="principalName" jdbcType="VARCHAR" property="principalname" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="sumPrice" jdbcType="REAL" property="sumprice" />
-    <result column="priceType" jdbcType="VARCHAR" property="pricetype" />
     <result column="createTime" jdbcType="VARCHAR" property="createtime" />
     <result column="checkTime" jdbcType="VARCHAR" property="checktime" />
     <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, sourceID, targetID, senderPrincipalID, receiverPrincipalID, sourceType, targetType, 
-    sumPrice, priceType, createTime, checkTime, status
+    ID, sourceID, sourceName, targetID, targetName, principalID, principalName, type, 
+    sumPrice, createTime, checkTime, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.WarehourseOrderCommon" resultMap="BaseResultMap">
     select 
@@ -25,7 +25,7 @@
     from warehourse_order_common
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  <select id="select" parameterType="com.software.domain.WarehourseOrderCommon" resultMap="BaseResultMap">
+    <select id="select" parameterType="com.software.domain.WarehourseOrderCommon" resultMap="BaseResultMap">
 		select *
 		from warehourse_order_common
 		<where>
@@ -35,23 +35,23 @@
 			<if test="sourceid!=null and sourceid!=''">
 				and sourceID = #{sourceid}
 			</if>
+			<if test="sourcename!=null and sourcename!=''">
+				and sourceName = #{sourcename}
+			</if>
 			<if test="targetid!=null and targetid!=''">
 				and targetID = #{targetid}
 			</if>
-			<if test="senderprincipalid!=null and senderprincipalid!=''">
-				and senderPrincipalID = #{senderprincipalid}
+			<if test="targetname!=null and targetname!=''">
+				and targetName = #{targetName}
 			</if>
-			<if test="receiverprincipalid!=null and receiverprincipalid!=''">
-				and receiverPrincipalID = #{receiverprincipalid}
+			<if test="principalid!=null and principalid!=''">
+				and principalID = #{principalid}
 			</if>
-			<if test="sourcetype!=null and sourcetype!=''">
-				and sourceType = #{sourcetype}
+			<if test="principalname!=null and principalname!=''">
+				and principalName = #{principalname}
 			</if>
-			<if test="targettype!=null and targettype!=''">
-				and targetType = #{targettype}
-			</if>
-			<if test="pricetype!=null and pricetype!=''">
-				and priceType = #{pricetype}
+			<if test="type!=null and type!=''">
+				and type = #{type}
 			</if>
 			<if test="status!=null and status!=''">
 				and status = #{status}
@@ -63,16 +63,16 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.software.domain.WarehourseOrderCommon">
-    insert into warehourse_order_common (ID, sourceID, targetID, 
-      senderPrincipalID, receiverPrincipalID, 
-      sourceType, targetType, sumPrice, 
-      priceType, createTime, checkTime, 
-      status)
-    values (#{id,jdbcType=INTEGER}, #{sourceid,jdbcType=INTEGER}, #{targetid,jdbcType=INTEGER}, 
-      #{senderprincipalid,jdbcType=VARCHAR}, #{receiverprincipalid,jdbcType=VARCHAR}, 
-      #{sourcetype,jdbcType=VARCHAR}, #{targettype,jdbcType=VARCHAR}, #{sumprice,jdbcType=REAL}, 
-      #{pricetype,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{checktime,jdbcType=VARCHAR}, 
-      #{status,jdbcType=VARCHAR})
+    insert into warehourse_order_common (ID, sourceID, sourceName, 
+      targetID, targetName, principalID, 
+      principalName, type, sumPrice, 
+      createTime, checkTime, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{sourceid,jdbcType=INTEGER}, #{sourcename,jdbcType=VARCHAR}, 
+      #{targetid,jdbcType=INTEGER}, #{targetname,jdbcType=VARCHAR}, #{principalid,jdbcType=VARCHAR}, 
+      #{principalname,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{sumprice,jdbcType=REAL}, 
+      #{createtime,jdbcType=VARCHAR}, #{checktime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.WarehourseOrderCommon">
     insert into warehourse_order_common
@@ -83,26 +83,26 @@
       <if test="sourceid != null">
         sourceID,
       </if>
+      <if test="sourcename != null">
+        sourceName,
+      </if>
       <if test="targetid != null">
         targetID,
       </if>
-      <if test="senderprincipalid != null">
-        senderPrincipalID,
+      <if test="targetname != null">
+        targetName,
       </if>
-      <if test="receiverprincipalid != null">
-        receiverPrincipalID,
+      <if test="principalid != null">
+        principalID,
       </if>
-      <if test="sourcetype != null">
-        sourceType,
+      <if test="principalname != null">
+        principalName,
       </if>
-      <if test="targettype != null">
-        targetType,
+      <if test="type != null">
+        type,
       </if>
       <if test="sumprice != null">
         sumPrice,
-      </if>
-      <if test="pricetype != null">
-        priceType,
       </if>
       <if test="createtime != null">
         createTime,
@@ -121,26 +121,26 @@
       <if test="sourceid != null">
         #{sourceid,jdbcType=INTEGER},
       </if>
+      <if test="sourcename != null">
+        #{sourcename,jdbcType=VARCHAR},
+      </if>
       <if test="targetid != null">
         #{targetid,jdbcType=INTEGER},
       </if>
-      <if test="senderprincipalid != null">
-        #{senderprincipalid,jdbcType=VARCHAR},
+      <if test="targetname != null">
+        #{targetname,jdbcType=VARCHAR},
       </if>
-      <if test="receiverprincipalid != null">
-        #{receiverprincipalid,jdbcType=VARCHAR},
+      <if test="principalid != null">
+        #{principalid,jdbcType=VARCHAR},
       </if>
-      <if test="sourcetype != null">
-        #{sourcetype,jdbcType=VARCHAR},
+      <if test="principalname != null">
+        #{principalname,jdbcType=VARCHAR},
       </if>
-      <if test="targettype != null">
-        #{targettype,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
       <if test="sumprice != null">
         #{sumprice,jdbcType=REAL},
-      </if>
-      <if test="pricetype != null">
-        #{pricetype,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=VARCHAR},
@@ -159,26 +159,26 @@
       <if test="sourceid != null">
         sourceID = #{sourceid,jdbcType=INTEGER},
       </if>
+      <if test="sourcename != null">
+        sourceName = #{sourcename,jdbcType=VARCHAR},
+      </if>
       <if test="targetid != null">
         targetID = #{targetid,jdbcType=INTEGER},
       </if>
-      <if test="senderprincipalid != null">
-        senderPrincipalID = #{senderprincipalid,jdbcType=VARCHAR},
+      <if test="targetname != null">
+        targetName = #{targetname,jdbcType=VARCHAR},
       </if>
-      <if test="receiverprincipalid != null">
-        receiverPrincipalID = #{receiverprincipalid,jdbcType=VARCHAR},
+      <if test="principalid != null">
+        principalID = #{principalid,jdbcType=VARCHAR},
       </if>
-      <if test="sourcetype != null">
-        sourceType = #{sourcetype,jdbcType=VARCHAR},
+      <if test="principalname != null">
+        principalName = #{principalname,jdbcType=VARCHAR},
       </if>
-      <if test="targettype != null">
-        targetType = #{targettype,jdbcType=VARCHAR},
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
       </if>
       <if test="sumprice != null">
         sumPrice = #{sumprice,jdbcType=REAL},
-      </if>
-      <if test="pricetype != null">
-        priceType = #{pricetype,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=VARCHAR},
@@ -195,13 +195,13 @@
   <update id="updateByPrimaryKey" parameterType="com.software.domain.WarehourseOrderCommon">
     update warehourse_order_common
     set sourceID = #{sourceid,jdbcType=INTEGER},
+      sourceName = #{sourcename,jdbcType=VARCHAR},
       targetID = #{targetid,jdbcType=INTEGER},
-      senderPrincipalID = #{senderprincipalid,jdbcType=VARCHAR},
-      receiverPrincipalID = #{receiverprincipalid,jdbcType=VARCHAR},
-      sourceType = #{sourcetype,jdbcType=VARCHAR},
-      targetType = #{targettype,jdbcType=VARCHAR},
+      targetName = #{targetname,jdbcType=VARCHAR},
+      principalID = #{principalid,jdbcType=VARCHAR},
+      principalName = #{principalname,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       sumPrice = #{sumprice,jdbcType=REAL},
-      priceType = #{pricetype,jdbcType=VARCHAR},
       createTime = #{createtime,jdbcType=VARCHAR},
       checkTime = #{checktime,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR}
