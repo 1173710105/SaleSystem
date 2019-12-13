@@ -36,8 +36,7 @@ public class ClientController {
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
 		client.setLabel(param.getLabel());
-		
-		List<com.software.domain.Client> result = service.select(client);
+		List<com.software.domain.Client> result = service.selectValid(client);
 		return result;
 	}
 	

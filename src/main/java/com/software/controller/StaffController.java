@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.software.domain.Staff;
+import com.software.topservice.StaffManagerService;
 
 @RestController
 @RequestMapping("/staff")
 public class StaffController {
 	@Autowired
+	private StaffManagerService service;
 	
 	@RequestMapping("/queryById")
 	public Staff queryStaffById(@RequestBody Map<String, String> param){
@@ -38,8 +40,7 @@ public class StaffController {
 		staff.setLabel("valid");
 		
 		
-		Staff result = null;
-		
+		Staff result = service.selectByPrimaryKey(staff);
 		return result;
 	}
 	
@@ -65,7 +66,7 @@ public class StaffController {
 		staff.setEmail(email);
 		staff.setLabel("valid");
 		
-		List<Staff> result = null;
+		List<Staff> result = service.select(staff);
 		return result;
 	}
 	
@@ -91,6 +92,7 @@ public class StaffController {
 		staff.setEmail(email);
 		staff.setLabel("valid");
 		
+		service.insertSelective(staff);
 		return "success";
 	}
 	
@@ -114,8 +116,8 @@ public class StaffController {
 		staff.setGender(gender);
 		staff.setPhone(phone);
 		staff.setEmail(email);
-		staff.setLabel("valid");
-		
+		staff.setLabel("invalid");
+		service.updateByPrimaryKeySelective(staff);
 		return "success";
 	}
 	
@@ -140,7 +142,7 @@ public class StaffController {
 		staff.setPhone(phone);
 		staff.setEmail(email);
 		staff.setLabel("valid");
-		
+		service.updateByPrimaryKeySelective(staff);
 		return "success";
 	}
 }

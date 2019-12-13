@@ -1,6 +1,8 @@
 package com.software.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,13 +36,21 @@ public class CargoController {
 	
 	@RequestMapping("/add")
 	public String addCargo(@RequestBody ReceiveCargo param){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String date = df.format(new Date());// new Date()为获取当前系统时间
+		
 		param.setLabel("valid");
+		param.setTime(date);
 		service.insertSelective(param);
 		return "success";
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteCargo(@RequestBody ReceiveCargo param){
+	public String deleteCargo(@RequestBody ReceiveCargo param)
+	{
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String date = df.format(new Date());// new Date()为获取当前系统时间
+		param.setTime(date);
 		param.setLabel("invalid");
 		service.updateByPrimaryKeySelective(param);
 		return "success";
@@ -48,6 +58,9 @@ public class CargoController {
 	
 	@RequestMapping("/update")
 	public String updateCargo(@RequestBody ReceiveCargo param){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String date = df.format(new Date());// new Date()为获取当前系统时间
+		param.setTime(date);
 		param.setLabel("valid");
 		service.updateByPrimaryKeySelective(param);
 		return "success";
