@@ -3,29 +3,20 @@ package com.software.topservice;
 import java.util.List;
 
 import com.software.trans.ReceiveOrder;
+import com.software.trans.ReceiveWarehourseOrder;
 import com.software.trans.SendOrder;
+import com.software.trans.SendWarehourseOrder;
 
 public interface WarehourseOrderManagerService 
 {
-public List<SendOrder> select(ReceiveOrder order);
+	public List<SendWarehourseOrder> select(ReceiveWarehourseOrder order);
 	
-	public void insert(List<ReceiveOrder> orderList);
+	public void insert(List<ReceiveWarehourseOrder> orderList);
 	
-	public void update(List<ReceiveOrder> orderList);
+	public void update(List<ReceiveWarehourseOrder> orderList);
 	
-	public void delete(ReceiveOrder order);
+	public void delete(ReceiveWarehourseOrder order);
+
+	public String checkOrder(ReceiveWarehourseOrder order);
 	
-	/**
-	 * 设计到detail表的操作，可能数量不够
-	 * @param order
-	 */
-	public String checkOrder(ReceiveOrder order);
-	
-	public void payOrder(ReceiveOrder order);
-	
-	/**
-	 * 设计到detail表的操作
-	 * @param order
-	 */
-	public void returnOrder(ReceiveOrder order);
 }
