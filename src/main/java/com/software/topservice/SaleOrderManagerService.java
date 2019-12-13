@@ -20,7 +20,7 @@ public interface SaleOrderManagerService
 	 * 设计到detail表的操作，可能数量不够
 	 * @param order
 	 */
-	public void checkOrder(ReceiveOrder order);
+	public String checkOrder(ReceiveOrder order);
 	
 	public void payOrder(ReceiveOrder order);
 	

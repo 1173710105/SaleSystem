@@ -5,118 +5,26 @@ import java.util.List;
 public class SaleorderCommon 
 {
 	private String tablename;
-    /**
-     * 记录订单ID ID
-     */
     private Integer id;
-
-    /**
-     * 仓库（门店）ID warehourseID
-     */
     private Integer warehourseid;
-
-    /**
-     *  warehourseName
-     */
     private String warehoursename;
-
-    /**
-     * 客户ID clientID
-     */
     private Integer clientid;
-
-    /**
-     *  clientName
-     */
     private String clientname;
-
-    /**
-     * 负责人ID principalID
-     */
     private String principalid;
-
-    /**
-     *  principalName
-     */
     private String principalname;
-
-    /**
-     * 创建时间 createTime
-     */
     private String createtime;
-
-    /**
-     * 审核时间 checkTime
-     */
     private String checktime;
-
-    /**
-     * 收款时间 gatherTime
-     */
     private String gathertime;
-
-    /**
-     * 退款时间 returnTime
-     */
     private String returntime;
-
-    /**
-     * pos时间 posTime
-     */
     private String postime;
-
-    /**
-     *  status
-     */
     private Integer status;
-
-    /**
-     * 总价 sumPrice
-     */
     private Float sumprice;
-
-    /**
-     * 收款 gather
-     */
     private Float gather;
-
-    /**
-     * 找零 change
-     */
     private Float change;
-
-    /**
-     * 利润 margin
-     */
     private Float margin;
-
-    /**
-     * 订单类型 type
-     */
     private String type;
-
-    /**
-     * 备注信息 note
-     */
     private String note;
-
-    /**
-     * 异动信息 exception
-     */
     private String exception;
-
-    /**
-     * 订单中商品列表
-     */
-    private List<SaleorderItem> items;
-    
-    public List<SaleorderItem> getItems() {
-		return items;
-	}
-
-	public void setItems(List<SaleorderItem> items) {
-		this.items = items;
-	}
 
 	public String getTablename() {
 		return tablename;
@@ -285,14 +193,4 @@ public class SaleorderCommon
     public void setException(String exception) {
         this.exception = exception == null ? null : exception.trim();
     }
-
-	@Override
-	public String toString() {
-		return "SaleorderCommon [tablename=" + tablename + ", id=" + id + ", warehourseid=" + warehourseid
-				+ ", clientid=" + clientid + ", principalid=" + principalid + ", createtime=" + createtime
-				+ ", checktime=" + checktime + ", gathertime=" + gathertime + ", returntime=" + returntime
-				+ ", postime=" + postime + ", status=" + status + ", sumprice=" + sumprice + ", gather=" + gather
-				+ ", change=" + change + ", margin=" + margin + ", type=" + type + ", note=" + note + ", exception="
-				+ exception + ", items=" + items + "]";
-	}
 }

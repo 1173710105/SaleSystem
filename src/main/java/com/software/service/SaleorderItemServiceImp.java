@@ -55,4 +55,10 @@ public class SaleorderItemServiceImp implements SaleorderItemService {
 		mapper.createTable(record.getTablename());
 	}
 
+	@Override
+	public void deleteByID(SaleorderItem record) 
+	{
+		mapper.deleteByID(record);
+	}
+
 }

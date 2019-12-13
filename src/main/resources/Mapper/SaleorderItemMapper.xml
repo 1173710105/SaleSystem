@@ -40,6 +40,10 @@
     delete from ${tablename}
     where viceID = #{viceid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByID" parameterType="com.software.domain.SaleorderItem">
+    delete from ${tablename}
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.software.domain.SaleorderItem">
     insert into ${tablename} (viceID, ID, itemID, 
       itemName, itemNum, perPrice, 
