@@ -31,11 +31,7 @@ public class SubBranchDetailMap {
      */
     private String principalname;
 
-    /**
-     * 子仓库商品表的名称 itemTable
-     */
-    private String itemtable;
-
+   
     /**
      * 子仓库销售表的名称 saleOrderItemTable
      */
@@ -55,6 +51,12 @@ public class SubBranchDetailMap {
      * 子仓库的表的名称 warehourseDetailTable
      */
     private String warehoursedetailtable;
+    
+    /**
+     * 子仓库商品表的名称 itemTable
+     */
+    private String itemtable;
+
 
     /**
      * 更新时间 time

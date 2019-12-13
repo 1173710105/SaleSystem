@@ -62,6 +62,40 @@
     from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <select id="select" parameterType="com.software.domain.SaleorderCommon" resultMap="BaseResultMap">
+		select *
+		from ${tablename}
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="warehourseid!=null and warehourseid!=''">
+				and warehourseID = #{warehourseid}
+			</if>
+			<if test="warehoursename!=null and warehoursename!=''">
+				and warehourseName = #{warehoursename}
+			</if>
+			<if test="clientid!=null and clientid!=''">
+				and clientID = #{clientid}
+			</if>
+			<if test="clientname!=null and clientname!=''">
+				and clientName = #{clientname}
+			</if>
+			<if test="principalid!=null and principalid!=''">
+				and principalID = #{principalid}
+			</if>
+			<if test="principalname!=null and principalname!=''">
+				and principalName = #{principalname}
+			</if>
+			<if test="status!=null and status!=''">
+				and status = #{status}
+			</if>
+			<if test="type!=null and type!=''">
+				and type = #{type}
+			</if>
+		</where>
+	</select>
+
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.SaleorderCommon">
     delete from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
