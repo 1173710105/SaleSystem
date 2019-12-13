@@ -137,7 +137,18 @@ public class SendWarehourseOrder {
 
 	
 	public void initByCommon(WarehourseOrderCommon common){
-		
+		this.id = common.getId();
+		this.sourceid = common.getSourceid();
+		this.sourcename = common.getSourcename();
+		this.targetid = common.getTargetid();
+		this.targetname = common.getTargetname();
+		this.principalid = common.getPrincipalid();
+		this.principalname = common.getPrincipalname();
+		this.type = common.getType();
+		this.sumprice = common.getSumprice();
+		this.createtime = common.getCreatetime();
+		this.checktime = common.getChecktime();
+		this.status = common.getStatus();
 	}
     
 }

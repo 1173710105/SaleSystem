@@ -3,8 +3,8 @@ package com.software.trans;
 import com.software.domain.WarehourseOrderCommon;
 import com.software.domain.WarehourseOrderItem;
 
-public class ReceiveWarehourseOrder {
-	
+public class ReceiveWarehourseOrder 
+{
     private String id;
     private String sourceid;
     private String sourcename;
@@ -28,6 +28,9 @@ public class ReceiveWarehourseOrder {
 	
 	
 	
+	
+
+
 	public String getId() {
 		return id;
 	}

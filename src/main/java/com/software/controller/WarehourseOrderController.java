@@ -42,11 +42,13 @@ public class WarehourseOrderController {
 	
 	@RequestMapping("/apply")
 	public String applyWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
+		// update
 		return "success";
 	}
 	
 	@RequestMapping("/pass")
 	public String passWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
+		// check
 		return "success";
 	}
 }
