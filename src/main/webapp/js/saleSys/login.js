@@ -94,34 +94,13 @@ $("#login-btn").click(
                     setCookie("time", data.time);
                 } else {
                     alert("请求失败");
+                    return;
                 }
             },
             error: function () {
             }
         });
-        var thirdrequest = 
-            '{"id":"' + account +'",'
-            + '"tablename":"' + getCookie("stafftable") + '"}';
-        dataajax = $.ajax({
-            url: url,
-            data: thirdrequest,
-            async: false,
-            type: "post",
-            dataType: "text",
-            contentType: "application/json;charset=UTF-8",
-            success: function (data) {
-                if (data != null) {
-                    //填充cookie
-                    //用户名 name
-                    setCookie("name", data.name);
-                } else {
-                    alert("请求失败");
-                }
-            },
-            error: function () {
-            }
-        });
-        $.when(loginajax, dataajax, personalajax).done(function() {
+        $.when(loginajax, dataajax).done(function() {
             top.location.href = destination;
         });
     });
