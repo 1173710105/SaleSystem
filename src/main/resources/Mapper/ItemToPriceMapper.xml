@@ -116,22 +116,22 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.ItemToPrice">
     update ${tablename}
     <set>
-      <if test="name != null">
+      <if test="name != null and name != ''">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="retailprice != null">
+      <if test="retailprice != null and retailprice != ''">
         retailPrice = #{retailprice,jdbcType=REAL},
       </if>
-      <if test="wholesaleprice != null">
+      <if test="wholesaleprice != null and wholesaleprice != ''">
         wholesalePrice = #{wholesaleprice,jdbcType=REAL},
       </if>
-      <if test="purchaseprice != null">
+      <if test="purchaseprice != null and purchaseprice!=''">
         purchasePrice = #{purchaseprice,jdbcType=REAL},
       </if>
-      <if test="time != null">
+      <if test="time != null and time != ''">
         time = #{time,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+      <if test="label != null and label !=''">
         label = #{label,jdbcType=VARCHAR},
       </if>
     </set>

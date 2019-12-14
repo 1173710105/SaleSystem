@@ -34,7 +34,8 @@ $('#search-btn').click(function () {
 
 //添加货品
 $('#add-btn').click(function() {
-    $('#cargoModal').modal('show'); //show modal
+	alert("无权限");
+	return;
 });
 
 //保存货品
@@ -68,16 +69,17 @@ $('#save-btn').click(function() {
 })
 
 //编辑货品
-$('#edit-btn').click(function() {
+$(document).on('click', '#edit-btn', function() {
+	$('#cargoModal').modal('show'); //show modal
+	console.log("aa");
     var cargoid = $(this).val();
     var cargo;
-    for (var i = 0; i < cargoList.length; i++) {
-        if (cargoList[i].id == cargoid) {
-            cargo = cargoList[i];
+    for (var i = 0; i < tempCargoList.length; i++) {
+        if (tempCargoList[i].id == cargoid) {
+            cargo = tempCargoList[i];
             break;
         }
     }
-    $('#cargoModal').modal('show'); //show modal
     //填充信息
     $('#cargo-id').val(cargo.id);
     $('#cargo-name').val(cargo.name);
@@ -89,7 +91,7 @@ $('#edit-btn').click(function() {
 });
 
 //删除货品
-$('#delete_btn').click(function () {
+$(document).on('click', '#delete-btn', function () {
     var r = confirm("是否删除？");
     if (r == true) {
         //实现
@@ -129,8 +131,8 @@ function loadCargoList(cargoList) {
         var td8 = document.createElement("td");
         var editButton = document.createElement("button");
         editButton.type = "button";
-        editButton.id = "edit-btn";
-        //editButton.setAttribute("id", "edit-btn");
+        //editButton.id = "edit-btn";
+        editButton.setAttribute("id", "edit-btn");
         editButton.setAttribute("value", cargoList[i].id); //将货品id封装在value中
         editButton.className = "btn btn-sm btn-primary";
         editButton.innerHTML = "编辑";

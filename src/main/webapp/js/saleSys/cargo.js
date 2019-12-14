@@ -90,19 +90,32 @@ function insertCargo(cargo) {
     + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
-   url = "";
+   url = "/cargo/insert";
   return sendJsonAjax(url, param);
 }
 
  //删除货品
-function deleteCargo(id, tablename) {
-    if (id == "") {
+function deleteCargo(tid, ttablename) {
+    if (tid == "") {
         return;
     }
-    url = "";
+    cargo = {
+    		id :tid,
+    		tablename : ttablename
+    }
+    url = "/cargo/delete";
+    combineCargo = $.extend({},defaultSetting, cargo);
     param = 
-        '{"id":"' + id + '",'
-        + '"tablename":"' + tablename + "}"; 
+    '{"id":"' + combineCargo.id +'",'
+    + '"name":"' + combineCargo.name +'",'
+    + '"type":"' + combineCargo.type +'",'
+    + '"specification":"' + combineCargo.specification +'",'
+    + '"picture":"' + combineCargo.picture +'",'
+    + '"retailprice":"' + combineCargo.retailprice +'",'
+    + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
+    + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
+    + '"tablename":"' + combineCargo.tablename + '"}';
+    console.log("delete cargo : " , param);
     return sendJsonAjax(url, param);
 }
 
@@ -122,7 +135,8 @@ function updateCargo(cargo) {
     + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
-   url = "";
+    console.log("update cargo : " , param);
+   url = "/cargo/update";
   return sendJsonAjax(url, param);
 }
 

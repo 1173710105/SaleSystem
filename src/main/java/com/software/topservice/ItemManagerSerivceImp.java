@@ -58,7 +58,6 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	{
 		Item exampleItem = record.toItem();
 		ItemToPrice examplePrice = record.toPrice();
-		
 		List<Item> itemList = itemService.select(exampleItem);
 		Map<Integer, ReceiveCargo> map = new HashMap<Integer, ReceiveCargo>();
 		ReceiveCargo cargo;
@@ -94,7 +93,7 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 		ItemToPrice examplePrice = record.toPrice();
 		
 		itemService.updateByPrimaryKeySelective(exampleItem);
-		priceService.updateByPrimaryKey(examplePrice);
+		priceService.updateByPrimaryKeySelective(examplePrice);
 	}
 
 	@Override

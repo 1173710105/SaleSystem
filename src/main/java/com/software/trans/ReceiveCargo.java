@@ -119,10 +119,14 @@ public class ReceiveCargo
 			item.setId(Integer.valueOf(this.id));
 		}
 		item.setName(this.name);
-		item.setType(this.type);
+		if (this.type!=null&&!this.type.equals("任意")) 
+		{
+			item.setType(this.type);
+		}
 		item.setSpecification(this.specification);
 		item.setPicture(this.picture);
 		item.setTime(this.time);
+		item.setLabel(this.label);
 		return item;
 	}
 	
@@ -151,6 +155,7 @@ public class ReceiveCargo
 			
 		}
 		price.setTime(time);
+		price.setLabel(this.label);
 		return price;
 	}
 	

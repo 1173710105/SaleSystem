@@ -91,4 +91,11 @@ public class Item {
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", type=" + type + ", specification=" + specification
+				+ ", picture=" + picture + ", time=" + time + ", label=" + label + "]";
+	}
+
 }
