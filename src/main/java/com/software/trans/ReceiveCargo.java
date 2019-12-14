@@ -148,6 +148,7 @@ public class ReceiveCargo
 		{
 			price.setWholesaleprice(Float.valueOf(this.wholesaleprice));
 
+			
 		}
 		price.setTime(time);
 		return price;
