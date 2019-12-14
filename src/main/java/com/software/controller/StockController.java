@@ -14,7 +14,8 @@ import com.software.trans.Stock;
 @RequestMapping("/stock")
 public class StockController {
 	@RequestMapping("/queryById")
-	public List<Stock> queryStockByWarehourseId(@RequestBody Stock param){
+	public List<Stock> queryStockByWarehourseId(@RequestBody Stock param)
+	{
 		List<Stock> result = null;
 		return result;
 	}
