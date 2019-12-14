@@ -63,7 +63,7 @@ public class WarehourseOrderController
 	public String applyWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
 		// update
 		param.setStatus(2+"");
-		
+		service.updateStatus(param);
 		return "success";
 	}
 	
