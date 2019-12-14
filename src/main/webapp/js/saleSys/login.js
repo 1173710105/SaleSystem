@@ -88,14 +88,15 @@ $("#login-btn").click(
                     setCookie("warehourseid", data.warehourseid);
                     setCookie("warehoursename", data.warehoursename);
                     setCookie("warehourselocation", data.warehourselocation);
-                    setCookie("pricipalid", data.pricipalid);
-                    setCookie("pricipalname", data.principalname);
+                    setCookie("principalid", data.principalid);
+                    setCookie("principalname", data.principalname);
                     setCookie("saleorderitemtable", data.saleorderitemtable);
                     setCookie("saleordercommontable", data.saleorderitemtable);
                     setCookie("stafftable", data.stafftable);
                     setCookie("warehoursedetailtable", data.warehoursedetailtable);
                     setCookie("itemtable", data.itemtable);
                     setCookie("time", data.time);
+                    console.log("pname", getCookie("principalname"));
                 } else {
                     alert("请求失败");
                     return;
