@@ -35,6 +35,9 @@ public class CargoController {
 		param.setLabel("valid");
 		List<ReceiveCargo> result = service.select(param);
 		return result;
+		
+		
+		
 	}
 	
 	@RequestMapping("/add")
