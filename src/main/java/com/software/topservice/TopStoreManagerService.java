@@ -12,4 +12,6 @@ public interface TopStoreManagerService
     public List<StoreManager> select(StoreManager record);
 
     public void updateByPrimaryKeySelective(StoreManager record);
+    
+    public int count();
 }

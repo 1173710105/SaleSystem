@@ -3,6 +3,7 @@ package com.software.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.eclipse.jdt.internal.compiler.lookup.ImplicitNullAnnotationVerifier;
 
 import com.software.domain.StoreManager;
 
@@ -21,4 +22,6 @@ public interface StoreManagerMapper {
     int updateByPrimaryKeySelective(StoreManager record);
 
     int updateByPrimaryKey(StoreManager record);
+    
+    int count();
 }

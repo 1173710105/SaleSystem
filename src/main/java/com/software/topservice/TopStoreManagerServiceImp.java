@@ -72,4 +72,9 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 		mapService.updateByHourseID(exampleMap);
 	}
 
+	@Override
+	public int count()
+	{
+		return managerService.count();
+	}
 }
