@@ -11,6 +11,7 @@ public class StoreManager {
     private String label;
     private String hourseid;
     private String hoursename;
+    private String time;
     
 	public String getId() {
 		return id;
@@ -65,5 +66,11 @@ public class StoreManager {
 	}
 	public void setHoursename(String hoursename) {
 		this.hoursename = hoursename;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
 	}
 }

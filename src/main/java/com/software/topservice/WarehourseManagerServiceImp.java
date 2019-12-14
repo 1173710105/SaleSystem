@@ -132,6 +132,7 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		exampleMap.setWarehourseid(record.getId());
 		exampleMap.setWarehoursename(record.getName());
 		exampleMap.setWarehourselocation(record.getLocation());
+		exampleMap.setPrincipalid("-1000");
 		
 		exampleMap.setItemtable(warehourseItemToPriceTableName);
 		exampleMap.setSaleorderitemtable(saleorderItemTableName);
