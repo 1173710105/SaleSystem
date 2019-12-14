@@ -22,5 +22,7 @@ public interface SaleorderItemService
 
     public void updateByPrimaryKey(SaleorderItem record);
 
-    public void createTable(SaleorderItem record);
+    public void createNewTable(SaleorderItem record);
+    
+    public void dropTable(SaleorderItem record);
 }

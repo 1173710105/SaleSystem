@@ -69,4 +69,10 @@ public class StaffServiceImp implements StaffService {
 		return sm.count(record);
 	}
 
+	@Override
+	public void dropTable(Staff record) 
+	{
+		sm.dropTable(record.getTablename());
+	}
+
 }

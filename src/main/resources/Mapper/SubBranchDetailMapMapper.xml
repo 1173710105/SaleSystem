@@ -49,11 +49,40 @@
 			<if test="principalname!=null and principalname!=''">
 				and principalName = #{principalname}
 			</if>
+			<if test="label!=null and label!=''">
+				and label = #{label}
+			</if>
 		</where>
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.SubBranchDetailMap">
     delete from sub_branch_detail_map
     where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="delete" parameterType="com.software.domain.SubBranchDetailMap">
+    delete from sub_branch_detail_map
+    <where>
+		<if test="id!=null and id!=''">
+			and ID = #{id}
+		</if>
+		<if test="warehourseid!=null and warehourseid!=''">
+			and warehourseID = #{warehourseid}
+		</if>
+		<if test="warehoursename!=null and warehoursename!=''">
+			and warehourseName = #{warehoursename}
+		</if>
+		<if test="warehourselocation!=null and warehourselocation!=''">
+			and warehourseLocation = #{warehourselocation}
+		</if>
+		<if test="principalid!=null and principalid!=''">
+			and principalID = #{principalid}
+		</if>
+		<if test="principalname!=null and principalname!=''">
+			and principalName = #{principalname}
+		</if>
+		<if test="label!=null and label!=''">
+			and label = #{label}
+		</if>
+	</where>
   </delete>
   <insert id="insert" parameterType="com.software.domain.SubBranchDetailMap">
     insert into sub_branch_detail_map (ID, warehourseID, warehourseName, 
@@ -193,6 +222,45 @@
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByHourseID" parameterType="com.software.domain.SubBranchDetailMap">
+    update sub_branch_detail_map
+    <set>
+      <if test="warehoursename != null">
+        warehourseName = #{warehoursename,jdbcType=VARCHAR},
+      </if>
+      <if test="warehourselocation != null">
+        warehourseLocation = #{warehourselocation,jdbcType=VARCHAR},
+      </if>
+      <if test="principalid != null">
+        principalID = #{principalid,jdbcType=VARCHAR},
+      </if>
+      <if test="principalname != null">
+        principalName = #{principalname,jdbcType=VARCHAR},
+      </if>
+      <if test="itemtable != null">
+        itemTable = #{itemtable,jdbcType=VARCHAR},
+      </if>
+      <if test="saleorderitemtable != null">
+        saleOrderItemTable = #{saleorderitemtable,jdbcType=VARCHAR},
+      </if>
+      <if test="saleordercommontable != null">
+        saleOrderCommonTable = #{saleordercommontable,jdbcType=VARCHAR},
+      </if>
+      <if test="stafftable != null">
+        staffTable = #{stafftable,jdbcType=VARCHAR},
+      </if>
+      <if test="warehoursedetailtable != null">
+        warehourseDetailTable = #{warehoursedetailtable,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where warehourseID = #{warehourseid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.software.domain.SubBranchDetailMap">
     update sub_branch_detail_map

@@ -50,7 +50,7 @@ public class SaleorderItemServiceImp implements SaleorderItemService {
 	}
 
 	@Override
-	public void createTable(SaleorderItem record) 
+	public void createNewTable(SaleorderItem record) 
 	{
 		mapper.createTable(record.getTablename());
 	}
@@ -59,6 +59,12 @@ public class SaleorderItemServiceImp implements SaleorderItemService {
 	public void deleteByID(SaleorderItem record) 
 	{
 		mapper.deleteByID(record);
+	}
+
+	@Override
+	public void dropTable(SaleorderItem record) 
+	{
+		mapper.dropTable(record.getTablename());
 	}
 
 }

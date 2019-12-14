@@ -22,12 +22,6 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 	}
 
 	@Override
-	public StoreManager selectByPrimaryKey(StoreManager record) 
-	{
-		return service.selectByPrimaryKey(record);
-	}
-
-	@Override
 	public List<StoreManager> select(StoreManager record) 
 	{
 		return service.select(record);

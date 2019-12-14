@@ -21,4 +21,6 @@ public interface SubBranchDetailMapService
     public void updateByPrimaryKeySelective(SubBranchDetailMap record);
 
     public void updateByPrimaryKey(SubBranchDetailMap record);
+    
+    public void updateByHourseID(SubBranchDetailMap record);
 }

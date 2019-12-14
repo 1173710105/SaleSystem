@@ -22,4 +22,6 @@ public interface WarehourseDetailService
     public void updateByPrimaryKey(WarehourseDetail record);
     
     public void createNewTable(WarehourseDetail record);
+    
+    public void dropTable(WarehourseDetail record);
 }
