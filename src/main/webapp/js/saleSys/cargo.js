@@ -38,7 +38,7 @@ function sendJsonAjax(url, param) {
     if (id == "") {
         return;
     }
-    url = "";
+    url = "/cargo/queryById";
     param = 
         '{"id":"' + id + '",'
         + '"tablename":"' + tablename + "}";       
@@ -61,7 +61,7 @@ function sendJsonAjax(url, param) {
         + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
         + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
         + '"tablename":"' + combineCargo.tablename + '"}';
-    url = "";
+    url = "/cargo/query";
    return sendJsonAjax(url, param);
  }
 
