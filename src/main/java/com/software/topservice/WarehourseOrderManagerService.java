@@ -19,4 +19,6 @@ public interface WarehourseOrderManagerService
 
 	public String checkOrder(ReceiveWarehourseOrder order);
 	
+	public void updateStatus(ReceiveWarehourseOrder order);
+	
 }
