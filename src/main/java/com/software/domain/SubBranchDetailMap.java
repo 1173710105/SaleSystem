@@ -181,4 +181,16 @@ public class SubBranchDetailMap {
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
+
+	@Override
+	public String toString() {
+		return "SubBranchDetailMap [id=" + id + ", warehourseid=" + warehourseid + ", warehoursename=" + warehoursename
+				+ ", warehourselocation=" + warehourselocation + ", principalid=" + principalid + ", principalname="
+				+ principalname + ", saleorderitemtable=" + saleorderitemtable + ", saleordercommontable="
+				+ saleordercommontable + ", stafftable=" + stafftable + ", warehoursedetailtable="
+				+ warehoursedetailtable + ", itemtable=" + itemtable + ", time=" + time + ", label=" + label + ", flag="
+				+ flag + "]";
+	}
+	
+	
 }

@@ -42,10 +42,8 @@ public class LoginController
 		String id = param.getId();
 		String password = param.getPassword();
 		String authority = param.getType();
-		System.out.println(id);
-		System.out.println(password);
-		System.out.println(authority);
 		SubBranchDetailMap map = loginService.login(id, password, authority);
+		System.out.println(map);
     	if(map.getFlag().equals("true")){
 			mp.put(id, map);
 		}
@@ -55,12 +53,9 @@ public class LoginController
 	@RequestMapping("/secondRequest")
 	public SubBranchDetailMap secondRequest(@RequestBody ReceiveUser param)
 	{
-		System.out.println("second");
 		String id = param.getId();
 		if(mp.containsKey(id)){
 			
-			System.out.println("exist");
-			System.out.println(JSON.toJSON(mp.get(id)));
 			return mp.get(id);
 		}else{
 			return null;
