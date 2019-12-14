@@ -8,7 +8,9 @@ public interface WarehourseOrderItemService
 {
 	public void deleteByPrimaryKey(WarehourseOrderItem record);
 
-    public void insert(WarehourseOrderItem record);
+    public void deleteByID(WarehourseOrderItem record);
+    
+	public void insert(WarehourseOrderItem record);
 
     public void insertSelective(WarehourseOrderItem record);
 
@@ -19,4 +21,5 @@ public interface WarehourseOrderItemService
     public void updateByPrimaryKeySelective(WarehourseOrderItem record);
 
     public void updateByPrimaryKey(WarehourseOrderItem record);
+    
 }

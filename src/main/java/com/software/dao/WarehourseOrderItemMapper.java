@@ -11,6 +11,8 @@ public interface WarehourseOrderItemMapper
 {
     int deleteByPrimaryKey(WarehourseOrderItem record);
 
+    int deleteByID(WarehourseOrderItem record);
+    
     int insert(WarehourseOrderItem record);
 
     int insertSelective(WarehourseOrderItem record);

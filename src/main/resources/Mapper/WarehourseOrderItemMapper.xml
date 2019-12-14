@@ -13,13 +13,13 @@
   <sql id="Base_Column_List">
     viceID, ID, itemID, itemName, itemNum, perPrice, sumPrice
   </sql>
-  <select id="selectByPrimaryKey" parameterType="com.software.domain.WarehourseOrderCommon" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.software.domain.WarehourseOrderItem" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from warehourse_order_item
     where viceID = #{viceid,jdbcType=INTEGER}
   </select>
-  <select id="select" parameterType="com.software.domain.WarehourseOrderCommon" resultMap="BaseResultMap">
+  <select id="select" parameterType="com.software.domain.WarehourseOrderItem" resultMap="BaseResultMap">
 		select *
 		from warehourse_order_item
 		<where>
@@ -34,7 +34,11 @@
 			</if>
 		</where>
 	</select>
-  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.WarehourseOrderCommon">
+  <delete id="deleteByPrimaryKey" parameterType="com.software.domain.WarehourseOrderItem">
+    delete from warehourse_order_item
+    where viceID = #{viceid,jdbcType=INTEGER}
+  </delete>
+   <delete id="deleteByID" parameterType="com.software.domain.WarehourseOrderItem">
     delete from warehourse_order_item
     where viceID = #{viceid,jdbcType=INTEGER}
   </delete>
