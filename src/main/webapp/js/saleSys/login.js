@@ -103,7 +103,7 @@ $("#login-btn").click(
             '{"id":"' + account +'",'
             + '"tablename":"' + getCookie("stafftable") + '"}';
         dataajax = $.ajax({
-            url: url,
+            url: "http://localhost:8080/exam/" + "thirdRequest",
             data: thirdrequest,
             async: false,
             type: "post",
