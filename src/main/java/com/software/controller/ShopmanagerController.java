@@ -66,16 +66,20 @@ public class ShopmanagerController {
 	
 	@RequestMapping("/insert")
 	public String insertManager(@RequestBody Map<String, String> param){
-		String id = param.get("id");
+		String hourseid = param.get("hourseid");
+		String tablename = "sub_staff_"+String.format("%04d", hourseid);
+		String mid = tablename.substring(tablename.length()-4, tablename.length());
+		String prefix = "3";
+//		String last = String.format("%04d", service.count(null));
+//		String id = prefix+mid+last;
 		String password = param.get("password");
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
 		String email = param.get("email");
-		String hourseid = param.get("hourseid");
 		
 		StoreManager storemanager = new StoreManager();
-		storemanager.setId(id);
+//		storemanager.setId(id);
 		storemanager.setPassword(password);
 		storemanager.setName(name);
 		storemanager.setGender(gender);
