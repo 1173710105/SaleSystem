@@ -67,7 +67,7 @@ $("#login-btn").click(
         var secondrequest = 
             '{"id":"' + account +'"}';
         dataajax = $.ajax({
-            url: url,
+            url: "http://localhost:8080/exam/" + "secondRequest",
             data: secondrequest,
             async: false,
             type: "post",
