@@ -19,6 +19,14 @@ public class StockController {
 		return result;
 	}
 	
+	@RequestMapping("/query")
+	public List<Stock> queryStock(@RequestBody Stock param){
+		List<Stock> result = null;
+		return result;
+	}
 	
-	
+	@RequestMapping("/update")
+	public String updateStock(@RequestBody List<Stock> param){
+		return "success";
+	}
 }
