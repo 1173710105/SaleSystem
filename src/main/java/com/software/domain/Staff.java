@@ -3,48 +3,28 @@ package com.software.domain;
 public class Staff 
 {
 	private String tablename;
-    /**
-     * 员工ID ID
-     */
     private String id;
-
-    /**
-     * 密码 password
-     */
     private String password;
-
-    /**
-     * 员工所属子仓库ID hourseID
-     */
     private Integer hourseid;
-
-    /**
-     * 员工姓名 name
-     */
+    private String hoursename;
     private String name;
-
-    /**
-     * 员工性别 gender
-     */
     private String gender;
-
-    /**
-     * 员工手机 phone
-     */
     private String phone;
-
-    /**
-     * 员工电子邮件 email
-     */
     private String email;
-
-    /**
-     *  label
-     */
     private String label;
 
-    
-    public String getTablename() {
+    public String getHoursename() 
+    {
+		return hoursename;
+	}
+
+	public void setHoursename(String hoursename) 
+	
+	{
+		this.hoursename = hoursename;
+	}
+
+	public String getTablename() {
 		return tablename;
 	}
 
