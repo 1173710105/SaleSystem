@@ -14,6 +14,7 @@ public class Stock {
     private String hourseid;
     private String afterstock;
     
+    
 	public String getTablename() {
 		return tablename;
 	}
