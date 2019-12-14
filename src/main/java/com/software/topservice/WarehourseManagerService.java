@@ -15,6 +15,4 @@ public interface WarehourseManagerService
     public List<Warehourse> select(Warehourse record);
     
     public void updateByPrimaryKeySelective(Warehourse record);
-
-    public void updateByPrimaryKey(Warehourse record);
 }

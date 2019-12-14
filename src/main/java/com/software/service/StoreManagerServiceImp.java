@@ -57,4 +57,10 @@ public class StoreManagerServiceImp implements StoreManagerService
 	{
 		smm.updateByPrimaryKey(record);
 	}
+
+	@Override
+	public int count() 
+	{
+		return smm.count();
+	}
 }

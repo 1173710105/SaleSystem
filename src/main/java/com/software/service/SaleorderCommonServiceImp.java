@@ -50,8 +50,14 @@ public class SaleorderCommonServiceImp implements SaleorderCommonService {
 	}
 
 	@Override
-	public void createTable(SaleorderCommon record) {
+	public void createNewTable(SaleorderCommon record) {
 		mapper.createTable(record.getTablename());
+	}
+
+	@Override
+	public void dropTable(SaleorderCommon record) 
+	{
+		mapper.dropTable(record.getTablename());
 	}
 
 }

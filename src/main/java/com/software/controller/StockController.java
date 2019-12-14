@@ -1,15 +1,40 @@
 package com.software.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.software.domain.GeneralManager;
+import com.software.topservice.StockManagerService;
+import com.software.trans.Stock;
 
 @RestController
 @RequestMapping("/stock")
-public class StockController {
+public class StockController 
+{
+	@Autowired
+	private StockManagerService service;
 	
+	@RequestMapping("/queryById")
+	public List<Stock> queryStockByWarehourseId(@RequestBody Stock param)
+	{
+		List<Stock> result = service.select(param);
+		return result;
+	}
+	
+	@RequestMapping("/query")
+	public List<Stock> queryStock(@RequestBody Stock param){
+		List<Stock> result = service.select(param);
+		return result;
+	}
+	
+	@RequestMapping("/update")
+	public String updateStock(@RequestBody List<Stock> param){
+		service.update(param);
+		return "success";
+	}
 }

@@ -18,11 +18,12 @@ public class StaffController {
 	private StaffManagerService service;
 	
 	@RequestMapping("/queryById")
-	public Staff queryStaffById(@RequestBody Map<String, String> param){
-		String tablename = param.get("tablename");
+	public Staff queryStaffById(@RequestBody Map<String, String> param)
+	{
 		String id = param.get("id");
 		String password = param.get("password");
 		Integer hourseid = Integer.valueOf(param.get("hourseid"));
+		String tablename = "sub_staff_"+String.format("%04d", hourseid);
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
@@ -46,10 +47,10 @@ public class StaffController {
 	
 	@RequestMapping("/query")
 	public List<Staff> queryStaff(@RequestBody Map<String, String> param){
-		String tablename = param.get("tablename");
 		String id = param.get("id");
 		String password = param.get("password");
 		Integer hourseid = Integer.valueOf(param.get("hourseid"));
+		String tablename = "sub_staff_"+String.format("%04d", hourseid);
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
@@ -72,13 +73,13 @@ public class StaffController {
 	
 	@RequestMapping("/add")
 	public String addStaff(@RequestBody Map<String, String> param){
-		String tablename = param.get("tablename");
+		Integer hourseid = Integer.valueOf(param.get("hourseid"));
+		String tablename = "sub_staff_"+String.format("%04d", hourseid);
 		String mid = tablename.substring(tablename.length()-4, tablename.length());
 		String prefix = "3";
 		String last = String.format("%04d", service.count(null));
 		String id = prefix+mid+last;
 		String password = param.get("password");
-		Integer hourseid = Integer.valueOf(param.get("hourseid"));
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
@@ -101,10 +102,10 @@ public class StaffController {
 	
 	@RequestMapping("/delete")
 	public String deleteStaff(@RequestBody Map<String, String> param){
-		String tablename = param.get("tablename");
 		String id = param.get("id");
 		String password = param.get("password");
 		Integer hourseid = Integer.valueOf(param.get("hourseid"));
+		String tablename = "sub_staff_"+String.format("%04d", hourseid);
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
@@ -126,10 +127,10 @@ public class StaffController {
 	
 	@RequestMapping("/update")
 	public String updateStaff(@RequestBody Map<String, String> param){
-		String tablename = param.get("tablename");
 		String id = param.get("id");
 		String password = param.get("password");
 		Integer hourseid = Integer.valueOf(param.get("hourseid"));
+		String tablename = "sub_staff_"+String.format("%04d", hourseid);
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");

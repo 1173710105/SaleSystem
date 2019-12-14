@@ -58,4 +58,10 @@ public class SubBranchDetailMapServiceImp implements SubBranchDetailMapService
 	public void updateByPrimaryKey(SubBranchDetailMap record) {
 		mapper.updateByPrimaryKey(record);
 	}
+
+	@Override
+	public void updateByHourseID(SubBranchDetailMap record) 
+	{
+		mapper.updateByHourseID(record);
+	}
 }
