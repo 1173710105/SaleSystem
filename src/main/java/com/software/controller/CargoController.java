@@ -34,6 +34,10 @@ public class CargoController {
 		System.out.println("hourseID"+ param.getTablename());
 		param.setLabel("valid");
 		List<ReceiveCargo> result = service.select(param);
+		System.out.println(result.size());
+		for(ReceiveCargo r:result){
+			System.out.println(r.toString());
+		}
 		return result;
 		
 		

@@ -2,6 +2,8 @@
  * 货物有关请求和操作
  */
 
+var tempdata; 
+
 defaultSetting = 
 {
     id : '',
@@ -24,7 +26,9 @@ function sendJsonAjax(url, param) {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+            	console.log("cargo json receive : ", data);
+            	tempdata = data;
+                //return data;
             }
             return null;
         },
@@ -62,7 +66,12 @@ function sendJsonAjax(url, param) {
         + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
         + '"tablename":"' + combineCargo.tablename + '"}';
     url = "/cargo/query";
-   return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    sendJsonAjax(url, param);
+    console.log("send cargo query : ", param);
+    console.log("query cargo : " , tempdata);
+    //return sendJsonAjax(url, param);
+    return tempdata;
  }
 
  //添加货品

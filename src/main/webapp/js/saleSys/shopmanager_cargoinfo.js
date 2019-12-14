@@ -17,6 +17,7 @@ window.onload = function() {
 
 //搜索处理
 $('#search-btn').click(function () {
+	cleanList();
     var s_cargoname = $('#search-cargo-name').val().toString();
     var s_cargoid = $('#search-cargo-id').val().toString();
     var s_cargotype = $('#search-cargo-type').val();
@@ -27,7 +28,7 @@ $('#search-btn').click(function () {
     }
     var queryList = queryCargo(cargo);
     tempCargoList = queryList;
-    loadOrderList(queryList);
+    loadCargoList(queryList);
 });
 
 //添加货品
@@ -82,7 +83,7 @@ $('#edit-btn').click(function() {
     $('#retail-price').val(cargo.retailprice);
     $('#purchase-price').val(cargo.purchaseprice);
     $('#wholesale-price').val(cargo.wholesaleprice);
-})
+});
 
 //删除货品
 $('#delete_btn').click(function () {
@@ -93,6 +94,10 @@ $('#delete_btn').click(function () {
     }
 });
 
+function cleanList() {
+	var editTable = document.getElementById("cargo-tbody");
+	editTable.innerHTML = "";
+}
 
 //加载货品信息
 function loadCargoList(cargoList) {
@@ -121,6 +126,7 @@ function loadCargoList(cargoList) {
         var editButton = document.createElement("button");
         editButton.type = "button";
         editButton.id = "edit-btn";
+        //editButton.setAttribute("id", "edit-btn");
         editButton.setAttribute("value", cargoList[i].id); //将货品id封装在value中
         editButton.className = "btn btn-sm btn-primary";
         editButton.innerHTML = "编辑";
