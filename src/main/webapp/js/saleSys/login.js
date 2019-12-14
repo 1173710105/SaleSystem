@@ -81,7 +81,7 @@ $("#login-btn").click(
                     //用户名 name
                     //职位 position
                     setCookie("id", account);
-                    setCookie("name", );
+                    setCookie("name", 111);
                     setCookie("position", type);
                     setCookie("warehourseid", data.warehourseid);
                     setCookie("warehoursename", data.warehoursename);
