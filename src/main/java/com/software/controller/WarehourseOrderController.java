@@ -72,6 +72,6 @@ public class WarehourseOrderController
 		// check
 		param.setStatus(4+"");
 		String result = service.checkOrder(param);
-		return "success";
+		return result;
 	}
 }
