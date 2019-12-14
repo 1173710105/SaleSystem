@@ -4,10 +4,10 @@ var tempOrderMap = new Map();
 
 window.onload = function () {
     var historyList = queryOrder({ sourceid: getCookie("id") });//TODO 获取门店id
-    // loadOrderList(historyList);
-    // for (var i = 0; i < historyList.length; i++) {
-    //     tempWareOrderMap.set(historyList[i].id, historyList[i]);
-    // }
+    loadOrderList(historyList);
+    for (var i = 0; i < historyList.length; i++) {
+        tempWareOrderMap.set(historyList[i].id, object2map(historyList[i]));
+    }
 }
 
 //刷新订单列表，传入请求的list对象
@@ -150,7 +150,8 @@ function loadMadal(ol, type) {
     var editTable = document.getElementById("temp-cargo-tbody");
     for (cargo in ol) {
         var tr = document.createElement("tr");
-        tr.setAttribute("id", ol[i].get("id"));
+        tr.setAttribute("id", "temp-tr");
+        tr.setAttribute("cid", ol[i].get("itemid"));
         var td0 = document.createElement("td");
         td0.innerHTML = ol[i].get("itemname");
         var td1 = document.createElement("td");
@@ -179,6 +180,12 @@ function loadMadal(ol, type) {
     }
 
     //是否显示退货备注
+    if(common.get("status") == "6") {
+        $('.return-note')[0].style.display = "";
+        $('#order-note').val(common.get("note"));
+    } else {
+        $('.return-note')[0].style.display = "none";
+    }
 }
 
 //条件搜索
@@ -191,6 +198,9 @@ $('#search-btn').click(function () {
         checkstatus: $('#search-status').val(),
     }
     var queryList = queryOrder(order);
+    for (var i = 0; i < queryList.length; i++) {
+        tempWareOrderMap.set(queryList[i].id, object2map(queryList[i]));
+    }
     loadOrderList(queryList);
 });
 
@@ -334,6 +344,12 @@ $('#return-btn').click(function () {
     $('#return-total-price').val(tempOrderMap.get(orderid)[0].get("totalprice"));
 });
 
+$('#cargo-num').blur(function() {
+    var perprice = parseFloat($('#cargo-wholesale-price').val());
+    var itemnum = parseInt($('#cargo-num').val());
+    $('#cargo-total-price').val(perprice * itemnum);
+});
+
 //保存订单货品修改
 $('#temp-add-btn').click(function() {
     var orderid = $('#order-id').val();
@@ -363,25 +379,116 @@ $('#temp-add-btn').click(function() {
     //插入记录
     if(torder == null) {
         var cid = $('#cargo-id').val();
+        var cargo = queryCargoById(cid);
         var m = new Map();
         m.set("warehourseid", getCookie("warehourseid"));
         m.set("warehoursename", getCookie("warehoursename"));
-        m.set("itemid", order.items[i].itemid);
-        m.set("itemname", order.items[i].itemname);
-        m.set("itemnum", order,items[i].itemnum);
-        m.set("perprice", order,items[i].perprice);
-        m.set("sumprice", order,items[i].sumprice);
-        l.push(m);
+        m.set("itemid", cargo.id);
+        m.set("itemname", cargo.name);
+        m.set("itemnum", $('#cargo-num').val());
+        m.set("perprice", cargo.purchaseprice);
+        m.set("sumprice", $('#cargo-total-price').val());
+        ol.push(m);
     }
-    //修改记录
+    //修改记录，只能修改数量
     else {
-
+        torder.set("itemnum", $('#cargo-num').val());
+        torder.set("sumprice", $('#cargo-total-price').val());
+        ol.push(torder);
     }
-    
 });
 
 //保存订单
+$('#save-btn').click(function() {
+    var order;
+    if ($('#order-id').val() == "") {
+        var client = queryClientById($('#client-id').val());
+        order = tempOrderMap.get("temp");
+        var totalprice = 0;
+        for(suborder in order) {
+            totalprice += parseFloat(suborder.get("sumprice"));
+        }
+        for(suborder in order) {
+            suborder.set("warehourseid", getCookie("warehourseid"));
+            suborder.set("warehoursename", getCookie("warehoursename"));
+            suborder.set("clientid", client.id);
+            suborder.set("clientname", client.name),
+            suborder.set("principalid", getCookie("id"));
+            suborder.set("principalname", getCookie("name"));
+            suborder.set("status", 1);
+            suborder.set("totalprice", totalprice);
+            suborder.set("type", 2);
+        }
+    } else {
+        order = tempOrderMap.get($('#order-id').val());
+        //修改总价 totalprice
+        var totalprice = 0;
+        for(suborder in order) {
+            totalprice += parseFloat(suborder.get("sumprice"));
+        }
+        for(suborder in order) {
+            suborder.set("total-price", totalprice);
+        }
+    }
+    l = [];
+    for(var i = 0; i < order.length; i++){
+        suborder = {
+            viceid : order[i].get("viceid"),
+            warehourseid : order[i].get("warehourseid"),
+            earehoursename : order[i].get("warehoursename"),
+            clientid : order[i].get("clientid"),
+            clientname : order[i].get("clientname"),
+            principalid : order[i].get("principalid"),
+            principalname : order[i].get("principalname"),
+            createtime : order[i].get("createtime"),
+            status : order[i].get("status"),
+            totalprice : order[i].get("totalprice"),
+            type : order[i].get("type", order.type),
+            margin : order[i].get("margin"),
+            note : order[i].get("note"),
+            exception : order[i].get("exception"),
+            itemid : order[i].get("itemid"),
+            itemname : order[i].get("itemname"),
+            itemnum : order[i].get("itemnum"),
+            perprice : order[i].get("perprice"),
+            sumprice : order[i].get("sumprice")
+        }
+        l.push(suborder);
+    }
+    if ($('#order-id').val() == "") {
+        insertOrder(l);
+    } else {
+        updateOrder(l);
+    }
+});
 
+//获取模态框内点选单元格的值,更新货品信息栏
+$(document).on('click', '#temp-tr', function () {
+    var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
+    console.log("行号：" + (td.parentElement.rowIndex) + "，列号：" + td.cellIndex);
+    //填充订单参数
+    var itemid = $(this).attr("cid");
+    var order;
+    if($('#order-id').val() == "") {
+        order = tempOrderMap.get("temp");
+    } else {
+        order = tempOrderMap.get($('#order-id').val());
+    }
+    for(so in order) {
+        if(so.get("itemid") == itemid) {
+            showCargo(so);
+            break;
+        }
+    }
+});
+
+function showCargo(suborder) {
+    $('#cargo-name').val(suborder.get("itemname"));
+    $('#cargo-id').val(suborder.get("itemid"));
+    $('#cargo-num').val(suborder.get("itemnum"));
+    $('#cargo-purchase-price').val(suborder.get("perprice"));
+    $('#cargo-total-price').val(suborder.get("sumprice"));
+}
 
 //数据转换，将接收数据转换为list<map>，每一个map是一个子列表
 //将单个对象转换
