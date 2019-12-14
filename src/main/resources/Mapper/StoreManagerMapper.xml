@@ -19,6 +19,9 @@
     from store_manager
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="count" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
+  	 	SELECT COUNT(*) FROM store_manager
+  </select>
     <select id="select" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
 		select *
 		from store_manager
