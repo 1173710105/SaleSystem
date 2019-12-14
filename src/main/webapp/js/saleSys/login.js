@@ -78,10 +78,8 @@ $("#login-btn").click(
                     //填充cookie
                     //会话 sessionid
                     //账号 id
-                    //用户名 name
                     //职位 position
                     setCookie("id", account);
-                    setCookie("name", 111);
                     setCookie("position", type);
                     setCookie("warehourseid", data.warehourseid);
                     setCookie("warehoursename", data.warehoursename);
@@ -94,7 +92,6 @@ $("#login-btn").click(
                     setCookie("warehoursedetailtable", data.warehoursedetailtable);
                     setCookie("itemtable", data.itemtable);
                     setCookie("time", data.time);
-                    top.location.href = destination;
                 } else {
                     alert("请求失败");
                 }
@@ -102,8 +99,30 @@ $("#login-btn").click(
             error: function () {
             }
         });
-        $.when(loginajax, dataajax).done(function() {
-
+        var thirdrequest = 
+            '{"id":"' + account +'",'
+            + '"tablename":"' + getCookie("stafftable") + '"}';
+        dataajax = $.ajax({
+            url: url,
+            data: thirdrequest,
+            async: false,
+            type: "post",
+            dataType: "text",
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                if (data != null) {
+                    //填充cookie
+                    //用户名 name
+                    setCookie("name", data.name);
+                } else {
+                    alert("请求失败");
+                }
+            },
+            error: function () {
+            }
+        });
+        $.when(loginajax, dataajax, personalajax).done(function() {
+            top.location.href = destination;
         });
     });
 

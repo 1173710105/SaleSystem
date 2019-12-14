@@ -335,7 +335,50 @@ $('#return-btn').click(function () {
 });
 
 //保存订单货品修改
+$('#temp-add-btn').click(function() {
+    var orderid = $('#order-id').val();
+    var cargoid = $('#cargo-id').val();
+    var ol;
+    //新增订单
+    if(orderid == "") {
+        ol = tempOrderMap.get("temp");
+        //新增订单，添加list
+        if(ol == null) {
+            l = [];
+            tempOrderMap.set("temp", l);
+            ol = l;
+        }
+    //编辑订单
+    } else {
+        ol = tempOrderMap.get(orderid);
+    }
+    //查找是否存在货品，存在修改，不存在添加
+    var torder;
+    for(itemorder in ol) {
+        if(itemorder.get("itemid") == cargoid) {
+            torder = itemorder;
+            break;
+        }
+    }
+    //插入记录
+    if(torder == null) {
+        var cid = $('#cargo-id').val();
+        var m = new Map();
+        m.set("warehourseid", getCookie("warehourseid"));
+        m.set("warehoursename", getCookie("warehoursename"));
+        m.set("itemid", order.items[i].itemid);
+        m.set("itemname", order.items[i].itemname);
+        m.set("itemnum", order,items[i].itemnum);
+        m.set("perprice", order,items[i].perprice);
+        m.set("sumprice", order,items[i].sumprice);
+        l.push(m);
+    }
+    //修改记录
+    else {
 
+    }
+    
+});
 
 //保存订单
 
