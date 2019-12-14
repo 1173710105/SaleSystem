@@ -71,7 +71,7 @@ $("#login-btn").click(
             data: secondrequest,
             async: false,
             type: "post",
-            dataType: "text",
+            dataType: "JSON",
             contentType: "application/json;charset=UTF-8",
             success: function (data) {
                 if (data != null) {
@@ -79,6 +79,10 @@ $("#login-btn").click(
                     //会话 sessionid
                     //账号 id
                     //职位 position
+                	console.log("data : ", data);
+                	console.log("data type : ", typeof(data));
+                	console.log("wid" + data.warehourseid );
+                	console.log("wid",data.warehourseid);
                     setCookie("id", account);
                     setCookie("position", type);
                     setCookie("warehourseid", data.warehourseid);
@@ -98,11 +102,11 @@ $("#login-btn").click(
                 }
             },
             error: function () {
+            	console.log("receive fail");
             }
         });
 
         $.when(loginajax, dataajax).done(function() {
-
             top.location.href = destination;
         });
     });

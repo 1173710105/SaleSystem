@@ -105,6 +105,11 @@ public class ReceiveCargo
 		this.wholesaleprice = price.getWholesaleprice()+"";
 	}
 	
+	private void fillTablename()
+	{
+		this.tablename = "sub_warehourse_itemtoprice_"+String.format("%04", Integer.valueOf(tablename));
+	}
+	
 	public Item toItem()
 	{
 		Item item = new Item();
@@ -120,6 +125,7 @@ public class ReceiveCargo
 	public ItemToPrice toPrice()
 	{
 		ItemToPrice price = new ItemToPrice();
+		fillTablename();
 		price.setTablename(this.tablename);
 		price.setId(Integer.valueOf(this.id));
 		price.setName(this.name);
@@ -129,6 +135,7 @@ public class ReceiveCargo
 		price.setTime(time);
 		return price;
 	}
+	
 	@Override
 	public String toString() {
 		return "ReceiveCargo [tablename=" + tablename + ", id=" + id + ", name=" + name + ", type=" + type
