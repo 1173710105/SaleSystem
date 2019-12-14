@@ -75,6 +75,8 @@ $("#login-btn").click(
             contentType: "application/json;charset=UTF-8",
             success: function (data) {
                 if (data != null) {
+                    console.log("receive login data : " + data);
+                    console.log("data type : ", typeof(data));
                     //填充cookie
                     //会话 sessionid
                     //账号 id
