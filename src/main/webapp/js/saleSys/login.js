@@ -42,28 +42,68 @@ $("#login-btn").click(
             alert("账户不能为空");
             return;
         }
-        $.ajax({
+         
+        loginajax = $.ajax({
             url: url,
             data: param,
+            async: false,
             type: "post",
             dataType: "text",
             contentType: "application/json;charset=UTF-8",
             success: function (str) {
                 if (str == "true") {
+                    
+                } else if (str == "wrongpwd") {
+                    alert("密码错误，请重新输入");
+                    return;
+                } else {
+                    alert("没有此账号");
+                    return;
+                }
+            },
+            error: function () {
+            }
+        });
+        var secondrequest = 
+            '{"id":"' + account +'"}';
+        dataajax = $.ajax({
+            url: url,
+            data: secondrequest,
+            async: false,
+            type: "post",
+            dataType: "text",
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                if (data != null) {
                     //填充cookie
                     //会话 sessionid
                     //账号 id
                     //用户名 name
                     //职位 position
+                    setCookie("id", account);
+                    setCookie("name", );
+                    setCookie("position", type);
+                    setCookie("warehourseid", data.warehourseid);
+                    setCookie("warehoursename", data.warehoursename);
+                    setCookie("warehourselocation", data.warehourselocation);
+                    setCookie("pricipalid", data.pricipalid);
+                    setCookie("pricipalname", data.principalname);
+                    setCookie("saleorderitemtable", data.saleorderitemtable);
+                    setCookie("saleordercommontable", data.saleorderitemtable);
+                    setCookie("stafftable", data.stafftable);
+                    setCookie("warehoursedetailtable", data.warehoursedetailtable);
+                    setCookie("itemtable", data.itemtable);
+                    setCookie("time", data.time);
                     top.location.href = destination;
-                } else if (str == "wrongpwd") {
-                    alert("密码错误，请重新输入");
                 } else {
-                    alert("没有此账号")
+                    alert("请求失败");
                 }
             },
             error: function () {
             }
+        });
+        $.when(loginajax, dataajax).done(function() {
+
         });
     });
 

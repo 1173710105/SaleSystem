@@ -35,6 +35,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="col-md-12">
+                        <caption>订单编号</caption>
+                        <input type="text" class="form-control" readonly="readonly" id="order-id">
+                    </div>
                     <div class="row">
                         <div class="col-md-2">
                             <caption>客户名称</caption>
@@ -114,12 +118,6 @@
                                 <textarea class="form-control" rows="3" placeholder="退货备注"></textarea>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                            <div class="col-md-4">
-                                <p id="gross-profit">毛利润: </p>
-                            </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -140,6 +138,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <caption>订单编号</caption>
+                            <input type="text" class="form-control" readonly="readonly" id="pay-order-id">
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <caption>客户名称</caption>
@@ -187,7 +191,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确认收款</button>
+                    <button type="button" class="btn btn-primary" id="ac-pay-btn">确认收款</button>
                 </div>
             </div>
         </div>
@@ -205,6 +209,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-md-12">
+                            <caption>订单编号</caption>
+                            <input type="text" class="form-control" readonly="readonly" id="return-order-id">
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <caption>客户名称</caption>
                             <input type="text" class="form-control" id="return-client-name">
@@ -219,13 +229,13 @@
                         <div class="col-md-6">
                             <caption>是否收款</caption>
                             <select class="form-control" id="payed-state">
-                                <option>是</option>
-                                <option>否</option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <caption>总价</caption>
-                            <input type="text" class="form-control" id="return-total-harge">
+                            <input type="text" class="form-control" id="return-total-price">
                         </div>
                     </div>
                     <div class="row">
@@ -310,6 +320,7 @@
                             <th>总价</th>
                             <th>状态</th>
                             <th>付款</th>
+                            <th>毛利润</th>
                             <th>负责人</th>
                             <th>地点</th>
                             <th>创建时间</th>
@@ -345,12 +356,9 @@
                             <td>1号仓</td>
                             <td>2019-11-20 15:53</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#orderDetailModal">详情</button>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#orderPayModal">付款</button>
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
-                                    data-target="#saleReturnModal">退货</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="detail-btn">详情</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="pay-btn">付款</button>
+                                <button type="button" class="btn btn-sm btn-danger" id="return-btn">退货</button>
                             </td>
                         </tr>
                         <tr>
@@ -374,18 +382,6 @@
         </div>
     </div>
 </body>
-
-<script>
-    $('#delete_btn').click(function () {
-        var r = confirm("是否删除？");
-        if (r == true) {
-            alert("删除成功");
-        }
-    });
-    $('#check_btn').click(function () {
-        var r = confirm("是否审核通过？");
-        if (r == true) {
-            alert("审核通过");
-        }
-    });
-</script>
+<script type="text/javascript" src="../js/saleSys/cookie.js"></script>
+<script type="text/javascript" src="../js/saleSys/order.js"></script>
+<script type="text/javascript" src="../js/saleSys/shopmanager_orderinfo.js"></script>
