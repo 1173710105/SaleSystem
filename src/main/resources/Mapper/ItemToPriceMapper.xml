@@ -28,6 +28,7 @@
   <delete id="dropTable" parameterType="String">
    		drop table ${tablename}
   </delete>
+  
   <select id="selectByPrimaryKey" parameterType="com.software.domain.ItemToPrice" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

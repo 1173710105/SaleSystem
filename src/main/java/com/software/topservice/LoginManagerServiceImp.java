@@ -119,6 +119,7 @@ public class LoginManagerServiceImp implements LoginManagerService
 		exampleStaff.setLabel("valid");
 		String hourseid = id.substring(1, 5);
 		exampleStaff.setTablename("sub_staff_"+hourseid);
+		System.out.println("sub_staff_"+hourseid);
 		Staff validStaff = null;
 		try 
 		{
@@ -126,6 +127,7 @@ public class LoginManagerServiceImp implements LoginManagerService
 		} 
 		catch (Exception e) 
 		{
+			System.out.println("查表失败");
 			validStaff = null;
 		}
 		if (validStaff==null) 
@@ -143,6 +145,7 @@ public class LoginManagerServiceImp implements LoginManagerService
 			SubBranchDetailMap temp = getAuthority(result);
 			if (temp==null) 
 			{
+				System.out.println("无权限");
 				result.setFlag("wrongid");
 			}
 			else 

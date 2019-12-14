@@ -28,10 +28,16 @@ public class CargoController {
 	}
 	
 	@RequestMapping("/query")
-	public List<ReceiveCargo> queryCargo(@RequestBody ReceiveCargo param){
+	public List<ReceiveCargo> queryCargo(@RequestBody ReceiveCargo param)
+	{
+		System.out.println("ID    "+param.getId());
+		System.out.println("hourseID"+ param.getTablename());
 		param.setLabel("valid");
 		List<ReceiveCargo> result = service.select(param);
 		return result;
+		
+		
+		
 	}
 	
 	@RequestMapping("/add")

@@ -7,7 +7,8 @@ defaultSetting = {
     name : '',
     gender : '',
     phone : '',
-    email : ''
+    email : '',
+    tablename : ''
 }
 
 function sendJsonAjax(url, param) {
@@ -29,12 +30,13 @@ function sendJsonAjax(url, param) {
  }
 
 //通过id查找员工
-function queryStaffById(id) {
+function queryStaffById(id, tablename) {
     if (id == "") {
         return;
     }
     param = 
-       '{"id":"' + id + '"}';
+       '{"id":"' + id + '",'
+       + '"tablename":"' + tablename + '"}';
     url = "";
     return sendJsonAjax(url, param);
 }
@@ -52,6 +54,7 @@ function queryStaff(staff) {
         + '"gender:"' + combineStaff.gender + '",'
         + '"phone":"' + combineStaff.phone + '",'
         + '"email":"' + combineStaff.email + '",'
+        + '"tablename":"' + combineStaff.tablename + '",'
         + '"hourseid":"' + combineStaff.hourseid + '"}';
     url = "";
     return sendJsonAjax(url, param);
@@ -70,6 +73,7 @@ function insertStaff(staff) {
     + '"gender:"' + combineStaff.gender + '",'
     + '"phone":"' + combineStaff.phone + '",'
     + '"email":"' + combineStaff.email + '",'
+    + '"tablename":"' + combineStaff.tablename + '",'
     + '"hourseid":"' + combineStaff.hourseid + '"}';
     url = "";
     return sendJsonAjax(url, param);
@@ -99,6 +103,7 @@ function updateStaff(staff) {
     + '"gender:"' + combineStaff.gender + '",'
     + '"phone":"' + combineStaff.phone + '",'
     + '"email":"' + combineStaff.email + '",'
+    + '"tablename":"' + combineStaff.tablename + '",'
     + '"hourseid":"' + combineStaff.hourseid + '"}';
     url = "";
     return sendJsonAjax(url, param);

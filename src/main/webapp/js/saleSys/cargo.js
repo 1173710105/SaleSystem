@@ -11,7 +11,8 @@ defaultSetting =
     picture : '',
     retailprice : '',
     wholesaleprice : '',
-    purchaseprice : '' //进货价
+    purchaseprice : '', //进货价
+    tablename : ''
 }
 
 function sendJsonAjax(url, param) {
@@ -19,7 +20,7 @@ function sendJsonAjax(url, param) {
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
@@ -33,12 +34,14 @@ function sendJsonAjax(url, param) {
  }
 
  //通过id查找货品
- function queryCargoById(id) {
+ function queryCargoById(id, tablename) {
     if (id == "") {
         return;
     }
-    url = "";
-    param = '{"id":"' + id + '"}';
+    url = "/cargo/queryById";
+    param = 
+        '{"id":"' + id + '",'
+        + '"tablename":"' + tablename + "}";       
     return sendJsonAjax(url, param);
  }
 
@@ -56,8 +59,9 @@ function sendJsonAjax(url, param) {
         + '"picture":"' + combineCargo.picture +'",'
         + '"retailprice":"' + combineCargo.retailprice +'",'
         + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
-        + '"purchaseprice":"' + combineCargo.purchaseprice +'"}';
-    url = "";
+        + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
+        + '"tablename":"' + combineCargo.tablename + '"}';
+    url = "/cargo/query";
    return sendJsonAjax(url, param);
  }
 
@@ -68,14 +72,15 @@ function insertCargo(cargo) {
     }
     combineCargo = $.extend({},defaultSetting, cargo);
     param = 
-       '{"id":"' + combineCargo.id +'",'
-       + '"name":"' + combineCargo.name +'",'
-       + '"type":"' + combineCargo.type +'",'
-       + '"specification":"' + combineCargo.specification +'",'
-       + '"picture":"' + combineCargo.picture +'",'
-       + '"retailprice":"' + combineCargo.retailprice +'",'
-       + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
-       + '"purchaseprice":"' + combineCargo.purchaseprice +'"}';
+    '{"id":"' + combineCargo.id +'",'
+    + '"name":"' + combineCargo.name +'",'
+    + '"type":"' + combineCargo.type +'",'
+    + '"specification":"' + combineCargo.specification +'",'
+    + '"picture":"' + combineCargo.picture +'",'
+    + '"retailprice":"' + combineCargo.retailprice +'",'
+    + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
+    + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
+    + '"tablename":"' + combineCargo.tablename + '"}';
    url = "";
   return sendJsonAjax(url, param);
 }
@@ -97,14 +102,15 @@ function updateCargo(cargo) {
     }
     combineCargo = $.extend({},defaultSetting, cargo);
     param = 
-       '{"id":"' + combineCargo.id +'",'
-       + '"name":"' + combineCargo.name +'",'
-       + '"type":"' + combineCargo.type +'",'
-       + '"specification":"' + combineCargo.specification +'",'
-       + '"picture":"' + combineCargo.picture +'",'
-       + '"retailprice":"' + combineCargo.retailprice +'",'
-       + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
-       + '"purchaseprice":"' + combineCargo.purchaseprice +'"}';
+    '{"id":"' + combineCargo.id +'",'
+    + '"name":"' + combineCargo.name +'",'
+    + '"type":"' + combineCargo.type +'",'
+    + '"specification":"' + combineCargo.specification +'",'
+    + '"picture":"' + combineCargo.picture +'",'
+    + '"retailprice":"' + combineCargo.retailprice +'",'
+    + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
+    + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
+    + '"tablename":"' + combineCargo.tablename + '"}';
    url = "";
   return sendJsonAjax(url, param);
 }
