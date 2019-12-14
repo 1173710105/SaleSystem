@@ -53,6 +53,8 @@
     delete from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </delete>
+  
+  
   <insert id="insert" parameterType="com.software.domain.ItemToPrice">
     insert into ${tablename} (ID, name, retailPrice, 
       wholesalePrice, purchasePrice, time, 
