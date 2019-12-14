@@ -61,4 +61,12 @@ public class WarehourseDetailServiceImp implements WarehourseDetailService {
 	{
 		wdm.createNewTable(record.getTablename());
 	}
+
+	@Override
+	public void dropTable(WarehourseDetail record) 
+	{
+		wdm.dropTable(record.getTablename());
+	}
+	
+	
 }

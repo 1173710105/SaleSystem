@@ -26,4 +26,5 @@ public interface SubBranchDetailMapMapper {
 
     int updateByPrimaryKey(SubBranchDetailMap record);
 
+    int updateByHourseID(SubBranchDetailMap record);
 }
