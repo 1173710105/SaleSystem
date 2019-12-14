@@ -51,5 +51,4 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 	{
 		service.updateByPrimaryKey(record);
 	}
-
 }

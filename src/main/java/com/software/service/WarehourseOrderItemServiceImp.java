@@ -51,6 +51,12 @@ public class WarehourseOrderItemServiceImp implements WarehourseOrderItemService
 	public void updateByPrimaryKey(WarehourseOrderItem record) {
 		mapper.updateByPrimaryKeySelective(record);
 	}
+
+	@Override
+	public void deleteByID(WarehourseOrderItem record) 
+	{
+		mapper.deleteByID(record);
+	}
 	
 
 
