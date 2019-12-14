@@ -9,6 +9,7 @@ import com.software.domain.ItemToPrice;
 @Mapper
 public interface ItemToPriceMapper 
 {
+	// woc cao
     int deleteByPrimaryKey(ItemToPrice record);
 
     int insert(ItemToPrice record);
