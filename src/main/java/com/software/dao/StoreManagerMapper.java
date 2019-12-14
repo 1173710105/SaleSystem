@@ -23,5 +23,5 @@ public interface StoreManagerMapper {
 
     int updateByPrimaryKey(StoreManager record);
     
-    int count();
+    int count(StoreManager record);
 }
