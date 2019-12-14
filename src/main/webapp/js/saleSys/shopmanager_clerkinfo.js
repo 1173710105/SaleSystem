@@ -1,7 +1,7 @@
 var tempClerkMap = new Map();
 
 window.onload = function () {
-    var clerkList = queryClient({ id: "" });
+    var clerkList = queryClient({ id: "", tablename : getCookie("stafftable")});
     for (var i = 0; i < clerkList.length; i++) {
         this.tempClerkMap.set(clerkList[i].id, clerkList[i]);
     }
@@ -16,6 +16,7 @@ $('#search-btn').click(function () {
         name: $('#search-name').val(),
         phone: $('#search-phone').val(),
         email: $('#search-email').val(),
+        tablename : getCookie("stafftable")
     }
     var cl = queryClient(clerk);
     for (var i = 0; i < cl.length; i++) {
@@ -53,7 +54,8 @@ $('#save-btn').click(function() {
         gender : $('clerk-gender').val(),
         phone : $('clerk-phone').val(),
         email : $('clerk-email').val(),
-        hourseid : $('clerk-rep').val()
+        hourseid : $('clerk-rep').val(),
+        tablename : getCookie("stafftable")
     }
     if($('clerk-id').val() == "") {
         insertStaff(clerk);
@@ -67,7 +69,11 @@ $('#delete-btn').click(function() {
     var r = confirm("是否删除？");
     if (r == true) {
         //实现
-        deleteStaff({id : $('client-id').val()});
+        deleteStaff(
+            {
+                id : $('client-id').val(),
+                tablename : getCookie("stafftable")
+            });
         alert("删除成功");
     }
 });

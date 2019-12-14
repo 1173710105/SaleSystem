@@ -24,7 +24,8 @@ $('#search-btn').click(function () {
     cargo = {
         id : s_cargoid,
         name : s_cargoname,
-        type : s_cargotype
+        type : s_cargotype,
+        tablename : getCookie("warehourseid")
     }
     var queryList = queryCargo(cargo);
     tempCargoList = queryList;
@@ -45,7 +46,8 @@ $('#save-btn').click(function() {
             type : $('#cargo-type').val(),
             specification : $('#cargo-format').val(),
             retailprice : $('#retail-price').val(),
-            wholesaleprice :  $('#wholesale-price').val()
+            wholesaleprice :  $('#wholesale-price').val(),
+            tablename : getCookie("warehourseid")
         }
         insertCargo(newCargo);
     } 
@@ -58,7 +60,8 @@ $('#save-btn').click(function() {
             specification : $('#cargo-format').val(),
             purchaseprice : $('#purchase-price').val(),
             retailprice : $('#retail-price').val(),
-            wholesaleprice :  $('#wholesale-price').val()
+            wholesaleprice :  $('#wholesale-price').val(),
+            tablename : getCookie("warehourseid")
         }
         updateCargo(newCargo);
     }
@@ -90,6 +93,7 @@ $('#delete_btn').click(function () {
     var r = confirm("是否删除？");
     if (r == true) {
         //实现
+        deleteCargo($(this).val(),getCookie("warehourseid"));
         alert("删除成功");
     }
 });
