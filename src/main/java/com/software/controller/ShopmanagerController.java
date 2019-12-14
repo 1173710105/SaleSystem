@@ -4,15 +4,21 @@ package com.software.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.software.domain.StoreManager;
+import com.software.topservice.TopStoreManagerService;
 
 @RestController
 @RequestMapping("/shopmanager")
-public class ShopmanagerController {
+public class ShopmanagerController 
+{
+	@Autowired
+	private TopStoreManagerService service;
+	
 	@RequestMapping("/queryById")
 	public StoreManager queryManagerById(@RequestBody Map<String, String> param){
 		String id = param.get("id");
@@ -32,10 +38,12 @@ public class ShopmanagerController {
 		storemanager.setEmail(email);
 		storemanager.setLabel("valid");
 		storemanager.setHourseid(hourseid);
-
-		
-		
-		StoreManager result = null;
+		List<StoreManager> list = service.select(storemanager);
+		if (list==null) 
+		{
+			return null;
+		}
+		StoreManager result = list.get(0);
 		return result;
 	}
 	
@@ -60,18 +68,18 @@ public class ShopmanagerController {
 		storemanager.setHourseid(hourseid);
 
 		
-		List<StoreManager> result = null;
+		List<StoreManager> result = service.select(storemanager);
 		return result;
 	}
 	
 	@RequestMapping("/insert")
 	public String insertManager(@RequestBody Map<String, String> param){
 		String hourseid = param.get("hourseid");
-		String tablename = "sub_staff_"+String.format("%04d", hourseid);
-		String mid = tablename.substring(tablename.length()-4, tablename.length());
+		String mid = String.format("%04", Integer.valueOf(hourseid));
 		String prefix = "3";
-//		String last = String.format("%04d", service.count(null));
-//		String id = prefix+mid+last;
+		
+		String last = String.format("%04d", service.count());
+		String id = prefix+mid+last;
 		String password = param.get("password");
 		String name = param.get("name");
 		String gender = param.get("gender");
@@ -79,7 +87,7 @@ public class ShopmanagerController {
 		String email = param.get("email");
 		
 		StoreManager storemanager = new StoreManager();
-//		storemanager.setId(id);
+		storemanager.setId(id);
 		storemanager.setPassword(password);
 		storemanager.setName(name);
 		storemanager.setGender(gender);
@@ -88,9 +96,9 @@ public class ShopmanagerController {
 		storemanager.setLabel("valid");
 		storemanager.setHourseid(hourseid);
 		
-		
-		
+		service.insertSelective(storemanager);
 		return "success";
+	
 	}
 	
 	@RequestMapping("/delete")
@@ -113,6 +121,7 @@ public class ShopmanagerController {
 		storemanager.setLabel("invalid");
 		storemanager.setHourseid(hourseid);
 		
+		service.updateByPrimaryKeySelective(storemanager);
 		return "success";
 	}
 	
@@ -135,7 +144,7 @@ public class ShopmanagerController {
 		storemanager.setEmail(email);
 		storemanager.setLabel("valid");
 		storemanager.setHourseid(hourseid);
-		
+		service.updateByPrimaryKeySelective(storemanager);
 		return "success";
 	}
 	
