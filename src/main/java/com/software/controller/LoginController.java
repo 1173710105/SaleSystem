@@ -30,6 +30,8 @@ public class LoginController
 	@Autowired
 	private LoginManagerService loginService;
 	
+	private Map<String, SubBranchDetailMap> mp;
+	
 	@RequestMapping(value = {"/administrator/login","/teacher/login","/student/login"})
 	public String login(@RequestBody ReceiveUser param)
 	{
@@ -37,7 +39,11 @@ public class LoginController
 		String password = param.getPassword();
 		String authority = param.getType();
 		SubBranchDetailMap map = loginService.login(id, password, authority);
-	
+		if(map.getFlag().equals("true")){
+			mp.put(id, map);
+		}
 		return map.getFlag();
 	}
+	
+	
 }
