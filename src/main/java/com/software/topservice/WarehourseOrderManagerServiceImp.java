@@ -226,4 +226,11 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		Random rand = new Random();
 		return rand.nextInt(100000000);
 	}
+
+	@Override
+	public void updateStatus(ReceiveWarehourseOrder order) 
+	{
+		WarehourseOrderCommon exampleCommon = order.toWarehourseOrderCommon();
+		commonService.updateByPrimaryKeySelective(exampleCommon);
+	}
 }
