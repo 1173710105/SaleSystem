@@ -1,5 +1,7 @@
 package com.software.topservice;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -47,7 +49,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService {
 			orderTemp.initByCommon(saleorderCommon);
 			// 获取该订单对应的物品
 			exampleItem.setTablename(order.getItemtablename());
-			exampleCommon.setId(saleorderCommon.getId());
+			exampleItem.setId(saleorderCommon.getId());
 			orderTemp.setItems(itemService.select(exampleItem));
 			result.add(orderTemp);
 		}
@@ -155,13 +157,18 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService {
 			tempDetail.setTablename(order.getWarehoursedetailtablename());
 			tempDetail.setItemid(saleorderItem.getItemid());
 			resultDetail = detailService.selectByPrimaryKey(tempDetail);
-			resultDetail.setTablename(order.getWarehoursedetailtablename());
+			if (resultDetail==null) 
+			{
+				System.out.println("逻辑错误，订单里的商品，仓库没有");
+				return "false";
+			}
 			if (resultDetail.getItemnum()<saleorderItem.getItemnum()) 
 			{
 				// 商品数量不足
 				return "false";
 			}
 			//更新商品数量
+			resultDetail.setTablename(order.getWarehoursedetailtablename());
 			resultDetail.setItemnum(resultDetail.getItemnum()-saleorderItem.getItemnum());
 			detailList.add(resultDetail);
 		}
@@ -201,6 +208,11 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService {
 			tempDetail.setTablename(order.getWarehoursedetailtablename());
 			tempDetail.setItemid(saleorderItem.getItemid());
 			resultDetail = detailService.selectByPrimaryKey(tempDetail);
+			if (resultDetail==null) 
+			{
+				System.out.println("逻辑错误，退回了一个仓库里面没有的商品");
+				return;
+			}
 			resultDetail.setTablename(order.getWarehoursedetailtablename());
 			//更新商品数量
 			resultDetail.setItemnum(resultDetail.getItemnum()+saleorderItem.getItemnum());

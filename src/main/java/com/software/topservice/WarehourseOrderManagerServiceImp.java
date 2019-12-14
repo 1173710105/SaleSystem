@@ -1,15 +1,14 @@
 package com.software.topservice;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.software.dao.SubBranchDetailMapMapper;
-import com.software.domain.SubBranchDetailMap;
 import com.software.domain.WarehourseDetail;
 import com.software.domain.WarehourseOrderCommon;
 import com.software.domain.WarehourseOrderItem;
@@ -19,7 +18,6 @@ import com.software.service.WarehourseOrderItemService;
 import com.software.trans.ReceiveWarehourseOrder;
 import com.software.trans.SendWarehourseOrder;
 
-import aj.org.objectweb.asm.Type;
 
 @Service
 public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerService 
@@ -146,6 +144,8 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		// 遍历订单中所有货品
 		// 子->总、、子-总 作为一个类  源要减，目的加     
 		// 进货商->总设为一个类        目的加   
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String date = df.format(new Date());// new Date()为获取当前系统时间
 		for (WarehourseOrderItem warehourseOrderItem : itemList) 
 		{
 			if (sourceTableName!=null) 
@@ -154,27 +154,45 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 				exampleDetail.setItemid(warehourseOrderItem.getItemid());
 				
 				sourceDetail = detailService.selectByPrimaryKey(exampleDetail);
-				sourceDetail.setTablename(sourceTableName);
+				if (sourceDetail==null) 
+				{
+					// 源仓库中没有该商品， 需要先添加   如果出现这一步，则会有逻辑错误
+					System.out.println("逻辑错误");
+					return "false";
+				}
 				if (sourceDetail.getItemnum()<warehourseOrderItem.getItemnum()) 
 				{
 					// 商品数量不够，审核失败
 					return "false";
 				}
 				// 源仓库，减
+				sourceDetail.setTablename(sourceTableName);
 				sourceDetail.setItemnum(sourceDetail.getItemnum()-warehourseOrderItem.getItemnum());
+				sourceDetail.setTime(date);  // 更新时间
 				sourceItemList.add(sourceDetail);
 			}
 			// 目的仓库加
 			exampleDetail.setTablename(targetTableName);
 			exampleDetail.setItemid(warehourseOrderItem.getItemid());
 			targetDetail = detailService.selectByPrimaryKey(exampleDetail);
-			targetDetail.setTablename(targetTableName);
-			// 记得初始化仓库
-			targetDetail.setItemnum(targetDetail.getItemnum()+warehourseOrderItem.getItemnum());
+			if (targetDetail==null) 
+			{
+				// 目标仓库中，没有该商品，需要初始化
+				targetDetail = new WarehourseDetail();
+				targetDetail.setTablename(targetTableName);
+				targetDetail.setItemid(exampleDetail.getItemid());
+				targetDetail.setItemnum(warehourseOrderItem.getItemnum());
+				targetDetail.setTime(date);
+			}
+			else 
+			{
+				targetDetail.setTablename(targetTableName);
+				targetDetail.setItemnum(targetDetail.getItemnum()+warehourseOrderItem.getItemnum());
+				targetDetail.setTime(date);
+			}
 			targetItemList.add(targetDetail);
 		}
-		
-		//更新到新窗口表里面
+		//更新到表里面
 		for (WarehourseDetail warehourseDetail : sourceItemList) 
 		{
 			detailService.updateByPrimaryKeySelective(warehourseDetail);
