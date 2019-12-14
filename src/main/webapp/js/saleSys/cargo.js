@@ -86,12 +86,14 @@ function insertCargo(cargo) {
 }
 
  //删除货品
-function deleteCargo(id) {
+function deleteCargo(id, tablename) {
     if (id == "") {
         return;
     }
     url = "";
-    param = '{"id":"' + id + '"}';
+    param = 
+        '{"id":"' + id + '",'
+        + '"tablename":"' + tablename + "}"; 
     return sendJsonAjax(url, param);
 }
 
