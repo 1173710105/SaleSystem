@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.software.domain.GeneralManager;
 import com.software.domain.Staff;
 import com.software.domain.StoreManager;
@@ -57,7 +58,9 @@ public class LoginController
 		System.out.println("second");
 		String id = param.getId();
 		if(mp.containsKey(id)){
+			
 			System.out.println("exist");
+			System.out.println(JSON.toJSON(mp.get(id)));
 			return mp.get(id);
 		}else{
 			return null;
