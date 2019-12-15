@@ -76,54 +76,54 @@
   <insert id="insertSelective" parameterType="com.software.domain.Staff">
     insert into ${tablename}
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id !=''">
         ID,
       </if>
-      <if test="password != null">
+      <if test="password != null and password !=''">
         password,
       </if>
-      <if test="hourseid != null">
+      <if test="hourseid != null and hourseid !=''">
         hourseID,
       </if>
-      <if test="name != null">
+      <if test="name != null and name !=''">
         name,
       </if>
-      <if test="gender != null">
+      <if test="gender != null and gender!=''">
         gender,
       </if>
-      <if test="phone != null">
+      <if test="phone != null and phone !=''">
         phone,
       </if>
-      <if test="email != null">
+      <if test="email != null and email!=''">
         email,
       </if>
-      <if test="label != null">
+      <if test="label != null and label!=''">
         label,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id !=''">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
+      <if test="password != null and password !=''">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="hourseid != null">
+      <if test="hourseid != null and hourseid !=''">
         #{hourseid,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
+      <if test="name != null and name !=''">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
+      <if test="gender != null and gender!=''">
         #{gender,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
+      <if test="phone != null and phone !=''">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
+      <if test="email != null and email!=''">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+      <if test="label != null and label!=''">
         #{label,jdbcType=VARCHAR},
       </if>
     </trim>
