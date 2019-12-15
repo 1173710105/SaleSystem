@@ -1,5 +1,4 @@
 //员工对象操作
-
 defaultSetting = {
     id : '',
     password : '',
@@ -12,31 +11,34 @@ defaultSetting = {
 }
 
 function sendJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+                console.log("staff json receive : ", data);
+               tempdata = data;
             }
-            return null;
+            else {
+                console.log("staff json receive null");
+            }
         },
         error: function () {
         }
     });
+    return tempdata;
  }
 
 //通过id查找员工
-function queryStaffById(id, tablename) {
-    if (id == "") {
+function queryStaffById(staff) {
+    if (staff.id == "") {
         return;
     }
-    param = 
-       '{"id":"' + id + '",'
-       + '"tablename":"' + tablename + '"}';
+    param = buildParam(staff);
     url = "";
     return sendJsonAjax(url, param);
 }
@@ -46,16 +48,7 @@ function queryStaff(staff) {
     if (staff == null) {
         return null;
     }
-    combineStaff = $.extend({},defaultSetting, staff);
-    param = 
-       '{'
-        + '"id":"' + combineStaff.id + '",'
-        + '"name":"' + combineStaff.name + '",'
-        + '"gender:"' + combineStaff.gender + '",'
-        + '"phone":"' + combineStaff.phone + '",'
-        + '"email":"' + combineStaff.email + '",'
-        + '"tablename":"' + combineStaff.tablename + '",'
-        + '"hourseid":"' + combineStaff.hourseid + '"}';
+    param = buildParam(staff);
     url = "";
     return sendJsonAjax(url, param);
 }
@@ -65,27 +58,17 @@ function insertStaff(staff) {
     if (staff == null) {
         return null;
     }
-    combineStaff = $.extend({},defaultSetting, staff);
-    param = 
-    '{'
-    + '"id":"' + combineStaff.id + '",'
-    + '"name":"' + combineStaff.name + '",'
-    + '"gender:"' + combineStaff.gender + '",'
-    + '"phone":"' + combineStaff.phone + '",'
-    + '"email":"' + combineStaff.email + '",'
-    + '"tablename":"' + combineStaff.tablename + '",'
-    + '"hourseid":"' + combineStaff.hourseid + '"}';
+    param = buildParam(staff);
     url = "";
     return sendJsonAjax(url, param);
 }
 
 //删除员工
-function deleteStaff(id) {
-    if (id == "") {
+function deleteStaff(staff) {
+    if (staff.id == "") {
         return null;
     }
-    param = 
-       '{"id":"' + id + '"}';
+    param = buildParam(staff);
     url = "";
     return sendJsonAjax(url, param);
 }
@@ -107,4 +90,18 @@ function updateStaff(staff) {
     + '"hourseid":"' + combineStaff.hourseid + '"}';
     url = "";
     return sendJsonAjax(url, param);
+}
+
+function buildParam(staff) {
+    combineStaff = $.extend({},defaultSetting, staff);
+    param = 
+       '{'
+        + '"id":"' + combineStaff.id + '",'
+        + '"name":"' + combineStaff.name + '",'
+        + '"gender:"' + combineStaff.gender + '",'
+        + '"phone":"' + combineStaff.phone + '",'
+        + '"email":"' + combineStaff.email + '",'
+        + '"tablename":"' + combineStaff.tablename + '",'
+        + '"hourseid":"' + combineStaff.hourseid + '"}';
+    return param;
 }
