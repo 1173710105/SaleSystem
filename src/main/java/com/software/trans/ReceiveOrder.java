@@ -11,6 +11,7 @@ public class ReceiveOrder
 	private String itemtablename;
 	private String warehoursedetailtablename;
 	private String itemtopricetable;
+	private String hourseid;
 	private String orderid;
 	private String viceid;
 	private String warehourseid;
@@ -275,4 +276,12 @@ public class ReceiveOrder
 		return item;
 	}
     
+	public void fillTablename()
+	{
+		String id = String.format("%04d", Integer.valueOf(this.hourseid));
+		this.commontablename = "sub_saleorder_common_"+id;
+		this.itemtablename	 =	"sub_saleorder_item_"+id;
+		this.warehoursedetailtablename = "sub_warehourse_detail_"+id;
+		this.itemtopricetable = "sub_warehourse_itemToPrice_"+id;
+	}
 }
