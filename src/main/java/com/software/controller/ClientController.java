@@ -25,6 +25,7 @@ public class ClientController {
 		String id = param.get("id");
 		com.software.domain.Client result = new com.software.domain.Client();
 		result.setId(Integer.valueOf(id));
+		result.setLabel("valid");
 		return service.selectByPrimaryKey(result);
 	}
 	
@@ -35,8 +36,8 @@ public class ClientController {
 		client.setName(param.getName());
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
-		client.setLabel(param.getLabel());
-		List<com.software.domain.Client> result = service.selectValid(client);
+		client.setLabel("valid");
+		List<com.software.domain.Client> result = service.select(client);
 		return result;
 	}
 	
@@ -47,7 +48,7 @@ public class ClientController {
 		client.setName(param.getName());
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
-		client.setLabel(param.getLabel());
+		client.setLabel("valid");
 		service.insertSelective(client);
 		return "success";
 	}
@@ -69,7 +70,7 @@ public class ClientController {
 		client.setName(param.getName());
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
-		client.setLabel(param.getLabel());
+		client.setLabel("valid");
 		service.updateByPrimaryKeySelective(client);
 		return "success";
 	}

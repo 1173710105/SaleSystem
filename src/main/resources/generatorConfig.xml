@@ -100,9 +100,10 @@
  	<!-- <table tableName="item" domainObjectName="Item" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  	<table tableName="base_warehourse_itemtoprice" domainObjectName="ItemToPrice" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  	 -->
- 	 <table tableName="warehourse_order_common" domainObjectName="WarehourseOrderCommon" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
- 	<!--  <table tableName="warehourse_order_item" domainObjectName="WarehourseOrderItem" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+<!--  	 <table tableName="warehourse_order_common" domainObjectName="WarehourseOrderCommon" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+ --> 	<!--  <table tableName="warehourse_order_item" domainObjectName="WarehourseOrderItem" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  	 -->
+ 	 <table tableName="client" domainObjectName="Client" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
  	 </context>
  	 	 
 </generatorConfiguration>
