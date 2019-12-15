@@ -1,11 +1,11 @@
 //POS机操作
 window.onload = function () {
-    // if (getCookie("sessionid") == "") {
-    // //登录
-    // alert("未登录,请登录后操作");
-    // window.location.href = "../login.html";
-    // return;
-    // }
+    if (getCookie("sessionid") == "") {
+    //登录
+    alert("未登录,请登录后操作");
+    window.location.href = "../login.html";
+    return;
+    }
 }
 
 //订单货品暂存列表
@@ -31,11 +31,10 @@ $('#add-btn').click(function () {
     var cargo = cargoList[cargoList.length - 1];
     if (document.getElementById('cargo-num').value == "") {
         //提示处理
-        
+        alert("请设置数量");
         return;
     }
     cargoNum.push(parseInt(document.getElementById('cargo-num').value));
-    var totalPrice = "123";
     var totalPrice = parseFloat(cargo.retailprice)
         * parseInt(document.getElementById('cargo-num').val());
     var editTable = document.getElementById("temp-cargo-list");
@@ -47,7 +46,7 @@ $('#add-btn').click(function () {
     var td2 = document.createElement("td");
     td2.innerHTML = document.getElementById('cargo-num').val();
     var td3 = document.createElement("td");
-    td3.innerHTML = cargo.retailprice.toString();
+    td3.innerHTML = cargo.retailprice;
     var td4 = document.createElement("td");
     td4.innerHTML = totalPrice.toString();
     tr.appendChild(td0);
@@ -82,9 +81,10 @@ $("#client-id").blur(function () {
     client = queryClientById(clientId);
     if (client == null) {
         //提示处理
+        alert("客户不存在");
         return;
     }
-    console.log(clientId);
+    console.log("pos client id : " ,clientId);
     document.getElementById('client-name').value = client.name;
 });
 
@@ -94,17 +94,18 @@ $("#client-id").blur(function () {
 $('#submit-btn').click(function() {
     if ($('#client-id').val() == "") {
         //提示
+        alert("请填写客户");
         return;
     }
     //整合订单
     //订单基本信息
     var s_clientid = $('#client-id').val();
-    var s_warehourseid = 1001; //仓库id
+    var s_warehourseid = getCookie("warehourseid"); //仓库id
     var s_principalid = getCookie("id");
     var s_sumprice = $('#total-price').val();
     var s_gather = $("#actual-recive").val();
     var s_change = $('#change').val();
-    var s_margin = calculateMargin(cargoList, cargoNum, 1); //利润
+    //var s_margin = calculateMargin(cargoList, cargoNum, 1); //利润
     var s_type = 1; //retail
     var s_status = 5;
     orderTempL = [];
@@ -117,14 +118,13 @@ $('#submit-btn').click(function() {
             sumprice : s_sumprice,
             gather : s_gather,
             change : s_change,
-            margin : s_margin,
             type : s_type,
-            status : status,
+            status : s_status,
             //货品
             itemid : cargoList[i].id,
             itemnum : cargoNum[i],
             perprice : cargoList[i].retailprice,
-            sumprice : cargoNum[i] * cargoList[i].retailprice,
+            sumprice : cargoNum[i] * parseFloat(cargoList[i].retailprice)
         }
         orderTempL.push(c);
     }
