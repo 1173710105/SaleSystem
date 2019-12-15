@@ -96,7 +96,6 @@ public class StaffController {
 		String password = "123";
 		
 		String hoursename = param.get("hoursename");
-		System.out.println(hoursename);
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");

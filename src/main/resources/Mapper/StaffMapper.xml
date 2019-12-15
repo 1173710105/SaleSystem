@@ -74,7 +74,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.Staff">
-    insert into sub_staff_example
+    insert into ${tablename}
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,

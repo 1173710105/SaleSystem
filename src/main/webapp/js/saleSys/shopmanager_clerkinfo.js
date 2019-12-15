@@ -28,6 +28,8 @@ $('#search-btn').click(function () {
 $('#add-btn').click(function() {
     $('#clerkModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "店员添加";
+    console.log("wname", getCookie("warehoursename"));
+    $('#clerk-rep').value = getCookie("warehoursename");
 });
 
 //编辑

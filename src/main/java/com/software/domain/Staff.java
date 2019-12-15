@@ -132,4 +132,12 @@ public class Staff
 	{
 		this.tablename = "sub_staff_"+String.format("%04d", this.hourseid);
 	}
+
+	@Override
+	public String toString() {
+		return "Staff [tablename=" + tablename + ", id=" + id + ", password=" + password + ", hourseid=" + hourseid
+				+ ", hoursename=" + hoursename + ", name=" + name + ", gender=" + gender + ", phone=" + phone
+				+ ", email=" + email + ", label=" + label + "]";
+	}
+	
 }
