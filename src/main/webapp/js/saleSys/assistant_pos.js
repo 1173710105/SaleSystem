@@ -104,8 +104,10 @@ $('#submit-btn').click(function() {
     //整合订单
     //订单基本信息
     var s_clientid = $('#client-id').val();
+    var s_clientname = $('#client-name').val();
     var s_warehourseid = getCookie("warehourseid"); //仓库id
     var s_principalid = getCookie("principalid");
+    var s_principalname = getCookie("principalname");
     var s_sumprice = $('#total-price').val();
     var s_gather = $("#actual-recive").val();
     var s_change = $('#change').val();
@@ -117,15 +119,19 @@ $('#submit-btn').click(function() {
     for (var i = 0; i < cargoList.length; i++) {
         c = {
             clientid : s_clientid,
+            clientname : s_clientname,
             tablename : s_warehourseid,
+            warehoursename : getCookie("warehoursename"),
             principalid : s_principalid,
-            sumprice : s_sumprice,
+            principalname : s_principalname,
+            ordersumprice : s_sumprice,
             gather : s_gather,
             change : s_change,
             type : s_type,
             status : s_status,
             //货品
             itemid : cargoList[i].id,
+            itemname : cargoList[i].name,
             itemnum : cargoNum[i],
             perprice : cargoList[i].retailprice,
             sumprice : cargoNum[i] * parseFloat(cargoList[i].retailprice)

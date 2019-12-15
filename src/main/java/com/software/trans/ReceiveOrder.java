@@ -11,7 +11,6 @@ public class ReceiveOrder
 	private String itemtablename;
 	private String warehoursedetailtablename;
 	private String itemtopricetable;
-	private String hourseid;
 	private String orderid;
 	private String viceid;
 	private String warehourseid;
@@ -222,23 +221,16 @@ public class ReceiveOrder
 	public void setOrdersumprice(String ordersumprice) {
 		this.ordersumprice = ordersumprice;
 	}
-	@Override
-	public String toString() {
-		return "ReceiveOrder [commontablename=" + commontablename + ", itemtablename=" + itemtablename + ", orderid="
-				+ orderid + ", viceid=" + viceid + ", warehourseid=" + warehourseid + ", warehoursename="
-				+ warehoursename + ", clientid=" + clientid + ", clientname=" + clientname + ", principalid="
-				+ principalid + ", principalname=" + principalname + ", itemid=" + itemid + ", itemnum=" + itemnum
-				+ ", perprice=" + perprice + ", sumprice=" + sumprice + ", gather=" + gather + ", change=" + change
-				+ ", margin=" + margin + ", createtime=" + createtime + ", checktime=" + checktime + ", gathertime="
-				+ gathertime + ", returntime=" + returntime + ", postime=" + postime + ", status=" + status + ", type="
-				+ type + ", exception=" + exception + ", note=" + note + "]";
-	}
+
 	
 	public SaleorderCommon toCommon()
 	{
 		SaleorderCommon common = new SaleorderCommon();
 		common.setTablename(this.commontablename);
-		common.setId(Integer.valueOf(this.orderid));
+		if (!this.orderid.equals("")) 
+		{
+			common.setId(Integer.valueOf(this.orderid));
+		}
 		common.setWarehourseid(Integer.valueOf(this.warehourseid));
 		common.setWarehoursename(this.warehoursename);
 		common.setClientid(Integer.valueOf(this.clientid));
@@ -254,7 +246,10 @@ public class ReceiveOrder
 		common.setSumprice(Float.valueOf(this.ordersumprice));
 		common.setGather(Float.valueOf(this.gather));
 		common.setChange(Float.valueOf(this.change));
-		common.setMargin(Float.valueOf(this.margin));
+		if (!this.margin.equals("")) 
+		{
+			common.setMargin(Float.valueOf(this.margin));
+		}
 		common.setType(this.type);
 		common.setNote(this.note);
 		common.setException(this.exception);
@@ -265,8 +260,14 @@ public class ReceiveOrder
 	{
 		SaleorderItem item = new SaleorderItem();
 		item.setTablename(this.itemtablename);
-		item.setId(Integer.valueOf(this.orderid));
-		item.setViceid(Integer.valueOf(this.viceid));
+		if (!this.orderid.equals("")) 
+		{
+			item.setId(Integer.valueOf(this.orderid));
+		}
+		if (!this.viceid.equals("")) 
+		{
+			item.setViceid(Integer.valueOf(this.viceid));
+		}
 		item.setItemid(Integer.valueOf(this.itemid));
 		item.setItemname(this.itemname);
 		item.setItemnum(Integer.valueOf(this.itemnum));
@@ -278,10 +279,25 @@ public class ReceiveOrder
     
 	public void fillTablename()
 	{
-		String id = String.format("%04d", Integer.valueOf(this.hourseid));
+		String id = String.format("%04d", Integer.valueOf(this.warehourseid));
 		this.commontablename = "sub_saleorder_common_"+id;
 		this.itemtablename	 =	"sub_saleorder_item_"+id;
 		this.warehoursedetailtablename = "sub_warehourse_detail_"+id;
-		this.itemtopricetable = "sub_warehourse_itemToPrice_"+id;
+		this.itemtopricetable = "sub_warehourse_itemtoprice_"+id;
 	}
+	@Override
+	public String toString() {
+		return "ReceiveOrder [commontablename=" + commontablename + ", itemtablename=" + itemtablename
+				+ ", warehoursedetailtablename=" + warehoursedetailtablename + ", itemtopricetable=" + itemtopricetable
+				+ ", orderid=" + orderid + ", viceid=" + viceid + ", warehourseid=" + warehourseid + ", warehoursename="
+				+ warehoursename + ", clientid=" + clientid + ", clientname=" + clientname + ", principalid="
+				+ principalid + ", principalname=" + principalname + ", itemid=" + itemid + ", itemnum=" + itemnum
+				+ ", itemname=" + itemname + ", perprice=" + perprice + ", sumprice=" + sumprice + ", gather=" + gather
+				+ ", change=" + change + ", margin=" + margin + ", createtime=" + createtime + ", checktime="
+				+ checktime + ", gathertime=" + gathertime + ", returntime=" + returntime + ", postime=" + postime
+				+ ", ordersumprice=" + ordersumprice + ", status=" + status + ", type=" + type + ", exception="
+				+ exception + ", note=" + note + "]";
+	}
+	
+	
 }

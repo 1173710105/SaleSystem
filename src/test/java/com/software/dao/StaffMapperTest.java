@@ -24,7 +24,9 @@ public class StaffMapperTest
 	{
 		Staff staff = new Staff();
 		staff.setTablename("sub_staff_0001");
+		System.out.println("i am ah  a");
 		int num = mapper.count(staff);
+		System.out.println("i am here:"+num);
 	}
 
 }

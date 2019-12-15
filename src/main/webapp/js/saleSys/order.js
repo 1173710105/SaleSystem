@@ -7,8 +7,11 @@ defaultSetting = {
     viceid: '',  //订单编号
     warehourseid: '',
     clientid: '',
+    clientname : '',
     principalid: '',
+    principalname : '',
     itemid : '',
+    itemname : '',
     itemnum: '',
     perprice: '',
     sumprice: '',
@@ -73,10 +76,14 @@ function insertOrder(orderL) {
         '{'
         + '"orderid":"' + combineOrder.orderid + '",'
         + '"viceid":"' + combineOrder.viceid + '",'
-        + '"hourseid":"' + combineOrder.tablename + '",'
+        + '"warehourseid":"' + combineOrder.tablename + '",'
+        + '"warehoursename":"' + combineOrder.warehoursename + '",'
         + '"clientid":"' + combineOrder.clientid + '",'
+        + '"clientname":"' + combineOrder.clientname + '",'
         + '"principalid":"' + combineOrder.principalid + '",'
+        + '"principalname":"' + combineOrder.principalname + '",'
         + '"itemid":"' + combineOrder.itemid + '",'
+        + '"itemname":"' + combineOrder.itemname + '",'
         + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
         + '"perprice":"' + combineOrder.perprice + '",'
         + '"sumprice":"' + combineOrder.sumprice + '",'

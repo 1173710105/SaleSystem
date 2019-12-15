@@ -165,7 +165,7 @@
         gather,
       </if>
       <if test="change != null">
-        change,
+        `change`,
       </if>
       <if test="margin != null">
         margin,
@@ -289,7 +289,7 @@
         gather = #{gather,jdbcType=REAL},
       </if>
       <if test="change != null">
-        change = #{change,jdbcType=REAL},
+        `change` = #{change,jdbcType=REAL},
       </if>
       <if test="margin != null">
         margin = #{margin,jdbcType=REAL},
@@ -322,7 +322,7 @@
       status = #{status,jdbcType=INTEGER},
       sumPrice = #{sumprice,jdbcType=REAL},
       gather = #{gather,jdbcType=REAL},
-      change = #{change,jdbcType=REAL},
+      `change` = #{change,jdbcType=REAL},
       margin = #{margin,jdbcType=REAL},
       type = #{type,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR},
