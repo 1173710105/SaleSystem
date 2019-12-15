@@ -1,10 +1,10 @@
 //POS机操作
 window.onload = function () {
-    if (getCookie("sessionid") == "") {
-    //登录
-    alert("未登录,请登录后操作");
-    window.location.href = "../login.html";
-    return;
+    if (getCookie("id") == "") {
+        //登录
+        alert("未登录,请登录后操作");
+        window.location.href = "../login.html";
+        return;
     }
 }
 
@@ -139,4 +139,24 @@ $('#submit-btn').click(function() {
     document.getElementById('cargo-retail-price').value = "";
     document.getElementById('cargo-num').value = "";
     document.getElementById('temp-cargo-list').innerHTML = "";
+});
+
+$('#clear-btn').click(function() {
+    //清空内容
+    document.getElementById('client-id').value = "";
+    document.getElementById('client-name').value = "";
+    document.getElementById('cargo-id').value = "";
+    document.getElementById('cargo-name').value = "";
+    document.getElementById('cargo-retail-price').value = "";
+    document.getElementById('cargo-num').value = "";
+    document.getElementById('temp-cargo-list').innerHTML = "";
+
+    $('#total-price').val("");
+    $("#actual-recive").val("");
+    $('#change').val("");
+
+    document.getElementById("temp-cargo-list").innerHTML = "";
+
+    cargoList = [];
+    cargoNum = [];
 });
