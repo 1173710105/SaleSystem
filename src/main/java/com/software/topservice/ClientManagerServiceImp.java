@@ -45,21 +45,6 @@ public class ClientManagerServiceImp implements ClientManagerService {
 	}
 	
 	@Override
-	public List<Client> selectValid(Client record) 
-	{
-		List<Client> result = service.select(record);
-		List<Client> afterFilter = new ArrayList<Client>();
-		for (Client client : result) 
-		{
-			if (!client.getLabel().equals("invalid")) 
-			{
-				afterFilter.add(client);
-			}
-		}
-		return afterFilter;
-	}
-	
-	@Override
 	public void updateByPrimaryKeySelective(Client record) {
 		service.updateByPrimaryKeySelective(record);
 	}
