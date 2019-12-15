@@ -3,11 +3,12 @@ defaultSetting = {
     id : '',
     password : '',
     hourseid : '',
+    hoursename : '',
     name : '',
     gender : '',
     phone : '',
     email : '',
-    tablename : ''
+    label : ''
 }
 
 function sendJsonAjax(url, param) {
@@ -34,16 +35,17 @@ function sendJsonAjax(url, param) {
  }
 
 //通过id查找员工
-function queryStaffById(id) {
-    if (id == "") {
+function queryStaffById(tid, thourseid) {
+    if (tid == "") {
         return;
     }
     staff = {
-        id : 
+        id : tid,
+        hourseid : thourseid
     }
     param = buildParam(staff);
     url = "";
-    
+    console.log("QueryStaffById : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -54,6 +56,7 @@ function queryStaff(staff) {
     }
     param = buildParam(staff);
     url = "";
+    console.log("QueryStaff : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -64,6 +67,7 @@ function insertStaff(staff) {
     }
     param = buildParam(staff);
     url = "";
+    console.log("InsertStaff : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -74,6 +78,7 @@ function deleteStaff(staff) {
     }
     param = buildParam(staff);
     url = "";
+    console.log("DeleteStaff : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -84,6 +89,7 @@ function updateStaff(staff) {
     }
     param = buildParam(staff);
     url = "";
+    console.log("UpdateStaff : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -96,7 +102,8 @@ function buildParam(staff) {
         + '"gender:"' + combineStaff.gender + '",'
         + '"phone":"' + combineStaff.phone + '",'
         + '"email":"' + combineStaff.email + '",'
-        + '"tablename":"' + combineStaff.tablename + '",'
-        + '"hourseid":"' + combineStaff.hourseid + '"}';
+        + '"hourseid":"' + combineStaff.hourseid + '",'
+        + '"hoursename":"' + combineStaff.hoursename + '",'
+        + '"label":"' + combineStaff.hourseid + '"}'
     return param;
 }
