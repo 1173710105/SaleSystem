@@ -28,6 +28,7 @@ defaultSetting = {
 };
 
 function sendJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
@@ -36,13 +37,13 @@ function sendJsonAjax(url, param) {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+                tempdata = data;
             }
-            return null;
         },
         error: function () {
         }
     });
+    return tempdata;
 }
 
 //查询订单,结果为list
@@ -50,33 +51,9 @@ function queryOrder(order) {
     if (order == null) {
         return;
     }
-    combineOrder = $.extend({}, defaultSetting, order);
-    param =
-        '{'
-        + '"orderid":"' + combineOrder.orderid + '",'
-        + '"viceid":"' + combineOrder.viceid + '",'
-        + '"warehorseid":"' + combineOrder.warehorseid + '",'
-        + '"clientid:"' + combineOrder.clientid + '",'
-        + '"principalid":"' + combineOrder.principalid + '",'
-        + '"itemid":"' + combineOrder.itemid + '",'
-        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
-        + '"perprice":"' + combineOrder.perprice + '",'
-        + '"sumprice":"' + combineOrder.sumprice + '",'
-        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
-        + '"gather":"' + combineOrder.gather + '",'
-        + '"change":"' + combineOrder.change + '",'
-        + '"margin":"' + combineOrder.margin + '",'
-        + '"createtime":"' + combineOrder.createtime + '",'
-        + '"checktime":"' + combineOrder.checktime + '",'
-        + '"gathertime":"' + combineOrder.gathertime + '",'
-        + '"returntime":"' + combineOrder.returntime + '",'
-        + '"postime":"' + combineOrder.postime + '",'
-        + '"status":"' + combineOrder.status + '",'
-        + '"type":"' + combineOrder.type + '",'
-        + '"exception":"' + combineOrder.exception + '",'
-        + '"note":"' + combineOrder.note + '"}';
+    param = buildParam(order);
     url = "/order/query";
-    console.log("查找订单" + param);
+    console.log("QueryOrder : " + param);
     return sendJsonAjax(url, param);
 }
 
@@ -88,42 +65,9 @@ function insertOrder(order) {
     if (order == null) {
         return;
     }
-    jsonList = [];
-    for (var i = 0 ; i < order.length; i++) {
-        combineOrder = $.extend({}, defaultSetting, order[i]);
-        param = 
-        '{'
-        + '"orderid":"' + combineOrder.orderid + '",'
-        + '"viceid":"' + combineOrder.viceid + '",'
-        + '"warehorseid":"' + combineOrder.warehorseid + '",'
-        + '"clientid:"' + combineOrder.clientid + '",'
-        + '"principalid":"' + combineOrder.principalid + '",'
-        + '"itemid":"' + combineOrder.itemid + '",'
-        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
-        + '"perprice":"' + combineOrder.perprice + '",'
-        + '"sumprice":"' + combineOrder.sumprice + '",'
-        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
-        + '"gather":"' + combineOrder.gather + '",'
-        + '"change":"' + combineOrder.change + '",'
-        + '"margin":"' + combineOrder.margin + '",'
-        + '"createtime":"' + combineOrder.createtime + '",'
-        + '"checktime":"' + combineOrder.checktime + '",'
-        + '"gathertime":"' + combineOrder.gathertime + '",'
-        + '"returntime":"' + combineOrder.returntime + '",'
-        + '"postime":"' + combineOrder.postime + '",'
-        + '"status":"' + combineOrder.status + '",'
-        + '"type":"' + combineOrder.type + '",'
-        + '"exception":"' + combineOrder.exception + '",'
-        + '"note":"' + combineOrder.note + '"}';
-        jsonList.push(param);
-    }
-    param = '[';
-    for (var i = 0 ; i < jsonList.length-1; i++) {
-        param += (jsonList[i] + ',');
-    }
-    param += (jsonList[jsonList.length-1] + ']');
+    param = buildParamList(order);
     url = "/order/insert";
-    console.log("插入新订单" + param);
+    console.log("InsertOrder : " + param);
     return sendJsonAjax(url, param);
 }
 
@@ -135,40 +79,8 @@ function updateOrder(order) {
     if (order == null) {
         return;
     }
-    jsonList = [];
-    for (var i = 0 ; i < order.length; i++) {
-        combineOrder = $.extend({}, defaultSetting, order[i]);
-        param = 
-        '{'
-        + '"orderid":"' + combineOrder.orderid + '",'
-        + '"viceid":"' + combineOrder.viceid + '",'
-        + '"warehorseid":"' + combineOrder.warehorseid + '",'
-        + '"clientid:"' + combineOrder.clientid + '",'
-        + '"principalid":"' + combineOrder.principalid + '",'
-        + '"itemid":"' + combineOrder.itemid + '",'
-        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
-        + '"perprice":"' + combineOrder.perprice + '",'
-        + '"sumprice":"' + combineOrder.sumprice + '",'
-        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
-        + '"gather":"' + combineOrder.gather + '",'
-        + '"change":"' + combineOrder.change + '",'
-        + '"margin":"' + combineOrder.margin + '",'
-        + '"createtime":"' + combineOrder.createtime + '",'
-        + '"checktime":"' + combineOrder.checktime + '",'
-        + '"gathertime":"' + combineOrder.gathertime + '",'
-        + '"returntime":"' + combineOrder.returntime + '",'
-        + '"postime":"' + combineOrder.postime + '",'
-        + '"status":"' + combineOrder.status + '",'
-        + '"type":"' + combineOrder.type + '",'
-        + '"exception":"' + combineOrder.exception + '",'
-        + '"note":"' + combineOrder.note + '"}';
-        jsonList.push(param);
-    }
-    param = '[';
-    for (var i = 0 ; i < jsonList.length-1; i++) {
-        param += (jsonList[i] + ',');
-    }
-    param += (jsonList[jsonList.length-1] + ']');
+    param = buildParamList(order);
+    console.log("UpdataOrder : " + param);
     url = "/order/update";
     return sendJsonAjax(url, param);
 }
@@ -180,6 +92,7 @@ function deleteOrder(id) {
     }
     param = 
         '{"viceid":"' + id.toString() + '"}';
+    console.log("DeleteOrder : " + param);
     url = "/order/delete";
     return sendJsonAjax(url, param);
 }
@@ -192,6 +105,7 @@ function checkOrder(id) {
     param =
         '{"viceid":"' + id.toString() + '"}';
     url = "/order/check";
+    console.log("CheckOrder : " + param);
     return sendJsonAjax(url, param);
 }
 
@@ -200,32 +114,9 @@ function payOrder(order) {
     if (id == "") {
         return;
     }
-    combineOrder = $.extend({}, defaultSetting, order);
-    param =
-    '{'
-    + '"orderid":"' + combineOrder.orderid + '",'
-    + '"viceid":"' + combineOrder.viceid + '",'
-    + '"warehorseid":"' + combineOrder.warehorseid + '",'
-    + '"clientid:"' + combineOrder.clientid + '",'
-    + '"principalid":"' + combineOrder.principalid + '",'
-    + '"itemid":"' + combineOrder.itemid + '",'
-    + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
-    + '"perprice":"' + combineOrder.perprice + '",'
-    + '"sumprice":"' + combineOrder.sumprice + '",'
-    + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
-    + '"gather":"' + combineOrder.gather + '",'
-    + '"change":"' + combineOrder.change + '",'
-    + '"margin":"' + combineOrder.margin + '",'
-    + '"createtime":"' + combineOrder.createtime + '",'
-    + '"checktime":"' + combineOrder.checktime + '",'
-    + '"gathertime":"' + combineOrder.gathertime + '",'
-    + '"returntime":"' + combineOrder.returntime + '",'
-    + '"postime":"' + combineOrder.postime + '",'
-    + '"status":"' + combineOrder.status + '",'
-    + '"type":"' + combineOrder.type + '",'
-    + '"exception":"' + combineOrder.exception + '",'
-    + '"note":"' + combineOrder.note + '"}';
+    param = buildParam(order);
     url = "/order/pay";
+    console.log("PayOrder : " + param);
     return sendJsonAjax(url, param);
 }
 
@@ -234,14 +125,15 @@ function returnOrder(tid, tprincipalid, texception, tnote) {
     if (id == "") {
         return;
     }
-    order = {
-        viceid : tid,
-        principalid : tprincipalid,
-        exception : texception,
-        note : tnote
-    }
-        combineOrder = $.extend({}, defaultSetting, order);
-        param =
+    param = buildParam(order);
+    url = "/order/return";
+    console.log("ReturnOrder : " + param);
+    return sendJsonAjax(url, param);
+}
+
+function buildParam(order) {
+    combineOrder = $.extend({}, defaultSetting, order);
+    param =
         '{'
         + '"orderid":"' + combineOrder.orderid + '",'
         + '"viceid":"' + combineOrder.viceid + '",'
@@ -265,6 +157,43 @@ function returnOrder(tid, tprincipalid, texception, tnote) {
         + '"type":"' + combineOrder.type + '",'
         + '"exception":"' + combineOrder.exception + '",'
         + '"note":"' + combineOrder.note + '"}';
-    url = "/order/return";
-    return sendJsonAjax(url, param);
+        return param;
+}
+
+function buildParamList(orderL) {
+    jsonList = [];
+    for (var i = 0 ; i < order.length; i++) {
+        combineOrder = $.extend({}, defaultSetting, order[i]);
+        param = 
+        '{'
+        + '"orderid":"' + combineOrder.orderid + '",'
+        + '"viceid":"' + combineOrder.viceid + '",'
+        + '"warehorseid":"' + combineOrder.warehorseid + '",'
+        + '"clientid:"' + combineOrder.clientid + '",'
+        + '"principalid":"' + combineOrder.principalid + '",'
+        + '"itemid":"' + combineOrder.itemid + '",'
+        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
+        + '"perprice":"' + combineOrder.perprice + '",'
+        + '"sumprice":"' + combineOrder.sumprice + '",'
+        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
+        + '"gather":"' + combineOrder.gather + '",'
+        + '"change":"' + combineOrder.change + '",'
+        + '"margin":"' + combineOrder.margin + '",'
+        + '"createtime":"' + combineOrder.createtime + '",'
+        + '"checktime":"' + combineOrder.checktime + '",'
+        + '"gathertime":"' + combineOrder.gathertime + '",'
+        + '"returntime":"' + combineOrder.returntime + '",'
+        + '"postime":"' + combineOrder.postime + '",'
+        + '"status":"' + combineOrder.status + '",'
+        + '"type":"' + combineOrder.type + '",'
+        + '"exception":"' + combineOrder.exception + '",'
+        + '"note":"' + combineOrder.note + '"}';
+        jsonList.push(param);
+    }
+    param = '[';
+    for (var i = 0 ; i < jsonList.length-1; i++) {
+        param += (jsonList[i] + ',');
+    }
+    param += (jsonList[jsonList.length-1] + ']');
+    return param;
 }
