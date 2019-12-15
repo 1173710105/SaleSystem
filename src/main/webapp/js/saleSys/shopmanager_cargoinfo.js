@@ -7,12 +7,13 @@ window.onload = function() {
     this.console.log("principalname", getCookie("principalname"));
     
     //加载货品
-    var cargoList = null;
-    var cargoList = this.queryCargo({id : '', tablename : getCookie("warehourseid")});
-    console.log("init cargolist : ", cargoList);
-    console.log("init cargoType : ", typeof(cargoList));
-    tempCargoList = cargoList;
-    loadCargoList(cargoList);
+    // var cargoList = null;
+    // var cargoList = this.queryCargo({id : '', tablename : getCookie("warehourseid")});
+    // console.log("init cargolist : ", cargoList);
+    // console.log("init cargoType : ", typeof(cargoList));
+    // tempCargoList = cargoList;
+    // loadCargoList(cargoList);
+    this.refreshCargoList();
 }
 
 //搜索处理
@@ -21,6 +22,9 @@ $('#search-btn').click(function () {
     var s_cargoname = $('#search-cargo-name').val().toString();
     var s_cargoid = $('#search-cargo-id').val().toString();
     var s_cargotype = $('#search-cargo-type').val();
+    if(s_cargotype == "任意") {
+        s_cargotype = '';
+    }
     cargo = {
         id : s_cargoid,
         name : s_cargoname,
@@ -34,8 +38,9 @@ $('#search-btn').click(function () {
 
 //添加货品
 $('#add-btn').click(function() {
-	alert("无权限");
-	return;
+    $('#cargoModal').modal('show');
+	// alert("无权限");
+	// return;
 });
 
 //保存货品
@@ -66,9 +71,10 @@ $('#save-btn').click(function() {
         }
         updateCargo(newCargo);
     }
-})
+    refreshCargoList();
+});
 
-//编辑货品
+//编辑货品填充信息
 $(document).on('click', '#edit-btn', function() {
 	$('#cargoModal').modal('show'); //show modal
 	console.log("aa");
@@ -95,14 +101,39 @@ $(document).on('click', '#delete-btn', function () {
     var r = confirm("是否删除？");
     if (r == true) {
         //实现
-        deleteCargo($(this).val(),getCookie("warehourseid"));
+        deleteCargo({
+            id : $(this).val(),
+            tablename : getCookie("warehourseid")});
         alert("删除成功");
+        refreshCargoList();
     }
 });
 
 function cleanList() {
 	var editTable = document.getElementById("cargo-tbody");
 	editTable.innerHTML = "";
+}
+
+//刷新页面
+function refreshCargoList() {
+    cleanList();
+    var s_cargoname = $('#search-cargo-name').val().toString();
+    var s_cargoid = $('#search-cargo-id').val().toString();
+    var s_cargotype = $('#search-cargo-type').val();
+    if(s_cargotype == "任意") {
+        s_cargotype = '';
+    }
+    cargo = {
+        id : s_cargoid,
+        name : s_cargoname,
+        type : s_cargotype,
+        tablename : getCookie("warehourseid")
+    }
+    var cargoList = this.queryCargo(cargo);
+    console.log("refresh cargolist : ", cargoList);
+    console.log("refresh cargoType : ", typeof(cargoList));
+    tempCargoList = cargoList;
+    loadCargoList(cargoList);
 }
 
 //加载货品信息

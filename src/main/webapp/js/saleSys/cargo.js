@@ -1,9 +1,6 @@
 /**
  * 货物有关请求和操作
  */
-
-var tempdata; 
-
 defaultSetting = 
 {
     id : '',
@@ -18,6 +15,7 @@ defaultSetting =
 }
 
 function sendJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
@@ -35,17 +33,26 @@ function sendJsonAjax(url, param) {
         error: function () {
         }
     });
+    return tempdata;
  }
 
  //通过id查找货品
- function queryCargoById(id, tablename) {
-    if (id == "") {
+ function queryCargoById(cargo) {
+    if (cargo.id == "") {
         return;
     }
     url = "/cargo/queryById";
-    param = 
-        '{"id":"' + id + '",'
-        + '"tablename":"' + tablename + "}";       
+    combineCargo = $.extend({},defaultSetting, cargo);
+     param = 
+        '{"id":"' + combineCargo.id +'",'
+        + '"name":"' + combineCargo.name +'",'
+        + '"type":"' + combineCargo.type +'",'
+        + '"specification":"' + combineCargo.specification +'",'
+        + '"picture":"' + combineCargo.picture +'",'
+        + '"retailprice":"' + combineCargo.retailprice +'",'
+        + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
+        + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
+        + '"tablename":"' + combineCargo.tablename + '"}';   
     return sendJsonAjax(url, param);
  }
 
@@ -69,9 +76,9 @@ function sendJsonAjax(url, param) {
     $.ajaxSettings.async = false;
     sendJsonAjax(url, param);
     console.log("send cargo query : ", param);
-    console.log("query cargo : " , tempdata);
-    //return sendJsonAjax(url, param);
-    return tempdata;
+    var data = sendJsonAjax(url, param);
+    console.log("query cargo : " , data);
+    return data;
  }
 
  //添加货品
@@ -95,13 +102,9 @@ function insertCargo(cargo) {
 }
 
  //删除货品
-function deleteCargo(tid, ttablename) {
-    if (tid == "") {
+function deleteCargo(cargo) {
+    if (cargo.id == "") {
         return;
-    }
-    cargo = {
-    		id :tid,
-    		tablename : ttablename
     }
     url = "/cargo/delete";
     combineCargo = $.extend({},defaultSetting, cargo);
@@ -115,7 +118,6 @@ function deleteCargo(tid, ttablename) {
     + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
-    console.log("delete cargo : " , param);
     return sendJsonAjax(url, param);
 }
 
