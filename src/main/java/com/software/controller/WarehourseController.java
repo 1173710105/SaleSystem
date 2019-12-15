@@ -86,4 +86,9 @@ public class WarehourseController
 		service.updateByPrimaryKeySelective(warehourse);
 		return "success";
 	}
+	
+	public Map<Integer, String> typeMenu()
+	{
+		return service.typeMenu();
+	}
 }

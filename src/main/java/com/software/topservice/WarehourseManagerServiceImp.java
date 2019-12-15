@@ -1,6 +1,8 @@
 package com.software.topservice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -165,6 +167,20 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		exampleMap.setWarehourseid(record.getId());
 		exampleMap.setLabel(record.getLabel());
 		mapService.updateByHourseID(exampleMap);
+	}
+
+	@Override
+	public Map<Integer, String> typeMenu() 
+	{
+		Map<Integer, String> resultMap = new HashMap<>();
+		Warehourse exampleWarehourse = new Warehourse();
+		exampleWarehourse.setLabel("valid");
+		List<Warehourse> resultList = hourseService.select(exampleWarehourse);
+		for (Warehourse warehourse : resultList) 
+		{
+			resultMap.put(warehourse.getId(), warehourse.getName());
+		}
+		return resultMap;
 	}
 	
 }

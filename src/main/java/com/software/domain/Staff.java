@@ -3,6 +3,7 @@ package com.software.domain;
 public class Staff 
 {
 	private String tablename;
+	
     private String id;
     private String password;
     private Integer hourseid;
@@ -11,6 +12,7 @@ public class Staff
     private String gender;
     private String phone;
     private String email;
+    
     private String label;
 
     public String getHoursename() 
@@ -94,5 +96,10 @@ public class Staff
 
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
+    }
+    
+    public void filltablename()
+    {
+    	this.tablename = "sub_staff_"+String.format("%04d", this.hourseid);
     }
 }
