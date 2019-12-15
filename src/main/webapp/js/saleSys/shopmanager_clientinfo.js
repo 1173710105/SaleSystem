@@ -24,7 +24,8 @@ $('#search-btn').click(function () {
 });
 
 //添加
-$('#add-btn').click(function() {
+$(document).on('click', '#add-btn', function() {
+	console.log("client add-btn");
     $('#clientModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "用户添加";
 });
@@ -45,7 +46,7 @@ $(document).on('click', '#edit-btn', function() {
 
 
 //保存模态框内容
-$('#save-btn').click(function() {
+$(document).on('click', '#save-btn', function() {
     client = {
         id : $('client-id').val(),
         name : $('client-name').val(),

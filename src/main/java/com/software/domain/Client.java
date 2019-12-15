@@ -1,6 +1,7 @@
 package com.software.domain;
 
-public class Client {
+public class Client 
+{
     /**
      * 客户ID ID
      */
