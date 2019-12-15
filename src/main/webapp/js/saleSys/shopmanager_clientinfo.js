@@ -1,22 +1,20 @@
 var tempClientMap = new Map();
 
 window.onload = function () {
-    var clientList = queryClient({ id: "" });
-    for (var i = 0; i < clientList.length; i++) {
-        this.tempClientMap.set(clientList[i].id, clientList[i]);
-    }
+    this.refreshClientList();
 }
 
 //搜索
 $('#search-btn').click(function () {
     //判断
     //搜索
+    cleanList();
     client = {
         id: $('#search-client-id').val(),
         name: $('#search-client-name').val(),
         phone: $('#search-phone').val(),
         email: $('#search-email').val(),
-        type: ""
+        type: $('#search-type').val()
     }
     var cl = queryClient(client);
     for (var i = 0; i < cl.length; i++) {
@@ -31,11 +29,11 @@ $('#add-btn').click(function() {
     $('#modal-title').innerHTML = "用户添加";
 });
 
-//编辑
-$('#edit-btn').click(function() {
+//编辑填充信息
+$(document).on('click', '#edit-btn', function() {
     $('#clientModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "用户编辑";
-    var client = tempClientMap.get($(this).id);
+    var client = tempClientMap.get($(this).val());
     $('client-id').val(client.id);
     $('client-name').val(client.name);
     $('client-gender').val(client.gender);
@@ -62,17 +60,43 @@ $('#save-btn').click(function() {
     } else {
         updateClient(client);
     }
+    refreshClientList();
 });
 
 //删除
-$('#delete-btn').click(function() {
+$(document).on('click', '#delete-btn' , function() {
     var r = confirm("是否删除？");
     if (r == true) {
         //实现
         deleteClient({id : $('client-id').val()});
         alert("删除成功");
+        refreshClientList();
     }
 });
+
+function cleanList() {
+	var editTable = document.getElementById("client-tbody");
+	editTable.innerHTML = "";
+}
+
+//刷新页面
+function refreshClientList() {
+    cleanList();
+    client = {
+        id: $('#search-client-id').val(),
+        name: $('#search-client-name').val(),
+        phone: $('#search-phone').val(),
+        email: $('#search-email').val(),
+        type: $('#search-type').val()
+    }
+    var clientList = this.queryClient(client);
+    console.log("refresh clientlist : ", clientList);
+    console.log("refresh clientType : ", typeof(clientList));
+    for (var i = 0; i < clientList.length; i++) {
+        this.tempClientMap.set(clientList[i].id, clientList[i]);
+    }
+    loadClientList(clientList);
+}
 
 //加载列表
 function loadClientList(cl) {

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 货物有关请求和操作
  */
 defaultSetting = 
@@ -37,9 +37,12 @@ function sendJsonAjax(url, param) {
  }
 
  //通过id查找货品
- function queryCargoById(cargo) {
-    if (cargo.id == "") {
+ function queryCargoById(tid) {
+    if (tid == "") {
         return;
+    }
+    cargo = {
+        id : tid
     }
     url = "/cargo/queryById";
     combineCargo = $.extend({},defaultSetting, cargo);
@@ -52,7 +55,8 @@ function sendJsonAjax(url, param) {
         + '"retailprice":"' + combineCargo.retailprice +'",'
         + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
         + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
-        + '"tablename":"' + combineCargo.tablename + '"}';   
+        + '"tablename":"' + combineCargo.tablename + '"}'; 
+    console.log("QueryCargoById : ", param); 
     return sendJsonAjax(url, param);
  }
 
@@ -75,7 +79,7 @@ function sendJsonAjax(url, param) {
     url = "/cargo/query";
     $.ajaxSettings.async = false;
     sendJsonAjax(url, param);
-    console.log("send cargo query : ", param);
+    console.log("QueryCargo : ", param);
     var data = sendJsonAjax(url, param);
     console.log("query cargo : " , data);
     return data;
@@ -98,6 +102,7 @@ function insertCargo(cargo) {
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
    url = "/cargo/add";
+   console.log("InsertCargo : ", param);
   return sendJsonAjax(url, param);
 }
 
@@ -118,6 +123,7 @@ function deleteCargo(cargo) {
     + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
+    console.log("DeleteCargo : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -137,7 +143,7 @@ function updateCargo(cargo) {
     + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
-    console.log("update cargo : " , param);
+    console.log("UpdataCargo : " , param);
    url = "/cargo/update";
   return sendJsonAjax(url, param);
 }

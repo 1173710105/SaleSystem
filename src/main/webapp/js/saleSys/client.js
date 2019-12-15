@@ -1,4 +1,4 @@
-//客户对象操作
+﻿//客户对象操作
 
 defaultSetting = {
     id : '',
@@ -10,31 +10,36 @@ defaultSetting = {
 }
 
 function sendJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+                console.log("ClientJson : ", data);
+                tempdata = data;
             }
-            return null;
         },
         error: function () {
         }
     });
+    return tempdata;
  }
 
 //通过id查找客户
-function queryClientById(id) {
-    if (id == "") {
+function queryClientById(tid) {
+    if (tid == "") {
         return;
     }
-    param = 
-       '{"id":"' + id + '"}';
+    client = {
+        id : tid
+    }
+    param = buildParam(client);
     url = "/client/queryById";
+    console.log("QueryClientById : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -43,15 +48,9 @@ function queryClient(client) {
     if (client == null) {
         return null;
     }
-    combineClient = $.extend({},defaultSetting, client);
-    param = 
-       '{'
-        + '"id":"' + combineClient.id + '",'
-        + '"name":"' + combineClient.name + '",'
-        + '"gender:"' + combineClient.gender + '",'
-        + '"phone":"' + combineClient.phone + '",'
-        + '"email":"' + combineClient.email + '",'
-        + '"label":"' + combineClient.label + '"}';
+
+    param = buildParam(client);
+    console.log("QueryClient : ", param);
     url = "/client/query";
     return sendJsonAjax(url, param);
 }
@@ -61,27 +60,21 @@ function insertClient(client) {
     if (client == null) {
         return null;
     }
-    combineClient = $.extend({},defaultSetting, client);
-    param = 
-       '{'
-        + '"id":"",'
-        + '"name":"' + combineClient.name + '",'
-        + '"gender:"' + combineClient.gender + '",'
-        + '"phone":"' + combineClient.phone + '",'
-        + '"email":"' + combineClient.email + '",'
-        + '"label":"' + combineClient.label + '"}';
+
+    param = buildParam(client);
     url = "/client/insert";
+    console.log("InsertClient : ", param);
     return sendJsonAjax(url, param);
 }
 
 //删除客户
-function deleteClient(id) {
-    if (id == "") {
+function deleteClient(client) {
+    if (client.id == "") {
         return null;
     }
-    param = 
-       '{"id":"' + id + '"}';
+    param = buildParam(client);
     url = "/client/delete";
+    console.log("DeleteClient : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -90,6 +83,13 @@ function updateClient(client) {
     if (client == null) {
         return null;
     }
+    param = buildParam(client);
+    url = "/client/update";
+    console.log("UpdataClient : ", param);
+    return sendJsonAjax(url, param);
+}
+
+function buildParam(client) {
     combineClient = $.extend({},defaultSetting, client);
     param = 
        '{'
@@ -99,6 +99,6 @@ function updateClient(client) {
         + '"phone":"' + combineClient.phone + '",'
         + '"email":"' + combineClient.email + '",'
         + '"label":"' + combineClient.label + '"}';
-    url = "/client/update";
-    return sendJsonAjax(url, param);
+
+    return param;
 }

@@ -3,15 +3,17 @@ defaultSetting = {
     hourseid : '',
     itemid : '',
     itemname : '',
-    itemnum : ''
+    itemnum : '',
+    tablename : ''
 }
 
 function sendJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
