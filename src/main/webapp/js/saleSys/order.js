@@ -27,13 +27,13 @@ defaultSetting = {
     note: ''
 };
 
-function sendJsonAjax(url, param) {
+function sendOrderJsonAjax(url, param) {
     var tempdata;
     $.ajax({
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
@@ -54,21 +54,55 @@ function queryOrder(order) {
     param = buildParam(order);
     url = "/order/query";
     console.log("QueryOrder : " + param);
-    return sendJsonAjax(url, param);
+    return sendOrderJsonAjax(url, param);
 }
 
 /**
  * 插入新建订单
  * @param {List} order 列表类型对象,每一个对象都是一个子订单
  */
-function insertOrder(order) {
-    if (order == null) {
+function insertOrder(orderL) {
+    if (orderL == null) {
         return;
     }
-    param = buildParamList(order);
+    //param = buildParamList(order);
+    jsonList = [];
+    for (var i = 0 ; i < orderL.length; i++) {
+        combineOrder = $.extend({}, defaultSetting, orderL[i]);
+        param = 
+        '{'
+        + '"orderid":"' + combineOrder.orderid + '",'
+        + '"viceid":"' + combineOrder.viceid + '",'
+        + '"hourseid":"' + combineOrder.tablename + '",'
+        + '"clientid":"' + combineOrder.clientid + '",'
+        + '"principalid":"' + combineOrder.principalid + '",'
+        + '"itemid":"' + combineOrder.itemid + '",'
+        + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
+        + '"perprice":"' + combineOrder.perprice + '",'
+        + '"sumprice":"' + combineOrder.sumprice + '",'
+        + '"ordersumprice":"' + combineOrder.ordersumprice + '",'
+        + '"gather":"' + combineOrder.gather + '",'
+        + '"change":"' + combineOrder.change + '",'
+        + '"margin":"' + combineOrder.margin + '",'
+        + '"createtime":"' + combineOrder.createtime + '",'
+        + '"checktime":"' + combineOrder.checktime + '",'
+        + '"gathertime":"' + combineOrder.gathertime + '",'
+        + '"returntime":"' + combineOrder.returntime + '",'
+        + '"postime":"' + combineOrder.postime + '",'
+        + '"status":"' + combineOrder.status + '",'
+        + '"type":"' + combineOrder.type + '",'
+        + '"exception":"' + combineOrder.exception + '",'
+        + '"note":"' + combineOrder.note + '"}';
+        jsonList.push(param);
+    }
+    param = '[';
+    for (var i = 0 ; i < jsonList.length-1; i++) {
+        param += (jsonList[i] + ',');
+    }
+    param += (jsonList[jsonList.length-1] + ']');
     url = "/order/insert";
     console.log("InsertOrder : " + param);
-    return sendJsonAjax(url, param);
+    return sendOrderJsonAjax(url, param);
 }
 
 /**
@@ -82,7 +116,7 @@ function updateOrder(order) {
     param = buildParamList(order);
     console.log("UpdataOrder : " + param);
     url = "/order/update";
-    return sendJsonAjax(url, param);
+    return sendOrderJsonAjax(url, param);
 }
 
 //删除订单
@@ -94,7 +128,7 @@ function deleteOrder(id) {
         '{"viceid":"' + id.toString() + '"}';
     console.log("DeleteOrder : " + param);
     url = "/order/delete";
-    return sendJsonAjax(url, param);
+    return sendOrderJsonAjax(url, param);
 }
 
 //将订单审核通过
@@ -106,7 +140,7 @@ function checkOrder(id) {
         '{"viceid":"' + id.toString() + '"}';
     url = "/order/check";
     console.log("CheckOrder : " + param);
-    return sendJsonAjax(url, param);
+    return sendOrderJsonAjax(url, param);
 }
 
 //将订单付款
@@ -117,7 +151,7 @@ function payOrder(order) {
     param = buildParam(order);
     url = "/order/pay";
     console.log("PayOrder : " + param);
-    return sendJsonAjax(url, param);
+    return sendOrderJsonAjax(url, param);
 }
 
 //将订单退货
@@ -128,7 +162,7 @@ function returnOrder(tid, tprincipalid, texception, tnote) {
     param = buildParam(order);
     url = "/order/return";
     console.log("ReturnOrder : " + param);
-    return sendJsonAjax(url, param);
+    return sendOrderJsonAjax(url, param);
 }
 
 function buildParam(order) {
@@ -162,8 +196,8 @@ function buildParam(order) {
 
 function buildParamList(orderL) {
     jsonList = [];
-    for (var i = 0 ; i < order.length; i++) {
-        combineOrder = $.extend({}, defaultSetting, order[i]);
+    for (var i = 0 ; i < orderL.length; i++) {
+        combineOrder = $.extend({}, defaultSetting, orderL[i]);
         param = 
         '{'
         + '"orderid":"' + combineOrder.orderid + '",'
@@ -195,5 +229,6 @@ function buildParamList(orderL) {
         param += (jsonList[i] + ',');
     }
     param += (jsonList[jsonList.length-1] + ']');
+    console.log("order param", param);
     return param;
 }

@@ -55,7 +55,7 @@ public class LoginController
 	{
 		String id = param.getId();
 		if(mp.containsKey(id)){
-			
+			System.out.println(mp.get(id).toString());
 			return mp.get(id);
 		}else{
 			return null;

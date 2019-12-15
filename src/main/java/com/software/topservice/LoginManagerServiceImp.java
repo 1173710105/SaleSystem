@@ -96,6 +96,7 @@ public class LoginManagerServiceImp implements LoginManagerService
 		{
 			SubBranchDetailMap exampleBranch = new SubBranchDetailMap();
 			exampleBranch.setPrincipalid(id);
+			exampleBranch.setPrincipalname(manager.getName());
 			exampleBranch.setLabel("valid");
 			SubBranchDetailMap temp = getAuthority(exampleBranch);
 			if (temp==null) 

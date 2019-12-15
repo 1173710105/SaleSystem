@@ -38,12 +38,22 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	{
 		Item exampleItem = record.toItem();
 		ItemToPrice examplePrice = record.toPrice();
+		System.out.println(exampleItem);
 		Item item = itemService.selectByPrimaryKey(exampleItem);
-		ItemToPrice price = priceService.selectByPrimaryKey(examplePrice);
-		ReceiveCargo cargo = new ReceiveCargo();
-		cargo.initByItem(item);
-		cargo.initByPrice(price);
-		return cargo;
+		if (item!=null) 
+		{
+			ReceiveCargo cargo = new ReceiveCargo();
+			ItemToPrice price = priceService.selectByPrimaryKey(examplePrice);
+			cargo.initByItem(item);
+			cargo.initByPrice(price);
+			System.out.println(cargo);
+			return cargo;
+		}
+		else
+		{
+			return null;
+		}
+
 	}
 	
 	@Override

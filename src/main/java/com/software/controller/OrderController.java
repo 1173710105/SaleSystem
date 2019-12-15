@@ -32,7 +32,7 @@ public class OrderController
 	
 	@RequestMapping("/insert")
 	public String insertOrder(@RequestBody List<ReceiveOrder> param){
-		
+		System.out.println(param.toString());
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String createtime = df.format(new Date());// new Date()为获取当前系统时间
 		param.get(0).setCreatetime(createtime);
