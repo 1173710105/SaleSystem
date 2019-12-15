@@ -2,7 +2,7 @@ package com.software.domain;
 
 public class Client 
 {
-    /**
+	/**
      * 客户ID ID
      */
     private Integer id;
