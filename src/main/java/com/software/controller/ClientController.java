@@ -36,19 +36,24 @@ public class ClientController {
 		client.setName(param.getName());
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
+		client.setNote(param.getNote());
+		client.setType(param.getType());
 		client.setLabel("valid");
 		List<com.software.domain.Client> result = service.select(client);
 		return result;
 	}
 	
-	@RequestMapping("/add")
+	@RequestMapping("/insert")
 	public String addClient(@RequestBody ReceiveClient param){
 		com.software.domain.Client client = new com.software.domain.Client();
 		client.setId(Integer.valueOf(param.getId()));
 		client.setName(param.getName());
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
+		client.setNote(param.getNote());
+		client.setType(param.getType());
 		client.setLabel("valid");
+		System.out.println(client.toString());
 		service.insertSelective(client);
 		return "success";
 	}
@@ -70,6 +75,8 @@ public class ClientController {
 		client.setName(param.getName());
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
+		client.setNote(param.getNote());
+		client.setType(param.getType());
 		client.setLabel("valid");
 		service.updateByPrimaryKeySelective(client);
 		return "success";

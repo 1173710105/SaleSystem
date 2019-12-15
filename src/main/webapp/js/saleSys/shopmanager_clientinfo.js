@@ -36,28 +36,28 @@ $(document).on('click', '#edit-btn', function() {
     $('#clientModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "用户编辑";
     var client = tempClientMap.get($(this).val());
-    $('client-id').val(client.id);
-    $('client-name').val(client.name);
-    $('client-gender').val(client.gender);
-    $('client-phone').val(client.phone);
-    $('client-email').val(client.email);
-    $('client-type').val(client.type);
-    $('client-label').val(client.label);
+    $('#client-id').val(client.id);
+    $('#client-name').val(client.name);
+    $('#client-gender').val(client.gender);
+    $('#client-phone').val(client.phone);
+    $('#client-email').val(client.email);
+    $('#client-type').val(client.type);
+    $('#client-label').val(client.label);
 });
 
 
 //保存模态框内容
 $(document).on('click', '#save-btn', function() {
     client = {
-        id : $('client-id').val(),
-        name : $('client-name').val(),
-        gender : $('client-gender').val(),
-        phone : $('client-phone').val(),
-        email : $('client-email').val(),
-        type : $('client-type').val(),
-        note : $('client-label').val()
+        id : $('#client-id').val(),
+        name : $('#client-name').val(),
+        gender : $('#client-gender').val(),
+        phone : $('#client-phone').val(),
+        email : $('#client-email').val(),
+        type : $('#client-type').val(),
+        note : $('#client-label').val()
     }
-    if($('client-id').val() == "") {
+    if($('#client-id').val() == "") {
         insertClient(client);
     } else {
         updateClient(client);
