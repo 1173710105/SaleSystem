@@ -1,4 +1,4 @@
-//店长管理货品信息
+﻿//店长管理货品信息
 
 tempCargoList = [];
 
@@ -69,9 +69,11 @@ $('#save-btn').click(function() {
 })
 
 //编辑货品
+
 $(document).on('click', '#edit-btn', function() {
 	$('#cargoModal').modal('show'); //show modal
 	console.log("aa");
+
     var cargoid = $(this).val();
     var cargo;
     for (var i = 0; i < tempCargoList.length; i++) {
