@@ -105,4 +105,11 @@ public class Client
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Client [id=" + id + ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", email=" + email
+				+ ", note=" + note + ", type=" + type + ", label=" + label + "]";
+	}
+    
 }

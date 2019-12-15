@@ -16,6 +16,7 @@ function sendJsonAjax(url, param) {
     $.ajax({
         url: url,
         data: param,
+        
         type: "post",
         dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
@@ -42,6 +43,7 @@ function queryClientById(tid) {
     param = buildParam(client);
     url = "/client/queryById";
     console.log("QueryClientById : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -54,6 +56,7 @@ function queryClient(client) {
     param = buildParam(client);
     console.log("QueryClient : ", param);
     url = "/client/query";
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -66,6 +69,7 @@ function insertClient(client) {
     param = buildParam(client);
     url = "/client/insert";
     console.log("InsertClient : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -77,6 +81,7 @@ function deleteClient(client) {
     param = buildParam(client);
     url = "/client/delete";
     console.log("DeleteClient : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -88,6 +93,7 @@ function updateClient(client) {
     param = buildParam(client);
     url = "/client/update";
     console.log("UpdataClient : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 

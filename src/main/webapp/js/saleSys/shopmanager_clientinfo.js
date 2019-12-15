@@ -10,16 +10,21 @@ $('#search-btn').click(function () {
     //判断
     //搜索
     cleanList();
+    stype = $('#search-type').val();
+    if(stype == "任意") {
+    	stype = '';
+    }
     client = {
         id: $('#search-client-id').val(),
         name: $('#search-client-name').val(),
         phone: $('#search-phone').val(),
         email: $('#search-email').val(),
-        type: $('#search-type').val()
+        type: stype
     }
     var cl = queryClient(client);
+    console.log("aaa", cl);
     for (var i = 0; i < cl.length; i++) {
-        this.tempClientMap.set(cl[i].id, cl[i]);
+        tempClientMap.set(cl[i].id.toString(), cl[i]);
     }
     loadClientList(cl);
 });
@@ -27,6 +32,7 @@ $('#search-btn').click(function () {
 //添加
 $(document).on('click', '#add-btn', function() {
 	console.log("client add-btn");
+	cleanModal();
     $('#clientModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "用户添加";
 });
@@ -42,7 +48,7 @@ $(document).on('click', '#edit-btn', function() {
     $('#client-phone').val(client.phone);
     $('#client-email').val(client.email);
     $('#client-type').val(client.type);
-    $('#client-label').val(client.label);
+    $('#client-label').val(client.note);
 });
 
 
@@ -70,7 +76,7 @@ $(document).on('click', '#delete-btn' , function() {
     var r = confirm("是否删除？");
     if (r == true) {
         //实现
-        deleteClient({id : $('client-id').val()});
+        deleteClient({id : $(this).val()});
         alert("删除成功");
         refreshClientList();
     }
@@ -81,21 +87,37 @@ function cleanList() {
 	editTable.innerHTML = "";
 }
 
+function cleanModal() {
+	 $('#modal-title').innerHTML = "用户编辑";
+	 $('#client-id').val('');
+	    $('#client-name').val('');
+	    $('#client-gender').val('');
+	    $('#client-phone').val('');
+	    $('#client-email').val('');
+	    $('#client-type').val('');
+	    $('#client-label').val('');
+}
+
 //刷新页面
 function refreshClientList() {
     cleanList();
+    cleanModal();
+    stype = $('#search-type').val();
+    if(stype == "任意") {
+    	stype = '';
+    }
     client = {
         id: $('#search-client-id').val(),
         name: $('#search-client-name').val(),
         phone: $('#search-phone').val(),
         email: $('#search-email').val(),
-        type: $('#search-type').val()
+        type: stype
     }
     var clientList = this.queryClient(client);
     console.log("refresh clientlist : ", clientList);
     console.log("refresh clientType : ", typeof(clientList));
     for (var i = 0; i < clientList.length; i++) {
-        this.tempClientMap.set(clientList[i].id, clientList[i]);
+        this.tempClientMap.set(clientList[i].id.toString(), clientList[i]);
     }
     loadClientList(clientList);
 }

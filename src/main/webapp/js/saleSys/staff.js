@@ -46,6 +46,7 @@ function queryStaffById(tid, thourseid) {
     param = buildParam(staff);
     url = "";
     console.log("QueryStaffById : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -58,6 +59,7 @@ function queryStaff(staff) {
     param = buildParam(staff);
     url = "/staff/query";
     console.log("QueryStaff : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -70,6 +72,7 @@ function insertStaff(staff) {
     param = buildParam(staff);
     url = "/staff/add";
     console.log("InsertStaff : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -81,6 +84,7 @@ function deleteStaff(staff) {
     param = buildParam(staff);
     url = "/staff/delete";
     console.log("DeleteStaff : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -92,6 +96,7 @@ function updateStaff(staff) {
     param = buildParam(staff);
     url = "/staff/update";
     console.log("UpdateStaff : ", param);
+    $.ajaxSettings.async = false;
     return sendJsonAjax(url, param);
 }
 
@@ -101,11 +106,11 @@ function buildParam(staff) {
        '{'
         + '"id":"' + combineStaff.id + '",'
         + '"name":"' + combineStaff.name + '",'
-        + '"gender:"' + combineStaff.gender + '",'
+        + '"gender":"' + combineStaff.gender + '",'
         + '"phone":"' + combineStaff.phone + '",'
         + '"email":"' + combineStaff.email + '",'
         + '"hourseid":"' + combineStaff.hourseid + '",'
         + '"hoursename":"' + combineStaff.hoursename + '",'
-        + '"label":"' + combineStaff.hourseid + '"}'
+        + '"label":"' + combineStaff.label + '"}'
     return param;
 }

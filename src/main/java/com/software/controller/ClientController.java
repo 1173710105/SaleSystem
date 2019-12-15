@@ -32,13 +32,18 @@ public class ClientController {
 	@RequestMapping("/query")
 	public List<com.software.domain.Client> queryClient(@RequestBody ReceiveClient param){
 		com.software.domain.Client client = new com.software.domain.Client();
-		client.setId(Integer.valueOf(param.getId()));
+		if (!param.getId().equals("")) 
+		{
+			client.setId(Integer.valueOf(param.getId()));
+		}
 		client.setName(param.getName());
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
 		client.setNote(param.getNote());
+		client.setEmail(param.getEmail());
 		client.setType(param.getType());
 		client.setLabel("valid");
+		System.out.println(client);
 		List<com.software.domain.Client> result = service.select(client);
 		return result;
 	}
@@ -46,11 +51,15 @@ public class ClientController {
 	@RequestMapping("/insert")
 	public String addClient(@RequestBody ReceiveClient param){
 		com.software.domain.Client client = new com.software.domain.Client();
-		client.setId(Integer.valueOf(param.getId()));
+		if (!param.getId().equals("")) 
+		{
+			client.setId(Integer.valueOf(param.getId()));
+		}
 		client.setName(param.getName());
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
 		client.setNote(param.getNote());
+		client.setEmail(param.getEmail());
 		client.setType(param.getType());
 		client.setLabel("valid");
 		System.out.println(client.toString());
@@ -59,9 +68,10 @@ public class ClientController {
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteClient(@RequestBody Map<String, String> param){
-		String id = param.get("id");
+	public String deleteClient(@RequestBody Map<String, String> param)
+	{
 		com.software.domain.Client result = new com.software.domain.Client();
+		String id = param.get("id");
 		result.setId(Integer.valueOf(id));
 		result.setLabel("invalid");
 		service.updateByPrimaryKeySelective(result);
@@ -76,6 +86,7 @@ public class ClientController {
 		client.setGender(param.getGender());
 		client.setPhone(param.getPhone());
 		client.setNote(param.getNote());
+		client.setEmail(param.getEmail());
 		client.setType(param.getType());
 		client.setLabel("valid");
 		service.updateByPrimaryKeySelective(client);
