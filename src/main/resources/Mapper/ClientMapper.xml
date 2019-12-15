@@ -37,7 +37,7 @@
 				and email = #{email}
 			</if>
 			<if test="type!=null and type!=''">
-				and type = #{email}
+				and type = #{type}
 			</if>
 			<if test="note!=null and note!=''">
 				and note = #{note}
@@ -62,54 +62,54 @@
   <insert id="insertSelective" parameterType="com.software.domain.Client">
     insert into client
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id!=''">
         ID,
       </if>
-      <if test="name != null">
+      <if test="name != null and name !=''">
         name,
       </if>
-      <if test="gender != null">
+      <if test="gender != null and gender !=''">
         gender,
       </if>
-      <if test="phone != null">
+      <if test="phone != null and phone !=''">
         phone,
       </if>
-      <if test="email != null">
+      <if test="email != null and email!=''">
         email,
       </if>
-      <if test="note != null">
+      <if test="note != null and note !=''">
         note,
       </if>
-      <if test="type != null">
+      <if test="type != null and type !=''">
         type,
       </if>
-      <if test="label != null">
+      <if test="label != null and label !=''">
         label,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id!=''">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
+      <if test="name != null and name!=''">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
+      <if test="gender != null and gender!=''">
         #{gender,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
+      <if test="phone != null and phone !=''">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
+      <if test="email != null and email !=''">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
+      <if test="note != null and note !=''">
         #{note,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
+      <if test="type != null and type !=''">
         #{type,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+      <if test="label != null and label!=''">
         #{label,jdbcType=VARCHAR},
       </if>
     </trim>
@@ -117,25 +117,26 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.Client">
     update client
     <set>
-      <if test="name != null">
+      <if test="name != null and name !=''">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
+      <if test="gender != null and gender !=''">
         gender = #{gender,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
+      <if test="phone != null and phone!=''">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
+      <if test="email != null and email!=''">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
+      <if test="note != null and note!=''">
         note = #{note,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
+      <if test="type != null and type !=''">
         type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+
+      <if test="label != null and label !=''">
         label = #{label,jdbcType=VARCHAR},
       </if>
     </set>

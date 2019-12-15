@@ -1,6 +1,7 @@
 package com.software.topservice;
 
 import java.util.List;
+import java.util.Map;
 
 import com.software.domain.Warehourse;
 
@@ -15,4 +16,6 @@ public interface WarehourseManagerService
     public List<Warehourse> select(Warehourse record);
     
     public void updateByPrimaryKeySelective(Warehourse record);
+    
+    public Map<Integer, String> typeMenu();
 }

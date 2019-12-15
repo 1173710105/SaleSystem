@@ -6,6 +6,8 @@ public class ReceiveClient {
 	private String gender;
 	private String phone;
 	private String email;
+	private String note;
+	private String type;
 	private String label;
 	public String getId() {
 		return id;
@@ -46,7 +48,19 @@ public class ReceiveClient {
 	@Override
 	public String toString() {
 		return "ReceiveClient [id=" + id + ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", email="
-				+ email + ", label=" + label + "]";
+				+ email + ", note=" + note + ", type=" + type + ", label=" + label + "]";
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

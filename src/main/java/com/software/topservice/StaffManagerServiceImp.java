@@ -26,23 +26,26 @@ public class StaffManagerServiceImp implements StaffManagerService
 	@Override
 	public void insertSelective(Staff record)
 	{
+		record.filltablename();
+		
 		staffService.insertSelective(record);
 	}
 
 	@Override
 	public Staff selectByPrimaryKey(Staff record) 
 	{
+		record.filltablename();
 		Staff staff = staffService.selectByPrimaryKey(record);
-		Warehourse hourse = new Warehourse();
-		hourse.setId(Integer.valueOf(staff.getId()));
-		staff.setHoursename(hourseService.selectByPrimaryKey(hourse).getName());
 		return staff;
 	}
 
 	@Override
 	public List<Staff> select(Staff record) 
 	{
+		record.filltablename();
 		List<Staff> result = staffService.select(record);
+		
+		/**
 		Warehourse hourse = new Warehourse();
 		Map<Integer, String> idToName = new HashMap<Integer, String>();
 		for (Staff staff : result) 
@@ -58,12 +61,14 @@ public class StaffManagerServiceImp implements StaffManagerService
 				idToName.put(hourse.getId(), staff.getHoursename());
 			}
 		}
+		*/
 		return result;
 	}
 
 	@Override
 	public void updateByPrimaryKeySelective(Staff record) 
 	{
+		record.filltablename();
 		staffService.updateByPrimaryKeySelective(record);
 	}
 	

@@ -3,12 +3,13 @@ package com.software.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-
 import com.software.domain.Staff;
+
 
 @Mapper
 public interface StaffMapper 
 {
+
     int deleteByPrimaryKey(Staff record);
 
     int insert(Staff record);

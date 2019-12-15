@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.software.dao.StaffMapper">
   <resultMap id="BaseResultMap" type="com.software.domain.Staff">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="hourseID" jdbcType="INTEGER" property="hourseid" />
+    <result column="hourseName" jdbcType="VARCHAR" property="hoursename" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
@@ -12,35 +13,32 @@
     <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, password, hourseID, name, gender, phone, email, label
+    ID, password, hourseID, hourseName, name, gender, phone, email, label
   </sql>
-  
-    <update id="createNewTable" parameterType="String">  
+  <update id="createNewTable" parameterType="com.software.domain.Staff">  
        CREATE TABLE ${tablename} (
 		  `ID` varchar(100) NOT NULL COMMENT '员工ID',
 		  `password` varchar(100) NOT NULL COMMENT '密码',
 		  `hourseID` int(11) NOT NULL COMMENT '员工所属子仓库ID',
+		  `hourseName` varchar(45) NOT NULL COMMENT '仓库名字',
 		  `name` varchar(45) NOT NULL COMMENT '员工姓名',
 		  `gender` varchar(45) NOT NULL COMMENT '员工性别',
 		  `phone` varchar(45) NOT NULL COMMENT '员工手机',
 		  `email` varchar(45) NOT NULL COMMENT '员工电子邮件',
-		  `label` varchar(45) NOT NULL,
+		  `label` varchar(45) NOT NULL COMMENT '标志是否有效',
 		  PRIMARY KEY (`ID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='子仓库员工信息';
   </update> 
-  <delete id="dropTable" parameterType="String">
-   		drop table ${tablename}
-   </delete>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ${tablename}
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="count" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
+  <select id="count" parameterType="com.software.domain.Staff" resultType="java.lang.Integer">
   	 	SELECT COUNT(*) FROM ${tablename}
   </select>  
-   <select id="select" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
+  <select id="select" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
 		select *
 		from ${tablename}
 		<where>
@@ -67,11 +65,13 @@
   </delete>
   <insert id="insert" parameterType="com.software.domain.Staff">
     insert into ${tablename} (ID, password, hourseID, 
-      name, gender, phone, 
-      email, label)
+      hourseName, name, gender, 
+      phone, email, label
+      )
     values (#{id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{hourseid,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR})
+      #{hoursename,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.Staff">
     insert into ${tablename}
@@ -84,6 +84,9 @@
       </if>
       <if test="hourseid != null">
         hourseID,
+      </if>
+      <if test="hoursename != null">
+        hourseName,
       </if>
       <if test="name != null">
         name,
@@ -111,6 +114,9 @@
       <if test="hourseid != null">
         #{hourseid,jdbcType=INTEGER},
       </if>
+      <if test="hoursename != null">
+        #{hoursename,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -137,6 +143,9 @@
       <if test="hourseid != null">
         hourseID = #{hourseid,jdbcType=INTEGER},
       </if>
+      <if test="hoursename != null">
+        hourseName = #{hoursename,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -159,6 +168,7 @@
     update ${tablename}
     set password = #{password,jdbcType=VARCHAR},
       hourseID = #{hourseid,jdbcType=INTEGER},
+      hourseName = #{hoursename,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},

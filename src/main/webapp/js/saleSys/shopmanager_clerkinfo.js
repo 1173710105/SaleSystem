@@ -13,11 +13,12 @@ $('#search-btn').click(function () {
         name: $('#search-name').val(),
         phone: $('#search-phone').val(),
         email: $('#search-email').val(),
-        hourseid : getCookie("warehourseid")
+        hourseid : getCookie("warehourseid"),
+        hoursename : getCookie("warehoursename")
     }
-    var cl = queryClient(clerk);
+    var cl = queryStaff(clerk);
     for (var i = 0; i < cl.length; i++) {
-        this.tempClerkMap.set(cl[i].id, cl[i]);
+    	tempClerkMap.set(cl[i].id.toString(), cl[i]);
     }
     cleanList();
     loadClerkList(cl);
@@ -27,34 +28,38 @@ $('#search-btn').click(function () {
 $('#add-btn').click(function() {
     $('#clerkModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "店员添加";
+    console.log("wname", getCookie("warehoursename"));
+    $('#clerk-rep').value = getCookie("warehoursename");
 });
 
 //编辑
 $(document).on('click', '#edit-btn', function() {
+	console.log("lk", tempClerkMap);
     $('#clerkModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "店员编辑";
-    var clerk = tempClerkMap.get($(this).id);
-    $('client-id').val(clerk.id);
-    $('clerk-name').val(client.name);
-    $('clerk-gender').val(client.gender);
-    $('clerk-phone').val(client.phone);
-    $('clerk-email').val(client.email);
-    $('clerk-rep').val(client.hourseid);
-    $('clie-position').val("店员");
+    var clerk = tempClerkMap.get($(this).val());
+    $('#clerk-id').val(clerk.id);
+    $('#clerk-name').val(clerk.name);
+    $('#clerk-gender').val(clerk.gender);
+    $('#clerk-phone').val(clerk.phone);
+    $('#clerk-email').val(clerk.email);
+    $('#clerk-rep').val(clerk.hourseid);
+    $('#clerk-position').val("店员");
 });
 
 
 //保存模态框内容
 $('#save-btn').click(function() {
     clerk = {
-        id : $('clerk-id').val(),
-        name : $('clerk-name').val(),
-        gender : $('clerk-gender').val(),
-        phone : $('clerk-phone').val(),
-        email : $('clerk-email').val(),
-        hourseid : getCookie("warehourseid")
+        id : $('#clerk-id').val(),
+        name : $('#clerk-name').val(),
+        gender : $('#clerk-gender').val(),
+        phone : $('#clerk-phone').val(),
+        email : $('#clerk-email').val(),
+        hourseid : getCookie("warehourseid"),
+        hoursename : getCookie("warehoursename")
     }
-    if($('clerk-id').val() == "") {
+    if($('#clerk-id').val() == "") {
         insertStaff(clerk);
     } else {
         updateStaff(clerk);
@@ -69,13 +74,24 @@ $(document).on('click', '#delete-btn', function() {
         //实现
         deleteStaff(
             {
-                id : $('client-id').val(),
+                id : $('#clerk-id').val(),
                 hourseid : getCookie("warehourseid")
             });
         alert("删除成功");
         refreshClerkList();
     }
 });
+
+function cleanModal() {
+	 $('#modal-title').innerHTML = "店员编辑";
+	 $('#clerk-id').val('');
+	    $('#clerk-name').val('');
+	    $('#clerk-gender').val('');
+	    $('#clerk-phone').val('');
+	    $('#clerk-email').val('');
+	    $('#clerk-rep').val('');
+	    $('#clerk-position').val("店员");
+}
 
 //加载列表
 function loadClerkList(cl) {
@@ -136,11 +152,12 @@ function refreshClerkList() {
         name: $('#search-name').val(),
         phone: $('#search-phone').val(),
         email: $('#search-email').val(),
-        hourseid : getCookie("warehourseid")
+        hourseid : getCookie("warehourseid"),
+        hoursename : getCookie("warehoursename")
     }
     var clerkList = queryStaff(clerk);
     for (var i = 0; i < clerkList.length; i++) {
-        this.tempClerkMap.set(clerkList[i].id, clerkList[i]);
+        this.tempClerkMap.set(clerkList[i].id.toString(), clerkList[i]);
     }
     loadClerkList(clerkList);
 }
