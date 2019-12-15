@@ -135,7 +135,8 @@
       <if test="type != null and type !=''">
         type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="label != null and label!=''">
+
+      <if test="label != null and label !=''">
         label = #{label,jdbcType=VARCHAR},
       </if>
     </set>

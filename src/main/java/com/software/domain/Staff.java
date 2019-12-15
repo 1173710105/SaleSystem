@@ -3,38 +3,52 @@ package com.software.domain;
 public class Staff 
 {
 	private String tablename;
-	
+    /**
+     * 员工ID ID
+     */
     private String id;
+
+    /**
+     * 密码 password
+     */
     private String password;
+
+    /**
+     * 员工所属子仓库ID hourseID
+     */
     private Integer hourseid;
+
+    /**
+     * 仓库名字 hourseName
+     */
     private String hoursename;
+
+    /**
+     * 员工姓名 name
+     */
     private String name;
+
+    /**
+     * 员工性别 gender
+     */
     private String gender;
+
+    /**
+     * 员工手机 phone
+     */
     private String phone;
+
+    /**
+     * 员工电子邮件 email
+     */
     private String email;
-    
+
+    /**
+     * 标志是否有效 label
+     */
     private String label;
 
-    public String getHoursename() 
-    {
-		return hoursename;
-	}
-
-	public void setHoursename(String hoursename) 
-	
-	{
-		this.hoursename = hoursename;
-	}
-
-	public String getTablename() {
-		return tablename;
-	}
-
-	public void setTablename(String tablename) {
-		this.tablename = tablename;
-	}
-
-	public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -56,6 +70,14 @@ public class Staff
 
     public void setHourseid(Integer hourseid) {
         this.hourseid = hourseid;
+    }
+
+    public String getHoursename() {
+        return hoursename;
+    }
+
+    public void setHoursename(String hoursename) {
+        this.hoursename = hoursename == null ? null : hoursename.trim();
     }
 
     public String getName() {
@@ -97,9 +119,17 @@ public class Staff
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
     }
+
+	public String getTablename() {
+		return tablename;
+	}
+
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
+	}
     
-    public void filltablename()
-    {
-    	this.tablename = "sub_staff_"+String.format("%04d", this.hourseid);
-    }
+	public void filltablename()
+	{
+		this.tablename = "sub_staff_"+String.format("%04d", this.hourseid);
+	}
 }

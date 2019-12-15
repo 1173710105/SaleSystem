@@ -9,7 +9,7 @@ import com.software.domain.Client;
 public interface ClientMapper 
 {
 
-    int deleteByPrimaryKey(Client record);
+	int deleteByPrimaryKey(Client record);
 
     int insert(Client record);
 
