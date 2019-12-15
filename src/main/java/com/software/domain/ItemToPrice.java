@@ -42,7 +42,8 @@ public class ItemToPrice
 		return tablename;
 	}
 
-	public void setTablename(String tablename) {
+	public void setTablename(String tablename) 
+	{
 		this.tablename = tablename;
 	}
 

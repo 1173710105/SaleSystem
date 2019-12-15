@@ -107,8 +107,14 @@ public class ReceiveCargo
 	
 	private void fillTablename()
 	{
-		System.out.println(tablename);
-		this.tablename = "sub_warehourse_itemtoprice_"+String.format("%04d", Integer.valueOf(tablename));
+		if (this.tablename.equals("-1")) 
+		{
+			this.tablename = "base_warehourse_itemtoprice";
+		}
+		else
+		{
+			this.tablename = "sub_warehourse_itemtoprice_"+String.format("%04d", Integer.valueOf(tablename));
+		}
 	}
 	
 	public Item toItem()
