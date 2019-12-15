@@ -1,21 +1,22 @@
 ﻿//客户对象操作
 
 defaultSetting = {
-    id : '',
-    name : '',
-    gender : '',
-    phone : '',
-    email : '',
-    type : '',
-    note : '',
-    label : ''
+    id : "",
+    name : "",
+    gender : "",
+    phone : "",
+    email : "",
+    type : "",
+    note : "",
+    label : ""
 }
 
-function sendJsonAjax(url, param) {
+function sendClientJsonAjax(url, param) {
     var tempdata;
     $.ajax({
         url: url,
         data: param,
+        
         type: "post",
         dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
@@ -39,10 +40,21 @@ function queryClientById(tid) {
     client = {
         id : tid
     }
-    param = buildParam(client);
+    //param = buildClientParam(client);
+    param = 
+    	'{'
+        + '"id":"' + tid + '",'
+        + '"name":"",'
+        + '"gender":"",'
+        + '"phone":"",'
+        + '"email":"",'
+        + '"type":"",'
+        + '"label":"",'
+        + '"note":""}';
     url = "/client/queryById";
     console.log("QueryClientById : ", param);
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
 }
 
 //通过条件筛选客户
@@ -51,10 +63,11 @@ function queryClient(client) {
         return null;
     }
 
-    param = buildParam(client);
+    param = buildClientParam(client);
     console.log("QueryClient : ", param);
     url = "/client/query";
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
 }
 
 //增加客户
@@ -63,10 +76,11 @@ function insertClient(client) {
         return null;
     }
 
-    param = buildParam(client);
+    param = buildClientParam(client);
     url = "/client/insert";
     console.log("InsertClient : ", param);
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
 }
 
 //删除客户
@@ -74,10 +88,11 @@ function deleteClient(client) {
     if (client.id == "") {
         return null;
     }
-    param = buildParam(client);
+    param = buildClientParam(client);
     url = "/client/delete";
     console.log("DeleteClient : ", param);
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
 }
 
 //更新客户
@@ -85,13 +100,14 @@ function updateClient(client) {
     if (client == null) {
         return null;
     }
-    param = buildParam(client);
+    param = buildClientParam(client);
     url = "/client/update";
     console.log("UpdataClient : ", param);
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
 }
 
-function buildParam(client) {
+function buildClientParam(client) {
     combineClient = $.extend({},defaultSetting, client);
     param = 
        '{'

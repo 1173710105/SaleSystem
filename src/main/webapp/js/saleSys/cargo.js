@@ -1,8 +1,7 @@
 ﻿/**
  * 货物有关请求和操作
  */
-defaultSetting = 
-{
+defaultSetting = {
     id : '',
     name : '',
     type : '',
@@ -14,7 +13,7 @@ defaultSetting =
     tablename : ''
 }
 
-function sendJsonAjax(url, param) {
+function sendCargoJsonAjax(url, param) {
     var tempdata;
     $.ajax({
         url: url,
@@ -37,27 +36,31 @@ function sendJsonAjax(url, param) {
  }
 
  //通过id查找货品
- function queryCargoById(tid) {
+ function queryCargoById(tid, ttablename) {
     if (tid == "") {
         return;
     }
     cargo = {
-        id : tid
+        id : tid,
+        tablename : ttablename
     }
+    console.log("c by id : ", cargo);
     url = "/cargo/queryById";
     combineCargo = $.extend({},defaultSetting, cargo);
      param = 
-        '{"id":"' + combineCargo.id +'",'
-        + '"name":"' + combineCargo.name +'",'
-        + '"type":"' + combineCargo.type +'",'
-        + '"specification":"' + combineCargo.specification +'",'
-        + '"picture":"' + combineCargo.picture +'",'
-        + '"retailprice":"' + combineCargo.retailprice +'",'
-        + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
-        + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
-        + '"tablename":"' + combineCargo.tablename + '"}'; 
+    	 '{"id":"' + combineCargo.id +'",'
+         + '"name":"",'
+         + '"type":"",'
+         + '"specification":"",'
+         + '"picture":"",'
+         + '"retailprice":"",'
+         + '"wholesaleprice":"",'
+         + '"purchaseprice":"",'
+         + '"tablename":"' + combineCargo.tablename + '"}';
+     $.ajaxSettings.async = false;
+     var data = sendCargoJsonAjax(url, param);
     console.log("QueryCargoById : ", param); 
-    return sendJsonAjax(url, param);
+    return data;
  }
 
  //通过条件筛选.结果为List形式
@@ -78,9 +81,8 @@ function sendJsonAjax(url, param) {
         + '"tablename":"' + combineCargo.tablename + '"}';
     url = "/cargo/query";
     $.ajaxSettings.async = false;
-    sendJsonAjax(url, param);
     console.log("QueryCargo : ", param);
-    var data = sendJsonAjax(url, param);
+    var data = sendCargoJsonAjax(url, param);
     console.log("query cargo : " , data);
     return data;
  }
@@ -103,7 +105,7 @@ function insertCargo(cargo) {
     + '"tablename":"' + combineCargo.tablename + '"}';
    url = "/cargo/add";
    console.log("InsertCargo : ", param);
-  return sendJsonAjax(url, param);
+  return sendCargoJsonAjax(url, param);
 }
 
  //删除货品
@@ -124,7 +126,7 @@ function deleteCargo(cargo) {
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
     console.log("DeleteCargo : ", param);
-    return sendJsonAjax(url, param);
+    return sendCargoJsonAjax(url, param);
 }
 
  //更新货品
@@ -145,7 +147,7 @@ function updateCargo(cargo) {
     + '"tablename":"' + combineCargo.tablename + '"}';
     console.log("UpdataCargo : " , param);
    url = "/cargo/update";
-  return sendJsonAjax(url, param);
+  return sendCargoJsonAjax(url, param);
 }
 
 /**

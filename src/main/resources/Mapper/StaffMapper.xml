@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.software.dao.StaffMapper">
   <resultMap id="BaseResultMap" type="com.software.domain.Staff">
@@ -35,10 +35,7 @@
     from ${tablename}
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="dropTable" parameterType="String">
-   		drop table ${tablename}
-   </delete>
-    <select id="count" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
+  <select id="count" parameterType="com.software.domain.Staff" resultType="java.lang.Integer">
   	 	SELECT COUNT(*) FROM ${tablename}
   </select>  
   <select id="select" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
@@ -77,7 +74,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.software.domain.Staff">
-    insert into sub_staff_example
+    insert into ${tablename}
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,

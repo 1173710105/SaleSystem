@@ -37,7 +37,7 @@
 				and email = #{email}
 			</if>
 			<if test="type!=null and type!=''">
-				and type = #{email}
+				and type = #{type}
 			</if>
 			<if test="note!=null and note!=''">
 				and note = #{note}
@@ -74,7 +74,7 @@
       <if test="phone != null and phone !=''">
         phone,
       </if>
-      <if test="email != null email!=''">
+      <if test="email != null and email!=''">
         email,
       </if>
       <if test="note != null and note !=''">
@@ -135,6 +135,7 @@
       <if test="type != null and type !=''">
         type = #{type,jdbcType=VARCHAR},
       </if>
+
       <if test="label != null and label !=''">
         label = #{label,jdbcType=VARCHAR},
       </if>

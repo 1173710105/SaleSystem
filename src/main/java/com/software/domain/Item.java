@@ -97,5 +97,4 @@ public class Item {
 		return "Item [id=" + id + ", name=" + name + ", type=" + type + ", specification=" + specification
 				+ ", picture=" + picture + ", time=" + time + ", label=" + label + "]";
 	}
-
 }

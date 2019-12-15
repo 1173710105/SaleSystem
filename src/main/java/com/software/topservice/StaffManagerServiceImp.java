@@ -27,6 +27,7 @@ public class StaffManagerServiceImp implements StaffManagerService
 	public void insertSelective(Staff record)
 	{
 		record.filltablename();
+		
 		staffService.insertSelective(record);
 	}
 

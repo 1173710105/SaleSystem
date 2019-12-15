@@ -89,7 +89,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 			itemService.insertSelective(tempItem);
 			// 算利润
 			tempPrice.setId(tempItem.getItemid());
-			margin += calMargin(priceService.selectByPrimaryKey(tempPrice), example.getType());
+			margin += calMargin(priceService.selectByPrimaryKey(tempPrice), example.getType())*tempItem.getItemnum();
 		}
 		//更新利润
 		resultCommon.setMargin(margin);
@@ -243,14 +243,14 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 
 	private float calMargin(ItemToPrice price, String priceType)
 	{
-		ItemToPrice result = priceService.selectByPrimaryKey(price);
-		if (priceType.equals("批发"))
+		System.out.println("type"+priceType);
+		if (priceType.equals("2"))
 		{
-			return result.getWholesaleprice() - result.getPurchaseprice();
+			return price.getWholesaleprice() - price.getPurchaseprice();
 		}
-		else if (priceType.equals("零售")) 
+		else if (priceType.equals("1")) 
 		{
-			return result.getRetailprice() - result.getPurchaseprice();
+			return price.getRetailprice() - price.getPurchaseprice();
 		}
 		else 
 		{
