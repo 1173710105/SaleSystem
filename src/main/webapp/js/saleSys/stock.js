@@ -4,7 +4,6 @@ defaultSetting = {
     itemid : '',
     itemname : '',
     itemnum : '',
-    tablename : ''
 }
 
 function sendJsonAjax(url, param) {
@@ -17,22 +16,26 @@ function sendJsonAjax(url, param) {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+                tempdata = data;
             }
-            return null;
         },
         error: function () {
         }
     });
+    return tempdata;
  }
 
 //通过仓库id查找库存
-function queryStockByWarehourseId(hourseid) {
-    if(hourseid == "") {
+function queryStockByWarehourseId(thourseid) {
+    if(thourseid == "") {
         return;
     }
-    param = '{"hourseid":"' + hourseid + '"}';
+    stock = {
+        hourseid : thourseid 
+    }
+    param = buildParam(stock);
     url = "";
+    console.log("QueryStockByWareId : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -41,12 +44,9 @@ function queryStock(stock) {
     if(stock == null) {
         return;
     }
-    combineStock = $.extend({}, defaultSetting, stock);
-    param = 
-        '{"hourseid":"' + combineStock.hourseid + '",'
-        + '"itemid":"' + combineStock.itemid + '",'
-        + '"itemname":"' + combineStock.itemname + '",'
-        + '"itemnum":"' + combineStock.itemnum + '"}';
+    url = ''
+    param = buildParam(stock);
+    console.log("QueryStock : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -56,6 +56,23 @@ function updateStock(stockL) {
     if(stockL == null) {
         return;
     }
+    param = buildParamList(stockL);
+    url = "";
+    console.log("UpdataStock : ", param);
+    return sendJsonAjax(param, url);
+}
+
+function buildParam(stock) {
+    combineStock = $.extend({}, defaultSetting, stock);
+    param = 
+        '{"hourseid":"' + combineStock.hourseid + '",'
+        + '"itemid":"' + combineStock.itemid + '",'
+        + '"itemname":"' + combineStock.itemname + '",'
+        + '"itemnum":"' + combineStock.itemnum + '"}';
+    return param;
+}
+
+function buildParamList(stockL) {
     jsonList = [];
     for(var i = 0; i < stockL.length; i++) {
         combineStock = $.extend({}, defaultSetting, stockL[i]);
@@ -71,6 +88,5 @@ function updateStock(stockL) {
         param += (jsonList[i] + ',');
     }
     param += (jsonList[jsonList.length-1] + ']');
-    url = "";
-    return sendJsonAjax(param, url);
+    return param;
 }

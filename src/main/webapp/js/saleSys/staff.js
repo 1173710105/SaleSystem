@@ -34,12 +34,16 @@ function sendJsonAjax(url, param) {
  }
 
 //通过id查找员工
-function queryStaffById(staff) {
-    if (staff.id == "") {
+function queryStaffById(id) {
+    if (id == "") {
         return;
+    }
+    staff = {
+        id : 
     }
     param = buildParam(staff);
     url = "";
+    
     return sendJsonAjax(url, param);
 }
 
@@ -78,16 +82,7 @@ function updateStaff(staff) {
     if (staff == null) {
         return null;
     }
-    combineStaff = $.extend({},defaultSetting, staff);
-    param = 
-    '{'
-    + '"id":"' + combineStaff.id + '",'
-    + '"name":"' + combineStaff.name + '",'
-    + '"gender:"' + combineStaff.gender + '",'
-    + '"phone":"' + combineStaff.phone + '",'
-    + '"email":"' + combineStaff.email + '",'
-    + '"tablename":"' + combineStaff.tablename + '",'
-    + '"hourseid":"' + combineStaff.hourseid + '"}';
+    param = buildParam(staff);
     url = "";
     return sendJsonAjax(url, param);
 }

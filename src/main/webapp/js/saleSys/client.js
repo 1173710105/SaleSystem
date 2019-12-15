@@ -6,6 +6,8 @@ defaultSetting = {
     gender : '',
     phone : '',
     email : '',
+    type : '',
+    note : '',
     label : ''
 }
 
@@ -38,7 +40,7 @@ function queryClientById(tid) {
         id : tid
     }
     param = buildParam(client);
-    url = "";
+    url = "/client/queryById";
     console.log("QueryClientById : ", param);
     return sendJsonAjax(url, param);
 }
@@ -50,7 +52,7 @@ function queryClient(client) {
     }
     param = buildParam(client);
     console.log("QueryClient : ", param);
-    url = "";
+    url = "/client/query";
     return sendJsonAjax(url, param);
 }
 
@@ -60,7 +62,7 @@ function insertClient(client) {
         return null;
     }
     param = buildParam(client);
-    url = "";
+    url = "/client/insert";
     console.log("InsertClient : ", param);
     return sendJsonAjax(url, param);
 }
@@ -71,7 +73,7 @@ function deleteClient(client) {
         return null;
     }
     param = buildParam(client);
-    url = "";
+    url = "/client/delete";
     console.log("DeleteClient : ", param);
     return sendJsonAjax(url, param);
 }
@@ -82,7 +84,7 @@ function updateClient(client) {
         return null;
     }
     param = buildParam(client);
-    url = "";
+    url = "client/update";
     console.log("UpdataClient : ", param);
     return sendJsonAjax(url, param);
 }
@@ -96,6 +98,8 @@ function buildParam(client) {
         + '"gender:"' + combineClient.gender + '",'
         + '"phone":"' + combineClient.phone + '",'
         + '"email":"' + combineClient.email + '",'
-        + '"label":"' + combineClient.label + '"}';
+        + '"type":"' + combineClient.type + '",'
+        + '"label":"' + combineClient.label + '",'
+        + '"note":"' + combineClient.note + '"}';
     return param;
 }
