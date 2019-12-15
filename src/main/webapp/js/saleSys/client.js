@@ -34,7 +34,7 @@ function queryClientById(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/client/queryById";
     return sendJsonAjax(url, param);
 }
 
@@ -52,7 +52,7 @@ function queryClient(client) {
         + '"phone":"' + combineClient.phone + '",'
         + '"email":"' + combineClient.email + '",'
         + '"label":"' + combineClient.label + '"}';
-    url = "";
+    url = "/client/query";
     return sendJsonAjax(url, param);
 }
 
@@ -70,7 +70,7 @@ function insertClient(client) {
         + '"phone":"' + combineClient.phone + '",'
         + '"email":"' + combineClient.email + '",'
         + '"label":"' + combineClient.label + '"}';
-    url = "";
+    url = "/client/insert";
     return sendJsonAjax(url, param);
 }
 
@@ -81,7 +81,7 @@ function deleteClient(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/client/delete";
     return sendJsonAjax(url, param);
 }
 
@@ -99,6 +99,6 @@ function updateClient(client) {
         + '"phone":"' + combineClient.phone + '",'
         + '"email":"' + combineClient.email + '",'
         + '"label":"' + combineClient.label + '"}';
-    url = "";
+    url = "/client/update";
     return sendJsonAjax(url, param);
 }

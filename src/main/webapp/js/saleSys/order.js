@@ -75,7 +75,7 @@ function queryOrder(order) {
         + '"type":"' + combineOrder.type + '",'
         + '"exception":"' + combineOrder.exception + '",'
         + '"note":"' + combineOrder.note + '"}';
-    url = "";
+    url = "/order/query";
     console.log("查找订单" + param);
     return sendJsonAjax(url, param);
 }
@@ -122,7 +122,7 @@ function insertOrder(order) {
         param += (jsonList[i] + ',');
     }
     param += (jsonList[jsonList.length-1] + ']');
-    url = "";
+    url = "/order/insert";
     console.log("插入新订单" + param);
     return sendJsonAjax(url, param);
 }
@@ -169,7 +169,7 @@ function updateOrder(order) {
         param += (jsonList[i] + ',');
     }
     param += (jsonList[jsonList.length-1] + ']');
-    url = "";
+    url = "/order/update";
     return sendJsonAjax(url, param);
 }
 
@@ -180,7 +180,7 @@ function deleteOrder(id) {
     }
     param = 
         '{"viceid":"' + id.toString() + '"}';
-    url = "";
+    url = "/order/delete";
     return sendJsonAjax(url, param);
 }
 
@@ -191,7 +191,7 @@ function checkOrder(id) {
     }
     param =
         '{"viceid":"' + id.toString() + '"}';
-    url = "";
+    url = "/order/check";
     return sendJsonAjax(url, param);
 }
 
@@ -225,7 +225,7 @@ function payOrder(order) {
     + '"type":"' + combineOrder.type + '",'
     + '"exception":"' + combineOrder.exception + '",'
     + '"note":"' + combineOrder.note + '"}';
-    url = "";
+    url = "/order/pay";
     return sendJsonAjax(url, param);
 }
 
@@ -265,6 +265,6 @@ function returnOrder(tid, tprincipalid, texception, tnote) {
         + '"type":"' + combineOrder.type + '",'
         + '"exception":"' + combineOrder.exception + '",'
         + '"note":"' + combineOrder.note + '"}';
-    url = "";
+    url = "/order/return";
     return sendJsonAjax(url, param);
 }

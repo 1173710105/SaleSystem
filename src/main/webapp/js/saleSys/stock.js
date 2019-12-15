@@ -30,7 +30,7 @@ function queryStockByWarehourseId(hourseid) {
         return;
     }
     param = '{"hourseid":"' + hourseid + '"}';
-    url = "";
+    url = "/stock/queryById";
     return sendJsonAjax(url, param);
 }
 
@@ -45,6 +45,7 @@ function queryStock(stock) {
         + '"itemid":"' + combineStock.itemid + '",'
         + '"itemname":"' + combineStock.itemname + '",'
         + '"itemnum":"' + combineStock.itemnum + '"}';
+    url = "/stock/query";
     return sendJsonAjax(url, param);
 }
 
@@ -69,6 +70,6 @@ function updateStock(stockL) {
         param += (jsonList[i] + ',');
     }
     param += (jsonList[jsonList.length-1] + ']');
-    url = "";
+    url = "/stock/update";
     return sendJsonAjax(param, url);
 }

@@ -32,7 +32,7 @@ function queryWarehourseById(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/warehourse/queryById";
     return sendJsonAjax(url, param);
 }
 
@@ -48,7 +48,7 @@ function queryWarehourse(warehourse) {
         + '"name":"' + combineWarehourse.name + '",'
         + '"location:"' + combineWarehourse.location + '",'
         + '"principalid":"' + combineWarehourse.principalid + '"}';
-    url = "";
+    url = "/warehourse/query";
     return sendJsonAjax(url, param);
 }
 
@@ -64,7 +64,7 @@ function addWarehourse(warehourse) {
         + '"name":"' + combineWarehourse.name + '",'
         + '"location:"' + combineWarehourse.location + '",'
         + '"principalid":"' + combineWarehourse.principalid + '"}';
-    url = "";
+    url = "/warehourse/add";
     return sendJsonAjax(url, param);
 }
 
@@ -75,7 +75,7 @@ function deleteWarehourse(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/warehourse/delete";
     return sendJsonAjax(url, param);
 }
 
@@ -91,6 +91,6 @@ function updateWarehourse(warehourse) {
         + '"name":"' + combineWarehourse.name + '",'
         + '"location:"' + combineWarehourse.location + '",'
         + '"principalid":"' + combineWarehourse.principalid + '"}';
-    url = "";
+    url = "/warehourse/update";
     return sendJsonAjax(url, param);
 }

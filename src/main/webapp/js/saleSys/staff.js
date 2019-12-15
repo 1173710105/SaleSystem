@@ -37,7 +37,7 @@ function queryStaffById(id, tablename) {
     param = 
        '{"id":"' + id + '",'
        + '"tablename":"' + tablename + '"}';
-    url = "";
+    url = "/staff/queryById";
     return sendJsonAjax(url, param);
 }
 
@@ -56,7 +56,7 @@ function queryStaff(staff) {
         + '"email":"' + combineStaff.email + '",'
         + '"tablename":"' + combineStaff.tablename + '",'
         + '"hourseid":"' + combineStaff.hourseid + '"}';
-    url = "";
+    url = "/staff/query";
     return sendJsonAjax(url, param);
 }
 
@@ -75,7 +75,7 @@ function insertStaff(staff) {
     + '"email":"' + combineStaff.email + '",'
     + '"tablename":"' + combineStaff.tablename + '",'
     + '"hourseid":"' + combineStaff.hourseid + '"}';
-    url = "";
+    url = "/staff/add";
     return sendJsonAjax(url, param);
 }
 
@@ -86,7 +86,7 @@ function deleteStaff(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/staff/delete";
     return sendJsonAjax(url, param);
 }
 
@@ -105,6 +105,6 @@ function updateStaff(staff) {
     + '"email":"' + combineStaff.email + '",'
     + '"tablename":"' + combineStaff.tablename + '",'
     + '"hourseid":"' + combineStaff.hourseid + '"}';
-    url = "";
+    url = "/staff/update";
     return sendJsonAjax(url, param);
 }
