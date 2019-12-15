@@ -65,6 +65,7 @@ $('#save-btn').click(function() {
 
 //编辑货品
 $('#edit-btn').click(function() {
+    $('#cargoModal').modal('show'); //show modal
     var cargoid = $(this).val();
     var cargo;
     for (var i = 0; i < cargoList.length; i++) {
@@ -73,7 +74,6 @@ $('#edit-btn').click(function() {
             break;
         }
     }
-    $('#cargoModal').modal('show'); //show modal
     //填充信息
     $('#cargo-id').val(cargo.id);
     $('#cargo-name').val(cargo.name);
@@ -82,7 +82,7 @@ $('#edit-btn').click(function() {
     $('#retail-price').val(cargo.retailprice);
     $('#purchase-price').val(cargo.purchaseprice);
     $('#wholesale-price').val(cargo.wholesaleprice);
-})
+});
 
 //删除货品
 $('#delete_btn').click(function () {
