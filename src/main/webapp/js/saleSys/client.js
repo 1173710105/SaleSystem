@@ -97,7 +97,7 @@ function buildParam(client) {
        '{'
         + '"id":"' + combineClient.id + '",'
         + '"name":"' + combineClient.name + '",'
-        + '"gender:"' + combineClient.gender + '",'
+        + '"gender":"' + combineClient.gender + '",'
         + '"phone":"' + combineClient.phone + '",'
         + '"email":"' + combineClient.email + '",'
         + '"type":"' + combineClient.type + '",'
