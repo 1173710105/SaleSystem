@@ -1,6 +1,7 @@
 var tempClientMap = new Map();
 
 window.onload = function () {
+    this.console.log("onload client");
     this.refreshClientList();
 }
 
@@ -54,7 +55,7 @@ $(document).on('click', '#save-btn', function() {
         phone : $('client-phone').val(),
         email : $('client-email').val(),
         type : $('client-type').val(),
-        label : $('client-label').val()
+        note : $('client-label').val()
     }
     if($('client-id').val() == "") {
         insertClient(client);

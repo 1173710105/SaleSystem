@@ -1,10 +1,7 @@
 var tempClerkMap = new Map();
 
 window.onload = function () {
-    var clerkList = queryClient({ id: "", tablename : getCookie("stafftable")});
-    for (var i = 0; i < clerkList.length; i++) {
-        this.tempClerkMap.set(clerkList[i].id, clerkList[i]);
-    }
+    this.refreshClerkList();
 }
 
 //搜索
@@ -16,12 +13,13 @@ $('#search-btn').click(function () {
         name: $('#search-name').val(),
         phone: $('#search-phone').val(),
         email: $('#search-email').val(),
-        tablename : getCookie("stafftable")
+        hourseid : getCookie("warehourseid")
     }
     var cl = queryClient(clerk);
     for (var i = 0; i < cl.length; i++) {
         this.tempClerkMap.set(cl[i].id, cl[i]);
     }
+    cleanList();
     loadClerkList(cl);
 });
 
@@ -32,7 +30,7 @@ $('#add-btn').click(function() {
 });
 
 //编辑
-$('#edit-btn').click(function() {
+$(document).on('click', '#edit-btn', function() {
     $('#clerkModal').modal('show'); //show modal
     $('#modal-title').innerHTML = "店员编辑";
     var clerk = tempClerkMap.get($(this).id);
@@ -54,27 +52,28 @@ $('#save-btn').click(function() {
         gender : $('clerk-gender').val(),
         phone : $('clerk-phone').val(),
         email : $('clerk-email').val(),
-        hourseid : $('clerk-rep').val(),
-        tablename : getCookie("stafftable")
+        hourseid : getCookie("warehourseid")
     }
     if($('clerk-id').val() == "") {
         insertStaff(clerk);
     } else {
         updateStaff(clerk);
     }
+    refreshClerkList();
 });
 
 //删除
-$('#delete-btn').click(function() {
+$(document).on('click', '#delete-btn', function() {
     var r = confirm("是否删除？");
     if (r == true) {
         //实现
         deleteStaff(
             {
                 id : $('client-id').val(),
-                tablename : getCookie("stafftable")
+                hourseid : getCookie("warehourseid")
             });
         alert("删除成功");
+        refreshClerkList();
     }
 });
 
@@ -124,4 +123,24 @@ function loadClerkList(cl) {
         tr.appendChild(td7);
         editTable.appendChild(tr);
     }
+}
+
+function cleanList() {
+    document.getElementById("clerk-tbody").innerHTML = "";
+}
+
+function refreshClerkList() {
+    cleanList();
+    clerk = {
+        id: $('#search-id').val(),
+        name: $('#search-name').val(),
+        phone: $('#search-phone').val(),
+        email: $('#search-email').val(),
+        hourseid : getCookie("warehourseid")
+    }
+    var clerkList = queryStaff(clerk);
+    for (var i = 0; i < clerkList.length; i++) {
+        this.tempClerkMap.set(clerkList[i].id, clerkList[i]);
+    }
+    loadClerkList(clerkList);
 }

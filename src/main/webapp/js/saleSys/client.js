@@ -6,6 +6,8 @@ defaultSetting = {
     gender : '',
     phone : '',
     email : '',
+    type : '',
+    note : '',
     label : ''
 }
 
@@ -98,7 +100,8 @@ function buildParam(client) {
         + '"gender:"' + combineClient.gender + '",'
         + '"phone":"' + combineClient.phone + '",'
         + '"email":"' + combineClient.email + '",'
-        + '"label":"' + combineClient.label + '"}';
-
+        + '"type":"' + combineClient.type + '",'
+        + '"label":"' + combineClient.label + '",'
+        + '"note":"' + combineClient.note + '"}';
     return param;
 }

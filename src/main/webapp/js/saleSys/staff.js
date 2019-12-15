@@ -3,11 +3,12 @@ defaultSetting = {
     id : '',
     password : '',
     hourseid : '',
+    hoursename : '',
     name : '',
     gender : '',
     phone : '',
     email : '',
-    tablename : ''
+    label : ''
 }
 
 function sendJsonAjax(url, param) {
@@ -34,13 +35,17 @@ function sendJsonAjax(url, param) {
  }
 
 //通过id查找员工
-function queryStaffById(staff) {
-    if (staff.id == "") {
+function queryStaffById(tid, thourseid) {
+    if (tid == "") {
         return;
     }
-
+    staff = {
+        id : tid,
+        hourseid : thourseid
+    }
     param = buildParam(staff);
-    url = "/staff/queryById";
+    url = "";
+    console.log("QueryStaffById : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -52,6 +57,7 @@ function queryStaff(staff) {
 
     param = buildParam(staff);
     url = "/staff/query";
+    console.log("QueryStaff : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -63,6 +69,7 @@ function insertStaff(staff) {
 
     param = buildParam(staff);
     url = "/staff/add";
+    console.log("InsertStaff : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -73,6 +80,7 @@ function deleteStaff(staff) {
     }
     param = buildParam(staff);
     url = "/staff/delete";
+    console.log("DeleteStaff : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -81,17 +89,9 @@ function updateStaff(staff) {
     if (staff == null) {
         return null;
     }
-    combineStaff = $.extend({},defaultSetting, staff);
-    param = 
-    '{'
-    + '"id":"' + combineStaff.id + '",'
-    + '"name":"' + combineStaff.name + '",'
-    + '"gender:"' + combineStaff.gender + '",'
-    + '"phone":"' + combineStaff.phone + '",'
-    + '"email":"' + combineStaff.email + '",'
-    + '"tablename":"' + combineStaff.tablename + '",'
-    + '"hourseid":"' + combineStaff.hourseid + '"}';
+    param = buildParam(staff);
     url = "/staff/update";
+    console.log("UpdateStaff : ", param);
     return sendJsonAjax(url, param);
 }
 
@@ -104,7 +104,8 @@ function buildParam(staff) {
         + '"gender:"' + combineStaff.gender + '",'
         + '"phone":"' + combineStaff.phone + '",'
         + '"email":"' + combineStaff.email + '",'
-        + '"tablename":"' + combineStaff.tablename + '",'
-        + '"hourseid":"' + combineStaff.hourseid + '"}';
+        + '"hourseid":"' + combineStaff.hourseid + '",'
+        + '"hoursename":"' + combineStaff.hoursename + '",'
+        + '"label":"' + combineStaff.hourseid + '"}'
     return param;
 }

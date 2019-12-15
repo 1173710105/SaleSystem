@@ -8,12 +8,17 @@ window.onload = function () {
 
 //搜索
 $('#search-btn').click(function () {
+    var stype = $('search-cargo-type');
+    if (stype == "任意") {
+        stype = '';
+    }
     stock = {
         itemid: $('search-cargo-id'),
         itemname: $('search-cargo-name'),
-        type: $('search-cargo-type'),
-        hourseid: ""  //获取仓库id
+        type: stype,
+        hourseid: getCookie("warehourseid")  //获取仓库id
     }
+    cleanList();
     loadStockList(queryStock(stock));
 });
 
@@ -33,18 +38,34 @@ $('#update-btn').click(function () {
         }
         updateStock(templ);
         alert("更新完成");
+        refreshStockList();
     }
 });
 
 //触发盘点文本框
-$('#check-input').blur(function() {
+$(document).on('blur', '#check-input', function () {
     var checknum = $(this).val();
     var id = $(this).attr("itemid");
+    if (checknum == "") {
+        if (checkStockMap.get(id) != null) {
+            delete checkStockMap[id];
+            for (var i = 0, len = checkStockMap.length; i < len; i++) {
+                if (!checkStockMap[i] || checkStockMap[i] == '') {
+                    checkStockMap.splice(i, 1);
+                    len--;
+                    i--;
+                }
+            }
+            return;
+        } else {
+            return;
+        }
+    }
     checkStockMap.set(id, {
-        hourseid : '', //仓库id
-        itemid : id,
-        itemname : '', //货品名称
-        itemnum : checknum
+        hourseid: '', //仓库id
+        itemid: id,
+        itemname: '', //货品名称
+        itemnum: checknum
     });
     console.log("Add new check : " + checkStockMap.get(id));
 });
@@ -82,4 +103,23 @@ function loadStockList(sl) {
         tr.appendChild(td5);
         editTable.appendChild(tr);
     }
+}
+
+function cleanList() {
+    document.getElementById("inventory-tbody").innerHTML = "";
+}
+
+function refreshStockList() {
+    cleanList();
+    var stype = $('search-cargo-type');
+    if (stype == "任意") {
+        stype = '';
+    }
+    stock = {
+        itemid: $('search-cargo-id'),
+        itemname: $('search-cargo-name'),
+        type: stype,
+        hourseid: getCookie("warehourseid")  //获取仓库id
+    }
+    loadStockList(querystock(stock));
 }
