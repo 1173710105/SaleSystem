@@ -1,4 +1,4 @@
-//客户对象操作
+﻿//客户对象操作
 
 defaultSetting = {
     id : '',
@@ -50,6 +50,7 @@ function queryClient(client) {
     if (client == null) {
         return null;
     }
+
     param = buildParam(client);
     console.log("QueryClient : ", param);
     url = "/client/query";
@@ -61,6 +62,7 @@ function insertClient(client) {
     if (client == null) {
         return null;
     }
+
     param = buildParam(client);
     url = "/client/insert";
     console.log("InsertClient : ", param);
@@ -84,7 +86,7 @@ function updateClient(client) {
         return null;
     }
     param = buildParam(client);
-    url = "client/update";
+    url = "/client/update";
     console.log("UpdataClient : ", param);
     return sendJsonAjax(url, param);
 }

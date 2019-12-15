@@ -7,14 +7,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.software.domain.Item;
 import com.software.domain.ItemToPrice;
+import com.software.domain.Warehourse;
+import com.software.domain.WarehourseDetail;
 import com.software.service.ItemService;
 import com.software.service.ItemToPriceService;
+import com.software.service.WarehourseDetailService;
 import com.software.trans.ReceiveCargo;
 
 @Service
@@ -26,6 +30,9 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Autowired
 	private ItemToPriceService priceService;
 
+	@Autowired
+	private WarehourseDetailService detailService;
+	
 	@Override
 	public ReceiveCargo selectByPrimaryKey(ReceiveCargo record) 
 	{
@@ -42,15 +49,24 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Override
 	public void insertSelective(ReceiveCargo record) 
 	{
-//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-//		String date = df.format(new Date());// new Date()为获取当前系统时间
-//		
 		Item exampleItem = record.toItem();
+		exampleItem.setPicture(getRandom()+"");
+		itemService.insertSelective(exampleItem);
+		
+		Item resultItem = itemService.select(exampleItem).get(0);
+		
+		WarehourseDetail detail = new WarehourseDetail();
+		detail.setTablename(record.getTablename());
+		detail.setItemnum(0);
+		detail.setTime(record.getTime());
+		detail.fillTableName();
+		detail.setItemid(resultItem.getId());
 		
 		ItemToPrice examplePrice = record.toPrice();
+		examplePrice.setId(resultItem.getId());
 		
-		itemService.insertSelective(exampleItem);
 		priceService.insertSelective(examplePrice);
+		detailService.insertSelective(detail);
 	}
 
 	@Override
@@ -108,5 +124,11 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 			result.put(i, itemList.get(i).getType());
 		}
 		return result;
+	}
+	
+	private int getRandom() 
+	{
+		Random random = new Random();
+		return random.nextInt(100000000);
 	}
 }

@@ -1,4 +1,4 @@
-//员工对象操作
+﻿//员工对象操作
 defaultSetting = {
     id : '',
     password : '',
@@ -54,8 +54,9 @@ function queryStaff(staff) {
     if (staff == null) {
         return null;
     }
+
     param = buildParam(staff);
-    url = "";
+    url = "/staff/query";
     console.log("QueryStaff : ", param);
     return sendJsonAjax(url, param);
 }
@@ -65,8 +66,9 @@ function insertStaff(staff) {
     if (staff == null) {
         return null;
     }
+
     param = buildParam(staff);
-    url = "";
+    url = "/staff/add";
     console.log("InsertStaff : ", param);
     return sendJsonAjax(url, param);
 }
@@ -77,7 +79,7 @@ function deleteStaff(staff) {
         return null;
     }
     param = buildParam(staff);
-    url = "";
+    url = "/staff/delete";
     console.log("DeleteStaff : ", param);
     return sendJsonAjax(url, param);
 }
@@ -88,7 +90,7 @@ function updateStaff(staff) {
         return null;
     }
     param = buildParam(staff);
-    url = "";
+    url = "/staff/update";
     console.log("UpdateStaff : ", param);
     return sendJsonAjax(url, param);
 }

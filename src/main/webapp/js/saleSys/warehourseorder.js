@@ -42,7 +42,7 @@ function queryWarehourseOrderById(id) {
         return;
     }
     param = '{"id":"' + id + '"}';
-    url = "";
+    url = "/warehourseOrder/queryById";
     sendJsonAjax(url, param);
 }
 
@@ -68,7 +68,7 @@ function queryWarehourseOrder(worder) {
         + '"itemnum":"' + combineWorder.itemnum + '",'
         + '"perprice":"' + combineWorder.perprice + '",'
         + '"sumprice":"' + combineWorder.sumprice + '"}';
-    url = "";
+    url = "/warehourseOrder/query";
     console.log("query warehourseorder: " + param);
     return sendJsonAjax(url, param);
 }
@@ -104,7 +104,7 @@ function insertWarehourseOrder(worder) {
         param += (jsonList[i] + ',');
     }
     param += (jsonList[jsonList.length-1] + ']');
-    url = "";
+    url = "/warehourseOrder/insert";
     console.log("insert new warehourseorder: " + param);
     return sendJsonAjax(url, param);
 }
@@ -141,7 +141,7 @@ function updateWarehourseOrder(worder) {
         param += (jsonList[i] + ',');
     }
     param += (jsonList[jsonList.length-1] + ']');
-    url = "";
+    url = "/warehourseOrder/update";
     console.log("update warehourseorder: " + param);
     return sendJsonAjax(url, param);
 }
@@ -152,7 +152,7 @@ function deleteWarehourseOrder(id) {
         return;
     }
     param = '{"id":"' + id + '"}';
-    url = "";
+    url = "/warehourseOrder/delete";
     return sendJsonAjax(url, param);
 }
 
@@ -162,7 +162,7 @@ function applyWarehourseOrder(id) {
         return;
     }
     param = '{"id":"' + id + '"}';
-    url = "";
+    url = "/warehourseOrder/apply";
     return sendJsonAjax(url, param);
 }
 
@@ -172,6 +172,6 @@ function passWarehourseOrder(id) {
         return;
     }
     param = '{"id":"' + id + '"}';
-    url = "";
+    url = "/warehourseOrder/pass";
     return sendJsonAjax(url, param);
 }

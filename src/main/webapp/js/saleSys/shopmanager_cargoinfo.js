@@ -1,4 +1,4 @@
-//店长管理货品信息
+﻿//店长管理货品信息
 
 tempCargoList = [];
 
@@ -73,6 +73,7 @@ $('#save-btn').click(function() {
     }
     refreshCargoList();
 });
+
 
 //编辑货品填充信息
 $(document).on('click', '#edit-btn', function() {

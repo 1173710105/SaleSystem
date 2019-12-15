@@ -1,5 +1,9 @@
 package com.software.domain;
 
+import static org.mockito.Mockito.ignoreStubs;
+
+import org.codehaus.plexus.util.dag.TopologicalSorter;
+
 public class WarehourseDetail 
 {
 	private String tablename;
@@ -51,6 +55,17 @@ public class WarehourseDetail
         this.time = time == null ? null : time.trim();
     }
 
+    public void fillTableName() 
+    {
+    	if (this.tablename.equals("-1")) 
+    	{
+    		this.tablename = "base_warehourse_detail";
+		}
+    	else
+    	{
+    		this.tablename = "sub_warehourse_detail_"+String.format("%04d", Integer.valueOf(this.tablename));
+    	}
+	}
 	@Override
 	public String toString() {
 		return "WarehourseDetail [tablename=" + tablename + ", itemid=" + itemid + ", itemnum=" + itemnum + ", time="

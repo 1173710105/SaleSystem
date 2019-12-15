@@ -36,7 +36,7 @@ function queryManagerById(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/shopmanager/queryById";
     return sendJsonAjax(url, param);
 }
 
@@ -55,7 +55,7 @@ function queryManager(manager) {
         + '"email":"' + combineManager.email + '",'
         + '"label":"' + combineManager.label + '",'
         + '"hourseid":"' + combineManager.hourseid + '"}';
-    url = "";
+    url = "/shopmanager/query";
     return sendJsonAjax(url, param);
 }
 
@@ -74,7 +74,7 @@ function insertManager(manager) {
         + '"email":"' + combineManager.email + '",'
         + '"label":"' + combineManager.label + '",'
         + '"hourseid":"' + combineManager.hourseid + '"}';
-    url = "";
+    url = "/shopmanager/insert";
     return sendJsonAjax(url, param);
 }
 
@@ -85,7 +85,7 @@ function deleteManager(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/shopmanager/delete";
     return sendJsonAjax(url, param);
 }
 
@@ -103,7 +103,7 @@ function updateManager(manager) {
     + '"phone":"' + combineClient.phone + '",'
     + '"email":"' + combineClient.email + '",'
     + '"hourseid":"' + combineClient.hourseid + '"}';
-    url = "";
+    url = "/shopmanager/update";
     return sendJsonAjax(url, param);
 }
 
@@ -114,6 +114,6 @@ function queryWareIdByManagerId(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/shopmanager/queryWare";
     return sendJsonAjax(url, param);
 }

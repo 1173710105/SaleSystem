@@ -16,8 +16,6 @@ public interface ClientManagerService
 
     public List<Client> select(Client record);
     
-    public List<Client> selectValid(Client record);
-    
     public void updateByPrimaryKeySelective(Client record);
 
     public void updateByPrimaryKey(Client record);

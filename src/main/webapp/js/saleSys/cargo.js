@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 货物有关请求和操作
  */
 defaultSetting = 
@@ -101,7 +101,7 @@ function insertCargo(cargo) {
     + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
-   url = "/cargo/insert";
+   url = "/cargo/add";
    console.log("InsertCargo : ", param);
   return sendJsonAjax(url, param);
 }

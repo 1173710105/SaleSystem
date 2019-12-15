@@ -34,7 +34,7 @@ function queryStockByWarehourseId(thourseid) {
         hourseid : thourseid 
     }
     param = buildParam(stock);
-    url = "";
+    url = "/stock/queryById";
     console.log("QueryStockByWareId : ", param);
     return sendJsonAjax(url, param);
 }
@@ -44,7 +44,7 @@ function queryStock(stock) {
     if(stock == null) {
         return;
     }
-    url = ''
+    url = '/stock/query'
     param = buildParam(stock);
     console.log("QueryStock : ", param);
     return sendJsonAjax(url, param);
@@ -57,7 +57,7 @@ function updateStock(stockL) {
         return;
     }
     param = buildParamList(stockL);
-    url = "";
+    url = "/stock/update";
     console.log("UpdataStock : ", param);
     return sendJsonAjax(param, url);
 }

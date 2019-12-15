@@ -35,6 +35,6 @@ function queryGManagerById(id) {
     }
     param = 
        '{"id":"' + id + '"}';
-    url = "";
+    url = "/generalmanager/queryById";
     return sendJsonAjax(url, param);
 }
