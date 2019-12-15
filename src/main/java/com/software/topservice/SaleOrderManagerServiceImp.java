@@ -192,6 +192,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 	@Override
 	public void payOrder(ReceiveOrder order) 
 	{
+		order.fillTablename();
 		SaleorderCommon exampleCommon = order.toCommon();
 		commonService.updateByPrimaryKeySelective(exampleCommon);
 	}
