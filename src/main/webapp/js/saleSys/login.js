@@ -1,4 +1,4 @@
-/**
+﻿/**
  * login function, use for login
  * login.html
  */
@@ -71,37 +71,42 @@ $("#login-btn").click(
             data: secondrequest,
             async: false,
             type: "post",
-            dataType: "text",
+            dataType: "JSON",
             contentType: "application/json;charset=UTF-8",
             success: function (data) {
                 if (data != null) {
-                    console.log("receive login data : " + data);
-                    console.log("data type : ", typeof(data));
                     //填充cookie
                     //会话 sessionid
                     //账号 id
                     //职位 position
+                	console.log("data : ", data);
+                	console.log("data type : ", typeof(data));
+                	console.log("wid" + data.warehourseid );
+                	console.log("wid",data.warehourseid);
                     setCookie("id", account);
                     setCookie("position", type);
                     setCookie("warehourseid", data.warehourseid);
                     setCookie("warehoursename", data.warehoursename);
                     setCookie("warehourselocation", data.warehourselocation);
-                    setCookie("pricipalid", data.pricipalid);
-                    setCookie("pricipalname", data.principalname);
+                    setCookie("principalid", data.principalid);
+                    setCookie("principalname", data.principalname);
                     setCookie("saleorderitemtable", data.saleorderitemtable);
                     setCookie("saleordercommontable", data.saleorderitemtable);
                     setCookie("stafftable", data.stafftable);
                     setCookie("warehoursedetailtable", data.warehoursedetailtable);
                     setCookie("itemtable", data.itemtable);
                     setCookie("time", data.time);
+                    console.log("pname", getCookie("principalname"));
                 } else {
                     alert("请求失败");
                     return;
                 }
             },
             error: function () {
+            	console.log("receive fail");
             }
         });
+
         $.when(loginajax, dataajax).done(function() {
             top.location.href = destination;
         });

@@ -2,6 +2,8 @@
  * 货物有关请求和操作
  */
 
+var tempdata; 
+
 defaultSetting = 
 {
     id : '',
@@ -24,7 +26,9 @@ function sendJsonAjax(url, param) {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+            	console.log("cargo json receive : ", data);
+            	tempdata = data;
+                //return data;
             }
             return null;
         },
@@ -38,7 +42,7 @@ function sendJsonAjax(url, param) {
     if (id == "") {
         return;
     }
-    url = "";
+    url = "/cargo/queryById";
     param = 
         '{"id":"' + id + '",'
         + '"tablename":"' + tablename + "}";       
@@ -61,8 +65,13 @@ function sendJsonAjax(url, param) {
         + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
         + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
         + '"tablename":"' + combineCargo.tablename + '"}';
-    url = "";
-   return sendJsonAjax(url, param);
+    url = "/cargo/query";
+    $.ajaxSettings.async = false;
+    sendJsonAjax(url, param);
+    console.log("send cargo query : ", param);
+    console.log("query cargo : " , tempdata);
+    //return sendJsonAjax(url, param);
+    return tempdata;
  }
 
  //添加货品
@@ -81,19 +90,32 @@ function insertCargo(cargo) {
     + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
-   url = "";
+   url = "/cargo/insert";
   return sendJsonAjax(url, param);
 }
 
  //删除货品
-function deleteCargo(id, tablename) {
-    if (id == "") {
+function deleteCargo(tid, ttablename) {
+    if (tid == "") {
         return;
     }
-    url = "";
+    cargo = {
+    		id :tid,
+    		tablename : ttablename
+    }
+    url = "/cargo/delete";
+    combineCargo = $.extend({},defaultSetting, cargo);
     param = 
-        '{"id":"' + id + '",'
-        + '"tablename":"' + tablename + "}"; 
+    '{"id":"' + combineCargo.id +'",'
+    + '"name":"' + combineCargo.name +'",'
+    + '"type":"' + combineCargo.type +'",'
+    + '"specification":"' + combineCargo.specification +'",'
+    + '"picture":"' + combineCargo.picture +'",'
+    + '"retailprice":"' + combineCargo.retailprice +'",'
+    + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
+    + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
+    + '"tablename":"' + combineCargo.tablename + '"}';
+    console.log("delete cargo : " , param);
     return sendJsonAjax(url, param);
 }
 
@@ -113,7 +135,8 @@ function updateCargo(cargo) {
     + '"wholesaleprice":"' + combineCargo.wholesaleprice +'",'
     + '"purchaseprice":"' + combineCargo.purchaseprice +'",'
     + '"tablename":"' + combineCargo.tablename + '"}';
-   url = "";
+    console.log("update cargo : " , param);
+   url = "/cargo/update";
   return sendJsonAjax(url, param);
 }
 

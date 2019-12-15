@@ -28,16 +28,34 @@
   <delete id="dropTable" parameterType="String">
    		drop table ${tablename}
   </delete>
+  
   <select id="selectByPrimaryKey" parameterType="com.software.domain.ItemToPrice" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <select id="select" parameterType="com.software.domain.ItemToPrice" resultMap="BaseResultMap">
+		select *
+		from ${tablename}
+		<where>
+			<if test="id!=null and id!=''">
+				and ID = #{id}
+			</if>
+			<if test="name!=null and name!=''">
+				and name = #{name}
+			</if>
+			<if test="label!=null and label!=''">
+				and label = #{label}
+			</if>
+		</where>
+	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.ItemToPrice">
     delete from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </delete>
+  
+  
   <insert id="insert" parameterType="com.software.domain.ItemToPrice">
     insert into ${tablename} (ID, name, retailPrice, 
       wholesalePrice, purchasePrice, time, 
@@ -98,22 +116,22 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.ItemToPrice">
     update ${tablename}
     <set>
-      <if test="name != null">
+      <if test="name != null and name != ''">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="retailprice != null">
+      <if test="retailprice != null and retailprice != ''">
         retailPrice = #{retailprice,jdbcType=REAL},
       </if>
-      <if test="wholesaleprice != null">
+      <if test="wholesaleprice != null and wholesaleprice != ''">
         wholesalePrice = #{wholesaleprice,jdbcType=REAL},
       </if>
-      <if test="purchaseprice != null">
+      <if test="purchaseprice != null and purchaseprice!=''">
         purchasePrice = #{purchaseprice,jdbcType=REAL},
       </if>
-      <if test="time != null">
+      <if test="time != null and time != ''">
         time = #{time,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+      <if test="label != null and label !=''">
         label = #{label,jdbcType=VARCHAR},
       </if>
     </set>

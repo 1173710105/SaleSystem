@@ -105,30 +105,60 @@ public class ReceiveCargo
 		this.wholesaleprice = price.getWholesaleprice()+"";
 	}
 	
+	private void fillTablename()
+	{
+		System.out.println(tablename);
+		this.tablename = "sub_warehourse_itemtoprice_"+String.format("%04d", Integer.valueOf(tablename));
+	}
+	
 	public Item toItem()
 	{
 		Item item = new Item();
-		item.setId(Integer.valueOf(this.id));
+		if (!this.id.equals("")) 
+		{
+			item.setId(Integer.valueOf(this.id));
+		}
 		item.setName(this.name);
-		item.setType(this.type);
+		if (this.type!=null&&!this.type.equals("任意")) 
+		{
+			item.setType(this.type);
+		}
 		item.setSpecification(this.specification);
 		item.setPicture(this.picture);
 		item.setTime(this.time);
+		item.setLabel(this.label);
 		return item;
 	}
 	
 	public ItemToPrice toPrice()
 	{
 		ItemToPrice price = new ItemToPrice();
+		fillTablename();
 		price.setTablename(this.tablename);
-		price.setId(Integer.valueOf(this.id));
+		if (!this.id.equals("")) 
+		{
+			price.setId(Integer.valueOf(this.id));
+		}
 		price.setName(this.name);
-		price.setRetailprice(Float.valueOf(this.retailprice));
-		price.setPurchaseprice(Float.valueOf(this.purchaseprice));
-		price.setWholesaleprice(Float.valueOf(this.wholesaleprice));
+		if (!this.retailprice.equals("")) 
+		{
+			price.setRetailprice(Float.valueOf(this.retailprice));
+		}
+		if (!this.purchaseprice.equals("")) 
+		{
+			price.setPurchaseprice(Float.valueOf(this.purchaseprice));
+		}
+		if (!this.wholesaleprice.equals("")) 
+		{
+			price.setWholesaleprice(Float.valueOf(this.wholesaleprice));
+
+			
+		}
 		price.setTime(time);
+		price.setLabel(this.label);
 		return price;
 	}
+	
 	@Override
 	public String toString() {
 		return "ReceiveCargo [tablename=" + tablename + ", id=" + id + ", name=" + name + ", type=" + type

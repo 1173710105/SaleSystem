@@ -61,6 +61,6 @@ public class StoreManagerServiceImp implements StoreManagerService
 	@Override
 	public int count() 
 	{
-		return smm.count();
+		return smm.count(null);
 	}
 }

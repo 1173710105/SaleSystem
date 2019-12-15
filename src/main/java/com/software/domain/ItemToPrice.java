@@ -101,4 +101,13 @@ public class ItemToPrice
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
     }
+
+	@Override
+	public String toString() 
+	{
+		return "ItemToPrice [tablename=" + tablename + ", id=" + id + ", name=" + name + ", retailprice=" + retailprice
+				+ ", wholesaleprice=" + wholesaleprice + ", purchaseprice=" + purchaseprice + ", time=" + time
+				+ ", label=" + label + "]";
+	}
+    
 }

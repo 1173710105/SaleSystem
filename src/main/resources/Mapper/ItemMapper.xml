@@ -35,6 +35,9 @@
 			<if test="specification!=null and specification!=''">
 				and specification = #{specification}
 			</if>
+			<if test="label!=null and label!=''">
+				and label = #{label}
+			</if>
 		</where>
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Item">
@@ -52,48 +55,48 @@
   <insert id="insertSelective" parameterType="com.software.domain.Item">
     insert into item
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id!=''">
         ID,
       </if>
-      <if test="name != null">
+      <if test="name != null and name != ''">
         name,
       </if>
-      <if test="type != null">
+      <if test="type != null and type !=''">
         type,
       </if>
-      <if test="specification != null">
+      <if test="specification != null and  specification!=''">
         specification,
       </if>
-      <if test="picture != null">
+      <if test="picture != null and picture!=''">
         picture,
       </if>
-      <if test="time != null">
+      <if test="time != null and time != '' ">
         time,
       </if>
-      <if test="label != null">
+      <if test="label != null and label!=''">
         label,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id!=''">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
+      <if test="name != null and name != ''">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
+      <if test="type != null and type !=''">
         #{type,jdbcType=VARCHAR},
       </if>
-      <if test="specification != null">
+      <if test="specification != null and  specification!=''">
         #{specification,jdbcType=VARCHAR},
       </if>
-      <if test="picture != null">
+      <if test="picture != null and picture!=''">
         #{picture,jdbcType=VARCHAR},
       </if>
-      <if test="time != null">
+      <if test="time != null and time != '' ">
         #{time,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+      <if test="label != null and label!=''">
         #{label,jdbcType=VARCHAR},
       </if>
     </trim>
@@ -101,22 +104,22 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.Item">
     update item
     <set>
-      <if test="name != null">
+      <if test="name != null and name!=''">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
+      <if test="type != null and type!=''">
         type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="specification != null">
+      <if test="specification != null and specification!=''">
         specification = #{specification,jdbcType=VARCHAR},
       </if>
-      <if test="picture != null">
+      <if test="picture != null and picture!=''">
         picture = #{picture,jdbcType=VARCHAR},
       </if>
-      <if test="time != null">
+      <if test="time != null and time!=''">
         time = #{time,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+      <if test="label != null and label!=''">
         label = #{label,jdbcType=VARCHAR},
       </if>
     </set>
