@@ -180,7 +180,7 @@ function loadMadal(ol, type) {
     }
 
     //是否显示退货备注
-    if(common.get("status") == "6") {
+    if (common.get("status") == "6") {
         $('.return-note')[0].style.display = "";
         $('#order-note').val(common.get("note"));
     } else {
@@ -190,18 +190,7 @@ function loadMadal(ol, type) {
 
 //条件搜索
 $('#search-btn').click(function () {
-    var order = {
-        id: $('#search-order-id').val(),
-        clientid: $('#search-client-id').val(),
-        type: $('#search-cargo-type').val(),
-        paystatus: $('#search-pay').val(),
-        checkstatus: $('#search-status').val(),
-    }
-    var queryList = queryOrder(order);
-    for (var i = 0; i < queryList.length; i++) {
-        tempWareOrderMap.set(queryList[i].id, object2map(queryList[i]));
-    }
-    loadOrderList(queryList);
+    refreshOrderList();
 });
 
 //弹出添加订单
@@ -344,40 +333,40 @@ $('#return-btn').click(function () {
     $('#return-total-price').val(tempOrderMap.get(orderid)[0].get("totalprice"));
 });
 
-$('#cargo-num').blur(function() {
+$('#cargo-num').blur(function () {
     var perprice = parseFloat($('#cargo-wholesale-price').val());
     var itemnum = parseInt($('#cargo-num').val());
     $('#cargo-total-price').val(perprice * itemnum);
 });
 
 //保存订单货品修改
-$('#temp-add-btn').click(function() {
+$('#temp-add-btn').click(function () {
     var orderid = $('#order-id').val();
     var cargoid = $('#cargo-id').val();
     var ol;
     //新增订单
-    if(orderid == "") {
+    if (orderid == "") {
         ol = tempOrderMap.get("temp");
         //新增订单，添加list
-        if(ol == null) {
+        if (ol == null) {
             l = [];
             tempOrderMap.set("temp", l);
             ol = l;
         }
-    //编辑订单
+        //编辑订单
     } else {
         ol = tempOrderMap.get(orderid);
     }
     //查找是否存在货品，存在修改，不存在添加
     var torder;
-    for(itemorder in ol) {
-        if(itemorder.get("itemid") == cargoid) {
+    for (itemorder in ol) {
+        if (itemorder.get("itemid") == cargoid) {
             torder = itemorder;
             break;
         }
     }
     //插入记录
-    if(torder == null) {
+    if (torder == null) {
         var cid = $('#cargo-id').val();
         var cargo = queryCargoById(cid);
         var m = new Map();
@@ -399,21 +388,21 @@ $('#temp-add-btn').click(function() {
 });
 
 //保存订单
-$('#save-btn').click(function() {
+$('#save-btn').click(function () {
     var order;
     if ($('#order-id').val() == "") {
         var client = queryClientById($('#client-id').val());
         order = tempOrderMap.get("temp");
         var totalprice = 0;
-        for(suborder in order) {
+        for (suborder in order) {
             totalprice += parseFloat(suborder.get("sumprice"));
         }
-        for(suborder in order) {
+        for (suborder in order) {
             suborder.set("warehourseid", getCookie("warehourseid"));
             suborder.set("warehoursename", getCookie("warehoursename"));
             suborder.set("clientid", client.id);
             suborder.set("clientname", client.name),
-            suborder.set("principalid", getCookie("id"));
+                suborder.set("principalid", getCookie("id"));
             suborder.set("principalname", getCookie("name"));
             suborder.set("status", 1);
             suborder.set("totalprice", totalprice);
@@ -423,35 +412,35 @@ $('#save-btn').click(function() {
         order = tempOrderMap.get($('#order-id').val());
         //修改总价 totalprice
         var totalprice = 0;
-        for(suborder in order) {
+        for (suborder in order) {
             totalprice += parseFloat(suborder.get("sumprice"));
         }
-        for(suborder in order) {
+        for (suborder in order) {
             suborder.set("total-price", totalprice);
         }
     }
     l = [];
-    for(var i = 0; i < order.length; i++){
+    for (var i = 0; i < order.length; i++) {
         suborder = {
-            viceid : order[i].get("viceid"),
-            warehourseid : order[i].get("warehourseid"),
-            earehoursename : order[i].get("warehoursename"),
-            clientid : order[i].get("clientid"),
-            clientname : order[i].get("clientname"),
-            principalid : order[i].get("principalid"),
-            principalname : order[i].get("principalname"),
-            createtime : order[i].get("createtime"),
-            status : order[i].get("status"),
-            totalprice : order[i].get("totalprice"),
-            type : order[i].get("type", order.type),
-            margin : order[i].get("margin"),
-            note : order[i].get("note"),
-            exception : order[i].get("exception"),
-            itemid : order[i].get("itemid"),
-            itemname : order[i].get("itemname"),
-            itemnum : order[i].get("itemnum"),
-            perprice : order[i].get("perprice"),
-            sumprice : order[i].get("sumprice")
+            viceid: order[i].get("viceid"),
+            warehourseid: order[i].get("warehourseid"),
+            earehoursename: order[i].get("warehoursename"),
+            clientid: order[i].get("clientid"),
+            clientname: order[i].get("clientname"),
+            principalid: order[i].get("principalid"),
+            principalname: order[i].get("principalname"),
+            createtime: order[i].get("createtime"),
+            status: order[i].get("status"),
+            totalprice: order[i].get("totalprice"),
+            type: order[i].get("type", order.type),
+            margin: order[i].get("margin"),
+            note: order[i].get("note"),
+            exception: order[i].get("exception"),
+            itemid: order[i].get("itemid"),
+            itemname: order[i].get("itemname"),
+            itemnum: order[i].get("itemnum"),
+            perprice: order[i].get("perprice"),
+            sumprice: order[i].get("sumprice")
         }
         l.push(suborder);
     }
@@ -469,18 +458,112 @@ $(document).on('click', '#temp-tr', function () {
     //填充订单参数
     var itemid = $(this).attr("cid");
     var order;
-    if($('#order-id').val() == "") {
+    if ($('#order-id').val() == "") {
         order = tempOrderMap.get("temp");
     } else {
         order = tempOrderMap.get($('#order-id').val());
     }
-    for(so in order) {
-        if(so.get("itemid") == itemid) {
+    for (so in order) {
+        if (so.get("itemid") == itemid) {
             showCargo(so);
             break;
         }
     }
 });
+
+$("#search-check-status").change(function () {
+    if ($(this).val() == "未审核") {
+        $('#search-pay option')[0].style.display = "none";
+        $('#search-pay option')[1].style.display = "";
+        $("#search-pay").val("未付款");
+        $('#search-pay option')[2].style.display = "none";
+    } else if ($(this).val() == "审核中") {
+        $('#search-pay option')[0].style.display = "none";
+        $('#search-pay option')[1].style.display = "";
+        $("#search-pay").val("未付款");
+        $('#search-pay option')[2].style.display = "none";
+    } else if ($(this).val() == "已审核") {
+        $('#search-pay option')[0].style.display = "";
+        $("#search-pay").val("任意");
+        $('#search-pay option')[1].style.display = "";
+        $('#search-pay option')[2].style.display = "";
+    } else if ($(this).val() == "已退货") {
+        $('#search-pay option')[0].style.display = "";
+        $("#search-pay").val("任意");
+        $('#search-pay option')[1].style.display = "";
+        $('#search-pay option')[2].style.display = "";
+    }
+});
+
+//清空表格
+function cleanOrderList() {
+    document.getElementById("order-tbody").innerHTML = "";
+    tempOrderMap.clear();
+}
+
+//刷新表格
+function refreshOrderList() {
+    cleanOrderList();
+    var staff = queryStaff({
+        id : $("#search-principal-id").val(),
+        hourseid : getCookie("warehourseid"),
+        hoursename : getCookie("warehoursename")
+    })[0];
+    var pays = $('#search-pay').val();
+    var checks = $('#search-check-status').val();
+    var sstatus = [];
+    if (checks == "任意" && pays == "任意") {
+        sstatus.push("");
+    } else if (checks == "任意" && pays == "未付款") {
+        sstatus.push("1");
+        sstatus.push("2")
+        sstatus.push("4");
+        sstatus.push("7")
+    } else if (checks == "任意" && pays == "已付款") {
+        sstatus.push("5");
+        sstatus.push("6");
+    }
+    else if (checks == "未审核") {
+        sstatus.push("1");
+    } else if (checks == "审核中") {
+        sstatus.push("2");
+    } else if (checks == "已审核" && pays == "任意") {
+        sstatus.push("4");
+        sstatus.push("5");
+    } else if (checks == "已审核" && pays == "未付款") {
+        sstatus.push("4");
+    } else if (checks == "已审核" && pays == "已付款") {
+        sstatus.push("5");
+    } else if (checks == "已退货" && pays == "任意") {
+        sstatus.push("6");
+        sstatus.push("7");
+    } else if (checks == "已退货" && pays == "未付款") {
+        sstatus.push("6");
+    } else if (checks == "已退货" && pays == "已付款") {
+        sstatus.push("7");
+    }
+    var queryList = [];
+    
+    for (s in sstatus) {
+        queryList.concat(queryOrder(
+            {
+                viceid: $('#search-order-id').val(),
+                clientid: $('#search-client-id').val(),
+                warehourseid: getCookie("warehourseid"),
+                warehoursename: getCookie("warehoursename"),
+                principalid: staff.id,
+                principalname: staff.name,
+                type : $('#search-cargo-type').val(),
+                status : s
+            }
+        ));
+    }
+    for (var i = 0; i < queryList.length; i++) {
+        tempWareOrderMap.set(queryList[i].id.toString(), object2map(queryList[i]));
+    }
+    console.log(sstatus);
+    loadOrderList(queryList);
+}
 
 function showCargo(suborder) {
     $('#cargo-name').val(suborder.get("itemname"));
@@ -513,13 +596,19 @@ function object2map(order) {
         m.set("type", order.type);
         m.set("margin", order.margin.toString());
         m.set("note", order.note);
-        m.set("exception",order.exception);
+        m.set("exception", order.exception);
         m.set("itemid", order.items[i].itemid);
         m.set("itemname", order.items[i].itemname);
-        m.set("itemnum", order,items[i].itemnum);
-        m.set("perprice", order,items[i].perprice);
-        m.set("sumprice", order,items[i].sumprice);
+        m.set("itemnum", order, items[i].itemnum);
+        m.set("perprice", order, items[i].perprice);
+        m.set("sumprice", order, items[i].sumprice);
         l.push(m);
     }
     return l;
 }
+
+//清除模态框内容
+$('body').on('hidden.bs.modal', '.modal', function () {
+    // $(this).removeData('bs.modal');
+    window.location.reload();
+});

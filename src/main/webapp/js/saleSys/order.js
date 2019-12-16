@@ -179,7 +179,7 @@ function buildParam(order) {
         + '"orderid":"' + combineOrder.orderid + '",'
         + '"viceid":"' + combineOrder.viceid + '",'
         + '"warehorseid":"' + combineOrder.warehorseid + '",'
-        + '"clientid:"' + combineOrder.clientid + '",'
+        + '"clientid":"' + combineOrder.clientid + '",'
         + '"principalid":"' + combineOrder.principalid + '",'
         + '"itemid":"' + combineOrder.itemid + '",'
         + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
@@ -210,7 +210,7 @@ function buildParamList(orderL) {
         + '"orderid":"' + combineOrder.orderid + '",'
         + '"viceid":"' + combineOrder.viceid + '",'
         + '"warehorseid":"' + combineOrder.warehorseid + '",'
-        + '"clientid:"' + combineOrder.clientid + '",'
+        + '"clientid":"' + combineOrder.clientid + '",'
         + '"principalid":"' + combineOrder.principalid + '",'
         + '"itemid":"' + combineOrder.itemid + '",'
         + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
