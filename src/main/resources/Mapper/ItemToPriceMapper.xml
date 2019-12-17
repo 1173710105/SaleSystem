@@ -21,7 +21,7 @@
 		  `wholesalePrice` float DEFAULT NULL,
 		  `purchasePrice` float DEFAULT NULL,
 		  `time` varchar(45) DEFAULT NULL,
-		  `label` varchar(45) NOT NULL,
+		  `label` varchar(45) DEFAULT NULL,
 		  PRIMARY KEY (`ID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品大价格的映射';
   </update> 

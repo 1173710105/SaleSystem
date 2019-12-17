@@ -1,5 +1,7 @@
 package com.software.topservice;
 
+import static org.mockito.Mockito.ignoreStubs;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,9 +11,11 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.software.domain.ItemToPrice;
 import com.software.domain.WarehourseDetail;
 import com.software.domain.WarehourseOrderCommon;
 import com.software.domain.WarehourseOrderItem;
+import com.software.service.ItemToPriceService;
 import com.software.service.WarehourseDetailService;
 import com.software.service.WarehourseOrderCommonService;
 import com.software.service.WarehourseOrderItemService;
@@ -32,13 +36,16 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 	@Autowired
 	private WarehourseDetailService detailService;
 	
+	@Autowired
+	private ItemToPriceService priceService;
+	
 	@Override
 	public List<SendWarehourseOrder> select(ReceiveWarehourseOrder order) 
 	{	
 		List<SendWarehourseOrder> result = new ArrayList<SendWarehourseOrder>();
 		WarehourseOrderCommon examplecommon = order.toWarehourseOrderCommon();
 
-		// 选取和服条件的订单
+		// 选取符合条件的订单
 		List<WarehourseOrderCommon> commonList = commonService.select(examplecommon);
 		
 		// 获取每一条订单的基本信息
@@ -84,7 +91,6 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 			itemTemp.setId(resultCommon.getId()+"");
 			itemService.insertSelective(itemTemp);
 		}
-		// orderSumPrice 不用自己去算了，因为网页已经算好了
 	}
 
 	@Override
@@ -131,21 +137,35 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		WarehourseOrderItem exampleItem = order.toWarehourseOrderItem();
 		List<WarehourseOrderItem> itemList = itemService.select(exampleItem);
 		
-		// 获取源和目的表名
+		// 用于初始化商品数量信息表，获取源和目的表名
 		String sourceTableName = getWarehourseDetailTable(exampleCommon.getSourceid());
 		String targetTableName = getWarehourseDetailTable(exampleCommon.getTargetid());
+		
+		// 用于初始化商品价格信息表
+		String sourcePriceTablename = getItemToPriceTable(exampleCommon.getSourceid());
+		String targetPriceTablename = getItemToPriceTable(exampleCommon.getTargetid());
+		
+		// 用于保存商品价格信息
+		ItemToPrice examplePrice = new ItemToPrice();
+		ItemToPrice sourcePrice = new ItemToPrice();
+		ItemToPrice targetPrice = new ItemToPrice();
+		List<ItemToPrice> priceList = new ArrayList<>();
 		
 		// 用于保存变化后商品数量信息
 		List<WarehourseDetail> sourceItemList = new ArrayList<>();
 		List<WarehourseDetail> targetItemList = new ArrayList<>();
+		
 		WarehourseDetail exampleDetail = new WarehourseDetail();
 		WarehourseDetail sourceDetail;
 		WarehourseDetail targetDetail;
+		
 		// 遍历订单中所有货品
 		// 子->总、、子-总 作为一个类  源要减，目的加     
 		// 进货商->总设为一个类        目的加   
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String date = df.format(new Date());// new Date()为获取当前系统时间
+		
+		
 		for (WarehourseOrderItem warehourseOrderItem : itemList) 
 		{
 			if (sourceTableName!=null) 
@@ -191,8 +211,35 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 				targetDetail.setTime(date);
 			}
 			targetItemList.add(targetDetail);
+			
+			
+			examplePrice.setTablename(targetPriceTablename);
+			examplePrice.setId(warehourseOrderItem.getItemid());
+			targetPrice = priceService.selectByPrimaryKey(examplePrice);
+			if (targetPrice==null) 
+			{
+				// 如果目的仓库里面没有商品到价格的信息，则需要初始化
+				if (sourcePriceTablename==null) 
+				{
+					// 货源地是进货商，则商品价格信息 中 进货价 与订单中的商品价格相同
+					targetPrice = new ItemToPrice();
+					targetPrice.setTablename(targetPriceTablename);
+					targetPrice.setId(warehourseOrderItem.getItemid());
+					targetPrice.setName(warehourseOrderItem.getItemname());
+					targetPrice.setPurchaseprice(warehourseOrderItem.getPerprice());
+					targetPrice.setTime(date);
+					priceList.add(targetPrice);
+				}
+				else
+				{
+					// 货源地是仓库，则商品价格信息与源仓库相同
+					sourcePrice = new ItemToPrice();
+					sourcePrice.setTablename(targetPriceTablename);
+					priceList.add(sourcePrice);
+				}
+			}
 		}
-		//更新到表里面
+		//更新到仓库商品数量信息表里面
 		for (WarehourseDetail warehourseDetail : sourceItemList) 
 		{
 			detailService.updateByPrimaryKeySelective(warehourseDetail);
@@ -200,6 +247,11 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		for (WarehourseDetail warehourseDetail : targetItemList) 
 		{
 			detailService.updateByPrimaryKeySelective(warehourseDetail);
+		}
+		// 更新到仓库商品价格信息表里面
+		for (ItemToPrice price : priceList) 
+		{
+			priceService.insertSelective(price);
 		}
 		return "true";
 	}
@@ -221,6 +273,21 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		
 	}
 	
+	private String getItemToPriceTable(Integer hourseid)
+	{
+		if (hourseid == -1) 
+		{
+			return "base_warehourse_itemtoprice";
+		}
+		else if (hourseid == -2) 
+		{
+			return null;
+		}
+		else
+		{
+			return "sub_warehourse_itemtoprice_"+String.format("%04d", hourseid);
+		}
+	}
 	private int getRandom()
 	{
 		Random rand = new Random();
