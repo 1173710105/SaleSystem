@@ -5,14 +5,6 @@ tempCargoList = [];
 window.onload = function() {
     this.console.log("warehourseid" , getCookie("warehourseid"));
     this.console.log("principalname", getCookie("principalname"));
-    
-    //加载货品
-    // var cargoList = null;
-    // var cargoList = this.queryCargo({id : '', tablename : getCookie("warehourseid")});
-    // console.log("init cargolist : ", cargoList);
-    // console.log("init cargoType : ", typeof(cargoList));
-    // tempCargoList = cargoList;
-    // loadCargoList(cargoList);
     this.refreshCargoList();
 }
 

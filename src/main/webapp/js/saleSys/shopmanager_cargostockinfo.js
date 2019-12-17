@@ -324,3 +324,7 @@ function showModalTable(cargoList, cargoNum) {
 
 }
 
+//******************************************************/
+function refreshCargoStockList() {
+    
+}

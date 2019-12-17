@@ -6,7 +6,7 @@ defaultSetting = {
     itemnum : '',
 }
 
-function sendJsonAjax(url, param) {
+function sendStockJsonAjax(url, param) {
     var tempdata;
     $.ajax({
         url: url,
@@ -36,7 +36,7 @@ function queryStockByWarehourseId(thourseid) {
     param = buildParam(stock);
     url = "/stock/queryById";
     console.log("QueryStockByWareId : ", param);
-    return sendJsonAjax(url, param);
+    return sendStockJsonAjax(url, param);
 }
 
 //通过条件过滤查找库存
@@ -47,7 +47,7 @@ function queryStock(stock) {
     url = '/stock/query'
     param = buildParam(stock);
     console.log("QueryStock : ", param);
-    return sendJsonAjax(url, param);
+    return sendStockJsonAjax(url, param);
 }
 
 //修改库存，更新盘点
@@ -59,7 +59,7 @@ function updateStock(stockL) {
     param = buildParamList(stockL);
     url = "/stock/update";
     console.log("UpdataStock : ", param);
-    return sendJsonAjax(param, url);
+    return sendStockJsonAjax(param, url);
 }
 
 function buildParam(stock) {

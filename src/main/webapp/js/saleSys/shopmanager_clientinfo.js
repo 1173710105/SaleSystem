@@ -166,3 +166,9 @@ function loadClientList(cl) {
         editTable.appendChild(tr);
     }
 }
+
+//清除模态框内容
+$('body').on('hidden.bs.modal', '.modal', function () {
+    // $(this).removeData('bs.modal');
+    window.location.reload();
+});

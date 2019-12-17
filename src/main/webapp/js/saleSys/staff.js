@@ -1,5 +1,5 @@
 ﻿//员工对象操作
-defaultSetting = {
+defaultStaffSetting = {
     id : '',
     password : '',
     hourseid : '',
@@ -101,7 +101,7 @@ function updateStaff(staff) {
 }
 
 function buildParam(staff) {
-    combineStaff = $.extend({},defaultSetting, staff);
+    combineStaff = $.extend({},defaultStaffSetting, staff);
     param = 
        '{'
         + '"id":"' + combineStaff.id + '",'

@@ -6,32 +6,31 @@ window.onload = function () {
         window.location.href = "../login.html";
         return;
     }
-    console.log(getCookie("principalid"));
-    console.log(getCookie("warehourseid"));
 }
 
 //订单货品暂存列表
 var cargoList = [];
 //订单货品数量暂存列表
 var cargoNum = [];
+var tempcargo;
 
 $("#cargo-id").blur(function () {
     var cargoId = $(this).val();
     cargo = queryCargoById(cargoId, getCookie("warehourseid"));
     if (cargo == null) {
         //提示处理
+        alert("货品不存在");
         return;
     }
-    cargoList.push(cargo);
-    console.log(cargo);
-    console.log(cargoId);
+    tempcargo = cargo;
     document.getElementById('cargo-name').value = cargo.name;
     document.getElementById('cargo-retail-price').value = cargo.retailprice;
 });
 
 //添加按钮,点击将货品添加至订单表格中
 $('#add-btn').click(function () {
-    var cargo = cargoList[cargoList.length - 1];
+    var cargo = tempcargo;
+    cargoList.push(cargo);
     if (document.getElementById('cargo-num').value == "") {
         //提示处理
         alert("请设置数量");
@@ -57,13 +56,12 @@ $('#add-btn').click(function () {
     tr.appendChild(td3);
     tr.appendChild(td4);
     editTable.appendChild(tr);
-    updateTotalPrice(); //Update total price
+    updateHistoryTotalPrice(); //Update total price
 });
 
 //更新总价格
-function updateTotalPrice() {
+function updateHistoryTotalPrice() {
     var totalPrice = 0;
-    console.log(cargoList);
     for(var i = 0; i < cargoList.length; i++) {
         totalPrice += parseFloat(cargoList[i].retailprice) * cargoNum[i];
     }
@@ -75,20 +73,21 @@ $("#actual-recive").blur(function () {
     var totalPrice = parseFloat(document.getElementById('total-price').value);
     var actualPrice = parseFloat(document.getElementById('actual-recive').value);
     var change = actualPrice - totalPrice;
+    if (change < 0) {
+        alert("实收价格不得低于总价");
+        return;
+    }
     document.getElementById('change').value = change;
 });
 
 //客户名称
 $("#client-id").blur(function () {
-    var clientId = $("#client-id").val();
-    console.log("pos client id : ", clientId);
-    var client = queryClientById(clientId);
+    var client = queryClientById($("#client-id").val());
     if (client == null) {
         //提示处理
         alert("客户不存在");
         return;
     }
-    console.log("pos client id : " ,clientId);
     document.getElementById('client-name').value = client.name;
 });
 
@@ -105,13 +104,9 @@ $('#submit-btn').click(function() {
     //订单基本信息
     var s_clientid = $('#client-id').val();
     var s_clientname = $('#client-name').val();
-    var s_warehourseid = getCookie("warehourseid"); //仓库id
-    var s_principalid = getCookie("principalid");
-    var s_principalname = getCookie("principalname");
     var s_sumprice = $('#total-price').val();
     var s_gather = $("#actual-recive").val();
     var s_change = $('#change').val();
-    //var s_margin = calculateMargin(cargoList, cargoNum, 1); //利润
     var s_type = 1; //retail
     var s_status = 5;
     orderTempL = [];
@@ -120,10 +115,10 @@ $('#submit-btn').click(function() {
         c = {
             clientid : s_clientid,
             clientname : s_clientname,
-            tablename : s_warehourseid,
+            tablename : getCookie("warehourseid"),
             warehoursename : getCookie("warehoursename"),
-            principalid : s_principalid,
-            principalname : s_principalname,
+            principalid : getCookie("principalid"),
+            principalname : getCookie("principalname"),
             ordersumprice : s_sumprice,
             gather : s_gather,
             change : s_change,
@@ -140,19 +135,14 @@ $('#submit-btn').click(function() {
     }
     //调用insert
     insertOrder(orderTempL);
-
-    //清空内容
-    document.getElementById('client-id').value = "";
-    document.getElementById('client-name').value = "";
-    document.getElementById('cargo-id').value = "";
-    document.getElementById('cargo-name').value = "";
-    document.getElementById('cargo-retail-price').value = "";
-    document.getElementById('cargo-num').value = "";
-    document.getElementById('temp-cargo-list').innerHTML = "";
+    clearPosTerminal();
 });
 
 $('#clear-btn').click(function() {
-    //清空内容
+    clearPosTerminal();
+});
+
+function clearPosTerminal() {
     document.getElementById('client-id').value = "";
     document.getElementById('client-name').value = "";
     document.getElementById('cargo-id').value = "";
@@ -165,8 +155,7 @@ $('#clear-btn').click(function() {
     $("#actual-recive").val("");
     $('#change').val("");
 
-    document.getElementById("temp-cargo-list").innerHTML = "";
-
     cargoList = [];
     cargoNum = [];
-});
+    tempcargo = null;
+}
