@@ -232,7 +232,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		// 更新库存
 		for (WarehourseDetail warehourseDetail : detailList) 
 		{
-			detailService.updateByPrimaryKeySelective(warehourseDetail);
+			detailService.updateByPrimaryKey(warehourseDetail);
 		}
 		return "true";
 	}
@@ -248,6 +248,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 	@Override
 	public void returnOrder(ReceiveOrder order) 
 	{
+		order.fillTablename();
 		SaleorderItem exampleItem = order.toItem();
 		List<SaleorderItem> itemList = itemService.select(exampleItem);
 		
@@ -279,7 +280,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		// 更新库存
 		for (WarehourseDetail warehourseDetail : detailList) 
 		{
-			detailService.updateByPrimaryKeySelective(warehourseDetail);
+			detailService.updateByPrimaryKey(warehourseDetail);
 		}
 	}
 	
