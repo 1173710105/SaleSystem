@@ -291,7 +291,7 @@ $(document).on('click', '#temp-delete-btn', function () {
 //订单退货
 $('#ack-return-btn').click(function () {
     returnOrder({
-        viceid : id,
+        orderid : $('#return-order-id').val(),
         warehourseid : getCookie("warehourseid"),
         principalid : getCookie("principalid"),
         note : $('#return-note').val(),
