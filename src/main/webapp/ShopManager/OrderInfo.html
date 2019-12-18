@@ -51,7 +51,8 @@
                         <div class="col-md-2">
                             <caption>订单类型</caption>
                             <select class="form-control input-sm" readonly="readonly" id="order-type">
-                                <option>批发</option>
+                                <option value="1">零售</option>
+                                <option value="2">批发</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -332,54 +333,7 @@
                         </tr>
                     </thead>
                     <tbody id="order-tbody">
-                        <tr>
-                            <td>1</td>
-                            <td>零售</td>
-                            <td>张三</td>
-                            <td>30</td>
-                            <td>未审核</td>
-                            <td>未付款</td>
-                            <td>李店章</td>
-                            <td>1号仓</td>
-                            <td>2019-11-20 15:53</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary" id="check_btn">审核</button>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#orderModifyModal">编辑</button>
-                                <button type="button" class="btn btn-sm btn-danger" id="delete_btn">删除</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>零售</td>
-                            <td>张三</td>
-                            <td>30</td>
-                            <td>已审核</td>
-                            <td>未付款</td>
-                            <td>李店章</td>
-                            <td>1号仓</td>
-                            <td>2019-11-20 15:53</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary" id="detail-btn">详情</button>
-                                <button type="button" class="btn btn-sm btn-primary" id="pay-btn">付款</button>
-                                <button type="button" class="btn btn-sm btn-danger" id="return-btn">退货</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>零售</td>
-                            <td>张三</td>
-                            <td>30</td>
-                            <td>已退货</td>
-                            <td>已付款</td>
-                            <td>李店章</td>
-                            <td>1号仓</td>
-                            <td>2019-11-20 15:53</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#orderReturnDetailModal">详情</button>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>

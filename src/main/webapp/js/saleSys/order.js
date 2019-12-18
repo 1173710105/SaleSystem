@@ -40,6 +40,7 @@ function sendOrderJsonAjax(url, param) {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
+            	console.log("Receive JSON order : ", data);
                 tempdata = data;
             }
         },
@@ -57,6 +58,7 @@ function queryOrder(order) {
     param = buildOrderParam(order);
     url = "/order/query";
     console.log("QueryOrder : " + param);
+    $.ajaxSettings.async = false;
     return sendOrderJsonAjax(url, param);
 }
 
@@ -109,6 +111,7 @@ function insertOrder(orderL) {
     param += (jsonList[jsonList.length-1] + ']');
     url = "/order/insert";
     console.log("InsertOrder : " + param);
+    $.ajaxSettings.async = false;
     return sendOrderJsonAjax(url, param);
 }
 
@@ -123,6 +126,7 @@ function updateOrder(order) {
     param = buildOrderParamList(order);
     console.log("UpdataOrder : " + param);
     url = "/order/update";
+    $.ajaxSettings.async = false;
     return sendOrderJsonAjax(url, param);
 }
 
@@ -135,6 +139,7 @@ function deleteOrder(id) {
         '{"viceid":"' + id.toString() + '"}';
     console.log("DeleteOrder : " + param);
     url = "/order/delete";
+    $.ajaxSettings.async = false;
     return sendOrderJsonAjax(url, param);
 }
 
@@ -144,9 +149,10 @@ function checkOrder(id) {
         return;
     }
     param =
-        '{"viceid":"' + id.toString() + '"}';
+        '{"orderid":"' + id.toString() + '"}';
     url = "/order/check";
     console.log("CheckOrder : " + param);
+    $.ajaxSettings.async = false;
     return sendOrderJsonAjax(url, param);
 }
 
@@ -158,6 +164,7 @@ function payOrder(order) {
     param = buildOrderParam(order);
     url = "/order/pay";
     console.log("PayOrder : " + param);
+    $.ajaxSettings.async = false;
     return sendOrderJsonAjax(url, param);
 }
 
@@ -169,6 +176,7 @@ function returnOrder(order) {
     param = buildOrderParam(order);
     url = "/order/return";
     console.log("ReturnOrder : " + param);
+    $.ajaxSettings.async = false;
     return sendOrderJsonAjax(url, param);
 }
 
@@ -178,7 +186,7 @@ function buildOrderParam(order) {
         '{'
         + '"orderid":"' + combineOrder.orderid + '",'
         + '"viceid":"' + combineOrder.viceid + '",'
-        + '"warehorseid":"' + combineOrder.warehorseid + '",'
+        + '"warehourseid":"' + combineOrder.warehourseid + '",'
         + '"clientid":"' + combineOrder.clientid + '",'
         + '"principalid":"' + combineOrder.principalid + '",'
         + '"itemid":"' + combineOrder.itemid + '",'

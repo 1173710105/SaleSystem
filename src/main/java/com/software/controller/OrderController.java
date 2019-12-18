@@ -26,7 +26,11 @@ public class OrderController
 	@RequestMapping("/query")
 	public List<SendOrder> queryOrder(@RequestBody ReceiveOrder param)
 	{
+		System.out.println(param.getClientid());
 		List<SendOrder> result = service.select(param);
+		for(SendOrder s:result){
+			System.out.println(s.toString());
+		}
 		return result;//返回查找结果
 	}
 	

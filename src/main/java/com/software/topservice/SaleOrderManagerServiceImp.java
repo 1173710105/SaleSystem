@@ -38,6 +38,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		order.fillTablename();
 		List<SendOrder> result = new ArrayList<SendOrder>();
 		SaleorderCommon exampleCommon = order.toCommon();
+		System.out.println("exampleId:"+exampleCommon.getId());
 		//查取符合条件的订单
 		List<SaleorderCommon> commonList = commonService.select(exampleCommon);
 		SendOrder orderTemp;
@@ -48,6 +49,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 			orderTemp.initByCommon(saleorderCommon);
 			// 获取该订单对应的物品
 			exampleItem.setTablename(order.getItemtablename());
+			System.out.println(saleorderCommon.getId());
 			exampleItem.setId(saleorderCommon.getId());
 			orderTemp.setItems(itemService.select(exampleItem));
 			result.add(orderTemp);

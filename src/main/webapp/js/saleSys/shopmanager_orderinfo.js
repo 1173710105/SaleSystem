@@ -22,29 +22,9 @@ function loadOrderList(ol) {
         var td3 = document.createElement("td");
         td3.innerHTML = ol[i].sumprice;
         var td4 = document.createElement("td");
-        td4.innerHTML = 
-        (function() {
-            var cs = status2checkstatus(ol[i].status.toString());
-            if(cs == 0) {
-                return "未审核";
-            } else if(cs == 1) {
-                return "审核中";
-            } else if(cs == 2) {
-                return "已审核";
-            } else if(cs == 3) {
-                return  "已退货";
-            }
-        });
+        td4.innerHTML = getCheckStatus(ol[i]);
         var td5 = document.createElement("td");
-        td5.innerHTML = 
-        (function() {
-            var ps = status2paystatus(ol[i].status.toString());
-            if(ps == 0) {
-                return "未付款";
-            } else if(ps == 1) {
-                return "已付款";
-            } 
-        });
+        td5.innerHTML = getPayStatus(ol[i]);
         var td6 = document.createElement("td");
         td6.innerHTML = ol[i].margin;
         var td7 = document.createElement("td");
@@ -176,31 +156,37 @@ function loadMadal(ol) {
     $('#principal-name').val(common.get("principalname"));
 
     if(status != "1") {
-        $('#temp-add-btn').setAttribute("style","display:none;");
+        //$('#temp-add-btn').setAttribute("style","display:none;");
+    	document.getElementById('temp-add-btn').setAttribute("style","display:none;");
+//    	$('.modal-foot')[0].style.display = "";
+//        $('.save-btn')[0].style.display = "";
     } else {
-        $('#temp-add-btn').setAttribute("style","display:block;");
+    	document.getElementById('#temp-add-btn').setAttribute("style","display:block;");
+//        $('.modal-foot')[0].style.display = "none";
+//        $('.save-btn')[0].style.display = "none";
     }
 
     var editTable = document.getElementById("temp-cargo-tbody");
-    for (cargo in ol) {
+    
+    for (key in ol) {
         var tr = document.createElement("tr");
         tr.setAttribute("id", "temp-tr");
-        tr.setAttribute("cid", ol[i].get("itemid"));
+        tr.setAttribute("cid", ol[key].get("itemid"));
         var td0 = document.createElement("td");
-        td0.innerHTML = ol[i].get("itemname");
+        td0.innerHTML = ol[key].get("itemname");
         var td1 = document.createElement("td");
-        td1.innerHTML = ol[i].get("itemid");
+        td1.innerHTML = ol[key].get("itemid");
         var td2 = document.createElement("td");
-        td2.innerHTML = ol[i].get("itemnum");
+        td2.innerHTML = ol[key].get("itemnum");
         var td3 = document.createElement("td");
-        td3.innerHTML = ol[i].get("perprice");
+        td3.innerHTML = ol[key].get("perprice");
         var td4 = document.createElement("td");
-        td4.innerHTML = ol[i].get("sumprice");
+        td4.innerHTML = ol[key].get("sumprice");
         var td5 = document.createElement("td");
         var deleButton = document.createElement("button");
         deleButton.type = "button";
         deleButton.id = "temp-delete-btn";
-        deleButton.setAttribute("value", ol[i].get("itemid")); //将货品id封装在value中
+        deleButton.setAttribute("value", ol[key].get("itemid")); //将货品id封装在value中
         deleButton.className = "btn btn-sm btn-danger";
         deleButton.innerHTML = "删除";
         td5.appendChild(deleButton);
@@ -329,7 +315,7 @@ $(document).on('click', '#edit-btn', function () {
 });
 
 //弹出订单付款
-$('#pay-btn').click(function () {
+$(document).on('click', '#pay-btn', function () {
     $('#orderPayModal').modal('show');
     var orderid = $(this).val();
     var order = tempOrderMap.get(orderid);
@@ -361,7 +347,7 @@ $('#pay-btn').click(function () {
 });
 
 //弹出订单退货
-$('#return-btn').click(function () {
+$(document).on('click', '#return-btn', function () {
     var orderid = $(this).val();
     $('#saleReturnModal').modal('show');
     $('#return-order-id').val(tempOrderMap.get(orderid)[0].get("viceid"));
@@ -508,11 +494,11 @@ $(document).on('click', '#temp-tr', function () {
     } else {
         order = tempOrderMap.get($('#order-id').val());
     }
-    for (so in order) {
-        if (so.get("itemid") == itemid) {
-            showCargo(so);
-            break;
-        }
+    for(var i = 0; i < order.length; i++) {
+    	if(order[i].get("itemid").toString() == itemid) {
+    		showCargo(order[i]);
+    		break;
+    	}
     }
 });
 
@@ -537,6 +523,11 @@ $("#search-check-status").change(function () {
         $("#search-pay").val("任意");
         $('#search-pay option')[1].style.display = "";
         $('#search-pay option')[2].style.display = "";
+    } else if ($(this).val() == "任意") {
+    	$('#search-pay option')[0].style.display = "";
+        $("#search-pay").val("任意");
+        $('#search-pay option')[1].style.display = "";
+        $('#search-pay option')[2].style.display = "";
     }
 });
 
@@ -549,11 +540,13 @@ function cleanOrderList() {
 //刷新表格
 function refreshOrderList() {
     cleanOrderList();
-    var staff = queryStaff({
-        id : $("#search-principal-id").val(),
-        hourseid : getCookie("warehourseid"),
-        hoursename : getCookie("warehoursename")
-    })[0];
+    var staff;
+    if($("#search-principal-id").val() == "") {
+    	staff = {
+    		id : '',
+    		name : ''
+    	}
+    }
     var pays = $('#search-pay').val();
     var checks = $('#search-check-status').val();
     var sstatus = [];
@@ -588,23 +581,42 @@ function refreshOrderList() {
         sstatus.push("7");
     }
     var queryList = [];
-    for (s in sstatus) {
-        queryList.concat(queryOrder(
-            {
-                viceid: $('#search-order-id').val(),
+    console.log("sstatus : ", sstatus);
+    if(sstatus[0] == "") {
+    	queryList = queryOrder({
+    		orderid: $('#search-order-id').val(),
                 clientid: $('#search-client-id').val(),
                 warehourseid: getCookie("warehourseid"),
                 warehoursename: getCookie("warehoursename"),
-                principalid: staff.id,
-                principalname: staff.name,
+                principalid: $("#search-principal-id").val(),
+                principalname: '',
                 type : $('#search-cargo-type').val(),
-                status : s
-            }
-        ));
+                status : ''
+    	});
+    } else {
+		    	for (var i =0; i < sstatus.length; i++) {
+		    		var t = queryOrder({
+						orderid : $('#search-order-id').val(),
+						clientid : $('#search-client-id').val(),
+						warehourseid : getCookie("warehourseid"),
+						warehoursename : getCookie("warehoursename"),
+						principalid : $("#search-principal-id").val(),
+						principalname : '',
+						type : $('#search-cargo-type').val(),
+						status : sstatus[i]
+					});
+		    		for(var j = 0; j < t.length; j++) {
+		    			if(t[j] == null) continue;
+		    			queryList.push(t[j]);
+		    		}
+		}
     }
+    console.log("Build queryList : ", queryList);
     for (var i = 0; i < queryList.length; i++) {
-        tempWareOrderMap.set(queryList[i].id.toString(), object2map(queryList[i]));
+        tempOrderMap.set(queryList[i].id.toString(), object2map(queryList[i]));
     }
+    console.log("Build temporder Map : ", tempOrderMap);
+    
     loadOrderList(queryList);
 }
 
@@ -612,6 +624,7 @@ function showCargo(suborder) {
     $('#cargo-name').val(suborder.get("itemname"));
     $('#cargo-id').val(suborder.get("itemid"));
     $('#cargo-num').val(suborder.get("itemnum"));
+    $('#cargo-wholesale-price').val(suborder.get("perprice"));
     $('#cargo-purchase-price').val(suborder.get("perprice"));
     $('#cargo-total-price').val(suborder.get("sumprice"));
 }
@@ -642,9 +655,9 @@ function object2map(order) {
         m.set("exception", order.exception);
         m.set("itemid", order.items[i].itemid);
         m.set("itemname", order.items[i].itemname);
-        m.set("itemnum", order, items[i].itemnum);
-        m.set("perprice", order, items[i].perprice);
-        m.set("sumprice", order, items[i].sumprice);
+        m.set("itemnum", order.items[i].itemnum);
+        m.set("perprice", order.items[i].perprice);
+        m.set("sumprice", order.items[i].sumprice);
         l.push(m);
     }
     return l;
@@ -655,3 +668,25 @@ $('body').on('hidden.bs.modal', '.modal', function () {
     // $(this).removeData('bs.modal');
     window.location.reload();
 });
+
+function getCheckStatus(order) {
+    var cs = status2checkstatus(order.status.toString());
+    if(cs == 0) {
+        return "未审核";
+    } else if(cs == 1) {
+        return "审核中";
+    } else if(cs == 2) {
+        return "已审核";
+    } else if(cs == 3) {
+        return  "已退货";
+    }
+};
+
+function getPayStatus(order) {
+    var ps = status2paystatus(order.status.toString());
+    if(ps == 0) {
+        return "未付款";
+    } else if(ps == 1) {
+        return "已付款";
+    } 
+};
