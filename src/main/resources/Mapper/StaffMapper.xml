@@ -63,6 +63,7 @@
     delete from ${tablename}
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
+  
   <insert id="insert" parameterType="com.software.domain.Staff">
     insert into ${tablename} (ID, password, hourseID, 
       hourseName, name, gender, 

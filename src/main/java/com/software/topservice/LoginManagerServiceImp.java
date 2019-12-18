@@ -120,11 +120,18 @@ public class LoginManagerServiceImp implements LoginManagerService
 		exampleStaff.setLabel("valid");
 		String hourseid = id.substring(1, 5);
 		exampleStaff.setTablename("sub_staff_"+hourseid);
-		System.out.println("sub_staff_"+hourseid);
 		Staff validStaff = null;
 		try 
 		{
-			validStaff = staffService.selectByPrimaryKey(exampleStaff);
+			List<Staff> list = staffService.select(exampleStaff);
+			if(list.size()==0)
+			{
+				return null;
+			}
+			else
+			{
+				validStaff = list.get(0);
+			}
 		} 
 		catch (Exception e) 
 		{
@@ -141,6 +148,7 @@ public class LoginManagerServiceImp implements LoginManagerService
 		}
 		else
 		{
+			
 			result.setLabel("valid");
 			result.setWarehourseid(Integer.valueOf(hourseid));
 			SubBranchDetailMap temp = getAuthority(result);
@@ -163,9 +171,8 @@ public class LoginManagerServiceImp implements LoginManagerService
 	private SubBranchDetailMap getAuthority(SubBranchDetailMap exampleBranch)
 	{
 		List<SubBranchDetailMap> branches = branchService.select(exampleBranch);
-		if (branches.isEmpty()||branches.size()>1) 
+		if (branches.isEmpty()) 
 		{
-			System.out.println("逻辑错误，出现了多对一或者一对多");
 			return null;
 		}
 		else
