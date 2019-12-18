@@ -156,4 +156,13 @@ public class WarehourseOrderCommon {
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
     }
+
+	@Override
+	public String toString() {
+		return "WarehourseOrderCommon [id=" + id + ", sourceid=" + sourceid + ", sourcename=" + sourcename
+				+ ", targetid=" + targetid + ", targetname=" + targetname + ", principalid=" + principalid
+				+ ", principalname=" + principalname + ", type=" + type + ", sumprice=" + sumprice + ", createtime="
+				+ createtime + ", checktime=" + checktime + ", status=" + status + "]";
+	}
+    
 }

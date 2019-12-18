@@ -1,5 +1,7 @@
 package com.software.trans;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import com.software.domain.WarehourseOrderCommon;
 import com.software.domain.WarehourseOrderItem;
 
@@ -259,32 +261,53 @@ public class ReceiveWarehourseOrder
 
 
 
-	public WarehourseOrderCommon toWarehourseOrderCommon(){
+	public WarehourseOrderCommon toWarehourseOrderCommon()
+	{
 		WarehourseOrderCommon common = new WarehourseOrderCommon();
-		common.setId(Integer.valueOf(this.getId()));
-		common.setSourceid(Integer.valueOf(this.getSourceid()));
-		common.setSourcename(this.getSourcename());
-		common.setTargetid(Integer.valueOf(this.getTargetid()));
-		common.setTargetname(this.getTargetname());
-		common.setPrincipalid(this.getPrincipalid());
-		common.setPrincipalname(this.getPrincipalname());
-		common.setType(this.getType());
-		common.setSumprice(Float.valueOf(this.getOrdersumprice()));
-		common.setCreatetime(this.getCreatetime());
-		common.setChecktime(this.getChecktime());
-		common.setStatus(this.getStatus());
+		if (this.id!=null&&!this.id.equals("")) 
+		{
+			common.setId(Integer.valueOf(this.id));
+		}
+		common.setSourceid(Integer.valueOf(this.sourceid));
+		common.setSourcename(this.sourcename);
+		common.setTargetid(Integer.valueOf(this.targetid));
+		common.setTargetname(this.targetname);
+		common.setPrincipalid(this.principalid);
+		common.setPrincipalname(this.principalname);
+		common.setType(this.type);
+		common.setSumprice(Float.valueOf(this.ordersumprice));
+		common.setCreatetime(this.createtime);
+		common.setChecktime(this.checktime);
+		common.setStatus(this.status);
 		return common;
 	}
 	
-	public WarehourseOrderItem toWarehourseOrderItem(){
+	public WarehourseOrderItem toWarehourseOrderItem()
+	{
 		WarehourseOrderItem item = new WarehourseOrderItem();
-		item.setId(this.getId());
-		item.setViceid(Integer.valueOf(this.getViceid()));
-		item.setItemid(Integer.valueOf(this.getItemid()));
-		item.setItemname(this.getItemname());
-		item.setItemnum(Integer.valueOf(this.getItemnum()));
-		item.setPerprice(Float.valueOf(this.getPerprice()));
-		item.setSumprice(Float.valueOf(this.getSumprice()));
+		item.setId(this.id);
+		if (this.viceid!=null&&!this.viceid.equals("")) 
+		{
+			item.setViceid(Integer.valueOf(this.viceid));
+		}
+		if (this.itemid!=null&&!this.itemid.equals("")) 
+		{
+			item.setItemid(Integer.valueOf(this.itemid));
+		}
+		item.setItemname(this.itemname);
+		if(this.itemnum!=null&&!this.itemnum.equals(""))
+		{
+			item.setItemnum(Integer.valueOf(this.itemnum));
+		}
+		if (this.perprice!=null&&!this.perprice.equals("")) 
+		{
+			item.setPerprice(Float.valueOf(this.perprice));
+		}
+		
+		if (this.sumprice!=null&&!this.sumprice.equals("")) 
+		{
+			item.setSumprice(Float.valueOf(this.sumprice));
+		}
 		return item;
 	}
 }
