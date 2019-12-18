@@ -62,6 +62,7 @@
     from ${tablename}
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  
   <select id="select" parameterType="com.software.domain.SaleorderCommon" resultMap="BaseResultMap">
 		select *
 		from ${tablename}

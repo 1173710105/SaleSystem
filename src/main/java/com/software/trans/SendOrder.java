@@ -210,7 +210,7 @@ public class SendOrder
     	this.id = common.getId();
     	this.warehourseid = common.getWarehourseid();
     	this.warehoursename = common.getWarehoursename();
-    	this.clientid = common.getId();
+    	this.clientid = common.getClientid();
     	this.clientname = common.getClientname();
     	this.principalid = common.getPrincipalid();
     	this.principalname = common.getPrincipalname();
@@ -228,4 +228,16 @@ public class SendOrder
     	this.note = common.getNote();
     	this.exception = common.getException();
     }
+
+	@Override
+	public String toString() {
+		return "SendOrder [id=" + id + ", warehourseid=" + warehourseid + ", warehoursename=" + warehoursename
+				+ ", clientid=" + clientid + ", clientname=" + clientname + ", principalid=" + principalid
+				+ ", principalname=" + principalname + ", createtime=" + createtime + ", checktime=" + checktime
+				+ ", gathertime=" + gathertime + ", returntime=" + returntime + ", postime=" + postime + ", status="
+				+ status + ", sumprice=" + sumprice + ", gather=" + gather + ", change=" + change + ", margin=" + margin
+				+ ", type=" + type + ", note=" + note + ", exception=" + exception + ", items=" + items + "]";
+	}
+	
+	
 }

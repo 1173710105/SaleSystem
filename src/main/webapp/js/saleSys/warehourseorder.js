@@ -1,49 +1,58 @@
 //进货出货单操作
 
-defaultSetting = {
+defaultWareHourseOrderSetting = {
     id : '',  //仓库单id
     sourceid : '',
+    sourcename : '',
     targetid : '',
-    senderprincipalid : '',
-    receiverprincipalid : '',
-    sourcetype : '',
-    targettype : '',
-    sumprice : '',
-    pricetype : '',
+    targetname : '',
+    principalid : '',
+    principalname : '',
+    type : '',
+    createtime : '',
+    checktime : '',
     status : '',
+    ordersumprice : '',
+
     itemid : '',
     itemnum : '',
+    itemname : '',
     perprice : '',
-    sumprice : '',
-    pricetype : ''
+    sumprice : ''
 }
 
-function sendJsonAjax(url, param) {
+function sendWOrderJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
+            console.log("Receive Worder JSON : ", data);
             if (data != null) {
-                return data;
+               tempdata = data;
             }
-            return null;
         },
         error: function () {
         }
     });
+    return tempdata;
 }
 
 //通过id搜索仓库单
-function queryWarehourseOrderById(id) {
-    if (id == "") {
+function queryWarehourseOrderById(tid) {
+    if (tid == "") {
         return;
     }
-    param = '{"id":"' + id + '"}';
+    worder = {
+        id : tid
+    }
+    param = buildWorderParam(worder);
     url = "/warehourseOrder/queryById";
-    sendJsonAjax(url, param);
+    console.log("QueryWoederById : ", param);
+    sendWOrderJsonAjax(url, param);
 }
 
 //过滤条件搜索,结果为list
@@ -51,26 +60,10 @@ function queryWarehourseOrder(worder) {
     if (worder == null) {
         return;
     }
-    combineWorder = $.extend({}, defaultSetting, worder);
-    param = 
-        '{'
-        + '"id":"' + combineWorder.id + '",'
-        + '"sourceid":"' + combineWorder.sourceid + '",'
-        + '"targetid":"' + combineWorder.targetid + '",'
-        + '"senderprincipalid":"' + combineWorder.senderprincipalid + '",'
-        + '"receiverprincipalid":"' + combineWorder.receiverprincipalid + '",'
-        + '"sourcetype":"' + combineWorder.sourcetype + '",'
-        + '"targettype":"' + combineWorder.targettype + '",'
-        + '"sumprice":"' + combineWorder.sumprice + '",'
-        + '"pricetype":"' + combineWorder.pricetype + '",'
-        + '"status":"' + combineWorder.status+ '",'
-        + '"itemid":"' + combineWorder.itemid + '",'
-        + '"itemnum":"' + combineWorder.itemnum + '",'
-        + '"perprice":"' + combineWorder.perprice + '",'
-        + '"sumprice":"' + combineWorder.sumprice + '"}';
+    param = buildWorderParam(worder);
     url = "/warehourseOrder/query";
-    console.log("query warehourseorder: " + param);
-    return sendJsonAjax(url, param);
+    console.log("Query Worder : ", param);
+    return sendWOrderJsonAjax(url, param);
 }
 
 //插入仓库单
@@ -78,35 +71,10 @@ function insertWarehourseOrder(worder) {
     if (worder == null) {
         return;
     }
-    jsonList = [];
-    for (var i = 0 ; i < worder.length; i++) {
-        combineWorder = $.extend({}, defaultSetting, worder[i]);
-        param = 
-        '{'
-        + '"id":"' + combineWorder.id + '",'
-        + '"sourceid":"' + combineWorder.sourceid + '",'
-        + '"targetid":"' + combineWorder.targetid + '",'
-        + '"senderprincipalid":"' + combineWorder.senderprincipalid + '",'
-        + '"receiverprincipalid":"' + combineWorder.receiverprincipalid + '",'
-        + '"sourcetype":"' + combineWorder.sourcetype + '",'
-        + '"targettype":"' + combineWorder.targettype + '",'
-        + '"sumprice":"' + combineWorder.sumprice + '",'
-        + '"pricetype":"' + combineWorder.pricetype + '",'
-        + '"status":"' + combineWorder.status+ '",'
-        + '"itemid":"' + combineWorder.itemid + '",'
-        + '"itemnum":"' + combineWorder.itemnum + '",'
-        + '"perprice":"' + combineWorder.perprice + '",'
-        + '"sumprice":"' + combineWorder.sumprice + '"}';
-        jsonList.push(param);
-    }
-    param = '[';
-    for (var i = 0 ; i < jsonList.length-1; i++) {
-        param += (jsonList[i] + ',');
-    }
-    param += (jsonList[jsonList.length-1] + ']');
+    param = buildParamList(worder);
     url = "/warehourseOrder/insert";
-    console.log("insert new warehourseorder: " + param);
-    return sendJsonAjax(url, param);
+    console.log("Insert Worder : ", param);
+    return sendWOrderJsonAjax(url, param);
 }
 
 
@@ -115,63 +83,94 @@ function updateWarehourseOrder(worder) {
     if (worder == null) {
         return;
     }
-    jsonList = [];
-    for (var i = 0 ; i < worder.length; i++) {
-        combineWorder = $.extend({}, defaultSetting, worder[i]);
-        param = 
+    param = buildWorderParamList(worder);
+    url = "/warehourseOrder/update";
+    console.log("Update Worder : ", param);
+    return sendWOrderJsonAjax(url, param);
+}
+
+//删除仓库单
+function deleteWarehourseOrder(tid) {
+    if(tid == "") {
+        return;
+    }
+    param = buildWorderParam({id:tid})
+    url = "/warehourseOrder/delete";
+    console.log("Delete Worder : ", param);
+    return sendWOrderJsonAjax(url, param);
+}
+
+//将仓库单设置为审核中状态
+function applyWarehourseOrder(tid) {
+    if(tid == "") {
+        return;
+    }
+    param = buildWorderParam({id:tid});
+    url = "/warehourseOrder/apply";
+    console.log("Apply Worder : ", param);
+    return sendWOrderJsonAjax(url, param);
+}
+
+//将仓库单设置为通过状态
+function passWarehourseOrder(tid) {
+    if(tid == "") {
+        return;
+    }
+    param = buildWorderParam({id:tid});
+    url = "/warehourseOrder/pass";
+    console.log("Passs Worder : ", param);
+    return sendWOrderJsonAjax(url, param);
+}
+
+function buildWorderParam(worder) {
+    combineWorder = $.extend({}, defaultWareHourseOrderSetting, worder);
+    param = 
         '{'
         + '"id":"' + combineWorder.id + '",'
         + '"sourceid":"' + combineWorder.sourceid + '",'
+        + '"sourcename":"' + combineWorder.sourcename + '",'
         + '"targetid":"' + combineWorder.targetid + '",'
-        + '"senderprincipalid":"' + combineWorder.senderprincipalid + '",'
-        + '"receiverprincipalid":"' + combineWorder.receiverprincipalid + '",'
-        + '"sourcetype":"' + combineWorder.sourcetype + '",'
-        + '"targettype":"' + combineWorder.targettype + '",'
-        + '"sumprice":"' + combineWorder.sumprice + '",'
-        + '"pricetype":"' + combineWorder.pricetype + '",'
+        + '"targetname":"' + combineWorder.targetname + '",'
+        + '"principalid":"' + combineWorder.principalid + '",'
+        + '"principalname":"' + combineWorder.principalname + '",'
+        + '"type":"' + combineWorder.type + '",'
+        + '"createtime":"' + combineWorder.createtime + '",'
+        + '"checktime":"' + combineWorder.checktime + '",'
+        + '"ordersumprice":"' + combineWorder.ordersumprice + '",'
         + '"status":"' + combineWorder.status+ '",'
         + '"itemid":"' + combineWorder.itemid + '",'
+        + '"itemname":"' + combineWorder.itemname + '",'
         + '"itemnum":"' + combineWorder.itemnum + '",'
         + '"perprice":"' + combineWorder.perprice + '",'
         + '"sumprice":"' + combineWorder.sumprice + '"}';
-        jsonList.push(param);
+    return param;
+}
+
+function buildWorderParamList(worderL) {
+    jsonList = [];
+    for (var i = 0 ; i < worderL.length; i++) {
+        jsonList.push(buildWorderParam(worderL[i]));
     }
     param = '[';
     for (var i = 0 ; i < jsonList.length-1; i++) {
         param += (jsonList[i] + ',');
     }
     param += (jsonList[jsonList.length-1] + ']');
-    url = "/warehourseOrder/update";
-    console.log("update warehourseorder: " + param);
-    return sendJsonAjax(url, param);
+    return param;
 }
 
-//删除仓库单
-function deleteWarehourseOrder(id) {
-    if(id == "") {
-        return;
+/**
+ * 将状态码转换为审核状态
+ * @param {String} status
+ * @returns Int 0 为未审核，1为审核中，2为审核通过
+ */
+function status2checkstatus(status) {
+    if(status == "1") {
+        return 0;
+    } else if(status == "2") {
+        return 1;
+    } else if(status == "4") {
+        return 2;
     }
-    param = '{"id":"' + id + '"}';
-    url = "/warehourseOrder/delete";
-    return sendJsonAjax(url, param);
-}
-
-//将仓库单设置为审核中状态
-function applyWarehourseOrder(id) {
-    if(id == "") {
-        return;
-    }
-    param = '{"id":"' + id + '"}';
-    url = "/warehourseOrder/apply";
-    return sendJsonAjax(url, param);
-}
-
-//将仓库单设置为通过状态
-function passWarehourseOrder(id) {
-    if(id == "") {
-        return;
-    }
-    param = '{"id":"' + id + '"}';
-    url = "/warehourseOrder/pass";
-    return sendJsonAjax(url, param);
+    return -1;
 }

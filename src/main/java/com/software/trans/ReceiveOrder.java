@@ -229,11 +229,23 @@ public class ReceiveOrder
 		common.setTablename(this.commontablename);
 		if (!this.orderid.equals("")) 
 		{
-			common.setId(Integer.valueOf(this.orderid));
+			if (Integer.valueOf(this.orderid)==0) {
+				common.setId(-1);
+			}else{
+				common.setId(Integer.valueOf(this.orderid));
+			}
 		}
 		common.setWarehourseid(Integer.valueOf(this.warehourseid));
 		common.setWarehoursename(this.warehoursename);
-		common.setClientid(Integer.valueOf(this.clientid));
+		if (!this.clientid.equals("")) 
+		{
+			System.out.println("i am here");
+			if (Integer.valueOf(this.clientid)==0) {
+				common.setClientid(-1);
+			}else{
+				common.setClientid(Integer.valueOf(this.clientid));
+			}
+		}
 		common.setClientname(this.clientname);
 		common.setPrincipalid(this.principalid);
 		common.setPrincipalname(this.principalname);
@@ -242,10 +254,22 @@ public class ReceiveOrder
 		common.setGathertime(this.checktime);
 		common.setReturntime(this.returntime);
 		common.setPostime(this.postime);
-		common.setStatus(Integer.valueOf(this.status));
-		common.setSumprice(Float.valueOf(this.ordersumprice));
-		common.setGather(Float.valueOf(this.gather));
-		common.setChange(Float.valueOf(this.change));
+		if (!this.status.equals("")) 
+		{
+			common.setStatus(Integer.valueOf(this.status));
+		}
+		if (!this.sumprice.equals("")) 
+		{
+			common.setSumprice(Float.valueOf(this.ordersumprice));
+		}
+		if (!this.gather.equals("")) 
+		{
+			common.setGather(Float.valueOf(this.gather));
+		}
+		if (!this.change.equals("")) 
+		{
+			common.setChange(Float.valueOf(this.change));
+		}
 		if (!this.margin.equals("")) 
 		{
 			common.setMargin(Float.valueOf(this.margin));
@@ -253,6 +277,7 @@ public class ReceiveOrder
 		common.setType(this.type);
 		common.setNote(this.note);
 		common.setException(this.exception);
+		System.out.println(common);
 		return common;
 	}
 	
@@ -268,11 +293,23 @@ public class ReceiveOrder
 		{
 			item.setViceid(Integer.valueOf(this.viceid));
 		}
-		item.setItemid(Integer.valueOf(this.itemid));
+		if (!this.itemid.equals("")) 
+		{
+			item.setItemid(Integer.valueOf(this.itemid));
+		}
 		item.setItemname(this.itemname);
-		item.setItemnum(Integer.valueOf(this.itemnum));
-		item.setPerprice(Float.valueOf(this.perprice));
-		item.setSumprice(Float.valueOf(this.sumprice));
+		if (!this.itemnum.equals("")) 
+		{
+			item.setItemnum(Integer.valueOf(this.itemnum));
+		}
+		if (!this.perprice.equals("")) 
+		{
+			item.setPerprice(Float.valueOf(this.perprice));
+		}
+		if (!this.sumprice.equals("")) 
+		{
+			item.setSumprice(Float.valueOf(this.sumprice));
+		}
 		item.setPricetype(this.type);
 		return item;
 	}

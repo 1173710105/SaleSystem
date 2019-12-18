@@ -193,4 +193,17 @@ public class SaleorderCommon
     public void setException(String exception) {
         this.exception = exception == null ? null : exception.trim();
     }
+
+	@Override
+	public String toString() {
+		return "SaleorderCommon [tablename=" + tablename + ", id=" + id + ", warehourseid=" + warehourseid
+				+ ", warehoursename=" + warehoursename + ", clientid=" + clientid + ", clientname=" + clientname
+				+ ", principalid=" + principalid + ", principalname=" + principalname + ", createtime=" + createtime
+				+ ", checktime=" + checktime + ", gathertime=" + gathertime + ", returntime=" + returntime
+				+ ", postime=" + postime + ", status=" + status + ", sumprice=" + sumprice + ", gather=" + gather
+				+ ", change=" + change + ", margin=" + margin + ", type=" + type + ", note=" + note + ", exception="
+				+ exception + "]";
+	}
+    
+    
 }
