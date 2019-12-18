@@ -50,6 +50,7 @@ public class LoginManagerServiceImp implements LoginManagerService
 	private SubBranchDetailMap generalManagerLogin(String id, String password)
 	{
 		SubBranchDetailMap result = new SubBranchDetailMap();
+		
 		GeneralManager exampleManager = new GeneralManager();
 		exampleManager.setId(id);
 		GeneralManager manager = managerService.selectByPrimaryKey(exampleManager);
@@ -126,7 +127,8 @@ public class LoginManagerServiceImp implements LoginManagerService
 			List<Staff> list = staffService.select(exampleStaff);
 			if(list.size()==0)
 			{
-				return null;
+				result.setFlag("wrongid");
+				return result;
 			}
 			else
 			{

@@ -29,7 +29,7 @@ function loadHistoryOrderList(orderList) {
         var td5 = document.createElement("td");
         td5.innerHTML = orderList[i].warehoursename;
         var td6 = document.createElement("td");
-        td6.innerHTML = orderList[i].createTime;
+        td6.innerHTML = orderList[i].createtime;
         var td7 = document.createElement("td");
         var button = document.createElement("button");
         button.type = "button";
@@ -68,7 +68,7 @@ $('#search-btn').click(function () {
 //详情按钮
 $(document).on('click', '#detail-btn', function () {
     $('#orderDetailModal').modal('show'); //show modal
-    console.log("Click HOrder : ", $(this).getAttribute("value")); //获取按钮value
+    console.log("Click HOrder : ", $(this).attr("value")); //获取按钮value
 
     var order = tempOrderMap.get($(this).val());
     $('#client-name').val(order.clientname);
@@ -77,6 +77,7 @@ $(document).on('click', '#detail-btn', function () {
     $('#owner').val(order.principalname);
     $('#gross-profit').innerHTML = order.margin;
     //填充订单货品列表
+    console.log("aaa", order.items);
     var editTable = document.getElementById("temp-cargo-list");
     for (var i = 0; i < order.items.length; i++) {
         var tr = document.createElement("tr");
@@ -98,7 +99,7 @@ $(document).on('click', '#detail-btn', function () {
         tr.appendChild(td4);
         editTable.appendChild(tr);
     }
-    tempItemList = orderList[i].items;
+    tempItemList = order.items;
 });
 
 //获取模态框内点选单元格的值,更新货品信息栏

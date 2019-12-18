@@ -126,12 +126,12 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		//detailList 更新仓库信息
 		for (WarehourseDetail detail : detailList) 
 		{
-			detailService.updateByPrimaryKeySelective(detail);
+			detailService.updateByPrimaryKey(detail);
 		}
 		//itemList 插入订单物品信息
 		for (SaleorderItem item : itemList) 
 		{
-			itemService.updateByPrimaryKeySelective(item);
+			itemService.updateByPrimaryKey(item);
 		}
 	}
 

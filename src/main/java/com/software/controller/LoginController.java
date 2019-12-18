@@ -44,7 +44,8 @@ public class LoginController
 		String authority = param.getType();
 		SubBranchDetailMap map = loginService.login(id, password, authority);
 		System.out.println(map);
-    	if(map.getFlag().equals("true")){
+    	if(map.getFlag().equals("true"))
+    	{
 			mp.put(id, map);
 		}
 		return map.getFlag();
