@@ -239,3 +239,39 @@ function buildOrderParamList(orderL) {
     console.log("order param", param);
     return param;
 }
+
+/**
+ * 将状态码转换为付款状态
+ * @param {String}} status 
+ * @returns 1 为已付款 0为未付款
+ */
+function status2paystatus(status) {
+    if(status == "1" 
+        || status == "2"
+        || status == "4"
+        || status == "7") {
+            return 0;
+        }
+    else if (status == "5" || status == "6") {
+        return 1;
+    }
+    return -1;
+}
+
+/**
+ * 将状态码转换为审核状态
+ * @param {String} status
+ * @returns Int 0 为未审核，1为审核中，2为审核通过，3为退货 
+ */
+function status2checkstatus(status) {
+    if(status == "1") {
+        return 0;
+    } else if(status == "2") {
+        return 1;
+    } else if(status == "4" || status == "5") {
+        return 2;
+    } else if(status == "6" || status == "7") {
+        return 3;
+    }
+    return -1;
+ }

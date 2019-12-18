@@ -22,9 +22,29 @@ function loadOrderList(ol) {
         var td3 = document.createElement("td");
         td3.innerHTML = ol[i].sumprice;
         var td4 = document.createElement("td");
-        td4.innerHTML = ol[i].status;
+        td4.innerHTML = 
+        (function() {
+            var cs = status2checkstatus(ol[i].status.toString());
+            if(cs == 0) {
+                return "未审核";
+            } else if(cs == 1) {
+                return "审核中";
+            } else if(cs == 2) {
+                return "已审核";
+            } else if(cs == 3) {
+                return  "已退货";
+            }
+        });
         var td5 = document.createElement("td");
-        td5.innerHTML = ol[i].status;
+        td5.innerHTML = 
+        (function() {
+            var ps = status2paystatus(ol[i].status.toString());
+            if(ps == 0) {
+                return "未付款";
+            } else if(ps == 1) {
+                return "已付款";
+            } 
+        });
         var td6 = document.createElement("td");
         td6.innerHTML = ol[i].margin;
         var td7 = document.createElement("td");
