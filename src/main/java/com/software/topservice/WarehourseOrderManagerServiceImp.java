@@ -103,7 +103,7 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		
 		// 删除订单中的商品
 		WarehourseOrderItem exampleItem = new WarehourseOrderItem();
-		example.setId(exampleCommon.getId()+"");
+		exampleItem.setId(example.getId()+"");
 		itemService.deleteByID(exampleItem);
 		
 		WarehourseOrderItem itemTemp;
@@ -132,9 +132,11 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 	{
 		// common 最后才更新
 		WarehourseOrderCommon exampleCommon = order.toWarehourseOrderCommon();
+		String date = exampleCommon.getCreatetime();
 		
 		// 获取订单的商品
 		WarehourseOrderItem exampleItem = order.toWarehourseOrderItem();
+		exampleItem.setViceid(null);
 		List<WarehourseOrderItem> itemList = itemService.select(exampleItem);
 		
 		// 用于初始化商品数量信息表，获取源和目的表名
@@ -153,7 +155,8 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		
 		// 用于保存变化后商品数量信息
 		List<WarehourseDetail> sourceItemList = new ArrayList<>();
-		List<WarehourseDetail> targetItemList = new ArrayList<>();
+		List<WarehourseDetail> targetInsertItemList = new ArrayList<>();
+		List<WarehourseDetail> targetUpdateItemList = new ArrayList<>();
 		
 		WarehourseDetail exampleDetail = new WarehourseDetail();
 		WarehourseDetail sourceDetail;
@@ -162,9 +165,6 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		// 遍历订单中所有货品
 		// 子->总、、子-总 作为一个类  源要减，目的加     
 		// 进货商->总设为一个类        目的加   
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-		String date = df.format(new Date());// new Date()为获取当前系统时间
-		
 		
 		for (WarehourseOrderItem warehourseOrderItem : itemList) 
 		{
@@ -203,16 +203,16 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 				targetDetail.setItemid(exampleDetail.getItemid());
 				targetDetail.setItemnum(warehourseOrderItem.getItemnum());
 				targetDetail.setTime(date);
+				targetInsertItemList.add(targetDetail);
 			}
 			else 
 			{
 				targetDetail.setTablename(targetTableName);
 				targetDetail.setItemnum(targetDetail.getItemnum()+warehourseOrderItem.getItemnum());
 				targetDetail.setTime(date);
+				targetUpdateItemList.add(targetDetail);
 			}
-			targetItemList.add(targetDetail);
-			
-			
+						
 			examplePrice.setTablename(targetPriceTablename);
 			examplePrice.setId(warehourseOrderItem.getItemid());
 			targetPrice = priceService.selectByPrimaryKey(examplePrice);
@@ -234,7 +234,11 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 				{
 					// 货源地是仓库，则商品价格信息与源仓库相同
 					sourcePrice = new ItemToPrice();
+					sourcePrice.setTablename(sourcePriceTablename);
+					sourcePrice.setId(warehourseOrderItem.getItemid());
+					sourcePrice = priceService.selectByPrimaryKey(sourcePrice);
 					sourcePrice.setTablename(targetPriceTablename);
+					sourcePrice.setTime(date);
 					priceList.add(sourcePrice);
 				}
 			}
@@ -242,11 +246,15 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		//更新到仓库商品数量信息表里面
 		for (WarehourseDetail warehourseDetail : sourceItemList) 
 		{
-			detailService.updateByPrimaryKeySelective(warehourseDetail);
+			detailService.updateByPrimaryKey(warehourseDetail);
 		}
-		for (WarehourseDetail warehourseDetail : targetItemList) 
+		for (WarehourseDetail warehourseDetail : targetUpdateItemList) 
 		{
-			detailService.updateByPrimaryKeySelective(warehourseDetail);
+			detailService.updateByPrimaryKey(warehourseDetail);
+		}
+		for (WarehourseDetail warehourseDetail : targetInsertItemList) 
+		{
+			detailService.insertSelective(warehourseDetail);
 		}
 		// 更新到仓库商品价格信息表里面
 		for (ItemToPrice price : priceList) 

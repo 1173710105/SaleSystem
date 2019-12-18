@@ -42,7 +42,7 @@
 				and targetID = #{targetid}
 			</if>
 			<if test="targetname!=null and targetname!=''">
-				and targetName = #{targetName}
+				and targetName = #{targetname}
 			</if>
 			<if test="principalid!=null and principalid!=''">
 				and principalID = #{principalid}

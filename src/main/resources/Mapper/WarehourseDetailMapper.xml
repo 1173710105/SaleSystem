@@ -73,15 +73,16 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.WarehourseDetail">
     update ${tablename}
     <set>
-      <if test="itemnum != null">
+      <if test="itemnum != null and itemnum!=''">
         itemNum = #{itemnum,jdbcType=INTEGER},
       </if>
-      <if test="time != null">
+      <if test="time != null and time!=''">
         time = #{time,jdbcType=VARCHAR},
       </if>
     </set>
     where itemID = #{itemid,jdbcType=INTEGER}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.software.domain.WarehourseDetail">
     update ${tablename}
     set itemNum = #{itemnum,jdbcType=INTEGER},

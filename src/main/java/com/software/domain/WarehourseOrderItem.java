@@ -92,4 +92,12 @@ public class WarehourseOrderItem
     public void setSumprice(Float sumprice) {
         this.sumprice = sumprice;
     }
+
+	@Override
+	public String toString() {
+		return "WarehourseOrderItem [viceid=" + viceid + ", id=" + id + ", itemid=" + itemid + ", itemname=" + itemname
+				+ ", itemnum=" + itemnum + ", perprice=" + perprice + ", sumprice=" + sumprice + "]";
+	}
+    
+    
 }
