@@ -251,7 +251,7 @@ public class ReceiveOrder
 		common.setPrincipalname(this.principalname);
 		common.setCreatetime(this.createtime);
 		common.setChecktime(this.checktime);
-		common.setGathertime(this.checktime);
+		common.setGathertime(this.gathertime);
 		common.setReturntime(this.returntime);
 		common.setPostime(this.postime);
 		if (!this.status.equals("")) 

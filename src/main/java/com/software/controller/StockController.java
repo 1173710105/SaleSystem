@@ -34,6 +34,7 @@ public class StockController
 	
 	@RequestMapping("/update")
 	public String updateStock(@RequestBody List<Stock> param){
+		System.out.println(param.get(0).toString());
 		service.update(param);
 		return "success";
 	}

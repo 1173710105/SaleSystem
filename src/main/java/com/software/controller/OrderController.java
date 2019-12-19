@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,26 +36,30 @@ public class OrderController
 	}
 	
 	@RequestMapping("/insert")
-	public String insertOrder(@RequestBody List<ReceiveOrder> param)
+	public Map<String,String> insertOrder(@RequestBody List<ReceiveOrder> param)
 	{
 		if (param.size()==0) 
 		{
 			return null;
 		}
-		System.out.println(param.toString());
+		System.out.println(param.get(0).toString());
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String createtime = df.format(new Date());// new Date()为获取当前系统时间
 		param.get(0).setCreatetime(createtime);
-		System.out.println(param.get(0));
-		service.insert(param);
-		return "success";//返回成功/失败信息
+		String infovalue = service.insert(param);
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", infovalue);
+		return result;//返回成功/失败信息
 	}
 	
 	@RequestMapping("/update")
-	public String updateOrder(@RequestBody List<ReceiveOrder> param)
+	public Map<String,String> updateOrder(@RequestBody List<ReceiveOrder> param)
 	{
-		service.update(param);
-		return "success";//返回成功/失败信息
+		
+		String infovalue = service.update(param);
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", infovalue);
+		return result;//返回成功/失败信息
 	}
 	
 	@RequestMapping("/delete")
@@ -64,30 +69,37 @@ public class OrderController
 	}
 	
 	@RequestMapping("/check")
-	public String checkOrder(@RequestBody ReceiveOrder param){
+	public Map<String,String> checkOrder(@RequestBody ReceiveOrder param){
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String checktime = df.format(new Date());// new Date()为获取当前系统时间
 		param.setChecktime(checktime);
 		param.setStatus("4");
-		String result = service.checkOrder(param);
+		
+		String infovalue = service.checkOrder(param);
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", infovalue);
+		System.out.println("11111"+result);
 		return result;//返回成功/失败信息
 	}
 	
 	@RequestMapping("/pay")
-	public String payOrder(@RequestBody ReceiveOrder param)
+	public Map<String,String> payOrder(@RequestBody ReceiveOrder param)
 	{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String gathertime = df.format(new Date());// new Date()为获取当前系统时间
 		param.setGathertime(gathertime);
 		param.setStatus("5");
 		
-		service.payOrder(param);;
-		return "success";//返回成功/失败信息
+		service.payOrder(param);
+		
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "收款成功");
+		return result;//返回成功/失败信息
 	}
 	
 	@RequestMapping("/return")
-	public String returnOrder(@RequestBody ReceiveOrder param){
+	public Map<String,String> returnOrder(@RequestBody ReceiveOrder param){
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String returntime = df.format(new Date());// new Date()为获取当前系统时间
@@ -95,6 +107,9 @@ public class OrderController
 		param.setStatus("6");
 		
 		service.returnOrder(param);
-		return "success";//返回成功/失败信息
+		
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "退货成功");
+		return result;//返回成功/失败信息
 	}
 }

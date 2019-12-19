@@ -75,6 +75,10 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		commonService.insertSelective(exampleCommon);
 		
 		// 插入商品, 最后查出价格之后还需要填上，毛利润
+		if (commonService.select(exampleCommon).size()!=1) 
+		{
+			System.out.println("逻辑错误");
+		}
 		SaleorderCommon resultCommon = commonService.select(exampleCommon).get(0);
 		resultCommon.setTablename(example.getCommontablename());
 		
@@ -123,15 +127,19 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		resultCommon.setMargin(margin);
 		commonService.updateByPrimaryKeySelective(resultCommon);
 		
-		//detailList 更新仓库信息
-		for (WarehourseDetail detail : detailList) 
+		if (example.getStatus().equals("5")) 
 		{
-			detailService.updateByPrimaryKey(detail);
+			//detailList 更新仓库信息
+			for (WarehourseDetail detail : detailList) 
+			{
+				detailService.updateByPrimaryKey(detail);
+			}
 		}
+		
 		//itemList 插入订单物品信息
 		for (SaleorderItem item : itemList) 
 		{
-			itemService.updateByPrimaryKey(item);
+			itemService.insertSelective(item);
 		}
 		return "创建订单成功";
 	}
@@ -145,10 +153,12 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 			return "订单中没有商品";
 		}
 		ReceiveOrder example =  orderList.get(0);
+		example.fillTablename();
 		SaleorderCommon exampleCommon = example.toCommon();
 		
 		// 删除原订单所有商品
 		SaleorderItem tempItem = new SaleorderItem();
+		tempItem.setTablename(example.getItemtablename());
 		tempItem.setId(exampleCommon.getId());
 		itemService.deleteByID(tempItem);
 		

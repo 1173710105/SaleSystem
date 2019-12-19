@@ -24,9 +24,8 @@ public class CargoController {
 	public ReceiveCargo queryCargoById(@RequestBody ReceiveCargo param){
 		System.out.println("ID    "+param.getId());
 		System.out.println("hourseID"+ param.getTablename());
-		
+		param.setLabel("valid");
 		ReceiveCargo result = service.selectByPrimaryKey(param);
-		System.out.println(result.toString());
 		return result;
 	}
 	

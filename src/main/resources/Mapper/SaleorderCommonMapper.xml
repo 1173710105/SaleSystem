@@ -94,6 +94,12 @@
 			<if test="type!=null and type!=''">
 				and type = #{type}
 			</if>
+			<if test="note!=null and note!=''">
+				and note = #{note}
+			</if>
+			<if test="exception!=null and exception!=''">
+				and exception = #{exception}
+			</if>
 		</where>
 	</select>
 
@@ -185,61 +191,61 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="warehourseid != null">
+      <if test="warehourseid != null and warehourseid!=''">
         #{warehourseid,jdbcType=INTEGER},
       </if>
-      <if test="warehoursename != null">
+      <if test="warehoursename != null and warehoursename!=''">
         #{warehoursename,jdbcType=VARCHAR},
       </if>
-      <if test="clientid != null">
+      <if test="clientid != null and clientid!=''">
         #{clientid,jdbcType=INTEGER},
       </if>
-      <if test="clientname != null">
+      <if test="clientname != null and clientname!=''">
         #{clientname,jdbcType=VARCHAR},
       </if>
-      <if test="principalid != null">
+      <if test="principalid != null and principalid!=''">
         #{principalid,jdbcType=VARCHAR},
       </if>
-      <if test="principalname != null">
+      <if test="principalname != null and principalname!=''">
         #{principalname,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null and createtime!=''">
         #{createtime,jdbcType=VARCHAR},
       </if>
-      <if test="checktime != null">
+      <if test="checktime != null and checktime!=''">
         #{checktime,jdbcType=VARCHAR},
       </if>
-      <if test="gathertime != null">
+      <if test="gathertime != null and gathertime!=''">
         #{gathertime,jdbcType=VARCHAR},
       </if>
-      <if test="returntime != null">
+      <if test="returntime != null and returntime!=''">
         #{returntime,jdbcType=VARCHAR},
       </if>
-      <if test="postime != null">
+      <if test="postime != null and postime!=''">
         #{postime,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null and status!=''">
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="sumprice != null">
+      <if test="sumprice != null and sumprice!=''">
         #{sumprice,jdbcType=REAL},
       </if>
-      <if test="gather != null">
+      <if test="gather != null and gather!=''">
         #{gather,jdbcType=REAL},
       </if>
-      <if test="change != null">
+      <if test="change != null and change!=''">
         #{change,jdbcType=REAL},
       </if>
-      <if test="margin != null">
+      <if test="margin != null and margin!=''">
         #{margin,jdbcType=REAL},
       </if>
-      <if test="type != null">
+      <if test="type != null and type!=''">
         #{type,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
+      <if test="note != null and note!=''">
         #{note,jdbcType=VARCHAR},
       </if>
-      <if test="exception != null">
+      <if test="exception != null and exception!=''">
         #{exception,jdbcType=VARCHAR},
       </if>
     </trim>
@@ -247,61 +253,61 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.SaleorderCommon">
     update ${tablename}
     <set>
-      <if test="warehourseid != null">
+      <if test="warehourseid != null and warehourseid!=''">
         warehourseID = #{warehourseid,jdbcType=INTEGER},
       </if>
-      <if test="warehoursename != null">
+      <if test="warehoursename != null and warehoursename!=''">
         warehourseName = #{warehoursename,jdbcType=VARCHAR},
       </if>
-      <if test="clientid != null">
+      <if test="clientid != null and clientid!=''">
         clientID = #{clientid,jdbcType=INTEGER},
       </if>
-      <if test="clientname != null">
+      <if test="clientname != null and clientname!=''">
         clientName = #{clientname,jdbcType=VARCHAR},
       </if>
-      <if test="principalid != null">
+      <if test="principalid != null and principalid!=''">
         principalID = #{principalid,jdbcType=VARCHAR},
       </if>
-      <if test="principalname != null">
+      <if test="principalname != null and principalname!=''">
         principalName = #{principalname,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null and createtime!=''">
         createTime = #{createtime,jdbcType=VARCHAR},
       </if>
-      <if test="checktime != null">
+      <if test="checktime != null and checktime!=''">
         checkTime = #{checktime,jdbcType=VARCHAR},
       </if>
-      <if test="gathertime != null">
+      <if test="gathertime != null and gathertime!=''">
         gatherTime = #{gathertime,jdbcType=VARCHAR},
       </if>
       <if test="returntime != null">
         returnTime = #{returntime,jdbcType=VARCHAR},
       </if>
-      <if test="postime != null">
+      <if test="postime != null and postime!=''">
         posTime = #{postime,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null and status!=''">
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="sumprice != null">
+      <if test="sumprice != null and sumprice!=''">
         sumPrice = #{sumprice,jdbcType=REAL},
       </if>
-      <if test="gather != null">
+      <if test="gather != null and gather!=''">
         gather = #{gather,jdbcType=REAL},
       </if>
-      <if test="change != null">
+      <if test="change != null and change!=''">
         `change` = #{change,jdbcType=REAL},
       </if>
-      <if test="margin != null">
+      <if test="margin != null and margin!=''">
         margin = #{margin,jdbcType=REAL},
       </if>
-      <if test="type != null">
+      <if test="type != null and type !=''">
         type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
+      <if test="note != null and note !=''">
         note = #{note,jdbcType=VARCHAR},
       </if>
-      <if test="exception != null">
+      <if test="exception != null and exception !=''">
         exception = #{exception,jdbcType=VARCHAR},
       </if>
     </set>

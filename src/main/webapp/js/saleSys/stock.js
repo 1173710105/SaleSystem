@@ -1,5 +1,5 @@
 //库存对象及其操作
-defaultSetting = {
+defaultStockSetting = {
     hourseid : '',
     itemid : '',
     itemname : '',
@@ -19,10 +19,12 @@ function sendStockJsonAjax(url, param) {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
+            	console.log("Receive JSON stock : ", data);
                 tempdata = data;
             }
         },
         error: function () {
+        	console.log("Receive stock failed");
         }
     });
     return tempdata;
@@ -47,9 +49,11 @@ function queryStock(stock) {
     if(stock == null) {
         return;
     }
+    console.log("qqqqqqqqq", stock);
     url = '/stock/query'
     param = buildParam(stock);
     console.log("QueryStock : ", param);
+    $.ajaxSettings.async = false;
     return sendStockJsonAjax(url, param);
 }
 
@@ -59,31 +63,42 @@ function updateStock(stockL) {
     if(stockL == null) {
         return;
     }
+    stockL = [{
+    		hourseid: "1", //仓库id
+            itemid: "1",
+            itemname: "苏菲", //货品名称
+            itemnum: "1000",
+            type : "五金类"
+    }];
     param = buildParamList(stockL);
+    
     url = "/stock/update";
     console.log("UpdataStock : ", param);
+    $.ajaxSettings.async = false;
     return sendStockJsonAjax(param, url);
 }
 
 function buildParam(stock) {
-    combineStock = $.extend({}, defaultSetting, stock);
+    combineStock = $.extend({}, defaultStockSetting, stock);
     param = 
         '{"hourseid":"' + combineStock.hourseid + '",'
         + '"itemid":"' + combineStock.itemid + '",'
         + '"itemname":"' + combineStock.itemname + '",'
-        + '"itemnum":"' + combineStock.itemnum + '"}';
+        + '"itemnum":"' + combineStock.itemnum + '",'
+        + '"type":"' + combineStock.type + '"}';
     return param;
 }
 
 function buildParamList(stockL) {
     jsonList = [];
     for(var i = 0; i < stockL.length; i++) {
-        combineStock = $.extend({}, defaultSetting, stockL[i]);
+        combineStock = $.extend({}, defaultStockSetting, stockL[i]);
         param = 
         '{"hourseid":"' + combineStock.hourseid + '",'
         + '"itemid":"' + combineStock.itemid + '",'
         + '"itemname":"' + combineStock.itemname + '",'
-        + '"itemnum":"' + combineStock.itemnum + '"}';
+        + '"itemnum":"' + combineStock.itemnum + '",'
+        + '"type":"' + combineStock.type + '"}';
         jsonList.push(param);
     }
     param = '[';

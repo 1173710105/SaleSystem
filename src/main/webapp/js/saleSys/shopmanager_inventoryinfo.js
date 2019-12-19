@@ -34,29 +34,30 @@ $('#update-btn').click(function () {
 //触发盘点文本框
 $(document).on('blur', '#check-input', function () {
     var checknum = $(this).val();
-    var id = $(this).getAttribute("itemid");
-    if (checknum == "") {
-        if (checkStockMap.get(id) != null) {
-            delete checkStockMap[id];
-            for (var i = 0, len = checkStockMap.length; i < len; i++) {
-                if (!checkStockMap[i] || checkStockMap[i] == '') {
-                    checkStockMap.splice(i, 1);
-                    len--;
-                    i--;
-                }
-            }
-            return;
-        } else {
-            return;
-        }
-    }
-    checkStockMap.set(id, {
-        hourseid: tempStockMap.get(id).hourseid, //仓库id
-        itemid: id,
-        itemname: tempStockMap.get(id).itemname, //货品名称
+//    console.log($(this));
+//    var id = $(this).attr("itemid");
+//    if (checknum == "") {
+//        if (checkStockMap.get(id) != null) {
+//            delete checkStockMap[id];
+//            for (var i = 0, len = checkStockMap.length; i < len; i++) {
+//                if (!checkStockMap[i] || checkStockMap[i] == '') {
+//                    checkStockMap.splice(i, 1);
+//                    len--;
+//                    i--;
+//                }
+//            }
+//            return;
+//        } else {
+//            return;
+//        }
+//    }
+    checkStockMap.set("1", {
+        hourseid: "1", //仓库id
+        itemid: "1",
+        itemname: "苏菲", //货品名称
         itemnum: checknum
     });
-    console.log("Add new check : " + checkStockMap.get(id));
+//    console.log("Add new check : " + checkStockMap.get(id));
 });
 
 //加载库存列表
@@ -70,19 +71,21 @@ function loadStockList(sl) {
         var td1 = document.createElement("td");
         td1.innerHTML = sl[i].itemname;  //请求后台货物
         var td2 = document.createElement("td");
-        td2.innerHTML = sl[i].itemspecification;
+        td2.innerHTML = sl[i].type;
         var td3 = document.createElement("td");
-        td3.innerHTML = sl[i].itemnum;
+        td3.innerHTML = sl[i].specification;
         var td4 = document.createElement("td");
+        td4.innerHTML = sl[i].itemnum;
+        var td5 = document.createElement("td");
         checkinput = document.createElement('input');
         checkinput.className = "form-control";
         checkinput.setAttribute("placeholder", "最新盘点");
         checkinput.setAttribute("id", "check-input");
         checkinput.setAttribute("itemid", sl[i].itemid);
         checkinput.setAttribute("hourseid", sl[i].hourseid);
-        td4.appendChild(checkinput);
-        var td5 = document.createElement("td");
-        td5.innerHTML = sl[i].time;
+        td5.appendChild(checkinput);
+        var td6 = document.createElement("td");
+        td6.innerHTML = sl[i].time;
 
         tr.appendChild(td0);
         tr.appendChild(td1);
@@ -90,6 +93,7 @@ function loadStockList(sl) {
         tr.appendChild(td3);
         tr.appendChild(td4);
         tr.appendChild(td5);
+        tr.appendChild(td6);
         editTable.appendChild(tr);
     }
 }
@@ -100,13 +104,13 @@ function cleanStockList() {
 
 function refreshStockList() {
     cleanStockList();
-    var stype = $('search-cargo-type').val();
+    var stype = $('#search-cargo-type').val();
     if (stype == "任意") {
         stype = '';
     }
     loadStockList(queryStock({
-        itemid: $('search-cargo-id').val(),
-        itemname: $('search-cargo-name').val(),
+        itemid: $('#search-cargo-id').val(),
+        itemname: $('#search-cargo-name').val(),
         type: stype,
         hourseid: getCookie("warehourseid")  //获取仓库id
     }));

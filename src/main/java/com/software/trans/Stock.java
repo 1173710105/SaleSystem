@@ -119,7 +119,9 @@ public class Stock
     public Item toItem()
     {
     	Item item = new Item();
-    	item.setId(Integer.valueOf(this.itemid));
+    	if(!this.itemid.equals("")){
+    		item.setId(Integer.valueOf(this.itemid));
+    	}
     	item.setName(this.itemname);
     	item.setSpecification(this.specification);
     	item.setPicture(this.picture);
@@ -132,7 +134,9 @@ public class Stock
     {
     	WarehourseDetail detail = new WarehourseDetail();
     	detail.setTablename(this.tablename);
-    	detail.setItemid(Integer.valueOf(this.itemid));
+    	if(!this.itemid.equals("")){
+    		detail.setItemid(Integer.valueOf(this.itemid));
+    	}
     	detail.setTime(this.time);
     	if (isLegal(this.afterstock)) 
     	{

@@ -17,7 +17,7 @@
     select 
     <include refid="Base_Column_List" />
     from item
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER} and label = #{label,jdbcType=VARCHAR}
   </select>
   <select id="select" parameterType="com.software.domain.Item" resultMap="BaseResultMap">
 		select *

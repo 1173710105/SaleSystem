@@ -43,8 +43,10 @@ function sendOrderJsonAjax(url, param) {
             	console.log("Receive JSON order : ", data);
                 tempdata = data;
             }
+            console.log("Order Json : ", data);
         },
         error: function () {
+        	console.log("Receive JSON order failed");
         }
     });
     return tempdata;
@@ -78,7 +80,7 @@ function insertOrder(orderL) {
         '{'
         + '"orderid":"' + combineOrder.orderid + '",'
         + '"viceid":"' + combineOrder.viceid + '",'
-        + '"warehourseid":"' + combineOrder.tablename + '",'
+        + '"warehourseid":"' + combineOrder.warehourseid + '",'
         + '"warehoursename":"' + combineOrder.warehoursename + '",'
         + '"clientid":"' + combineOrder.clientid + '",'
         + '"clientname":"' + combineOrder.clientname + '",'
@@ -131,12 +133,11 @@ function updateOrder(order) {
 }
 
 //删除订单
-function deleteOrder(id) {
-    if (id == "") {
+function deleteOrder(order) {
+    if (order.id == "") {
         return;
     }
-    param = 
-        '{"viceid":"' + id.toString() + '"}';
+    param = buildOrderParam(order);
     console.log("DeleteOrder : " + param);
     url = "/order/delete";
     $.ajaxSettings.async = false;
@@ -144,12 +145,11 @@ function deleteOrder(id) {
 }
 
 //将订单审核通过
-function checkOrder(id) {
-    if (id == "") {
+function checkOrder(order) {
+    if (order.id == "") {
         return;
     }
-    param =
-        '{"orderid":"' + id.toString() + '"}';
+    param = buildOrderParam(order);
     url = "/order/check";
     console.log("CheckOrder : " + param);
     $.ajaxSettings.async = false;
@@ -158,7 +158,7 @@ function checkOrder(id) {
 
 //将订单付款
 function payOrder(order) {
-    if (id == "") {
+    if (order.id == "") {
         return;
     }
     param = buildOrderParam(order);
@@ -190,6 +190,7 @@ function buildOrderParam(order) {
         + '"clientid":"' + combineOrder.clientid + '",'
         + '"principalid":"' + combineOrder.principalid + '",'
         + '"itemid":"' + combineOrder.itemid + '",'
+        + '"itemname":"' + combineOrder.itemname + '",'
         + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
         + '"perprice":"' + combineOrder.perprice + '",'
         + '"sumprice":"' + combineOrder.sumprice + '",'
@@ -217,10 +218,11 @@ function buildOrderParamList(orderL) {
         '{'
         + '"orderid":"' + combineOrder.orderid + '",'
         + '"viceid":"' + combineOrder.viceid + '",'
-        + '"warehorseid":"' + combineOrder.warehorseid + '",'
+        + '"warehourseid":"' + combineOrder.warehourseid + '",'
         + '"clientid":"' + combineOrder.clientid + '",'
         + '"principalid":"' + combineOrder.principalid + '",'
         + '"itemid":"' + combineOrder.itemid + '",'
+        + '"itemname":"' + combineOrder.itemname + '",'
         + '"itemnum":"' + combineOrder.itemnum + '",'  //货品数量
         + '"perprice":"' + combineOrder.perprice + '",'
         + '"sumprice":"' + combineOrder.sumprice + '",'

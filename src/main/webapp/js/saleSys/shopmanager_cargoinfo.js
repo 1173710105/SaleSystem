@@ -30,9 +30,9 @@ $('#search-btn').click(function () {
 
 //添加货品
 $('#add-btn').click(function() {
-    $('#cargoModal').modal('show');
-	// alert("无权限");
-	// return;
+//    $('#cargoModal').modal('show');
+	 alert("无权限");
+	 return;
 });
 
 //保存货品

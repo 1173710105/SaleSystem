@@ -115,7 +115,7 @@ $('#submit-btn').click(function() {
         c = {
             clientid : s_clientid,
             clientname : s_clientname,
-            tablename : getCookie("warehourseid"),
+            warehourseid : getCookie("warehourseid"),
             warehoursename : getCookie("warehoursename"),
             principalid : getCookie("principalid"),
             principalname : getCookie("principalname"),
