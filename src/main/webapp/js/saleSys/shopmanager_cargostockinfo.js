@@ -1,7 +1,5 @@
 //店长进货页面
 window.onload = function () {
-    $('#type').val("aaa");
-    this.console.log($('#type').val());
     this.refreshCargoStockList();
 }
 
@@ -122,7 +120,7 @@ function loadWarehourseOrderList(worderList) {
 
 //加载模态框
 function loadModal(type, order) {
-    $('#type').setAttribute("type", type);
+    $('#type').val(type);
     var modal = $("#stockAddModal");
     console.log(modal);
     switch (type) {
@@ -159,7 +157,7 @@ function loadModal(type, order) {
             $('#order-source-position').val(order.sourceid);
             $('#order-principal').val(order.receiverprincipleid);
             //填充表格
-            $('#type').setAttribute("type", type);
+            $('#type').val(type);
             loadModalTable(order.items);
             break;
         }
@@ -191,8 +189,8 @@ function loadModalTable(items) {
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
-        if ($('#type').getAttribute("type") == "add"
-            || $('#type').getAttribute("type") == "edit") {
+        if ($('#type').val() == "add"
+            || $('#type').val() == "edit") {
             var td5 = document.createElement("td");
             deleButton = document.createElement("button");
             deleButton.type = "button";
@@ -258,7 +256,7 @@ $(document).on('click', '#delete-btn', function () {
 
 //删除货品
 //删除暂存列表中货品
-$('#temp-delete-btn').click(function () {
+$(document).on('click', '#temp-delete-btn', function () {
     var cargoid = $(this).val();
     cargoMap.delete(cargoid);
     loadModalTable();
@@ -402,7 +400,7 @@ $('body').on('hidden.bs.modal', '.modal', function () {
 
 function cleanCargoStockList() {
     tempWareOrderMap.clear();
-    cargoList.length = 0;
+    cargoMap.clear();
     document.getElementById("worder-tbody").innerHTML = "";
 }
 

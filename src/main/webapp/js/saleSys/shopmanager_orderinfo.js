@@ -148,7 +148,7 @@ function loadOrderList(ol) {
 function loadMadal(ol) {
     var common = ol[0];
     var status = common.get("status");
-    $('#order-id').val(common.get("viceid"));
+    $('#order-id').val(common.get("orderid"));
     $('#client-id').val(common.get("clientid"));
     $('#client-name').val(common.get("clientname"));
     $('#order-type').val(common.get("type"));
@@ -156,14 +156,13 @@ function loadMadal(ol) {
     $('#principal-name').val(common.get("principalname"));
 
     if(status != "1") {
-        //$('#temp-add-btn').setAttribute("style","display:none;");
-    	document.getElementById('temp-add-btn').setAttribute("style","display:none;");
-//    	$('.modal-foot')[0].style.display = "";
-//        $('.save-btn')[0].style.display = "";
+        $('.temp-add-btn')[0].setAttribute("style","display:none;");
+        $('.modal-foot')[0].setAttribute("style","display:;")
+        $('.save-btn')[0].setAttribute("style","display:;")
     } else {
-    	document.getElementById('#temp-add-btn').setAttribute("style","display:block;");
-//        $('.modal-foot')[0].style.display = "none";
-//        $('.save-btn')[0].style.display = "none";
+        $('.temp-add-btn')[0].setAttribute("style","display:block;");
+        $('.modal-foot')[0].setAttribute("style","display:none;")
+        $('.save-btn')[0].setAttribute("style","display:none;")
     }
 
     var editTable = document.getElementById("temp-cargo-tbody");
@@ -203,10 +202,10 @@ function loadMadal(ol) {
 
     //是否显示退货备注
     if (status == "6" || status == "7") {
-        $('.return-note')[0].style.display = "";
+        $('.return-note')[0].setAttribute("style","display:;")
         $('#order-note').val(common.get("note"));
     } else {
-        $('.return-note')[0].style.display = "none";
+        $('.return-note')[0].setAttribute("style","display:none;")
     }
 }
 
@@ -218,6 +217,7 @@ $('#search-btn').click(function () {
 //弹出添加订单
 $('#add-order-btn').click(function () {
     $('#orderModifyModal').modal('show');
+    $('.return-note')[0].setAttribute("style","display:none;");
     $('#principal-name').val(getCookie("principalname"));
     $('#order-postion').val(getCookie("warehoursename")); //获得仓库
 });
@@ -240,7 +240,7 @@ $('#ac-pay-btn').click(function () {
     var sgather = $('#pay-actual-charge').val();
     var schange = $('#pay-change').val();
     order = {
-        viceid: $('#pay-order-id').val(),
+        orderid: $('#pay-order-id').val(),
         change: schange,
         gather: sgather
     }
@@ -324,19 +324,19 @@ $(document).on('click', '#pay-btn', function () {
     $('#pay-pricinpal-name').val(order[0].get("pricinpalname"));
     $('#pay-total-price').val(order[0].get("sumprice"));
     var editTable = document.getElementById("temp-cargo-tbody");
-    for (cargo in order) {
+    for (var i = 0; i < order.length; i++) {
         var tr = document.createElement("tr");
-        tr.setAttribute("id", ol[i].get("id"));
+        tr.setAttribute("id", order[i].get("id"));
         var td0 = document.createElement("td");
-        td0.innerHTML = ol[i].get("itemname");
+        td0.innerHTML = order[i].get("itemname");
         var td1 = document.createElement("td");
-        td1.innerHTML = ol[i].get("itemid");
+        td1.innerHTML = order[i].get("itemid");
         var td2 = document.createElement("td");
-        td2.innerHTML = ol[i].get("itemnum");
+        td2.innerHTML = order[i].get("itemnum");
         var td3 = document.createElement("td");
-        td3.innerHTML = ol[i].get("perprice");
+        td3.innerHTML = order[i].get("perprice");
         var td4 = document.createElement("td");
-        td4.innerHTML = ol[i].get("sumprice");
+        td4.innerHTML = order[i].get("sumprice");
         tr.appendChild(td0);
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -350,7 +350,7 @@ $(document).on('click', '#pay-btn', function () {
 $(document).on('click', '#return-btn', function () {
     var orderid = $(this).val();
     $('#saleReturnModal').modal('show');
-    $('#return-order-id').val(tempOrderMap.get(orderid)[0].get("viceid"));
+    $('#return-order-id').val(tempOrderMap.get(orderid)[0].get("orderid"));
     $('#return-client-name').val(tempOrderMap.get(orderid)[0].get("clientname"));
     $('#return-pricipal-name').val(tempOrderMap.get(orderid)[0].get("principalname"));
     //判断是否付款
@@ -362,8 +362,33 @@ $(document).on('click', '#return-btn', function () {
     $('#return-total-price').val(tempOrderMap.get(orderid)[0].get("totalprice"));
 });
 
+$('#client-id').blur(function() {
+    var clientid = $(this).val();
+    var client = queryClientById(clientid);
+    if(client == null) {
+        alert("客户不存在");
+        return;
+    }
+    $('#client-name').val(client.name);
+    $('#client-id').val(client.id);
+});
+
+$('#cargo-id').blur(function() {
+    var itemid = $(this).val();
+    var item = queryCargoById(itemid, getCookie("warehourseid"));
+    if(item == null) {
+        alert("货品不存在");
+        return;
+    }
+    $('#cargo-name').val(item.name);
+    $('#cargo-id').val(item.id);
+    $('#cargo-num').val("");
+    $('#cargo-perprice').val(item.wholesaleprice);
+    $('#cargo-total-price').val("");
+});
+
 $('#cargo-num').blur(function () {
-    var perprice = parseFloat($('#cargo-wholesale-price').val());
+    var perprice = parseFloat($('#cargo-perprice').val());
     var itemnum = parseInt($('#cargo-num').val());
     $('#cargo-total-price').val(perprice * itemnum);
 });
@@ -388,23 +413,23 @@ $('#temp-add-btn').click(function () {
     }
     //查找是否存在货品，存在修改，不存在添加
     var torder;
-    for (itemorder in ol) {
-        if (itemorder.get("itemid") == cargoid) {
-            torder = itemorder;
+    for (var i =0 ; i< ol.length;i++) {
+        if (ol[i].get("itemid") == cargoid) {
+            torder = ol[i];
             break;
         }
     }
     //插入记录
     if (torder == null) {
         var cid = $('#cargo-id').val();
-        var cargo = queryCargoById(cid);
+        var cargo = queryCargoById(cid, getCookie("warehourseid"));
         var m = new Map();
         m.set("warehourseid", getCookie("warehourseid"));
         m.set("warehoursename", getCookie("warehoursename"));
         m.set("itemid", cargo.id);
         m.set("itemname", cargo.name);
         m.set("itemnum", $('#cargo-num').val());
-        m.set("perprice", cargo.purchaseprice);
+        m.set("perprice", cargo.wholesaleprice);
         m.set("sumprice", $('#cargo-total-price').val());
         ol.push(m);
     }
@@ -415,6 +440,40 @@ $('#temp-add-btn').click(function () {
         ol.push(torder);
     }
     console.log("Modify cargo : ", ol[ol.length-1]);
+    var editTable = document.getElementById("temp-cargo-tbody");
+    editTable.innerHTML = "";
+    for(var i in ol) {
+        var tr = document.createElement("tr");
+        tr.setAttribute("id", "temp-tr");
+        tr.setAttribute("cid", ol[i].get("itemid"));
+        var td0 = document.createElement("td");
+        td0.innerHTML = ol[i].get("itemname");
+        var td1 = document.createElement("td");
+        td1.innerHTML = ol[i].get("itemid");
+        var td2 = document.createElement("td");
+        td2.innerHTML = ol[i].get("itemnum");
+        var td3 = document.createElement("td");
+        td3.innerHTML = ol[i].get("perprice");
+        var td4 = document.createElement("td");
+        td4.innerHTML = ol[i].get("sumprice");
+        var td5 = document.createElement("td");
+        var deleButton = document.createElement("button");
+        deleButton.type = "button";
+        deleButton.id = "temp-delete-btn";
+        deleButton.setAttribute("value", ol[i].get("itemid")); //将货品id封装在value中
+        deleButton.className = "btn btn-sm btn-danger";
+        deleButton.innerHTML = "删除";
+        td5.appendChild(deleButton);
+        tr.appendChild(td0);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        if(status == "1") {
+            tr.appendChild(td5);
+        }
+        editTable.appendChild(tr);
+    }
 });
 
 //保存订单
@@ -424,35 +483,35 @@ $('#save-btn').click(function () {
         var client = queryClientById($('#client-id').val());
         order = tempOrderMap.get("temp");
         var totalprice = 0;
-        for (suborder in order) {
-            totalprice += parseFloat(suborder.get("sumprice"));
+        for (var i=0;i<order.length;i++) {
+            totalprice += parseFloat(order[i].get("sumprice"));
         }
-        for (suborder in order) {
-            suborder.set("warehourseid", getCookie("warehourseid"));
-            suborder.set("warehoursename", getCookie("warehoursename"));
-            suborder.set("clientid", client.id);
-            suborder.set("clientname", client.name),
-                suborder.set("principalid", getCookie("id"));
-            suborder.set("principalname", getCookie("name"));
-            suborder.set("status", 1);
-            suborder.set("totalprice", totalprice);
-            suborder.set("type", 2);
+        for (var i=0; i< order.length;i++) {
+            order[i].set("warehourseid", getCookie("warehourseid"));
+            order[i].set("warehoursename", getCookie("warehoursename"));
+            order[i].set("clientid", client.id);
+            order[i].set("clientname", client.name),
+            order[i].set("principalid", getCookie("id"));
+            order[i].set("principalname", getCookie("name"));
+            order[i].set("status", 1);
+            order[i].set("totalprice", totalprice);
+            order[i].set("type", 2);
         }
     } else {
         order = tempOrderMap.get($('#order-id').val());
         //修改总价 totalprice
         var totalprice = 0;
-        for (suborder in order) {
-            totalprice += parseFloat(suborder.get("sumprice"));
+        for (var i=0; i< order.length;i++) {
+            totalprice += parseFloat(order[i].get("sumprice"));
         }
-        for (suborder in order) {
-            suborder.set("total-price", totalprice);
+        for (var i=0; i< order.length;i++) {
+            order[i].set("total-price", totalprice);
         }
     }
     l = [];
     for (var i = 0; i < order.length; i++) {
         suborder = {
-            viceid: order[i].get("viceid"),
+            orderid: order[i].get("orderid"),
             warehourseid: order[i].get("warehourseid"),
             earehoursename: order[i].get("warehoursename"),
             clientid: order[i].get("clientid"),
@@ -624,8 +683,7 @@ function showCargo(suborder) {
     $('#cargo-name').val(suborder.get("itemname"));
     $('#cargo-id').val(suborder.get("itemid"));
     $('#cargo-num').val(suborder.get("itemnum"));
-    $('#cargo-wholesale-price').val(suborder.get("perprice"));
-    $('#cargo-purchase-price').val(suborder.get("perprice"));
+    $('#cargo-perprice').val(suborder.get("perprice"));
     $('#cargo-total-price').val(suborder.get("sumprice"));
 }
 
@@ -639,7 +697,7 @@ function object2map(order) {
     var l = [];
     for (var i = 0; i < order.items.length; i++) {
         var m = new Map();
-        m.set("viceid", order.id);
+        m.set("orderid", order.id);
         m.set("warehourseid", order.warehourseid);
         m.set("warehoursename", order.warehoursename);
         m.set("clientid", order.clientid);

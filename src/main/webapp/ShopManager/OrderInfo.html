@@ -35,10 +35,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-md-12">
+                    <div class="row">
+                         <div class="col-md-12">
                         <caption>订单编号</caption>
                         <input type="text" class="form-control" readonly="readonly" id="order-id">
                     </div>
+                    </div>
+                   
                     <div class="row">
                         <div class="col-md-2">
                             <caption>客户名称</caption>
@@ -80,7 +83,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <caption>单价</caption>
-                            <input type="text" readonly="readonly" class="form-control" id="cargo-wholesale-price">
+                            <input type="text" readonly="readonly" class="form-control" id="cargo-perprice">
                         </div>
                         <div class="col-md-3">
                             <caption>货品数量</caption>
@@ -93,7 +96,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-offset-10">
-                            <button type="button" class="btn btn-sm btn-primary" id="temp-add-btn">添加</button>
+                            <button type="button" class="temp-add-btn btn btn-sm btn-primary" id="temp-add-btn">添加</button>
                         </div>
                     </div>
                     <hr>
@@ -122,7 +125,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="save-btn">保存</button>
+                    <button type="button" class="save-btn btn btn-primary" id="save-btn">保存</button>
                 </div>
             </div>
         </div>
@@ -239,12 +242,15 @@
                             <input type="text" class="form-control" id="return-total-price">
                         </div>
                     </div>
-                    <div class="row">
+                    <div id="return-note" class="return-note">
+                        <div class="row">
                         <div class="col-md-12">
                                 <caption>退货备注</caption>
-                                <textarea id="return-note" class="form-control" rows="3" placeholder="退货备注"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="退货备注"></textarea>
                         </div>
                     </div>
+                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -342,5 +348,7 @@
 </body>
 <script type="text/javascript" src="../js/saleSys/cookie.js"></script>
 <script type="text/javascript" src="../js/saleSys/order.js"></script>
+<script type="text/javascript" src="../js/saleSys/client.js"></script>
+<script type="text/javascript" src="../js/saleSys/cargo.js"></script>
 <script type="text/javascript" src="../js/saleSys/staff.js"></script>
 <script type="text/javascript" src="../js/saleSys/shopmanager_orderinfo.js"></script>
