@@ -4,6 +4,9 @@ defaultSetting = {
     itemid : '',
     itemname : '',
     itemnum : '',
+    type : '',
+    label : '',
+    time : ''
 }
 
 function sendStockJsonAjax(url, param) {

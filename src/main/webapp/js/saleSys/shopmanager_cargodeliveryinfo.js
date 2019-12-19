@@ -1,7 +1,5 @@
 //店长出货页面
 window.onload = function () {
-    $('#type').val("aaa");
-    this.console.log($('#type').val());
     this.refreshCargoDeliveryList();
 }
 
@@ -9,7 +7,6 @@ window.onload = function () {
 var tempWareOrderMap = new Map();
 //订单货品暂存列表,新建订单时增加货品对象放在该列表中，编辑订单时，将订单中
 //所有货品加载到该列表中，对该列表修改，结束时写回发送到update函数
-//cargoList只封装warehourseitem
 var cargoMap = new Map();
 //订单货品数量暂存列表
 var cargoNumMap = new Map();
@@ -29,25 +26,18 @@ function loadWarehourseOrderList(worderList) {
         var td1 = document.createElement("td");
         td1.innerHTML = worderList[i].sumprice;
         var td2 = document.createElement("td");
-        td2.innerHTML = worderList[i].targetname;
+        td2.innerHTML = worderList[i].sourcename;
         var td3 = document.createElement("td");
-        td3.innerHTML = worderList[i].sourcename;
+        td3.innerHTML = worderList[i].targetname;
         var td4 = document.createElement("td");
-        td4.innerHTML = worderList[i].principalname;
+        td4.innerHTML = getType(worderList[i].type);
         var td5 = document.createElement("td");
-        td5.innerHTML = (function () {
-            var cs = status2checkstatus(worderList[i].status.toString());
-            if (cs == 0) {
-                return "未申请";
-            } else if (cs == 1) {
-                return "申请中";
-            } else if (cs == 2) {
-                return "已通过";
-            }
-        });
+        td5.innerHTML = getStatus(worderList[i].status);
         var td6 = document.createElement("td");
-        td6.innerHTML = worderList[i].createtime;
+        td6.innerHTML = worderList[i].principalname;
         var td7 = document.createElement("td");
+        td7.innerHTML = worderList[i].createtime;
+        var td8 = document.createElement("td");
         //未申请
         //添加编辑按钮,发起申请按钮,删除按钮
         if (worderList[i].status == "0") {
@@ -57,7 +47,7 @@ function loadWarehourseOrderList(worderList) {
             editButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
             editButton.className = "btn btn-sm btn-primary";
             editButton.innerHTML = "编辑";
-            td7.appendChild(editButton);
+            td8.appendChild(editButton);
 
             var applyButton = document.createElement("button");
             applyButton.type = "button";
@@ -65,7 +55,7 @@ function loadWarehourseOrderList(worderList) {
             applyButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
             applyButton.className = "btn btn-sm btn-primary";
             applyButton.innerHTML = "发起申请";
-            td7.appendChild(applyButton);
+            td8.appendChild(applyButton);
 
             var deleButton = document.createElement("button");
             deleButton.type = "button";
@@ -73,7 +63,7 @@ function loadWarehourseOrderList(worderList) {
             deleButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
             deleButton.className = "btn btn-sm btn-danger";
             deleButton.innerHTML = "删除";
-            td7.appendChild(deleButton);
+            td8.appendChild(deleButton);
         }
         //审核中 已通过
         //添加详情按钮
@@ -84,7 +74,7 @@ function loadWarehourseOrderList(worderList) {
             detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
             detailButton.className = "btn btn-sm btn-primary";
             detailButton.innerHTML = "详情";
-            td7.appendChild(detailButton);
+            td8.appendChild(detailButton);
         }
 
         tr.appendChild(td0);
@@ -95,13 +85,14 @@ function loadWarehourseOrderList(worderList) {
         tr.appendChild(td5);
         tr.appendChild(td6);
         tr.appendChild(td7);
+        tr.appendChild(td8);
         editTable.appendChild(tr);
     }
 }
 
 //加载模态框
 function loadModal(type, order) {
-    $('#type').setAttribute("type", type);
+    $('#type').val(type);
     var modal = $("#stockAddModal");
     console.log(modal);
     switch (type) {
@@ -149,8 +140,8 @@ function loadModalTable(items) {
     var editTable = document.getElementById("temp-worder-tbody");
     editTable.innerHTML = "";
     for (var i = 0; i < items.length; i++) {
-        cargoMap.set(order.items[i].itemid.toString(), order.items[i]);
-        cargoNumMap.set(order.items[i].itemid.toString(), order.items[i].itemnum); //填充货品数量
+        cargoMap.set(items[i].itemid.toString(), items[i]);
+        cargoNumMap.set(items[i].itemid.toString(), items[i].itemnum); //填充货品数量
         var tr = document.createElement("tr");
         tr.setAttribute("id", "temp-tr");
         tr.setAttribute("cid", items[i].itemid);
@@ -170,13 +161,13 @@ function loadModalTable(items) {
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
-        if ($('#type').getAttribute("type") == "add"
-            || $('#type').getAttribute("type") == "edit") {
+        if ($('#type').val() == "add"
+            || $('#type').val() == "edit") {
             var td5 = document.createElement("td");
             deleButton = document.createElement("button");
             deleButton.type = "button";
             deleButton.id = "temp-delete-btn";
-            deleButton.setAttribute("value", order.items[i].itemid); //将仓库单货品id封装在value中
+            deleButton.setAttribute("value", items[i].itemid); //将仓库单货品id封装在value中
             deleButton.className = "btn btn-sm btn-danger";
             deleButton.innerHTML = "删除";
             td5.appendChild(deleButton);
@@ -195,6 +186,8 @@ $('#search-btn').click(function () {
 //添加进货
 $('#add-btn').click(function () {
     $('#stockAddModal').modal('show'); //show modal
+    cargoMap.clear();
+    cargoNumMap.clear();
     loadModal("add", null);
 });
 
@@ -237,7 +230,7 @@ $(document).on('click', '#delete-btn', function () {
 
 //删除货品
 //删除暂存列表中货品
-$('#temp-delete-btn').click(function () {
+$(document).on('click', '#temp-delete-btn', function () {
     var cargoid = $(this).val();
     cargoMap.delete(cargoid);
     loadModalTable();
@@ -252,7 +245,7 @@ $('#cargo-id').blur(function () {
     }
     $('#cargo-name').val(tempcargo.name);
     $('#cargo-id').val(tempcargo.id);
-    $('#cargo-purchase-price').val(tempcargo.wholesaleprice);
+    $('#cargo-purchase-price').val(tempcargo.purchaseprice);
     $('#cargo-total-price').val(
         parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
 });
@@ -263,7 +256,7 @@ $('#cargo-num').blur(function () {
 })
 
 //添加货品到订货单
-$('#add-cargo-btn').click(function () {
+$(document).on('click', '#add-cargo-btn', function () {
     var cargoid = $(this).val();
     //由于map性质，一种货品只对应一条记录，所以子列表是唯一的
     if (cargoMap.has(cargoid)) {
@@ -324,10 +317,10 @@ $('#save-btn').click(function () {
     for (var k in cargoMap) {
         cargoObjectList.push({
             id: $('#order-id').val(),  //仓库单id
-            sourceid: $('#order-source-position').val(),
-            sourcename: '',                                 //填充名称
-            targetid: getCookie("warehourseid"),
-            targetname: getCookie("warehoursename"),
+            sourceid: getCookie("warehourseid"),
+            sourcename: getCookie("warehoursename"),                                 //填充名称
+            targetid: $('#order-target-position').val(),
+            targetname: '',
             principalid: getCookie("principalid"),
             principalname: getCookie("principalname"),
             type: 2,
@@ -371,7 +364,8 @@ $('body').on('hidden.bs.modal', '.modal', function () {
 
 function cleanCargoDeliveryList() {
     tempWareOrderMap.clear();
-    cargoList.length = 0;
+    cargoMap.clear();
+    cargoNumMap.clear();
     document.getElementById("worder-tbody").innerHTML = "";
 }
 
@@ -380,6 +374,7 @@ function refreshCargoDeliveryList() {
     worder = {
         id: $('#search-order-id').val(),
         sourceid: $('#search-order-source').val(),
+        type : $('#search-type').val(),
         status: $('#search-status').val(),
         sourceid: getCookie("warehourseid")
     }
@@ -390,3 +385,21 @@ function refreshCargoDeliveryList() {
     loadWarehourseOrderList(queryList);
 }
 
+function getStatus(status) {
+    var cs = status.toString();
+    if (cs == "1") {
+        return "未申请";
+    } else if (cs == "2") {
+        return "申请中";
+    } else if (cs == "4") {
+        return "已通过";
+    }
+}
+
+function getType(type) {
+    if (type.toString() == "1") {
+        return "进货";
+    } else if(type.toString() == "2") {
+        return "转仓";
+    }
+}
