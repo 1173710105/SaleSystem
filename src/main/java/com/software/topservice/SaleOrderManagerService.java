@@ -10,9 +10,9 @@ public interface SaleOrderManagerService
 {
 	public List<SendOrder> select(ReceiveOrder order);
 	
-	public void insert(List<ReceiveOrder> orderList);
+	public String insert(List<ReceiveOrder> orderList);
 	
-	public void update(List<ReceiveOrder> orderList);
+	public String update(List<ReceiveOrder> orderList);
 	
 	public void delete(ReceiveOrder order);
 	
