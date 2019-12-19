@@ -58,12 +58,12 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 	}
 
 	@Override
-	public void insert(List<ReceiveOrder> orderList) 
+	public String insert(List<ReceiveOrder> orderList) 
 	{
 		if (orderList.size()==0) 
 		{
 			System.out.println("没有商品，insert个屁");
-			return;
+			return "订单中没有商品";
 		}
 		// 插入的时候是没有ID的，插入，查出来， 这样可以后去ID
 		ReceiveOrder example =  orderList.get(0);
@@ -109,7 +109,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 				{
 					System.out.println("数量不知，无法零售");
 					commonService.deleteByPrimaryKey(resultCommon);  // 删除订单
-					return;
+					return "商品数量不足";
 				}
 				detailList.add(tempDetail);
 			}
@@ -133,15 +133,16 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		{
 			itemService.updateByPrimaryKey(item);
 		}
+		return "创建订单成功";
 	}
 
 	@Override
-	public void update(List<ReceiveOrder> orderList) 
+	public String update(List<ReceiveOrder> orderList) 
 	{
 		if (orderList.size()==0) 
 		{
 			System.out.println("没有商品，搞个屁");
-			return;
+			return "订单中没有商品";
 		}
 		ReceiveOrder example =  orderList.get(0);
 		SaleorderCommon exampleCommon = example.toCommon();
@@ -170,6 +171,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		// 重新更新common
 		exampleCommon.setMargin(margin);
 		commonService.updateByPrimaryKeySelective(exampleCommon);
+		return "修改订单成功";
 	}
 
 	@Override
@@ -202,7 +204,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 			if (resultDetail==null) 
 			{
 				// 商品数量不足
-				return "false";
+				return "商品数量不足";
 			}
 			detailList.add(resultDetail);
 			
@@ -234,7 +236,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		{
 			detailService.updateByPrimaryKey(warehourseDetail);
 		}
-		return "true";
+		return "审核成功";
 	}
 
 	@Override
