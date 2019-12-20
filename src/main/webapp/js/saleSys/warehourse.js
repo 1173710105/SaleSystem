@@ -1,28 +1,32 @@
 //仓库对象操作
 
-defaultSetting = {
+defaultWarehourseSetting = {
     id : '',
     name : '',
     location : '',
-    principalid : ''
+    principalid : '',
+    time : '',
+    label : ''
 }
 
-function sendJsonAjax(url, param) {
+function sendWarehourseJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+                console.log("Receive JSON Warehourse : ", data);
+                tempdata = data;
             }
-            return null;
         },
         error: function () {
         }
     });
+    return tempdata;
  }
 
 //通过id查找仓库
@@ -30,10 +34,13 @@ function queryWarehourseById(id) {
     if (id == "") {
         return;
     }
-    param = 
-       '{"id":"' + id + '"}';
+    param = buildWarehourseParam({
+        id : id
+    })
     url = "/warehourse/queryById";
-    return sendJsonAjax(url, param);
+    console.log("Query Warehourse By Id : ", param);
+    $.ajaxSettings.async = false;
+    return sendWarehourseJsonAjax(url, param);
 }
 
 //通过条件筛选仓库
@@ -41,42 +48,35 @@ function queryWarehourse(warehourse) {
     if (warehourse == null) {
         return null;
     }
-    combineWarehourse = $.extend({},defaultSetting, warehourse);
-    param = 
-       '{'
-        + '"id":"' + combineWarehourse.id + '",'
-        + '"name":"' + combineWarehourse.name + '",'
-        + '"location:"' + combineWarehourse.location + '",'
-        + '"principalid":"' + combineWarehourse.principalid + '"}';
+    param = buildWarehourseParam(warehourse);
     url = "/warehourse/query";
-    return sendJsonAjax(url, param);
+    console.log("Query Warehourse : ", param);
+    $.ajaxSettings.async = false;
+    return sendWarehourseJsonAjax(url, param);
 }
 
 //增加仓库
-function addWarehourse(warehourse) {
+function insertWarehourse(warehourse) {
     if (warehourse == null) {
         return null;
     }
-    combineWarehourse = $.extend({},defaultSetting, warehourse);
-    param = 
-       '{'
-        + '"id":"' + combineWarehourse.id + '",'
-        + '"name":"' + combineWarehourse.name + '",'
-        + '"location:"' + combineWarehourse.location + '",'
-        + '"principalid":"' + combineWarehourse.principalid + '"}';
+    param = buildWarehourseParam(warehourse);
     url = "/warehourse/add";
-    return sendJsonAjax(url, param);
+    console.log("Add Warehourse : ", param);
+    $.ajaxSettings.async = false;
+    return sendWarehourseJsonAjax(url, param);
 }
 
 //删除仓库
-function deleteWarehourse(id) {
-    if (id == "") {
+function deleteWarehourse(warehourse) {
+    if (warehourse.id == "") {
         return null;
     }
-    param = 
-       '{"id":"' + id + '"}';
+    param = buildWarehourseParam(warehourse);
     url = "/warehourse/delete";
-    return sendJsonAjax(url, param);
+    console.log("Delete Warehourse : ", param);
+    $.ajaxSettings.async = false;
+    return sendWarehourseJsonAjax(url, param);
 }
 
 //更新仓库
@@ -84,13 +84,22 @@ function updateWarehourse(warehourse) {
     if (warehourse == null) {
         return null;
     }
-    combineWarehourse = $.extend({},defaultSetting, warehourse);
+    param = buildWarehourseParam(warehourse);
+    url = "/warehourse/update";
+    console.log("Update Warehourse : ", param);
+    $.ajaxSettings.async = false;
+    return sendWarehourseJsonAjax(url, param);
+}
+
+function buildWarehourseParam(warehourse) {
+    combineWarehourse = $.extend({},defaultWarehourseSetting, warehourse);
     param = 
        '{'
         + '"id":"' + combineWarehourse.id + '",'
         + '"name":"' + combineWarehourse.name + '",'
-        + '"location:"' + combineWarehourse.location + '",'
-        + '"principalid":"' + combineWarehourse.principalid + '"}';
-    url = "/warehourse/update";
-    return sendJsonAjax(url, param);
+        + '"location":"' + combineWarehourse.location + '",'
+        + '"principalid":"' + combineWarehourse.principalid + '",'
+        + '"time":"' + combineWarehourse.time + '",'
+        + '"label":"' + combineWarehourse.label + '"}';
+    return param;
 }
