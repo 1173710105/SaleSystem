@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.software.domain.ItemToPrice;
+import com.software.domain.SubBranchDetailMap;
 import com.software.domain.WarehourseDetail;
 import com.software.domain.WarehourseOrderCommon;
 import com.software.domain.WarehourseOrderItem;
 import com.software.service.ItemToPriceService;
+import com.software.service.SubBranchDetailMapService;
 import com.software.service.WarehourseDetailService;
 import com.software.service.WarehourseOrderCommonService;
 import com.software.service.WarehourseOrderItemService;
@@ -38,6 +40,9 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 	
 	@Autowired
 	private ItemToPriceService priceService;
+	
+	@Autowired
+	private SubBranchDetailMapService mapService;
 	
 	@Override
 	public List<SendWarehourseOrder> select(ReceiveWarehourseOrder order) 
@@ -132,7 +137,7 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 	{
 		// common 最后才更新
 		WarehourseOrderCommon exampleCommon = order.toWarehourseOrderCommon();
-		String date = exampleCommon.getCreatetime();
+		String date = exampleCommon.getChecktime();
 		
 		// 获取订单的商品
 		WarehourseOrderItem exampleItem = order.toWarehourseOrderItem();
@@ -143,19 +148,8 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		String sourceTableName = getWarehourseDetailTable(exampleCommon.getSourceid());
 		String targetTableName = getWarehourseDetailTable(exampleCommon.getTargetid());
 		
-		// 用于初始化商品价格信息表
-		String sourcePriceTablename = getItemToPriceTable(exampleCommon.getSourceid());
-		String targetPriceTablename = getItemToPriceTable(exampleCommon.getTargetid());
-		
-		// 用于保存商品价格信息
-		ItemToPrice examplePrice = new ItemToPrice();
-		ItemToPrice sourcePrice = new ItemToPrice();
-		ItemToPrice targetPrice = new ItemToPrice();
-		List<ItemToPrice> priceList = new ArrayList<>();
-		
 		// 用于保存变化后商品数量信息
 		List<WarehourseDetail> sourceItemList = new ArrayList<>();
-		List<WarehourseDetail> targetInsertItemList = new ArrayList<>();
 		List<WarehourseDetail> targetUpdateItemList = new ArrayList<>();
 		
 		WarehourseDetail exampleDetail = new WarehourseDetail();
@@ -195,53 +189,12 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 			exampleDetail.setTablename(targetTableName);
 			exampleDetail.setItemid(warehourseOrderItem.getItemid());
 			targetDetail = detailService.selectByPrimaryKey(exampleDetail);
-			if (targetDetail==null) 
-			{
-				// 目标仓库中，没有该商品，需要初始化
-				targetDetail = new WarehourseDetail();
-				targetDetail.setTablename(targetTableName);
-				targetDetail.setItemid(exampleDetail.getItemid());
-				targetDetail.setItemnum(warehourseOrderItem.getItemnum());
-				targetDetail.setTime(date);
-				targetInsertItemList.add(targetDetail);
-			}
-			else 
-			{
-				targetDetail.setTablename(targetTableName);
-				targetDetail.setItemnum(targetDetail.getItemnum()+warehourseOrderItem.getItemnum());
-				targetDetail.setTime(date);
-				targetUpdateItemList.add(targetDetail);
-			}
-						
-			examplePrice.setTablename(targetPriceTablename);
-			examplePrice.setId(warehourseOrderItem.getItemid());
-			targetPrice = priceService.selectByPrimaryKey(examplePrice);
-			if (targetPrice==null) 
-			{
-				// 如果目的仓库里面没有商品到价格的信息，则需要初始化
-				if (sourcePriceTablename==null) 
-				{
-					// 货源地是进货商，则商品价格信息 中 进货价 与订单中的商品价格相同
-					targetPrice = new ItemToPrice();
-					targetPrice.setTablename(targetPriceTablename);
-					targetPrice.setId(warehourseOrderItem.getItemid());
-					targetPrice.setName(warehourseOrderItem.getItemname());
-					targetPrice.setPurchaseprice(warehourseOrderItem.getPerprice());
-					targetPrice.setTime(date);
-					priceList.add(targetPrice);
-				}
-				else
-				{
-					// 货源地是仓库，则商品价格信息与源仓库相同
-					sourcePrice = new ItemToPrice();
-					sourcePrice.setTablename(sourcePriceTablename);
-					sourcePrice.setId(warehourseOrderItem.getItemid());
-					sourcePrice = priceService.selectByPrimaryKey(sourcePrice);
-					sourcePrice.setTablename(targetPriceTablename);
-					sourcePrice.setTime(date);
-					priceList.add(sourcePrice);
-				}
-			}
+		
+			targetDetail.setTablename(targetTableName);
+			targetDetail.setItemnum(targetDetail.getItemnum()+warehourseOrderItem.getItemnum());
+			targetDetail.setTime(date);
+			targetUpdateItemList.add(targetDetail);
+			
 		}
 		//更新到仓库商品数量信息表里面
 		for (WarehourseDetail warehourseDetail : sourceItemList) 
@@ -252,15 +205,13 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		{
 			detailService.updateByPrimaryKey(warehourseDetail);
 		}
-		for (WarehourseDetail warehourseDetail : targetInsertItemList) 
+		
+		// 初始化所有仓库的进货价 
+		if (exampleCommon.getType().equals("1")) 
 		{
-			detailService.insertSelective(warehourseDetail);
+			 initPurchasePrice(order);
 		}
-		// 更新到仓库商品价格信息表里面
-		for (ItemToPrice price : priceList) 
-		{
-			priceService.insertSelective(price);
-		}
+		commonService.updateByPrimaryKeySelective(exampleCommon);
 		return "true";
 	}
 	
@@ -280,22 +231,36 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		}
 		
 	}
-	
-	private String getItemToPriceTable(Integer hourseid)
+
+	private void initPurchasePrice(ReceiveWarehourseOrder order)
 	{
-		if (hourseid == -1) 
+		WarehourseOrderItem exampleItem = new WarehourseOrderItem();
+		exampleItem.setId(order.getId());
+		List<WarehourseOrderItem> itemList = itemService.select(exampleItem);
+	
+		// 初始化总仓库与子仓库进货价信息
+		SubBranchDetailMap generalMap = new SubBranchDetailMap();
+		generalMap.setItemtable("base_warehourse_itemtoprice");
+		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
+		exampleMap.setLabel("valid");
+		List<SubBranchDetailMap> mapList = mapService.select(exampleMap);
+		mapList.add(generalMap);
+		ItemToPrice price = new ItemToPrice();
+		for (SubBranchDetailMap subBranchDetailMap : mapList) 
 		{
-			return "base_warehourse_itemtoprice";
-		}
-		else if (hourseid == -2) 
-		{
-			return null;
-		}
-		else
-		{
-			return "sub_warehourse_itemtoprice_"+String.format("%04d", hourseid);
+			for (WarehourseOrderItem warehourseOrderItem : itemList) 
+			{
+				price.setTablename(subBranchDetailMap.getItemtable());
+				price.setId(warehourseOrderItem.getItemid());
+				price.setName(warehourseOrderItem.getItemname());
+				price.setPurchaseprice(warehourseOrderItem.getPerprice());
+				price.setTime(order.getChecktime());
+				price.setLabel("valid");
+				priceService.updateByPrimaryKeySelective(price);
+			}
 		}
 	}
+	
 	private int getRandom()
 	{
 		Random rand = new Random();
