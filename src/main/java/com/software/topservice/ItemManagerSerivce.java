@@ -16,6 +16,8 @@ public interface ItemManagerSerivce
     
     public void updateByPrimaryKeySelective(ReceiveCargo record);    
     
+    public String deleteByPrimaryKey(ReceiveCargo record);
+    
     public Map<Integer, String> typeMenu();
     
 }

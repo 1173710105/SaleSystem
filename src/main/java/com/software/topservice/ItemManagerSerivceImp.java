@@ -1,9 +1,7 @@
 package com.software.topservice;
 
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.software.domain.Item;
 import com.software.domain.ItemToPrice;
 import com.software.domain.SubBranchDetailMap;
-import com.software.domain.Warehourse;
 import com.software.domain.WarehourseDetail;
 import com.software.service.ItemService;
 import com.software.service.ItemToPriceService;
@@ -41,17 +38,18 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Override
 	public ReceiveCargo selectByPrimaryKey(ReceiveCargo record) 
 	{
+		String hourseid = record.getTablename();
+		record.fillTablename();
 		Item exampleItem = record.toItem();
 		ItemToPrice examplePrice = record.toPrice();
-		System.out.println(exampleItem);
 		Item item = itemService.selectByPrimaryKey(exampleItem);
 		if (item!=null) 
 		{
 			ReceiveCargo cargo = new ReceiveCargo();
 			ItemToPrice price = priceService.selectByPrimaryKey(examplePrice);
+			cargo.setTablename(hourseid);
 			cargo.initByItem(item);
 			cargo.initByPrice(price);
-			System.out.println(cargo);
 			return cargo;
 		}
 		else
@@ -64,7 +62,7 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Override
 	public void insertSelective(ReceiveCargo record) 
 	{
-		
+		record.fillTablename();
 		Item exampleItem = record.toItem();
 		exampleItem.setPicture(getRandom()+"");
 		itemService.insertSelective(exampleItem);
@@ -85,6 +83,9 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 		
 		ItemToPrice examplePrice = record.toPrice();
 		examplePrice.setId(resultItem.getId());
+		examplePrice.setPurchaseprice(0.0f);
+		examplePrice.setRetailprice(0.0f);
+		examplePrice.setWholesaleprice(0.0f);
 		priceService.insertSelective(examplePrice);
 		
 		for (SubBranchDetailMap subBranchDetailMap : resultMaps) 
@@ -100,15 +101,20 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Override
 	public List<ReceiveCargo> select(ReceiveCargo record) 
 	{
+		String hourseid = record.getTablename();
+		record.fillTablename();
 		Item exampleItem = record.toItem();
 		ItemToPrice examplePrice = record.toPrice();
+		
 		List<Item> itemList = itemService.select(exampleItem);
+		
 		Map<Integer, ReceiveCargo> map = new HashMap<Integer, ReceiveCargo>();
 		ReceiveCargo cargo;
 		for (Item item : itemList) 
 		{
 			cargo = new ReceiveCargo();
 			cargo.initByItem(item);
+			cargo.setTablename(hourseid);
 			map.put(item.getId(), cargo);
 		}
 		
@@ -120,7 +126,8 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 		}
 		
 		List<ReceiveCargo> result = new ArrayList<>();
-		for (Integer index : map.keySet()) {
+		for (Integer index : map.keySet()) 
+		{
 			result.add(map.get(index));
 		}
 		return result;
@@ -129,25 +136,51 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Override
 	public void updateByPrimaryKeySelective(ReceiveCargo record) 
 	{	
+		record.fillTablename();
 		Item exampleItem = record.toItem();
-		
 		ItemToPrice examplePrice = record.toPrice();
 		
 		itemService.updateByPrimaryKeySelective(exampleItem);
 		priceService.updateByPrimaryKeySelective(examplePrice);
+	}
+	
+	@Override
+	public String deleteByPrimaryKey(ReceiveCargo record) 
+	{
+		record.fillTablename();
+		Item exampleItem = record.toItem();
 		
-		// 给子仓库的也更新
 		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
 		exampleMap.setLabel("valid");
-		List<SubBranchDetailMap> resultMaps = branchService.select(exampleMap);
+		List<SubBranchDetailMap> mapList = branchService.select(exampleMap);
 		
-		for (SubBranchDetailMap subBranchDetailMap : resultMaps) 
+		WarehourseDetail resultDetail;
+		WarehourseDetail exampleDetail = new WarehourseDetail();
+		
+		// 总仓库是否还存在该商品
+		exampleDetail.setItemid(Integer.valueOf(record.getId()));
+		exampleDetail.setTablename("base_warehourse_detail");
+		resultDetail = detailService.selectByPrimaryKey(exampleDetail);
+		
+		if (resultDetail.getItemnum()>0) 
 		{
-			examplePrice.setTablename(subBranchDetailMap.getItemtable());
-			priceService.updateByPrimaryKeySelective(examplePrice);
+			return "删除失败，总仓库还存在该商品";
 		}
 		
+		for (SubBranchDetailMap subBranchDetailMap : mapList) 
+		{
+			exampleDetail.setItemid(Integer.valueOf(record.getId()));
+			exampleDetail.setTablename(subBranchDetailMap.getWarehoursedetailtable());
+			resultDetail = detailService.selectByPrimaryKey(exampleDetail);
+			if (resultDetail.getItemnum()>0) 
+			{
+				return "删除失败，"+subBranchDetailMap.getWarehoursename()+"还存在该商品";
+			}
+		}
+		itemService.updateByPrimaryKeySelective(exampleItem);
+		return "删除成功";
 	}
+	
 
 	@Override
 	public Map<Integer, String> typeMenu() 

@@ -5,7 +5,7 @@ import com.software.domain.ItemToPrice;
 
 public class ReceiveCargo 
 {
-	private String tablename;
+	private String tablename;  
 	private String id;
 	private String name;
 	private String type;
@@ -106,7 +106,7 @@ public class ReceiveCargo
 		this.wholesaleprice = price.getWholesaleprice()+"";
 	}
 	
-	private void fillTablename()
+	public void fillTablename()
 	{
 		if (this.tablename.equals("-1")) 
 		{
@@ -140,7 +140,6 @@ public class ReceiveCargo
 	public ItemToPrice toPrice()
 	{
 		ItemToPrice price = new ItemToPrice();
-		fillTablename();
 		price.setTablename(this.tablename);
 		if (!this.id.equals("")) 
 		{
@@ -158,8 +157,6 @@ public class ReceiveCargo
 		if (!this.wholesaleprice.equals("")) 
 		{
 			price.setWholesaleprice(Float.valueOf(this.wholesaleprice));
-
-			
 		}
 		price.setTime(time);
 		price.setLabel(this.label);
