@@ -17,7 +17,8 @@ public class ReceiveCargo
 	private String time;
 	private String label;
 	
-	public String getId() {
+	public String getId() 
+	{
 		return id;
 	}
 	public String getTablename() {
@@ -164,6 +165,7 @@ public class ReceiveCargo
 		price.setLabel(this.label);
 		return price;
 	}
+
 	
 	@Override
 	public String toString() {

@@ -38,6 +38,9 @@
 			<if test="label!=null and label!=''">
 				and label = #{label}
 			</if>
+			<if test="picture!=null and picture!=''">
+				and picture = #{picture}
+			</if>
 		</where>
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.Item">

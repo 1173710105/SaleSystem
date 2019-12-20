@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
 
 import com.software.domain.Item;
 import com.software.domain.ItemToPrice;
+import com.software.domain.SubBranchDetailMap;
 import com.software.domain.Warehourse;
 import com.software.domain.WarehourseDetail;
 import com.software.service.ItemService;
 import com.software.service.ItemToPriceService;
+import com.software.service.SubBranchDetailMapService;
 import com.software.service.WarehourseDetailService;
 import com.software.trans.ReceiveCargo;
 
@@ -32,6 +34,9 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 
 	@Autowired
 	private WarehourseDetailService detailService;
+	
+	@Autowired
+	private SubBranchDetailMapService branchService;
 	
 	@Override
 	public ReceiveCargo selectByPrimaryKey(ReceiveCargo record) 
@@ -59,24 +64,37 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	@Override
 	public void insertSelective(ReceiveCargo record) 
 	{
+		
 		Item exampleItem = record.toItem();
 		exampleItem.setPicture(getRandom()+"");
 		itemService.insertSelective(exampleItem);
 		
 		Item resultItem = itemService.select(exampleItem).get(0);
 		
+		// 给总仓库和所有子仓库的初始化
+		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
+		exampleMap.setLabel("valid");
+		List<SubBranchDetailMap> resultMaps = branchService.select(exampleMap);
+		
 		WarehourseDetail detail = new WarehourseDetail();
-		detail.setTablename(record.getTablename());
+		detail.setItemid(resultItem.getId());
 		detail.setItemnum(0);
 		detail.setTime(record.getTime());
-		detail.fillTableName();
-		detail.setItemid(resultItem.getId());
+		detail.setTablename("base_warehourse_detail");
+		detailService.insertSelective(detail);
 		
 		ItemToPrice examplePrice = record.toPrice();
 		examplePrice.setId(resultItem.getId());
-		
 		priceService.insertSelective(examplePrice);
-		detailService.insertSelective(detail);
+		
+		for (SubBranchDetailMap subBranchDetailMap : resultMaps) 
+		{
+			detail.setTablename(subBranchDetailMap.getWarehoursedetailtable());
+			detailService.insertSelective(detail);
+			
+			examplePrice.setTablename(subBranchDetailMap.getItemtable());
+			priceService.insertSelective(examplePrice);
+		}
 	}
 
 	@Override
@@ -110,16 +128,25 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 
 	@Override
 	public void updateByPrimaryKeySelective(ReceiveCargo record) 
-	{
-//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-//		String date = df.format(new Date());// new Date()为获取当前系统时间
-//		
+	{	
 		Item exampleItem = record.toItem();
 		
 		ItemToPrice examplePrice = record.toPrice();
 		
 		itemService.updateByPrimaryKeySelective(exampleItem);
 		priceService.updateByPrimaryKeySelective(examplePrice);
+		
+		// 给子仓库的也更新
+		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
+		exampleMap.setLabel("valid");
+		List<SubBranchDetailMap> resultMaps = branchService.select(exampleMap);
+		
+		for (SubBranchDetailMap subBranchDetailMap : resultMaps) 
+		{
+			examplePrice.setTablename(subBranchDetailMap.getItemtable());
+			priceService.updateByPrimaryKeySelective(examplePrice);
+		}
+		
 	}
 
 	@Override
