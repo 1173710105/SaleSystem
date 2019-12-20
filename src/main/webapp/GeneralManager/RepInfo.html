@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>货品信息</title>
+    <script src="../js/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
@@ -11,7 +12,6 @@
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <!-- <link rel="stylesheet" href="css/common.css"> -->
     <!-- <link rel="stylesheet" href="css/PresentAnounce.css"> -->
-    <script src="js/jquery-1.9.1.min.js"></script>
     <style>
         .table th,
         .table td {
@@ -20,11 +20,10 @@
         }
 
         .middle {
-        float: none;
-        display: inline-block;
-        vertical-align: middle;
-        }                    
-
+            float: none;
+            display: inline-block;
+            vertical-align: middle;
+        }
     </style>
 </head>
 
@@ -41,107 +40,102 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <caption>编号</caption>
-                            <input type="text" readonly="readonly" class="form-control" id="cargoId" />
+                    <form id="rep-form">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <caption>编号</caption>
+                                <input type="text" readonly="readonly" class="form-control" id="rep-id" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <caption>名称</caption>
-                            <input type="text" class="form-control" id="cargoName">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <caption>名称</caption>
+                                <input type="text" class="form-control" id="rep-name">
+                            </div>
+                            <div class="col-md-6">
+                                <caption>地址</caption>
+                                <input type="text" class="form-control" id="rep-location">
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <caption>地址</caption>
-                            <input type="text" class="form-control" id="cargoName">
-                        </div>
-                    </div>
+                    </form>
                 </div>
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-primary" id="save-btn">保存</button>
                 </div>
             </div>
         </div>
     </div>
-        <div class="content">
-            <div class="row">
-                <div class="col-md-4">
-                    <caption>
-                        当前位置>仓库管理
-                    </caption>
-                </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-4">
+                <caption>
+                    当前位置>仓库管理
+                </caption>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#repModal">添加仓库</button>
-                </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <h6>仓库名称 </h6>
-                            <input type="text" class="form-control input-sm">
-                        </div>
-                        <div class="col-md-5">
-                            <h6>仓库编号</h6>
-                            <input type="text" class="form-control input-sm">
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-sm btn-default" type="button">查询</button>
-                        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary btn-sm" id="add-btn">添加仓库</button>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h6>仓库名称 </h6>
+                        <input type="text" class="form-control input-sm" id="search-rep-name">
+                    </div>
+                    <div class="col-md-5">
+                        <h6>仓库编号</h6>
+                        <input type="text" class="form-control input-sm" id="search-rep-id">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-sm btn-default" type="button" id="search-btn">查询</button>
                     </div>
                 </div>
             </div>
-            <hr>
-            <div align="center">
-                <table class="table table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th>编号</th>
-                            <th>名称</th>
-                            <th>地址</th>
-                            <th>更新时间</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>分仓1</td>
-                            <td>xx街道</td>
-                            <td>老王</td>
-                            <td>2019-11-20 15:53</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#repModal">编辑</button>
-                                <button type="button" id="delete_btn" class="btn btn-sm btn-danger">删除</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>分仓2</td>
-                            <td>xx街道</td>
-                            <td>老王</td>
-                            <td>2019-11-20 15:53</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#cargoModal">编辑</button>
-                                <button type="button" id="delete_btn" class="btn btn-danger btn-sm">删除</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
+        <hr>
+        <div align="center">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>地址</th>
+                        <th>更新时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="rep-tbody">
+                    <tr>
+                        <td>1</td>
+                        <td>分仓1</td>
+                        <td>xx街道</td>
+                        <td>老王</td>
+                        <td>2019-11-20 15:53</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-primary" id="edit-btn">编辑</button>
+                            <button type="button" id="delete-btn" class="btn btn-sm btn-danger">删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>分仓2</td>
+                        <td>xx街道</td>
+                        <td>老王</td>
+                        <td>2019-11-20 15:53</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">编辑</button>
+                            <button type="button" id="delete-btn" class="btn btn-danger btn-sm">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
-
-<script>
-    $('#delete_btn').click(function () {
-        var r = confirm("是否删除？");
-        if (r == true) {
-            alert("删除成功");
-        }
-    });
-</script>
+<script type="text/javascript" src="../js/saleSys/cookie.js"></script>
+<script type="text/javascript" src="../js/saleSys/warehourse.js"></script>
+<script type="text/javascript" src="../js/saleSys/generalmanager_repinfo.js"></script>
