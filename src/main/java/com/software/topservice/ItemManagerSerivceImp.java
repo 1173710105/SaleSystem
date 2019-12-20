@@ -157,16 +157,18 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 		WarehourseDetail resultDetail;
 		WarehourseDetail exampleDetail = new WarehourseDetail();
 		
-		// 总仓库是否还存在该商品
-		exampleDetail.setItemid(Integer.valueOf(record.getId()));
-		exampleDetail.setTablename("base_warehourse_detail");
-		resultDetail = detailService.selectByPrimaryKey(exampleDetail);
+		ItemToPrice resultPrice;
 		
-		if (resultDetail.getItemnum()>0) 
-		{
-			return "删除失败，总仓库还存在该商品";
-		}
+		SubBranchDetailMap generalMap = new SubBranchDetailMap();
+		generalMap.setWarehoursename("总仓库");
+		generalMap.setWarehoursedetailtable("base_warehourse_detail");
+		generalMap.setItemtable("base_warehourse_itemtoprice");
+		mapList.add(generalMap);
 		
+		List<WarehourseDetail> deleteDetail = new ArrayList<>();
+		List<ItemToPrice> deletePrice = new ArrayList<>();
+		
+		// 遍历 总仓库和子仓库，判断是否还存在该商品
 		for (SubBranchDetailMap subBranchDetailMap : mapList) 
 		{
 			exampleDetail.setItemid(Integer.valueOf(record.getId()));
@@ -176,6 +178,23 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 			{
 				return "删除失败，"+subBranchDetailMap.getWarehoursename()+"还存在该商品";
 			}
+			resultDetail.setTablename(subBranchDetailMap.getWarehoursedetailtable());
+			deleteDetail.add(resultDetail);
+			
+			resultPrice = new ItemToPrice();
+			resultPrice.setId(Integer.valueOf(record.getId()));
+			resultPrice.setTablename(subBranchDetailMap.getItemtable());
+			deletePrice.add(resultPrice);
+		}
+		
+		// 删除子仓库的price 和 数量信息
+		for (ItemToPrice price : deletePrice) 
+		{
+			priceService.deleteByPrimaryKey(price);
+		}
+		for (WarehourseDetail detail : deleteDetail) 
+		{
+			detailService.deleteByPrimaryKey(detail);
 		}
 		itemService.updateByPrimaryKeySelective(exampleItem);
 		return "删除成功";

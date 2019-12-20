@@ -21,26 +21,44 @@ public class ItemManagerSerivceTest
 	@Test
 	public void testInsert() 
 	{
-		ReceiveCargo cargo = new ReceiveCargo();
-		cargo.setId("");
-		cargo.setTablename("-1");
-		cargo.setName("java");
-		cargo.setPurchaseprice("2.0");
-		cargo.setWholesaleprice("4");
-		cargo.setRetailprice("4.0");
-		cargo.setType("wujinlei");
-		cargo.setSpecification("nothing at all");
-		cargo.setLabel("valid");
-		cargo.setTime("sj");
-		
-		service.insertSelective(cargo);
+//		ReceiveCargo cargo = new ReceiveCargo();
+//		cargo.setId("");
+//		cargo.setTablename("-1");
+//		cargo.setName("java22");
+//		cargo.setPurchaseprice("2.0");
+//		cargo.setWholesaleprice("4");
+//		cargo.setRetailprice("4.0");
+//		cargo.setType("wujinlei");
+//		cargo.setSpecification("nothing at all");
+//		cargo.setLabel("valid");
+//		cargo.setTime("sj");
+//		
+//		service.insertSelective(cargo);
 	}
 
 	@Test
 	public void testUpdate()
 	{
+//		ReceiveCargo cargo = new ReceiveCargo();
+//		cargo.setId("4");
+//		cargo.setTablename("-1");
+//		cargo.setName("java111");
+//		cargo.setPurchaseprice("3.0");
+//		cargo.setWholesaleprice("");
+//		cargo.setRetailprice("");
+//		cargo.setType("wujinlei");
+//		cargo.setSpecification("nothing at all");
+//		cargo.setLabel("valid");
+//		cargo.setTime("sj");
+//		
+//		service.updateByPrimaryKeySelective(cargo);
+	}
+	
+	@Test
+	public void testDelete()
+	{
 		ReceiveCargo cargo = new ReceiveCargo();
-		cargo.setId("4");
+		cargo.setId("8");
 		cargo.setTablename("-1");
 		cargo.setName("java111");
 		cargo.setPurchaseprice("3.0");
@@ -48,9 +66,9 @@ public class ItemManagerSerivceTest
 		cargo.setRetailprice("");
 		cargo.setType("wujinlei");
 		cargo.setSpecification("nothing at all");
-		cargo.setLabel("valid");
+		cargo.setLabel("invalid");
 		cargo.setTime("sj");
 		
-		service.updateByPrimaryKeySelective(cargo);
+		System.out.println(service.deleteByPrimaryKey(cargo));
 	}
 }
