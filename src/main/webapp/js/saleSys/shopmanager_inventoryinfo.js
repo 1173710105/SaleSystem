@@ -34,30 +34,24 @@ $('#update-btn').click(function () {
 //触发盘点文本框
 $(document).on('blur', '#check-input', function () {
     var checknum = $(this).val();
-//    console.log($(this));
-//    var id = $(this).attr("itemid");
-//    if (checknum == "") {
-//        if (checkStockMap.get(id) != null) {
-//            delete checkStockMap[id];
-//            for (var i = 0, len = checkStockMap.length; i < len; i++) {
-//                if (!checkStockMap[i] || checkStockMap[i] == '') {
-//                    checkStockMap.splice(i, 1);
-//                    len--;
-//                    i--;
-//                }
-//            }
-//            return;
-//        } else {
-//            return;
-//        }
-//    }
-    checkStockMap.set("1", {
-        hourseid: "1", //仓库id
-        itemid: "1",
-        itemname: "苏菲", //货品名称
+    console.log($(this));
+    var id = $(this).attr("itemid");
+    var hourseid = $(this).attr("hourseid");
+    if (checknum == "") {
+        if (checkStockMap.get(id) != null) {
+            delete checkStockMap[id];
+            return;
+        } else {
+            return;
+        }
+    }
+    checkStockMap.set(id, {
+        hourseid: hourseid, //仓库id
+        itemid: id,
+        //itemname: , //货品名称
         itemnum: checknum
     });
-//    console.log("Add new check : " + checkStockMap.get(id));
+    console.log("Add new check : " + checkStockMap.get(id));
 });
 
 //加载库存列表

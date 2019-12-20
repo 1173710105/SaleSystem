@@ -63,15 +63,7 @@ function updateStock(stockL) {
     if(stockL == null) {
         return;
     }
-    stockL = [{
-    		hourseid: "1", //仓库id
-            itemid: "1",
-            itemname: "苏菲", //货品名称
-            itemnum: "1000",
-            type : "五金类"
-    }];
     param = buildParamList(stockL);
-    
     url = "/stock/update";
     console.log("UpdataStock : ", param);
     $.ajaxSettings.async = false;
