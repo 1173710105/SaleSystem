@@ -69,7 +69,7 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		String staffTableName = "sub_staff_hourseid_"+String.format("%04d", hourseid);
 		String saleorderCommonTableName = "sub_saleorder_common_"+String.format("%04d", hourseid);
 		String saleorderItemTableName = "sub_saleorder_item_"+String.format("%04d", hourseid);
-		String warehourseItemToPriceTableName = "sub_warehourse_itemToPrice_"+String.format("%04d", hourseid);
+		String warehourseItemToPriceTableName = "sub_warehourse_itemtoprice_"+String.format("%04d", hourseid);
 		String warehourseDetailTableName = "sub_warehourse_detail_"+String.format("%04d", hourseid);
 		
 		Staff exampleStaff = new Staff();
@@ -106,7 +106,7 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		String staffTableName = "sub_staff_hourseid_"+String.format("%04d", hourseid);
 		String saleorderCommonTableName = "sub_saleorder_common_"+String.format("%04d", hourseid);
 		String saleorderItemTableName = "sub_saleorder_item_"+String.format("%04d", hourseid);
-		String warehourseItemToPriceTableName = "sub_warehourse_itemToPrice_"+String.format("%04d", hourseid);
+		String warehourseItemToPriceTableName = "sub_warehourse_itemtoprice_"+String.format("%04d", hourseid);
 		String warehourseDetailTableName = "sub_warehourse_detail_"+String.format("%04d", hourseid);
 		
 		Staff exampleStaff = new Staff();
