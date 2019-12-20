@@ -58,15 +58,12 @@ public class StockManagerServiceImp implements StockManagerService
 	@Override
 	public void update(List<Stock> record) 
 	{
-		Item exampleItem;
 		WarehourseDetail exampleDetail;
 		for (Stock stock : record) 
 		{
 			stock.fillTablename();
-			exampleItem = stock.toItem();
 			exampleDetail = stock.toDetail();
-			itemService.updateByPrimaryKeySelective(exampleItem);
-			detailService.updateByPrimaryKeySelective(exampleDetail);
+			detailService.updateByPrimaryKey(exampleDetail);
 		}
 	}
 

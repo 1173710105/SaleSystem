@@ -91,6 +91,14 @@ function updateWarehourse(warehourse) {
     return sendWarehourseJsonAjax(url, param);
 }
 
+//请求id与仓库映射
+function queryWarehourseMenu() {
+	url = "/warehourse/typemenu";
+    console.log("QueryMenu Warehourse : ", param);
+    $.ajaxSettings.async = false;
+    return sendWarehourseJsonAjax(url, param);
+}
+
 function buildWarehourseParam(warehourse) {
     combineWarehourse = $.extend({},defaultWarehourseSetting, warehourse);
     param = 

@@ -1,6 +1,10 @@
 package com.software.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.software.topservice.WarehourseOrderManagerService;
 import com.software.trans.ReceiveWarehourseOrder;
 import com.software.trans.SendWarehourseOrder;
+import com.software.trans.Stock;
 
 @RestController
 @RequestMapping("/warehourseOrder")
@@ -32,14 +37,22 @@ public class WarehourseOrderController
 	}
 	
 	@RequestMapping("/insert")
-	public String insertWarehourseOrder(@RequestBody List<ReceiveWarehourseOrder> param){
+	public Map<String, String> insertWarehourseOrder(@RequestBody List<ReceiveWarehourseOrder> param){
 		if (param.size()==0) 
 		{
-			return "";
+			return null;
 		}
 		param.get(0).setStatus(1+"");
+		System.out.println("订单号："+param.get(0).getId());
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String time = df.format(new Date());// new Date()为获取当前系统时间
+		for(ReceiveWarehourseOrder s: param){
+			s.setCreatetime(time);
+		}
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("info", "添加成功");
 		service.insert(param);
-		return "success";
+		return result;
 	}
 	
 	@RequestMapping("/update")
@@ -60,11 +73,18 @@ public class WarehourseOrderController
 	}
 	
 	@RequestMapping("/apply")
-	public String applyWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
+	public Map<String, String> applyWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
 		// update
 		param.setStatus(2+"");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String time = df.format(new Date());// new Date()为获取当前系统时间
+		param.setChecktime(time);
+		
 		service.updateStatus(param);
-		return "success";
+		
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("info", "已提交，请等待审核");
+		return result;
 	}
 	
 	@RequestMapping("/pass")

@@ -18,8 +18,8 @@ function refreshRepList() {
     loadRepList(qlist);
 }
 
-function loadRepList() {
-    var editTable = $("#rep-tbody");
+function loadRepList(qlist) {
+    var editTable = document.getElementById("rep-tbody");
     editTable.innerHTML = "";
     for (var i in qlist) {
         var tr = document.createElement('tr');
@@ -82,7 +82,8 @@ $('#save-btn').click(function () {
         }).info);
     } else {
         alert(updateWarehourse({
-            name: $('#rep-name').val(),
+            id : $('#rep-id').val(),
+        	name: $('#rep-name').val(),
             location: $('#rep-location').val()
         }).info);
     }
@@ -90,6 +91,7 @@ $('#save-btn').click(function () {
 })
 
 $(document).on('click', '#edit-btn', function () {
+	$('#repModal').modal('show');
     loadModal(repMap.get($(this).val()));
 });
 
