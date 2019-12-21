@@ -36,6 +36,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form id="modal-form">
                     <div id="type"></div>
                     <div class="row" >
                         <div class="col-md-12">
@@ -84,14 +85,18 @@
                             <caption>货品数量</caption>
                             <input type="text" class="form-control" id="cargo-num">
                         </div>
-                        <div class="col-md-offset-3 col-md-6">
+                        <div class="col-md-3">
+                            <caption>进货价</caption>
+                            <input readonly="readonly" type="text" class="form-control input-sm" id="cargo-purchase-price">
+                        </div>
+                        <div class="col-md-offset-3">
                             <caption>总价格</caption>
-                            <input type="text" class="form-control" id="cargoTotalPrice">
+                            <input type="text" class="form-control" id="cargo-total-price">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-offset-10 col-md-2">
-                            <button type="button" class="btn btn-sm btn-primary">添加</button>
+                            <button type="button" class="btn btn-sm btn-primary" id="add-cargo-btn">添加</button>
                         </div>
                     </div>
                     <hr>
@@ -117,6 +122,7 @@
                                 <h4>出货总价: </h4>
                             </div>
                         </div>
+                        </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>

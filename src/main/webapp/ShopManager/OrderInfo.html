@@ -35,6 +35,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form id="order-form">
+                    <div id="status"></div>
                     <div class="row">
                          <div class="col-md-12">
                         <caption>订单编号</caption>
@@ -122,6 +124,7 @@
                                 <textarea id="order-note" class="form-control" rows="3" placeholder="退货备注"></textarea>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -232,7 +235,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <caption>是否收款</caption>
-                            <select class="form-control" id="payed-state">
+                            <select readonly="readonly" class="form-control" id="payed-state">
                                 <option value="1">是</option>
                                 <option value="0">否</option>
                             </select>

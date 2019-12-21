@@ -111,3 +111,20 @@ function buildWarehourseParam(warehourse) {
         + '"label":"' + combineWarehourse.label + '"}';
     return param;
 }
+
+function buildWMenuOptionHTML() {
+    var html;
+    queryWarehourseMenu().forEach(function(value, key) {
+        html += '<option value="' + key + '">' + value + '</option>';
+    })
+    return html;
+}
+
+function buildWMenuOptionNoBaseHTML() {
+    var html;
+    queryWarehourseMenu().forEach(function(value, key) {
+        if(key == -1) continue;
+        html += '<option value="' + key + '">' + value + '</option>';
+    })
+    return html;
+}

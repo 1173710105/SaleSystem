@@ -380,11 +380,10 @@ $('#save-btn').click(function () {
             sumprice: value.sumprice
         })
     });
+    $('#stockAddModal').modal('hide');
     if ($('#type').val() == "add") {
-    	$('#stockAddModal').modal('hide');
         alert(insertWarehourseOrder(cargoObjectList).info);
     } else if ($("#type").val() == "edit") {
-    	$('#stockAddModal').modal('hide');
         alert(updateWarehourseOrder(cargoObjectList).info);
     }
     //清空缓存list

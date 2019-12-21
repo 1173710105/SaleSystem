@@ -1,6 +1,6 @@
 //店长对象操作
 
-defaultSetting = {
+defaultShopManagerSetting = {
     id : '',
     password : '',
     hourseid : '',
@@ -11,7 +11,8 @@ defaultSetting = {
     label : ''
 }
 
-function sendJsonAjax(url, param) {
+function sendShopManagerJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
@@ -20,13 +21,14 @@ function sendJsonAjax(url, param) {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+                console.log("Receive JSON manager : ", data);
+                tempdata = data;
             }
-            return null;
         },
         error: function () {
         }
     });
+    return data;
  }
 
 //通过id查找店长
@@ -37,7 +39,9 @@ function queryManagerById(id) {
     param = 
        '{"id":"' + id + '"}';
     url = "/shopmanager/queryById";
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    console.log("Query ManagerById : ", param);
+    return sendShopManagerJsonAjax(url, param);
 }
 
 //通过条件筛选店长
@@ -45,7 +49,7 @@ function queryManager(manager) {
     if (manager == null) {
         return null;
     }
-    combineManager = $.extend({},defaultSetting, manager);
+    combineManager = $.extend({},defaultShopManagerSetting, manager);
     param = 
        '{'
         + '"id":"' + combineManager.id + '",'
@@ -56,7 +60,9 @@ function queryManager(manager) {
         + '"label":"' + combineManager.label + '",'
         + '"hourseid":"' + combineManager.hourseid + '"}';
     url = "/shopmanager/query";
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    console.log("Query Manager : ", param);
+    return sendShopManagerJsonAjax(url, param);
 }
 
 //增加店长
@@ -64,7 +70,7 @@ function insertManager(manager) {
     if (manager == null) {
         return null;
     }
-    combineManager = $.extend({},defaultSetting, manager);
+    combineManager = $.extend({},defaultShopManagerSetting, manager);
     param = 
        '{'
         + '"id":"' + combineManager.id + '",'
@@ -75,7 +81,9 @@ function insertManager(manager) {
         + '"label":"' + combineManager.label + '",'
         + '"hourseid":"' + combineManager.hourseid + '"}';
     url = "/shopmanager/insert";
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    console.log("Insert Manager : ", param);
+    return sendShopManagerJsonAjax(url, param);
 }
 
 //删除店长
@@ -86,7 +94,9 @@ function deleteManager(id) {
     param = 
        '{"id":"' + id + '"}';
     url = "/shopmanager/delete";
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    console.log("Delete Manager : ", param);
+    return sendShopManagerJsonAjax(url, param);
 }
 
 //更新店长
@@ -94,7 +104,7 @@ function updateManager(manager) {
     if (manager == null) {
         return null;
     }
-    combineClient = $.extend({},defaultSetting, manager);
+    combineClient = $.extend({},defaultShopManagerSetting, manager);
     param = 
     '{'
     + '"id":"' + combineClient.id + '",'
@@ -104,7 +114,9 @@ function updateManager(manager) {
     + '"email":"' + combineClient.email + '",'
     + '"hourseid":"' + combineClient.hourseid + '"}';
     url = "/shopmanager/update";
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    console.log("Update Manager : ", param);
+    return sendShopManagerJsonAjax(url, param);
 }
 
 //通过店长查找管理仓库id
@@ -115,5 +127,7 @@ function queryWareIdByManagerId(id) {
     param = 
        '{"id":"' + id + '"}';
     url = "/shopmanager/queryWare";
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    console.log("Query WareIdByManager : ", param);
+    return sendShopManagerJsonAjax(url, param);
 }
