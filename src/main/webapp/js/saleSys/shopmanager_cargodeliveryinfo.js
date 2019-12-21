@@ -1,6 +1,10 @@
 //店长出货页面
 window.onload = function () {
-    this.refreshCargoDeliveryList();
+	this.document.getElementById('order-stock-position').innerHTML = this.buildWMenuOptionHTML(); 
+	this.document.getElementById('search-order-target').innerHTML = '<option value="">任意</option>' + this.buildWMenuOptionHTML(); 
+	this.document.getElementById('order-target-position').innerHTML = this.buildWMenuOptionHTML(); 
+    tempRep = queryWarehourseMenu();
+	this.refreshCargoDeliveryList();
 }
 
 //订货单和id映射表
@@ -12,7 +16,7 @@ var cargoMap = new Map();
 var cargoNumMap = new Map();
 var tempCargo;
 var preCargoId; //保存之前在货品框中货品id
-
+var tempRep;
 
 //加载进货信息
 function loadWarehourseOrderList(worderList) {
@@ -28,7 +32,7 @@ function loadWarehourseOrderList(worderList) {
         var td2 = document.createElement("td");
         td2.innerHTML = worderList[i].sourcename;
         var td3 = document.createElement("td");
-        td3.innerHTML = worderList[i].targetname;
+        td3.innerHTML = tempRep.get(worderList[i].targetid.toString());
         var td4 = document.createElement("td");
         td4.innerHTML = getType(worderList[i].type);
         var td5 = document.createElement("td");
@@ -136,24 +140,31 @@ function loadWarehourseOrderList(worderList) {
 //加载模态框
 function loadModal(type, order) {
     $('#type').val(type);
+    
+    document.getElementById("temp-worder-tbody").innerHTML = "";
+    cargoMap.clear();
+    cargoNumMap.clear();
+    
     var modal = $("#stockDeliverModal");
     switch (type) {
         case "add": {
-            $('.div-oid')[0].style.display = "none";
             $('.modal-footer')[0].style.display = "";
-            $('.save-btn')[0].style.display = "";
+            $('.add-cargo-btn')[0].style.display = "";
             modal.find('.modal-title').text("添加出货");
+            
+            console.log("wew", getCookie("principalname"));
+            $('#order-principal').val(getCookie("principalname"));
             break;
         }
         case "edit": {
-            $('.div-oid')[0].style.display = "";
             $('.modal-footer')[0].style.display = "";
-            $('.save-btn')[0].style.display = "";
+            $('.add-cargo-btn')[0].style.display = "";
             modal.find('.modal-title').text("编辑出货");
 
             $('#order-id').val(order.id);
             $('#order-stock-position').val(order.targetid);
             $('#order-source-position').val(order.sourceid);
+            $('#order-target-position').val(order.targetid);
             $('#order-principal').val(order.principalname);
             //填充表格
             document.getElementById('type').setAttribute("type", type);
@@ -161,14 +172,14 @@ function loadModal(type, order) {
             break;
         }
         case "detail": {
-            $('.div-oid')[0].style.display = "";
             $('.modal-footer')[0].style.display = "none";
-            $('.save-btn')[0].style.display = "none";
+            $('.add-cargo-btn')[0].style.display = "none";
             modal.find('.modal-title').text("进货详情");
 
             $('#order-id').val(order.id);
             $('#order-stock-position').val(order.targetid);
             $('#order-source-position').val(order.sourceid);
+            $('#order-target-position').val(order.targetid);
             $('#order-principal').val(order.principalname);
             //填充表格
             document.getElementById('type').setAttribute("type", type);
@@ -218,7 +229,7 @@ function loadModalTable(items) {
         }
         editTable.appendChild(tr);
     }
-
+    console.log("cargoMap", cargoMap);
 }
 
 function cleanCargoDeliveryList() {
@@ -235,7 +246,7 @@ function refreshCargoDeliveryList() {
         sourceid: $('#search-order-target').val(),
         type : $('#search-type').val(),
         status: $('#search-status').val(),
-        principalid : $('#search-principal-id'),
+        principalid : $('#search-principal-id').val(),
         sourceid: getCookie("warehourseid")
     }
     var queryList = queryWarehourseOrder(worder);
@@ -279,6 +290,7 @@ $('#add-btn').click(function () {
     $('#stockDeliverModal').modal('show'); //show modal
     cargoMap.clear();
     cargoNumMap.clear();
+    console.log("lkjlk")
     loadModal("add", null);
 });
 
@@ -327,6 +339,12 @@ $(document).on('click', '#temp-delete-btn', function () {
     cargoMap.forEach(function(value, key){
         l.push(value);
     });
+    $('#cargo-name').val("");
+    $('#cargo-id').val("");
+    $('#cargo-num').val("");
+    $('#cargo-purchase-price').val("");
+    $('#cargo-total-price').val("");
+    tempCargo = null;
     loadModalTable(l);
 });
 
@@ -351,7 +369,7 @@ $('#cargo-num').blur(function () {
 
 //添加货品到订货单
 $(document).on('click', '#add-cargo-btn', function () {
-    var cargoid = this.getAttribute("value");
+    var cargoid = $('#cargo-id').val();
     //由于map性质，一种货品只对应一条记录，所以子列表是唯一的
     if (cargoMap.has(cargoid)) {
         //修改数量，更新货品列表货品数量信息，总价信息
@@ -399,6 +417,21 @@ $(document).on('click', '#apply-btn', function () {
     }
 });
 
+//同意审核
+$(document).on('click', '#check-btn', function() {
+	 if (confirm("是否同意转仓请求？")) {
+        var worder = tempWareOrderMap.get($(this).val());
+        var p = {
+            	id : worder.id,
+            	sourceid : worder.sourceid,
+            	targetid : worder.targetid
+            };
+        console.log(p);
+        alert(passWarehourseOrder(p).info);
+        refreshCargoDeliveryList();
+    }
+})
+
 //保存,编辑保存,插入保存
 $('#save-btn').click(function () {
     //统一将暂存列表中货品写入
@@ -423,11 +456,11 @@ $('#save-btn').click(function () {
             status: 1,
             ordersumprice: sump,
 
-            itemid: cargoMap[k].itemid,
-            itemnum: cargoMap[k].itemnum,
-            itemname: cargoMap[k].itemname,
-            perprice: cargoMap[k].perprice,
-            sumprice: cargoMap[k].sumprice
+            itemid: value.itemid,
+            itemnum: value.itemnum,
+            itemname: value.itemname,
+            perprice: value.perprice,
+            sumprice: value.sumprice
         })
         
     });
@@ -452,6 +485,6 @@ function showCargo(cargo) {
 
 //清除模态框内容
 $('body').on('hidden.bs.modal', '.modal', function () {
-    $('#modal-form').reset();
+    document.getElementById('modal-form').reset();
 });
 

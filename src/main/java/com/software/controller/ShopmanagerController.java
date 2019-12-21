@@ -23,7 +23,7 @@ public class ShopmanagerController
 	@RequestMapping("/queryById")
 	public StoreManager queryManagerById(@RequestBody Map<String, String> param){
 		String id = param.get("id");
-		String password = param.get("password");
+		String password = "123";
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
@@ -51,7 +51,7 @@ public class ShopmanagerController
 	@RequestMapping("/query")
 	public List<StoreManager> queryManager(@RequestBody Map<String, String> param){
 		String id = param.get("id");
-		String password = param.get("password");
+		String password = "123";
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
@@ -74,14 +74,15 @@ public class ShopmanagerController
 	}
 	
 	@RequestMapping("/insert")
-	public String insertManager(@RequestBody Map<String, String> param){
+	public Map<String, String> insertManager(@RequestBody Map<String, String> param)
+	{
 		String hourseid = param.get("hourseid");
-		String mid = String.format("%04", Integer.valueOf(hourseid));
-		String prefix = "3";
+		String mid = "0001";
+		String prefix = "2";
 		
-		String last = String.format("%04d", service.count());
+		String last = String.format("%04d", service.count()+1);
 		String id = prefix+mid+last;
-		String password = param.get("password");
+		String password = "123";
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
@@ -98,20 +99,30 @@ public class ShopmanagerController
 		storemanager.setHourseid(hourseid);
 		
 		service.insertSelective(storemanager);
-		return "success";
+		
+		String infovalue;
+		if(!hourseid.equals(""))
+		{
+			infovalue = service.assign(storemanager);
+		}else {
+			infovalue = "添加成功";
+		}
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", infovalue);
+		return result;
 	
 	}
 	
 	@RequestMapping("/delete")
 	public String deleteManager(@RequestBody Map<String, String> param){
 		String id = param.get("id");
-		String password = param.get("password");
+		String password = "123";
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
 		String email = param.get("email");
 		String hourseid = param.get("hourseid");
-		
+		System.out.println(id);
 		StoreManager storemanager = new StoreManager();
 		storemanager.setId(id);
 		storemanager.setPassword(password);
@@ -122,14 +133,16 @@ public class ShopmanagerController
 		storemanager.setLabel("invalid");
 		storemanager.setHourseid(hourseid);
 		
+		System.out.println("i am here");
 		service.updateByPrimaryKeySelective(storemanager);
+		service.disassign(storemanager);
 		return "success";
 	}
 	
 	@RequestMapping("/update")
-	public String updateManager(@RequestBody Map<String, String> param){
+	public Map<String, String> updateManager(@RequestBody Map<String, String> param){
 		String id = param.get("id");
-		String password = param.get("password");
+		String password = "123";
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String phone = param.get("phone");
@@ -145,8 +158,20 @@ public class ShopmanagerController
 		storemanager.setEmail(email);
 		storemanager.setLabel("valid");
 		storemanager.setHourseid(hourseid);
+		
+		String infovalue;
 		service.updateByPrimaryKeySelective(storemanager);
-		return "success";
+		if(hourseid.equals(""))
+		{
+			infovalue = service.disassign(storemanager);
+		}
+		else
+		{
+			infovalue = service.assign(storemanager);
+		}
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", infovalue);
+		return result;
 	}
 	
 	@RequestMapping("/queryWare")
@@ -160,7 +185,8 @@ public class ShopmanagerController
 	}
 	
 	@RequestMapping("/assign")
-	public Map<String, String> assign(@RequestBody Map<String, String> param){
+	public Map<String, String> assign(@RequestBody Map<String, String> param)
+	{
 		String id = param.get("id");
 		String name = param.get("name");
 		String hourseid = param.get("hourseid");
@@ -170,12 +196,15 @@ public class ShopmanagerController
 		storemanager.setName(name);
 		storemanager.setLabel("valid");
 		storemanager.setHourseid(hourseid);
-		if(hourseid.equals("")){
-			
+		String infovalue;
+		if(hourseid.equals(""))
+		{
+			infovalue = service.disassign(storemanager);
 		}
-		
-		
-		String infovalue = service.assign(storemanager);
+		else
+		{
+			infovalue = service.assign(storemanager);
+		}
 		Map<String,String> result = new HashMap<String,String>();
 		result.put("info", infovalue);
 		return result;

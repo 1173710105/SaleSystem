@@ -34,6 +34,7 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 		List<SubBranchDetailMap> resultMap;
 		for (StoreManager storeManager : resultList) 
 		{
+			exampleMap = new SubBranchDetailMap();
 			exampleMap.setPrincipalid(storeManager.getId());
 			resultMap = mapService.select(exampleMap);
 			if (resultMap.size()==0) 
@@ -57,11 +58,6 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 	public void updateByPrimaryKeySelective(StoreManager record) 
 	{
 		managerService.updateByPrimaryKeySelective(record);
-		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
-		exampleMap.setPrincipalid(record.getId());
-		exampleMap.setWarehourseid(Integer.valueOf(record.getHourseid()));
-		exampleMap.setLabel(record.getLabel());
-		mapService.updateByHourseID(exampleMap);
 	}
 
 	@Override
@@ -72,6 +68,7 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 		exampleMap.setWarehourseid(Integer.valueOf(record.getHourseid()));
 		exampleMap.setLabel("valid");
 		exampleMap = mapService.select(exampleMap).get(0);
+		System.out.println(exampleMap);
 		if (exampleMap.getPrincipalid().equals(record.getId())) 
 		{
 			// 已经任命成功了
@@ -79,13 +76,13 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 		}
 		else if (exampleMap.getPrincipalid().equals("")) 
 		{
-			
 			SubBranchDetailMap tempMap = new SubBranchDetailMap();
 			tempMap.setPrincipalid(record.getId());
 			List<SubBranchDetailMap> reusltMap = mapService.select(tempMap);
 			if (reusltMap.size()==1) 
 			{
 				// 取消已经任命的关系
+				tempMap = reusltMap.get(0);
 				tempMap.setPrincipalid("");
 				tempMap.setPrincipalname("");
 				tempMap.setTime(record.getTime());
@@ -114,7 +111,6 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 		// 查不映射关系
 		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
 		exampleMap.setPrincipalid(record.getId());
-		exampleMap.setPrincipalname(record.getName());
 		
 		List<SubBranchDetailMap> resultMap = mapService.select(exampleMap);
 		if (resultMap.size()>=2) 

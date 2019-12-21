@@ -87,12 +87,20 @@ function insertManager(manager) {
 }
 
 //删除店长
-function deleteManager(id) {
-    if (id == "") {
+function deleteManager(manager) {
+    if (manager.id == "") {
         return null;
     }
+    combineManager = $.extend({},defaultShopManagerSetting, manager);
     param = 
-       '{"id":"' + id + '"}';
+       '{'
+        + '"id":"' + combineManager.id + '",'
+        + '"name":"' + combineManager.name + '",'
+        + '"gender":"' + combineManager.gender + '",'
+        + '"phone":"' + combineManager.phone + '",'
+        + '"email":"' + combineManager.email + '",'
+        + '"label":"' + combineManager.label + '",'
+        + '"hourseid":"' + combineManager.hourseid + '"}';
     url = "/shopmanager/delete";
     $.ajaxSettings.async = false;
     console.log("Delete Manager : ", param);

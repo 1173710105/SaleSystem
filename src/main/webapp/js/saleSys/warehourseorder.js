@@ -118,11 +118,11 @@ function applyWarehourseOrder(tid) {
 }
 
 //将仓库单设置为通过状态
-function passWarehourseOrder(tid) {
-    if(tid == "") {
+function passWarehourseOrder(worder) {
+    if(worder.id == "") {
         return;
     }
-    param = buildWorderParam({id:tid});
+    param = buildWorderParam(worder);
     url = "/warehourseOrder/pass";
     console.log("Passs Worder : ", param);
     $.ajaxSettings.async = false;

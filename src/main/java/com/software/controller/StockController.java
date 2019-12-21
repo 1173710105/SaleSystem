@@ -2,6 +2,7 @@ package com.software.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class StockController
 	}
 	
 	@RequestMapping("/update")
-	public String updateStock(@RequestBody List<Stock> param)
+	public Map<String, String> updateStock(@RequestBody List<Stock> param)
 	{
 		System.out.println(param.get(0).toString());
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -44,6 +45,8 @@ public class StockController
 			s.setTime(time);
 		}
 		service.update(param);
-		return "success";
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "更新成功");
+		return result;
 	}
 }
