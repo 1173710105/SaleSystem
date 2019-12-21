@@ -71,7 +71,7 @@ function loadWarehourseOrderList(worderList) {
         //审核中 已通过
         //添加详情按钮
         //源为总仓
-        else if (worderList[i].status == "2" || worderList[i].status == "4") {
+        else if (worderList[i].sourceid.toString() == "-1" && (worderList[i].status == "2" || worderList[i].status == "4")) {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";
@@ -83,7 +83,7 @@ function loadWarehourseOrderList(worderList) {
         //审核中
         //添加详情，审核
         //源为其他子仓
-        else if (worderList[i].status == "2" || worderList[i].status == "4") {
+        else if (worderList[i].status == "2" && worderList[i].principalid.toString() != getCookie("principalid")) {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";
@@ -98,6 +98,18 @@ function loadWarehourseOrderList(worderList) {
             detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
             detailButton.className = "btn btn-sm btn-primary";
             detailButton.innerHTML = "审核";
+            td8.appendChild(detailButton);
+        }
+        //审核中
+        //添加详情，审核
+        //源为其他子仓，且为自己发起的
+        else if (worderList[i].status == "2" && worderList[i].principalid.toString() == getCookie("principalid")) {
+            var detailButton = document.createElement("button");
+            detailButton.type = "button";
+            detailButton.id = "detail-btn";
+            detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
+            detailButton.className = "btn btn-sm btn-primary";
+            detailButton.innerHTML = "详情";
             td8.appendChild(detailButton);
         }
 
@@ -333,8 +345,7 @@ $('#add-cargo-btn').click(function () {
 $(document).on('click', '#apply-btn', function () {
     var r = confirm("是否发起申请，发起后单据不可修改？");
     if (r == true) {
-        applyWarehourseOrder($(this).val());
-        alert("申请成功");
+        alert(applyWarehourseOrder($(this).val()).info);
         refreshCargoStockList();
     }
 });
@@ -343,8 +354,7 @@ $(document).on('click', '#apply-btn', function () {
 $(document).on('click', "#check-btn", function () {
     var r = confirm("是否同意转仓请求？");
     if (r == true) {
-        passWarehourseOrder($(this).val());
-        alert("审核成功");
+        alert(passWarehourseOrder($(this).val()).info);
         refreshCargoStockList();
     }
 });
