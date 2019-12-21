@@ -31,14 +31,24 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 	{
 		List<StoreManager> resultList = managerService.select(record);
 		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
-		SubBranchDetailMap resultMap;
+		List<SubBranchDetailMap> resultMap;
 		for (StoreManager storeManager : resultList) 
 		{
 			exampleMap.setPrincipalid(storeManager.getId());
-			resultMap = mapService.select(exampleMap).get(0);  // 在insert 出保证得到唯一的门店
-			storeManager.setHourseid(resultMap.getWarehourseid()+"");
-			storeManager.setHoursename(resultMap.getWarehoursename());
-			storeManager.setTime(resultMap.getTime());
+			resultMap = mapService.select(exampleMap);
+			if (resultMap.size()==0) 
+			{
+				storeManager.setHourseid("");
+				storeManager.setHoursename("");
+				storeManager.setTime("");
+			}
+			else
+			{
+				exampleMap = resultMap.get(0);
+				storeManager.setHourseid(exampleMap.getWarehourseid()+"");
+				storeManager.setHoursename(exampleMap.getWarehoursename());
+				storeManager.setTime(exampleMap.getTime());
+			}
 		}
 		return resultList;
 	}
