@@ -21,9 +21,8 @@ public class CargoController {
 	@Autowired
 	private ItemManagerSerivce service;
 	@RequestMapping("/queryById")
-	public ReceiveCargo queryCargoById(@RequestBody ReceiveCargo param){
-		System.out.println("ID    "+param.getId());
-		System.out.println("hourseID"+ param.getTablename());
+	public ReceiveCargo queryCargoById(@RequestBody ReceiveCargo param)
+	{
 		param.setLabel("valid");
 		ReceiveCargo result = service.selectByPrimaryKey(param);
 		return result;
