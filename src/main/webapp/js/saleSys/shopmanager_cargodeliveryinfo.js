@@ -40,7 +40,7 @@ function loadWarehourseOrderList(worderList) {
         var td8 = document.createElement("td");
         //未申请
         //添加编辑按钮,发起申请按钮,删除按钮
-        if (worderList[i].status == "0") {
+        if (worderList[i].status == "1") {
             var editButton = document.createElement("button");
             editButton.type = "button";
             editButton.id = "edit-btn";
@@ -65,9 +65,52 @@ function loadWarehourseOrderList(worderList) {
             deleButton.innerHTML = "删除";
             td8.appendChild(deleButton);
         }
-        //审核中 已通过
-        //添加详情按钮
-        else if (worderList[i].status == "1" || worderList[i].status == "2") {
+        //审核中且目的为对方子仓（非总仓）发起的申请（对方：进货申请--》我方：出货审核）
+        //添加详情 审核按钮
+        //若是对方发起请求，则负责人id与我方店长id不同
+        else if(worderList[i].targetid != "-1" && worderList[i].status == "2" && worderList[i].principalid != getCookie("principalid")) {
+            var detailButton = document.createElement("button");
+            detailButton.type = "button";
+            detailButton.id = "detail-btn";
+            detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
+            detailButton.className = "btn btn-sm btn-primary";
+            detailButton.innerHTML = "详情";
+            td8.appendChild(detailButton);
+
+            var applyButton = document.createElement("button");
+            applyButton.type = "button";
+            applyButton.id = "check-btn";
+            applyButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
+            applyButton.className = "btn btn-sm btn-primary";
+            applyButton.innerHTML = "审核";
+            td8.appendChild(applyButton);
+        }
+        //审核中且目的为对方子仓（非总仓）我方发起的申请（我方：出货申请--》对方：进货审核）
+        //添加详情
+        //若是我方发起请求，则负责人id与我方店长id相同
+        else if(worderList[i].targetid != "-1" && worderList[i].status == "2" && worderList[i].principalid == getCookie("principalid")) {
+            var detailButton = document.createElement("button");
+            detailButton.type = "button";
+            detailButton.id = "detail-btn";
+            detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
+            detailButton.className = "btn btn-sm btn-primary";
+            detailButton.innerHTML = "详情";
+            td8.appendChild(detailButton);
+        }
+        //审核中且目的为总仓的申请
+        //添加详情
+        else if(worderList[i].status == "2" && worderList[i].targetid == "-1") {
+            var detailButton = document.createElement("button");
+            detailButton.type = "button";
+            detailButton.id = "detail-btn";
+            detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
+            detailButton.className = "btn btn-sm btn-primary";
+            detailButton.innerHTML = "详情";
+            td8.appendChild(detailButton);
+        }
+        //已通过的（包含目的总仓和子仓）
+        //显示详情
+        else if (worderList[i].status == "4") {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";
@@ -93,43 +136,42 @@ function loadWarehourseOrderList(worderList) {
 //加载模态框
 function loadModal(type, order) {
     $('#type').val(type);
-    var modal = $("#stockAddModal");
-    console.log(modal);
+    var modal = $("#stockDeliverModal");
     switch (type) {
         case "add": {
             $('.div-oid')[0].style.display = "none";
-            $('.modal-foot')[0].style.display = "";
+            $('.modal-footer')[0].style.display = "";
             $('.save-btn')[0].style.display = "";
-            modal.find('.modal-title').text("添加进货");
+            modal.find('.modal-title').text("添加出货");
             break;
         }
         case "edit": {
             $('.div-oid')[0].style.display = "";
-            $('.modal-foot')[0].style.display = "";
+            $('.modal-footer')[0].style.display = "";
             $('.save-btn')[0].style.display = "";
-            modal.find('.modal-title').text("编辑进货");
+            modal.find('.modal-title').text("编辑出货");
 
             $('#order-id').val(order.id);
             $('#order-stock-position').val(order.targetid);
             $('#order-source-position').val(order.sourceid);
-            $('#order-principal').val(order.receiverprincipleid);
+            $('#order-principal').val(order.principalname);
             //填充表格
-            $('#type').setAttribute("type", type);
+            document.getElementById('type').setAttribute("type", type);
             loadModalTable(order.items);
             break;
         }
         case "detail": {
             $('.div-oid')[0].style.display = "";
-            $('.modal-foot')[0].style.display = "none";
+            $('.modal-footer')[0].style.display = "none";
             $('.save-btn')[0].style.display = "none";
             modal.find('.modal-title').text("进货详情");
 
             $('#order-id').val(order.id);
             $('#order-stock-position').val(order.targetid);
             $('#order-source-position').val(order.sourceid);
-            $('#order-principal').val(order.receiverprincipleid);
+            $('#order-principal').val(order.principalname);
             //填充表格
-            $('#type').setAttribute("type", type);
+            document.getElementById('type').setAttribute("type", type);
             loadModalTable(order.items);
             break;
         }
@@ -140,8 +182,9 @@ function loadModalTable(items) {
     var editTable = document.getElementById("temp-worder-tbody");
     editTable.innerHTML = "";
     for (var i = 0; i < items.length; i++) {
+        //填充货品数量
         cargoMap.set(items[i].itemid.toString(), items[i]);
-        cargoNumMap.set(items[i].itemid.toString(), items[i].itemnum); //填充货品数量
+        cargoNumMap.set(items[i].itemid.toString(), items[i].itemnum); 
         var tr = document.createElement("tr");
         tr.setAttribute("id", "temp-tr");
         tr.setAttribute("cid", items[i].itemid);
@@ -178,190 +221,6 @@ function loadModalTable(items) {
 
 }
 
-//搜索
-$('#search-btn').click(function () {
-    refreshCargoDeliveryList();
-});
-
-//添加进货
-$('#add-btn').click(function () {
-    $('#stockAddModal').modal('show'); //show modal
-    cargoMap.clear();
-    cargoNumMap.clear();
-    loadModal("add", null);
-});
-
-//编辑进货
-$(document).on('click', '#edit-btn', function () {
-    $('#stockAddModal').modal('show'); //show modal
-    var id = $(this).val();
-    loadModal("edit", tempWareOrderMap.get(id));
-});
-
-//进货详细
-$(document).on('click', '#detail-btn', function () {
-    $('#stockAddModal').modal('show'); //show modal
-    var id = $(this).val();
-    loadModal("detail", tempWareOrderMap.get(id));
-});
-
-
-
-//获取模态框内点选单元格的值,更新货品信息栏
-$(document).on('click', '#temp-tr', function () {
-    var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
-    console.log("行号：" + (td.parentElement.rowIndex) + "，列号：" + td.cellIndex);
-    //填充订单参数
-    var cargoid = $(this).getAttribute("cid");
-    preCargoId = cargoid;
-    showCargo(cargoMap.get(cargoid));
-});
-
-//删除订单
-$(document).on('click', '#delete-btn', function () {
-    var r = confirm("是否删除？");
-    if (r == true) {
-        var orderid = $(this).val();
-        deleteWarehourseOrder(orderid);
-        alert("删除成功");
-        refreshCargoDeliveryList();
-    }
-});
-
-//删除货品
-//删除暂存列表中货品
-$(document).on('click', '#temp-delete-btn', function () {
-    var cargoid = $(this).val();
-    cargoMap.delete(cargoid);
-    loadModalTable();
-});
-
-//修改货品id，请求新货品数据，移除货品列表之前的货品
-$('#cargo-id').blur(function () {
-    tempcargo = queryCargoById($(this).val(), getCookie("warehourseid"));
-    if (tempcargo == null) {
-        alert("货品不存在");
-        return;
-    }
-    $('#cargo-name').val(tempcargo.name);
-    $('#cargo-id').val(tempcargo.id);
-    $('#cargo-purchase-price').val(tempcargo.purchaseprice);
-    $('#cargo-total-price').val(
-        parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
-});
-
-$('#cargo-num').blur(function () {
-    $('#cargo-total-price').val(
-        parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
-})
-
-//添加货品到订货单
-$(document).on('click', '#add-cargo-btn', function () {
-    var cargoid = $(this).val();
-    //由于map性质，一种货品只对应一条记录，所以子列表是唯一的
-    if (cargoMap.has(cargoid)) {
-        //修改数量，更新货品列表货品数量信息，总价信息
-        if (cargoid == preCargoId) {
-            cargoMap.get(cargoid).itemnum = $('#cargo-num').val();
-            cargoMap.get(cargoid).perprice = $('#cargo-purchase-price').val();
-            cargoMap.get(cargoid).sumprice = $('#cargo-total-price').val();
-        }
-        //改变了id且该id存在于货品列表中，则替换map中对应值，删去之前的货品对象
-        else {
-            cargoMap.get(cargoid).itemnum = $('#cargo-num').val();
-            cargoMap.get(cargoid).perprice = $('#cargo-purchase-price').val();
-            cargoMap.get(cargoid).sumprice = $('#cargo-total-price').val();
-            cargoMap.delete(preCargoId);
-        }
-    } else {
-        //不存在对应货品，新增记录插入到map中
-        cargoMap.set(cargoid, {
-            itemid: cargoid,
-            //itemname :  $('#cargo-name').val(),
-            //itemnum : $('#cargo-num').val(),
-            //perprice : $('#cargo-purchase-price').val(),
-            //sumprice : $('#cargo-total-price').val()
-            itemname: tempcargo.name,
-            itemnum: $('#cargo-num').val(),
-            perprice: tempcargo.wholesaleprice,
-            sumprice: $('#cargo-total-price').val()
-        });
-    }
-    //更新缓存
-    var l = [];
-    for (var k in cargoMap) {
-        l.push(cargoMap[k]);
-    }
-    loadModalTable(l);
-});
-
-//发起申请
-$(document).on('click', '#apply-btn', function () {
-    var r = confirm("是否发起申请，发起后单据不可修改？");
-    if (r == true) {
-        applyWarehourseOrder($(this).val());
-        alert("申请成功");
-        refreshCargoDeliveryList();
-    }
-});
-
-//保存,编辑保存,插入保存
-$('#save-btn').click(function () {
-    //统一将暂存列表中货品写入
-    var cargoObjectList = [];
-    var sump = 0;
-    for (var k in cargoMap) {
-        sump += parseFloat(cargoMap[k].perprice) * parseInt(cargoMap[k].itemnum);
-    }
-    //新建订单
-    for (var k in cargoMap) {
-        cargoObjectList.push({
-            id: $('#order-id').val(),  //仓库单id
-            sourceid: getCookie("warehourseid"),
-            sourcename: getCookie("warehoursename"),                                 //填充名称
-            targetid: $('#order-target-position').val(),
-            targetname: '',
-            principalid: getCookie("principalid"),
-            principalname: getCookie("principalname"),
-            type: 2,
-            createtime: '',
-            checktime: '',
-            status: 1,
-            ordersumprice: sump,
-
-            itemid: cargoMap[k].itemid,
-            itemnum: cargoMap[k].itemnum,
-            itemname: cargoMap[k].itemname,
-            perprice: cargoMap[k].perprice,
-            sumprice: cargoMap[k].sumprice
-        })
-        
-    }
-    if($('#type').val() == "add") {
-        insertWarehourseOrder(cargoObjectList);
-    } else if($("#type").val() == "edit") {
-        updateWarehourseOrder(cargoObjectList);
-    }
-    //清空缓存list
-    refreshCargoDeliveryList();
-});
-
-//显示模态框中货品信息
-function showCargo(cargo) {
-    $('#cargo-name').val(cargo.itemname);
-    $('#cargo-id').val(cargo.itemid);
-    $('#cargo-num').val(cargo.itemnum);
-    $('#cargo-purchase-price').val(cargo.perprice);
-    $('#cargo-total-price').val(cargo.sumprice);
-}
-
-//******************************************************/
-//清除模态框内容
-$('body').on('hidden.bs.modal', '.modal', function () {
-    // $(this).removeData('bs.modal');
-    window.location.reload();
-});
-
 function cleanCargoDeliveryList() {
     tempWareOrderMap.clear();
     cargoMap.clear();
@@ -373,12 +232,16 @@ function refreshCargoDeliveryList() {
     cleanCargoDeliveryList();
     worder = {
         id: $('#search-order-id').val(),
-        sourceid: $('#search-order-source').val(),
+        sourceid: $('#search-order-target').val(),
         type : $('#search-type').val(),
         status: $('#search-status').val(),
+        principalid : $('#search-principal-id'),
         sourceid: getCookie("warehourseid")
     }
     var queryList = queryWarehourseOrder(worder);
+    if(queryList.length == 0){
+        return;
+    }
     for (var i = 0; i < queryList.length; i++) {
         tempWareOrderMap.set(queryList[i].id.toString(), queryList[i]);
     }
@@ -403,3 +266,192 @@ function getType(type) {
         return "转仓";
     }
 }
+
+/*************************************************/
+
+//搜索
+$('#search-btn').click(function () {
+    refreshCargoDeliveryList();
+});
+
+//添加进货
+$('#add-btn').click(function () {
+    $('#stockDeliverModal').modal('show'); //show modal
+    cargoMap.clear();
+    cargoNumMap.clear();
+    loadModal("add", null);
+});
+
+//编辑进货
+$(document).on('click', '#edit-btn', function () {
+    $('#stockDeliverModal').modal('show'); //show modal
+    var id = $(this).val();
+    loadModal("edit", tempWareOrderMap.get(id));
+});
+
+//进货详细
+$(document).on('click', '#detail-btn', function () {
+    $('#stockDeliverModal').modal('show'); //show modal
+    var id = $(this).val();
+    loadModal("detail", tempWareOrderMap.get(id));
+});
+
+
+
+//获取模态框内点选单元格的值,更新货品信息栏
+$(document).on('click', '#temp-tr', function () {
+    var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
+    console.log("行号：" + (td.parentElement.rowIndex) + "，列号：" + td.cellIndex);
+    //填充订单参数
+    var cargoid = this.getAttribute("cid");
+    preCargoId = cargoid;
+    showCargo(cargoMap.get(cargoid));
+});
+
+//删除订单
+$(document).on('click', '#delete-btn', function () {
+    var r = confirm("是否删除？");
+    if (r == true) {
+        var orderid = $(this).val();
+        alert(deleteWarehourseOrder(orderid).info);
+        refreshCargoDeliveryList();
+    }
+});
+
+//删除货品
+//删除暂存列表中货品
+$(document).on('click', '#temp-delete-btn', function () {
+    var cargoid = $(this).val();
+    cargoMap.delete(cargoid);
+    var l = [];
+    cargoMap.forEach(function(value, key){
+        l.push(value);
+    });
+    loadModalTable(l);
+});
+
+//修改货品id，请求新货品数据，移除货品列表之前的货品
+$('#cargo-id').blur(function () {
+    tempcargo = queryCargoById($(this).val(), getCookie("warehourseid"));
+    if (tempcargo == null) {
+        alert("货品不存在");
+        return;
+    }
+    $('#cargo-name').val(tempcargo.name);
+    $('#cargo-id').val(tempcargo.id);
+    $('#cargo-purchase-price').val(tempcargo.purchaseprice);
+    $('#cargo-total-price').val(
+        parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
+});
+
+$('#cargo-num').blur(function () {
+    $('#cargo-total-price').val(
+        parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
+})
+
+//添加货品到订货单
+$(document).on('click', '#add-cargo-btn', function () {
+    var cargoid = this.getAttribute("value");
+    //由于map性质，一种货品只对应一条记录，所以子列表是唯一的
+    if (cargoMap.has(cargoid)) {
+        //修改数量，更新货品列表货品数量信息，总价信息
+        if (cargoid == preCargoId) {
+            cargoMap.get(cargoid).itemnum = $('#cargo-num').val();
+            cargoMap.get(cargoid).perprice = $('#cargo-purchase-price').val();
+            cargoMap.get(cargoid).sumprice = $('#cargo-total-price').val();
+        }
+        //改变了id且该id存在于货品列表中，则替换map中对应值，删去之前的货品对象
+        else {
+            cargoMap.get(cargoid).itemnum = $('#cargo-num').val();
+            cargoMap.get(cargoid).perprice = $('#cargo-purchase-price').val();
+            cargoMap.get(cargoid).sumprice = $('#cargo-total-price').val();
+            cargoMap.delete(preCargoId);
+        }
+    } else {
+        //不存在对应货品，新增记录插入到map中
+    	var object = {
+                itemid: tempcargo.id,
+                itemname: tempcargo.name,
+                itemnum: $('#cargo-num').val(),
+                perprice: tempcargo.purchaseprice,
+                sumprice: $('#cargo-total-price').val()
+            };
+        cargoMap.set(tempcargo.id.toString(), object);
+    }
+    //更新缓存
+    var l = [];
+    cargoMap.forEach(function(value, key) {
+    	l.push(value);
+    })
+    var sump;
+    cargoMap.forEach(function(value, key) {
+        sump += parseFloat(value.perprice) * parseInt(value.itemnum);
+    });
+    $('#total-price').text("进货总价: " + sump);
+    loadModalTable(l);
+});
+
+//发起申请
+$(document).on('click', '#apply-btn', function () {
+    if (confirm("是否发起申请，发起后单据不可修改？")) {
+        alert(applyWarehourseOrder($(this).val()).info);
+        refreshCargoDeliveryList();
+    }
+});
+
+//保存,编辑保存,插入保存
+$('#save-btn').click(function () {
+    //统一将暂存列表中货品写入
+    var cargoObjectList = [];
+    var sump = 0;
+    cargoMap.forEach(function(value, key) {
+        sump += parseFloat(value.perprice) * parseInt(value.itemnum);
+    });
+    //新建订单
+    cargoMap.forEach(function(value, key) {
+        cargoObjectList.push({
+            id: $('#order-id').val(),  //仓库单id
+            sourceid: getCookie("warehourseid"),
+            sourcename: getCookie("warehoursename"),                                 //填充名称
+            targetid: $('#order-target-position').val(),
+            targetname: '',
+            principalid: getCookie("principalid"),
+            principalname: getCookie("principalname"),
+            type: 2,
+            createtime: '',
+            checktime: '',
+            status: 1,
+            ordersumprice: sump,
+
+            itemid: cargoMap[k].itemid,
+            itemnum: cargoMap[k].itemnum,
+            itemname: cargoMap[k].itemname,
+            perprice: cargoMap[k].perprice,
+            sumprice: cargoMap[k].sumprice
+        })
+        
+    });
+    $('#stockDeliverModal').modal('hide');
+    if($('#type').val() == "add") {
+        alert(insertWarehourseOrder(cargoObjectList).info);
+    } else if($("#type").val() == "edit") {
+        alert(updateWarehourseOrder(cargoObjectList).info);
+    }
+    //清空缓存list
+    refreshCargoDeliveryList();
+});
+
+//显示模态框中货品信息
+function showCargo(cargo) {
+    $('#cargo-name').val(cargo.itemname);
+    $('#cargo-id').val(cargo.itemid);
+    $('#cargo-num').val(cargo.itemnum);
+    $('#cargo-purchase-price').val(cargo.perprice);
+    $('#cargo-total-price').val(cargo.sumprice);
+}
+
+//清除模态框内容
+$('body').on('hidden.bs.modal', '.modal', function () {
+    $('#modal-form').reset();
+});
+

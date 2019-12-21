@@ -4,6 +4,7 @@ var tempStockMap = new Map();
 
 window.onload = function () {
     this.refreshStockList();
+    this.document.getElementById('search-warehourse-id').innerHTML = $('#search-warehourse-id').innerHTML + this.buildWMenuOptionHTML();
 }
 
 //搜索
