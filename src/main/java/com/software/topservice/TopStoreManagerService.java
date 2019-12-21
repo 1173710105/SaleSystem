@@ -13,5 +13,7 @@ public interface TopStoreManagerService
 
     public void updateByPrimaryKeySelective(StoreManager record);
     
+    public String assign(StoreManager record);
+    
     public int count();
 }
