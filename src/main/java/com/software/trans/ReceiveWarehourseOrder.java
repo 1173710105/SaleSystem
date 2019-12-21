@@ -29,10 +29,6 @@ public class ReceiveWarehourseOrder
     private String sumprice;
 	
 	
-	
-	
-
-
 	public String getId() {
 		return id;
 	}
