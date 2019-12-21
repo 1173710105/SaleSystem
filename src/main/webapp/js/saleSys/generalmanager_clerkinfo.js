@@ -1,8 +1,11 @@
 window.onload = function () {
-    this.refreshClerkList();
-    this.document.getElementById('search-rep').innerHTML = '<option value="">未分配</option>' + this.buildWMenuOptionNoBaseHTML();
-    this.document.getElementById('clerk-rep').innerHTML = '<option value="">无</option>' + this.buildWMenuOptionNoBaseHTML();
+    this.document.getElementById('search-rep').innerHTML = '<option value="">未分配</option>' + buildWMenuOptionNoBaseHTML();
+    this.document.getElementById('clerk-rep').innerHTML = '<option value="">无</option>' + buildWMenuOptionNoBaseHTML();
     this.tempRep = this.queryWarehourseMenu();
+    $("#search-rep").val($('#search-rep option')[1].getAttribute("value"));
+	$('#search-rep option')[0].style.display = "none";
+	
+    this.refreshClerkList();
 }
 
 var tempRep;
@@ -34,7 +37,7 @@ function loadClerkList(cl) {
         var td5 = document.createElement("td");
         td5.innerHTML = tempRep.get(cl[i].hourseid);
         var td6 = document.createElement("td");
-        td6.innerHTML = cl[i].position == "staff" ? "店员" : "店长";
+        td6.innerHTML = cl[i].position == "staff" ? "店员" : cl[i].position == ""? "未分配" :"店长";
         var td7 = document.createElement("td");
         var editButton = document.createElement("button");
         editButton.type = "button";
@@ -50,6 +53,7 @@ function loadClerkList(cl) {
         deleButton.className = "btn btn-sm btn-danger";
         deleButton.innerHTML = "删除";
 
+        var detailButton = document.createElement("button");
         detailButton.type = "button";
         detailButton.id = "delete-btn";
         detailButton.setAttribute("value", cl[i].id); //将id封装在value中
@@ -58,7 +62,7 @@ function loadClerkList(cl) {
 
         if (cl[i].position == "shop-manager") {
             td7.appendChild(editButton);
-            td7.appendChild(deleteButton);
+            td7.appendChild(deleButton);
         } else if (cl[i].position == "staff") {
             td7.appendChild(detailButton);
         }
@@ -92,30 +96,31 @@ function refreshClerkList() {
     if ($('#search-position').val() == "staff") {
         var tl = queryStaff(clerk);
         for (var i in tl) {
-            tl[i][position] = "staff";
+            tl[i].position = "staff";
+            clerkList.push(tl[i]);
         }
-        clerkList.concat(tl);
     } else if ($('#search-position').val() == "shop-manager") {
         var tl = queryManager(clerk);
         for (var i in tl) {
-            tl[i][position] = "shop-manager";
+            tl[i].position = "shop-manager";
+            clerkList.push(tl[i]);
         }
-        clerkList.concat(tl);
     } else if ($('#search-position').val() == "") {
         var tl = queryStaff(clerk);
         for (var i in tl) {
-            tl[i][position] = "staff";
+            tl[i].position = "staff";
+            clerkList.push(tl[i]);
         }
-        clerkList.concat(tl);
         tl = queryManager(clerk);
         for (var i in tl) {
-            tl[i][position] = "shop-manager";
+            tl[i].position = "shop-manager";
+            clerkList.push(tl[i]);
         }
-        clerkList.concat(tl);
     }
     for (var i = 0; i < clerkList.length; i++) {
         this.tempClerkMap.set(clerkList[i].id.toString(), clerkList[i]);
     }
+    console.log("wer", clerkList);
     loadClerkList(clerkList);
 }
 
@@ -127,7 +132,7 @@ $('#search-btn').click(function () {
 //弹出添加店长
 $('#add-btn').click(function () {
     $('#clerkModal').modal('show'); //show modal
-    modal.find('.modal-title').text("添加店长");
+    $('#clerkModal').find('.modal-title').text("添加店长");
     $('.modal-footer')[0].style.display = "block";
     document.getElementById('clerk-rep').removeAttribute("readonly");
 });
@@ -135,7 +140,7 @@ $('#add-btn').click(function () {
 //编辑
 $(document).on('click', '#edit-btn', function () {
     $('#clerkModal').modal('show'); //show modal
-    modal.find('.modal-title').text("编辑店长");
+    $('#clerkModal').find('.modal-title').text("编辑店长");
     $('.modal-footer')[0].style.display = "block";
     document.getElementById('clerk-rep').removeAttribute("readonly");
 
@@ -146,12 +151,14 @@ $(document).on('click', '#edit-btn', function () {
     $('#clerk-phone').val(clerk.phone);
     $('#clerk-email').val(clerk.email);
     $('#clerk-rep').val(clerk.hourseid);
+    
+    preRep = clerk.hourseid;
 });
 
 //店员详情
 $(document).on('click', '#detail-btn', function () {
     $('#clerkModal').modal('show'); //show modal
-    modal.find('.modal-title').text("店员详情");
+    $('#clerkModal').find('.modal-title').text("店员详情");
     $('.modal-footer')[0].style.display = "none";
     document.getElementById('clerk-rep').setAttribute("readonly", "readonly");
 
@@ -165,8 +172,13 @@ $(document).on('click', '#detail-btn', function () {
     $('#clerk-position').val("staff");
 });
 
-$("#clerk-rep").change(function () {
-    preRep = $(this).val();
+$("#search-position").change(function () {
+	if($(this).val() == "shop-manager") {
+		$('#search-rep option')[0].style.display = "";
+	} else {
+		$("#search-rep").val($('#search-rep option')[1].getAttribute("value"));
+		$('#search-rep option')[0].style.display = "none";
+	}
 });
 
 //保存模态框内容
@@ -188,7 +200,7 @@ $('#save-btn').click(function () {
         }
         //更新
         var info;
-        if ((info = assignManager(clerk)) != "任命成功") {
+        if ((info = assignManager(clerk).info) != "任命成功") {
             alert(info);
         }
         $('#clerkModal').modal('hide');
@@ -203,13 +215,15 @@ $('#save-btn').click(function () {
         }
         updateManager(clerk);
         //更新
+        console.log("pre", preRep);
+        console.log("cur", $('#clerk-rep').val());
         if (preRep != $('#clerk-rep').val()) {
             clerk = {
                 id: $('#clerk-id').val(),
                 hourseid: $('#clerk-rep').val()
             }
             var info;
-            if ((info = assignManager(clerk)) != "任命成功") {
+            if ((info = assignManager(clerk).info) != "任命成功") {
                 alert(info);
             }
         }
@@ -233,5 +247,5 @@ $(document).on('click', '#delete-btn', function () {
 
 //清除模态框内容
 $('body').on('hidden.bs.modal', '.modal', function () {
-    $('#clerk-form').reset();
+    document.getElementById('clerk-form').reset();
 });

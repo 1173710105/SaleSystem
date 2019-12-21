@@ -170,6 +170,9 @@ public class ShopmanagerController
 		storemanager.setName(name);
 		storemanager.setLabel("valid");
 		storemanager.setHourseid(hourseid);
+		if(hourseid.equals("")){
+			
+		}
 		
 		
 		String infovalue = service.assign(storemanager);

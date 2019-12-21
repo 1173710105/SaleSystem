@@ -37,13 +37,19 @@
                 <div class="modal-body">
                     <form id="clerk-form">
                     <div class="row">
+                        <div class="col-md-12">
+                            <caption>编号</caption>
+                            <input type="text" readonly="readonly" class="form-control" id="clerk-id">
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <caption>姓名</caption>
                             <input type="text" class="form-control" id="clerk-name">
                         </div>
                         <div class="col-md-6">
                             <caption>性别</caption>
-                            <select class="form-control" id="clerk-sex">
+                            <select class="form-control" id="clerk-gender">
                                 <option value="男">男</option>
                                 <option value="女">女</option >
                             </select>
@@ -153,36 +159,14 @@
                     </tr>
                 </thead>
                 <tbody id="clerk-tbody">
-                    <tr>
-                        <td>1</td>
-                        <td>张三</td>
-                        <td>男</td>
-                        <td>125xxx</td>
-                        <td>xxx@email</td>
-                        <td>1号仓</td>
-                        <td>店员</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                data-target="#clientModal">编辑</button>
-                            <button id="delete_btn" type="button" class="btn btn-sm btn-danger">删除</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>李四</td>
-                        <td>男</td>
-                        <td>180xxx</td>
-                        <td>xxx@gmail</td>
-                        <td>1号仓</td>
-                        <td>店长</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                data-target="#clientModal">编辑</button>
-                            <button id="delete_btn" type="button" class="btn btn-danger btn-sm">删除</button>
-                        </td>
-                    </tr>
+                   
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+<script type="text/javascript" src="../js/saleSys/cookie.js"></script>
+<script type="text/javascript" src="../js/saleSys/warehourse.js"></script>
+<script type="text/javascript" src="../js/saleSys/staff.js"></script>
+<script type="text/javascript" src="../js/saleSys/shopmanager.js"></script>
+<script type="text/javascript" src="../js/saleSys/generalmanager_clerkinfo.js"></script>

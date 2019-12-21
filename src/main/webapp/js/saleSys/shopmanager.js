@@ -17,7 +17,7 @@ function sendShopManagerJsonAjax(url, param) {
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
@@ -28,7 +28,7 @@ function sendShopManagerJsonAjax(url, param) {
         error: function () {
         }
     });
-    return data;
+    return tempdata;
  }
 
 //通过id查找店长
@@ -54,7 +54,7 @@ function queryManager(manager) {
        '{'
         + '"id":"' + combineManager.id + '",'
         + '"name":"' + combineManager.name + '",'
-        + '"gender:"' + combineManager.gender + '",'
+        + '"gender":"' + combineManager.gender + '",'
         + '"phone":"' + combineManager.phone + '",'
         + '"email":"' + combineManager.email + '",'
         + '"label":"' + combineManager.label + '",'
@@ -75,7 +75,7 @@ function insertManager(manager) {
        '{'
         + '"id":"' + combineManager.id + '",'
         + '"name":"' + combineManager.name + '",'
-        + '"gender:"' + combineManager.gender + '",'
+        + '"gender":"' + combineManager.gender + '",'
         + '"phone":"' + combineManager.phone + '",'
         + '"email":"' + combineManager.email + '",'
         + '"label":"' + combineManager.label + '",'
@@ -109,7 +109,7 @@ function updateManager(manager) {
     '{'
     + '"id":"' + combineClient.id + '",'
     + '"name":"' + combineClient.name + '",'
-    + '"gender:"' + combineClient.gender + '",'
+    + '"gender":"' + combineClient.gender + '",'
     + '"phone":"' + combineClient.phone + '",'
     + '"email":"' + combineClient.email + '",'
     + '"hourseid":"' + combineClient.hourseid + '"}';
@@ -141,7 +141,7 @@ function assignManager(manager) {
     '{'
     + '"id":"' + combineClient.id + '",'
     + '"name":"' + combineClient.name + '",'
-    + '"gender:"' + combineClient.gender + '",'
+    + '"gender":"' + combineClient.gender + '",'
     + '"phone":"' + combineClient.phone + '",'
     + '"email":"' + combineClient.email + '",'
     + '"hourseid":"' + combineClient.hourseid + '"}';

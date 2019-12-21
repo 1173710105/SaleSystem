@@ -94,9 +94,16 @@ function updateWarehourse(warehourse) {
 //请求id与仓库映射
 function queryWarehourseMenu() {
 	url = "/warehourse/typemenu";
+	param = "";
     console.log("QueryMenu Warehourse : ", param);
     $.ajaxSettings.async = false;
-    return sendWarehourseJsonAjax(url, param);
+    var map = new Map();
+    var obj = sendWarehourseJsonAjax(url, param);
+    var keys = Object.keys(obj);
+    for(var i in keys) {
+    	map.set(keys[i].toString(), obj[keys[i]]);
+    }
+    return map;
 }
 
 function buildWarehourseParam(warehourse) {
@@ -114,7 +121,8 @@ function buildWarehourseParam(warehourse) {
 
 function buildWMenuOptionHTML() {
     var html;
-    queryWarehourseMenu().forEach(function(value, key) {
+    var map = queryWarehourseMenu();
+    map.forEach(function(value, key) {
         html += '<option value="' + key + '">' + value + '</option>';
     })
     return html;
@@ -122,13 +130,11 @@ function buildWMenuOptionHTML() {
 
 function buildWMenuOptionNoBaseHTML() {
     var html;
-    queryWarehourseMenu().forEach(function(value, key) {
-        if(key == -1) {
-        	
-        } else {
-        	html += '<option value="' + key + '">' + value + '</option>';
-        }
-        
+    var map = queryWarehourseMenu();
+    map.forEach(function(value, key) {
+    	if(key != "-1") {
+    		html += '<option value="' + key + '">' + value + '</option>';
+    	}
     })
     return html;
 }
