@@ -29,6 +29,9 @@
 		  PRIMARY KEY (`ID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='子仓库员工信息';
   </update> 
+  <delete id="dropTable" parameterType="String">
+   		drop table ${tablename}
+  </delete>
   <select id="selectByPrimaryKey" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

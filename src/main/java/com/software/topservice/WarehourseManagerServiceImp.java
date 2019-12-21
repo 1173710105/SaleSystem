@@ -66,7 +66,7 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		//  sub_warehourse_itemToPrice_hourseid
 		//	sub_warehourse_detail_hourseid
 		
-		String staffTableName = "sub_staff_hourseid_"+String.format("%04d", hourseid);
+		String staffTableName = "sub_staff_"+String.format("%04d", hourseid);
 		String saleorderCommonTableName = "sub_saleorder_common_"+String.format("%04d", hourseid);
 		String saleorderItemTableName = "sub_saleorder_item_"+String.format("%04d", hourseid);
 		String warehourseItemToPriceTableName = "sub_warehourse_itemtoprice_"+String.format("%04d", hourseid);
