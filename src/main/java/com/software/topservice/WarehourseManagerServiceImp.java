@@ -91,7 +91,6 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		WarehourseDetail exampleDetail = new WarehourseDetail();
 		exampleDetail.setTablename(warehourseDetailTableName);
 		detailService.dropTable(exampleDetail);
-		
 	}
 
 	@Override
