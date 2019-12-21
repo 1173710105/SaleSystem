@@ -19,7 +19,7 @@
     from store_manager
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="count" parameterType="com.software.domain.Staff" resultMap="BaseResultMap">
+  <select id="count" parameterType="com.software.domain.Staff" resultType="java.lang.Integer">
   	 	SELECT COUNT(*) FROM store_manager
   </select>
     <select id="select" parameterType="com.software.domain.StoreManager" resultMap="BaseResultMap">
@@ -107,22 +107,22 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.StoreManager">
     update store_manager
     <set>
-      <if test="password != null">
+      <if test="password != null and password!=''">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="name != null">
+      <if test="name != null and name !=''">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
+      <if test="gender != null and gender!=''">
         gender = #{gender,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
+      <if test="phone != null and phone !=''">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
+      <if test="email != null and email!=''">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+      <if test="label != null and label!=''">
         label = #{label,jdbcType=VARCHAR},
       </if>
     </set>

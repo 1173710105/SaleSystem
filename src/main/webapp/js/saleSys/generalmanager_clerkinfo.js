@@ -183,51 +183,29 @@ $("#search-position").change(function () {
 
 //保存模态框内容
 $('#save-btn').click(function () {
-    if ($('#clerk-id').val() == "" && $('#clerk-rep').val() != "") {
-        var clerk = {
+    if ($('#clerk-id').val() == "") {
+    	$('#clerkModal').modal('hide');
+    	var clerk = {
             id: $('#clerk-id').val(),
             name: $('#clerk-name').val(),
             gender: $('#clerk-gender').val(),
             phone: $('#clerk-phone').val(),
             email: $('#clerk-email').val(),
-            hourseid: ''
-        }
-        //先插入店长，在更新映射关系
-        insertManager(clerk);
-        clerk = {
-            id: $('#clerk-id').val(),
             hourseid: $('#clerk-rep').val()
         }
-        //更新
-        var info;
-        if ((info = assignManager(clerk).info) != "任命成功") {
-            alert(info);
-        }
-        $('#clerkModal').modal('hide');
+        alert(insertManager(clerk).info);
     } else {
-        var clerk = {
+    	$('#clerkModal').modal('hide');
+    	var clerk = {
             id: $('#clerk-id').val(),
             name: $('#clerk-name').val(),
             gender: $('#clerk-gender').val(),
             phone: $('#clerk-phone').val(),
             email: $('#clerk-email').val(),
-            hourseid: ''
+            hourseid: $('#clerk-rep').val()
         }
-        updateManager(clerk);
-        //更新
-        console.log("pre", preRep);
-        console.log("cur", $('#clerk-rep').val());
-        if (preRep != $('#clerk-rep').val()) {
-            clerk = {
-                id: $('#clerk-id').val(),
-                hourseid: $('#clerk-rep').val()
-            }
-            var info;
-            if ((info = assignManager(clerk).info) != "任命成功") {
-                alert(info);
-            }
-        }
-        $('#clerkModal').modal('hide');
+        alert(updateManager(clerk).info);
+        
     }
     refreshClerkList();
 });

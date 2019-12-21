@@ -3,8 +3,8 @@ var checkStockMap = new Map();
 var tempStockMap = new Map();
 
 window.onload = function () {
+    this.document.getElementById('search-warehourse-id').innerHTML = this.buildWMenuOptionHTML(); 
     this.refreshStockList();
-    this.document.getElementById('search-warehourse-id').innerHTML = $('#search-warehourse-id').innerHTML + this.buildWMenuOptionHTML();
 }
 
 //搜索
@@ -14,20 +14,18 @@ $('#search-btn').click(function () {
 
 //更新盘点,（为0时删除/）
 $('#update-btn').click(function () {
-    var r = confirm("是否更新盘点？");
-    if (r == true) {
+    if (confirm("是否更新盘点？")) {
         templ = [];
-        for (var id in checkStockMap) {
-            stock = {
-                hourseid: checkStockMap.get(id).hourseid,
-                itemid: checkStockMap.get(id).itemid,
-                itemname: checkStockMap.get(id).itemname,
-                itemnum: checkStockMap.get(id).itemnum
+        checkStockMap.forEach(function(value, key){
+            var stock = {
+                hourseid: value.hourseid,
+                itemid: value.itemid,
+                itemname: value.itemname,
+                itemnum: value.itemnum
             }
             templ.push(stock);
-        }
-        updateStock(templ);
-        alert("更新完成");
+        });
+        alert(updateStock(templ).info);
         refreshStockList();
     }
 });
@@ -35,7 +33,7 @@ $('#update-btn').click(function () {
 //触发盘点文本框
 $(document).on('blur', '#check-input', function () {
     var checknum = $(this).val();
-    var id = $(this).getAttribute("itemid");
+    var id = this.getAttribute("itemid");
     if (checknum == "") {
         if (checkStockMap.get(id) != null) {
             delete checkStockMap[id];
@@ -51,19 +49,20 @@ $(document).on('blur', '#check-input', function () {
             return;
         }
     }
-    checkStockMap.set(id.tostring(), {
+    checkStockMap.set(id.toString(), {
         hourseid: tempStockMap.get(id).hourseid, //仓库id
         itemid: id,
         itemname: tempStockMap.get(id).itemname, //货品名称
         itemnum: checknum
     });
-    console.log("Add new check : " + checkStockMap.get(id));
+    console.log("Add new check : " , checkStockMap.get(id));
 });
 
 //加载库存列表
 function loadStockList(sl) {
     var editTable = document.getElementById("inventory-tbody");
     for (var i = 0; i < sl.length; i++) {
+    	tempStockMap.set(sl[i].itemid.toString(), sl[i]);
         var tr = document.createElement("tr");
         tr.setAttribute("id", sl[i].itemid);
         var td0 = document.createElement("td");

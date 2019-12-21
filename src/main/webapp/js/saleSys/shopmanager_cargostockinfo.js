@@ -1,7 +1,10 @@
 //店长进货页面
 window.onload = function () {
+	this.document.getElementById('order-source-position').innerHTML = this.buildWMenuOptionHTML(); 
+	this.document.getElementById('search-order-source').innerHTML = '<option value="">任意</option>' + this.buildWMenuOptionHTML(); 
+	this.document.getElementById('order-stock-position').innerHTML = this.buildWMenuOptionHTML(); 
+    tempRep = queryWarehourseMenu();
     this.refreshCargoStockList();
-    console.log("awe", queryWarehourseMenu());
 }
 
 //订货单和id映射表
@@ -354,7 +357,12 @@ $(document).on('click', '#apply-btn', function () {
 $(document).on('click', "#check-btn", function () {
     var r = confirm("是否同意转仓请求？");
     if (r == true) {
-        alert(passWarehourseOrder($(this).val()).info);
+    	var worder = tempWareOrderMap.get($(this).val());
+        alert(passWarehourseOrder({
+        	id : worder.id,
+        	sourceid : worder.sourceid,
+        	targetid : worder.targetid
+        }).info);
         refreshCargoStockList();
     }
 });

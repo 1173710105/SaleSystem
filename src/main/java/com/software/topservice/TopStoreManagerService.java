@@ -15,5 +15,7 @@ public interface TopStoreManagerService
     
     public String assign(StoreManager record);
     
+	public String disassign(StoreManager record);
+    
     public int count();
 }

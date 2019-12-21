@@ -56,14 +56,18 @@ public class WarehourseOrderController
 	}
 	
 	@RequestMapping("/update")
-	public String updateWarehourseOrder(@RequestBody List<ReceiveWarehourseOrder> param){
+	public Map<String, String> updateWarehourseOrder(@RequestBody List<ReceiveWarehourseOrder> param){
+		Map<String, String> result = new HashMap<String, String>();
+		
 		if (param.size()==0) 
 		{
-			return "";
+			result.put("info", "没有订单");
+		}else{
+			result.put("info", "修改成功");
 		}
 		param.get(0).setStatus(1+"");
 		service.update(param);
-		return "success";
+		return result;
 	}
 	
 	@RequestMapping("/delete")
@@ -76,9 +80,6 @@ public class WarehourseOrderController
 	public Map<String, String> applyWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
 		// update
 		param.setStatus(2+"");
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-		String time = df.format(new Date());// new Date()为获取当前系统时间
-		param.setChecktime(time);
 		
 		service.updateStatus(param);
 		
@@ -91,6 +92,9 @@ public class WarehourseOrderController
 	public String passWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
 		// check
 		param.setStatus(4+"");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String time = df.format(new Date());// new Date()为获取当前系统时间
+		param.setChecktime(time);
 		String result = service.checkOrder(param);
 		return result;
 	}
