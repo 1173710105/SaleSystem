@@ -133,7 +133,8 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		exampleMap.setWarehourseid(record.getId());
 		exampleMap.setWarehoursename(record.getName());
 		exampleMap.setWarehourselocation(record.getLocation());
-		exampleMap.setPrincipalid("-1000");
+		exampleMap.setPrincipalid("");
+		exampleMap.setPrincipalname("");
 		
 		exampleMap.setItemtable(warehourseItemToPriceTableName);
 		exampleMap.setSaleorderitemtable(saleorderItemTableName);
@@ -142,8 +143,28 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		exampleMap.setWarehoursedetailtable(warehourseDetailTableName);
 		exampleMap.setTime(record.getTime());
 		exampleMap.setLabel(record.getLabel());
-		
 		mapService.insertSelective(exampleMap);
+		
+		// 初始化五个表其中的两个
+		WarehourseDetail baseDetail = new WarehourseDetail();
+		baseDetail.setTablename("base_warehourse_detail");
+		
+		ItemToPrice basePrice = new ItemToPrice();
+		basePrice.setTablename("base_warehourse_itemtoprice");
+		
+		for (WarehourseDetail detail : detailService.select(baseDetail)) 
+		{
+			detail.setTablename(warehourseDetailTableName);
+			detail.setItemnum(0);
+			detail.setTime(record.getTime());
+			detailService.insertSelective(detail);
+		}
+		for (ItemToPrice price : priceService.select(basePrice)) 
+		{
+			price.setTablename(warehourseItemToPriceTableName);
+			price.setTime(record.getTime());
+			priceService.insertSelective(price);
+		}	
 	}
 
 	@Override
