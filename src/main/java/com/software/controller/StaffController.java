@@ -166,4 +166,29 @@ public class StaffController {
 		return "success";
 	}
 	
+	
+	@RequestMapping("/appoint")
+	public String appointStoreManager(@RequestBody Map<String, String> param){
+		String id = param.get("id");
+		String password = param.get("password");
+		Integer hourseid = Integer.valueOf(param.get("hourseid"));
+		String hoursename = param.get("hoursename");
+		String name = param.get("name");
+		String gender = param.get("gender");
+		String phone = param.get("phone");
+		String email = param.get("email");
+		
+		Staff staff = new Staff();
+		staff.setId(id);
+		staff.setPassword(password);
+		staff.setHourseid(hourseid);
+		staff.setHoursename(hoursename);
+		staff.setName(name);
+		staff.setGender(gender);
+		staff.setPhone(phone);
+		staff.setEmail(email);
+		staff.setLabel("valid");
+		service.updateByPrimaryKeySelective(staff);
+		return "success";
+	}
 }

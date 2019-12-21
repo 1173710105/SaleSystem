@@ -68,7 +68,7 @@ public class WarehourseController
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteWarehourse(@RequestBody Map<String, String> param){
+	public Map<String, String> deleteWarehourse(@RequestBody Map<String, String> param){
 		Warehourse warehourse = new Warehourse();
 		if (!(param.get("id").equals(""))) {
 			warehourse.setId(Integer.valueOf(param.get("id")));
@@ -79,8 +79,11 @@ public class WarehourseController
 		String date = df.format(new Date());// new Date()为获取当前系统时间
 		warehourse.setTime(date);
 		warehourse.setLabel("invalid");
-		service.updateByPrimaryKeySelective(warehourse);
-		return "success";
+		service.deleteByPrimaryKey(warehourse);
+		
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "删除成功");
+		return result;
 	}
 	
 	@RequestMapping("/update")

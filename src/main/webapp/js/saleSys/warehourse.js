@@ -123,8 +123,12 @@ function buildWMenuOptionHTML() {
 function buildWMenuOptionNoBaseHTML() {
     var html;
     queryWarehourseMenu().forEach(function(value, key) {
-        if(key == -1) continue;
-        html += '<option value="' + key + '">' + value + '</option>';
+        if(key == -1) {
+        	
+        } else {
+        	html += '<option value="' + key + '">' + value + '</option>';
+        }
+        
     })
     return html;
 }
