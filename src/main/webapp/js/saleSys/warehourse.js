@@ -119,3 +119,12 @@ function buildWMenuOptionHTML() {
     })
     return html;
 }
+
+function buildWMenuOptionNoBaseHTML() {
+    var html;
+    queryWarehourseMenu().forEach(function(value, key) {
+        if(key == -1) continue;
+        html += '<option value="' + key + '">' + value + '</option>';
+    })
+    return html;
+}
