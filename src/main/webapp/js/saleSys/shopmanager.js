@@ -131,3 +131,22 @@ function queryWareIdByManagerId(id) {
     console.log("Query WareIdByManager : ", param);
     return sendShopManagerJsonAjax(url, param);
 }
+
+function assignManager(manager) {
+    if (manager == null) {
+        return null;
+    }
+    combineClient = $.extend({},defaultShopManagerSetting, manager);
+    param = 
+    '{'
+    + '"id":"' + combineClient.id + '",'
+    + '"name":"' + combineClient.name + '",'
+    + '"gender:"' + combineClient.gender + '",'
+    + '"phone":"' + combineClient.phone + '",'
+    + '"email":"' + combineClient.email + '",'
+    + '"hourseid":"' + combineClient.hourseid + '"}';
+    url = "/shopmanager/assign";
+    $.ajaxSettings.async = false;
+    console.log("Assign Manager : ", param);
+    return sendShopManagerJsonAjax(url, param);
+}

@@ -122,7 +122,7 @@ function loadModal(type, order) {
     switch (type) {
         case "add": {
             $('.div-oid')[0].style.display = "none";
-            $('.modal-foot')[0].style.display = "";
+            $('.modal-footer')[0].style.display = "";
             $('.save-btn')[0].style.display = "";
             modal.find('.modal-title').text("添加进货");
             
@@ -131,7 +131,7 @@ function loadModal(type, order) {
         }
         case "edit": {
             $('.div-oid')[0].style.display = "";
-            $('.modal-foot')[0].style.display = "";
+            $('.modal-footer')[0].style.display = "";
             $('.save-btn')[0].style.display = "";
             modal.find('.modal-title').text("编辑进货");
 
@@ -146,7 +146,7 @@ function loadModal(type, order) {
         }
         case "detail": {
             $('.div-oid')[0].style.display = "";
-            $('.modal-foot')[0].style.display = "none";
+            $('.modal-footer')[0].style.display = "none";
             $('.save-btn')[0].style.display = "none";
             modal.find('.modal-title').text("进货详情");
 
