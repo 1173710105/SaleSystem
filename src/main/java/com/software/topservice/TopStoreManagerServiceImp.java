@@ -103,7 +103,34 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 		{
 			return "该门店已经存在店长，任命失败";
 		}
+	}
+	
+	@Override
+	public String disassign(StoreManager record)
+	{
+		// 查不映射关系
+		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
+		exampleMap.setPrincipalid(record.getId());
+		exampleMap.setPrincipalname(record.getName());
 		
+		List<SubBranchDetailMap> resultMap = mapService.select(exampleMap);
+		if (resultMap.size()>=2) 
+		{
+			// 逻辑错误
+			System.out.println("逻辑错误");
+			return "逻辑错误";
+		}
+		if (resultMap.size()==0) 
+		{
+			// 不存在映射关系，不需要要解除
+			return "成功";
+		}
+		exampleMap = resultMap.get(0);
+		exampleMap.setPrincipalid("");
+		exampleMap.setPrincipalname("");
+		exampleMap.setTime(record.getTime());
+		mapService.updateByPrimaryKeySelective(exampleMap);
+		return "成功";
 	}
 	
 	@Override
