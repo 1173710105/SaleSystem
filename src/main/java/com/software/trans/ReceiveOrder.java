@@ -322,6 +322,7 @@ public class ReceiveOrder
 		this.warehoursedetailtablename = "sub_warehourse_detail_"+id;
 		this.itemtopricetable = "sub_warehourse_itemtoprice_"+id;
 	}
+	
 	@Override
 	public String toString() {
 		return "ReceiveOrder [commontablename=" + commontablename + ", itemtablename=" + itemtablename
@@ -335,6 +336,4 @@ public class ReceiveOrder
 				+ ", ordersumprice=" + ordersumprice + ", status=" + status + ", type=" + type + ", exception="
 				+ exception + ", note=" + note + "]";
 	}
-	
-	
 }

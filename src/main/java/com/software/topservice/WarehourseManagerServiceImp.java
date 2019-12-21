@@ -97,13 +97,15 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 	@Override
 	public void insertSelective(Warehourse record) 
 	{		
+		System.out.println(record);
 		// 插入
 		hourseService.insertSelective(record);
 		// 查取，获取id
 		Warehourse result = hourseService.select(record).get(0);
 		Integer hourseid = result.getId();
+		
 		// 加入五个表
-		String staffTableName = "sub_staff_hourseid_"+String.format("%04d", hourseid);
+		String staffTableName = "sub_staff_"+String.format("%04d", hourseid);
 		String saleorderCommonTableName = "sub_saleorder_common_"+String.format("%04d", hourseid);
 		String saleorderItemTableName = "sub_saleorder_item_"+String.format("%04d", hourseid);
 		String warehourseItemToPriceTableName = "sub_warehourse_itemtoprice_"+String.format("%04d", hourseid);
@@ -131,10 +133,9 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		
 		// 建立映射关系
 		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
-		exampleMap.setWarehourseid(record.getId());
+		exampleMap.setWarehourseid(hourseid);
 		exampleMap.setWarehoursename(record.getName());
 		exampleMap.setWarehourselocation(record.getLocation());
-		exampleMap.setPrincipalid("-1000");
 		
 		exampleMap.setItemtable(warehourseItemToPriceTableName);
 		exampleMap.setSaleorderitemtable(saleorderItemTableName);
@@ -180,6 +181,7 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		{
 			resultMap.put(warehourse.getId(), warehourse.getName());
 		}
+		resultMap.put(-1, "总仓库");
 		return resultMap;
 	}
 	

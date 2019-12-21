@@ -1,5 +1,7 @@
 package com.software.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +35,14 @@ public class StockController
 	}
 	
 	@RequestMapping("/update")
-	public String updateStock(@RequestBody List<Stock> param){
+	public String updateStock(@RequestBody List<Stock> param)
+	{
 		System.out.println(param.get(0).toString());
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String time = df.format(new Date());// new Date()为获取当前系统时间
+		for(Stock s: param){
+			s.setTime(time);
+		}
 		service.update(param);
 		return "success";
 	}

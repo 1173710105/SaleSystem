@@ -52,7 +52,7 @@ public class SaleorderItemServiceImp implements SaleorderItemService {
 	@Override
 	public void createNewTable(SaleorderItem record) 
 	{
-		mapper.createTable(record.getTablename());
+		mapper.createNewTable(record.getTablename());
 	}
 
 	@Override

@@ -268,14 +268,23 @@ public class ReceiveWarehourseOrder
 		{
 			common.setId(Integer.valueOf(this.id));
 		}
-		common.setSourceid(Integer.valueOf(this.sourceid));
+		if (this.sourceid!=null&&!this.sourceid.equals("")) 
+		{
+			common.setSourceid(Integer.valueOf(this.sourceid));
+		}
 		common.setSourcename(this.sourcename);
-		common.setTargetid(Integer.valueOf(this.targetid));
+		if (this.targetid!=null&&!this.targetid.equals("")) 
+		{
+			common.setTargetid(Integer.valueOf(this.targetid));
+		}
 		common.setTargetname(this.targetname);
 		common.setPrincipalid(this.principalid);
 		common.setPrincipalname(this.principalname);
 		common.setType(this.type);
-		common.setSumprice(Float.valueOf(this.ordersumprice));
+		if (this.sumprice!=null&&!this.sumprice.equals("")) 
+		{
+			common.setSumprice(Float.valueOf(this.ordersumprice));
+		}
 		common.setCreatetime(this.createtime);
 		common.setChecktime(this.checktime);
 		common.setStatus(this.status);

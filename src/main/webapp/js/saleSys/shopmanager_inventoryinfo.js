@@ -1,6 +1,7 @@
 //保存盘点列表，{cargoId : cargo object}
 var checkStockMap = new Map();
 var tempStockMap = new Map();
+var checkList = [];
 
 window.onload = function () {
     this.refreshStockList();
@@ -15,16 +16,17 @@ $('#search-btn').click(function () {
 $('#update-btn').click(function () {
     var r = confirm("是否更新盘点？");
     if (r == true) {
-        templ = [];
-        for (var id in checkStockMap) {
-            stock = {
-                hourseid: checkStockMap.get(id).hourseid,
-                itemid: checkStockMap.get(id).itemid,
-                itemname: checkStockMap.get(id).itemname,
-                itemnum: checkStockMap.get(id).itemnum
+        var templ = [];
+        for (var key in checkList) {
+        	console.log("lkjlk", checkList[key]);
+            var stock = {
+                hourseid: checkList[key].hourseid,
+                itemid: checkList[key].itemid,
+                itemnum: checkList[key].itemnum
             }
             templ.push(stock);
         }
+        console.log("www", templ);
         updateStock(templ);
         alert("更新完成");
         refreshStockList();
@@ -36,7 +38,7 @@ $(document).on('blur', '#check-input', function () {
     var checknum = $(this).val();
     console.log($(this));
     var id = $(this).attr("itemid");
-    var hourseid = $(this).attr("hourseid");
+    var thourseid = $(this).attr("hourseid");
     if (checknum == "") {
         if (checkStockMap.get(id) != null) {
             delete checkStockMap[id];
@@ -45,13 +47,15 @@ $(document).on('blur', '#check-input', function () {
             return;
         }
     }
-    checkStockMap.set(id, {
-        hourseid: hourseid, //仓库id
+    var object = {
+    	hourseid: thourseid, //仓库id
         itemid: id,
         //itemname: , //货品名称
         itemnum: checknum
-    });
-    console.log("Add new check : " + checkStockMap.get(id));
+    }
+    checkStockMap.set(id.toString(),object);
+    checkList.push(object);
+    console.log("Add new check : " , checkStockMap);
 });
 
 //加载库存列表

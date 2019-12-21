@@ -56,6 +56,12 @@
 			<if test="status!=null and status!=''">
 				and status = #{status}
 			</if>
+			<if test="createtime!=null and createtime!=''">
+				and createTime = #{createtime}
+			</if>
+			<if test="checktime!=null and checktime!=''">
+				and checkTime = #{checktime}
+			</if>
 		</where>
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="com.software.domain.WarehourseOrderCommon">
@@ -156,37 +162,37 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.WarehourseOrderCommon">
     update warehourse_order_common
     <set>
-      <if test="sourceid != null">
+      <if test="sourceid != null and sourceid!=''">
         sourceID = #{sourceid,jdbcType=INTEGER},
       </if>
-      <if test="sourcename != null">
+      <if test="sourcename != null and sourcename!=''">
         sourceName = #{sourcename,jdbcType=VARCHAR},
       </if>
-      <if test="targetid != null">
+      <if test="targetid != null and targetid!=''">
         targetID = #{targetid,jdbcType=INTEGER},
       </if>
-      <if test="targetname != null">
+      <if test="targetname != null and targetname!=''">
         targetName = #{targetname,jdbcType=VARCHAR},
       </if>
-      <if test="principalid != null">
+      <if test="principalid != null and principalid!=''">
         principalID = #{principalid,jdbcType=VARCHAR},
       </if>
-      <if test="principalname != null">
+      <if test="principalname != null and principalname!=''">
         principalName = #{principalname,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
+      <if test="type != null and type!=''">
         type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="sumprice != null">
+      <if test="sumprice != null and sumprice!=''">
         sumPrice = #{sumprice,jdbcType=REAL},
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null and createtime!=''">
         createTime = #{createtime,jdbcType=VARCHAR},
       </if>
-      <if test="checktime != null">
+      <if test="checktime != null and checktime!=''">
         checkTime = #{checktime,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null and status!=''">
         status = #{status,jdbcType=VARCHAR},
       </if>
     </set>

@@ -64,7 +64,7 @@ public class CargoController {
 		String date = df.format(new Date());// new Date()为获取当前系统时间
 		param.setTime(date);
 		param.setLabel("invalid");
-		service.updateByPrimaryKeySelective(param);
+		service.deleteByPrimaryKey(param);
 		return "success";
 	}
 	

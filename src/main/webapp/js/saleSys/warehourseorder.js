@@ -52,6 +52,7 @@ function queryWarehourseOrderById(tid) {
     param = buildWorderParam(worder);
     url = "/warehourseOrder/queryById";
     console.log("QueryWoederById : ", param);
+    $.ajaxSettings.async = false;
     sendWOrderJsonAjax(url, param);
 }
 
@@ -63,6 +64,7 @@ function queryWarehourseOrder(worder) {
     param = buildWorderParam(worder);
     url = "/warehourseOrder/query";
     console.log("Query Worder : ", param);
+    $.ajaxSettings.async = false;
     return sendWOrderJsonAjax(url, param);
 }
 
@@ -71,9 +73,10 @@ function insertWarehourseOrder(worder) {
     if (worder == null) {
         return;
     }
-    param = buildParamList(worder);
+    param = buildWorderParamList(worder);
     url = "/warehourseOrder/insert";
     console.log("Insert Worder : ", param);
+    $.ajaxSettings.async = false;
     return sendWOrderJsonAjax(url, param);
 }
 
@@ -86,6 +89,7 @@ function updateWarehourseOrder(worder) {
     param = buildWorderParamList(worder);
     url = "/warehourseOrder/update";
     console.log("Update Worder : ", param);
+    $.ajaxSettings.async = false;
     return sendWOrderJsonAjax(url, param);
 }
 
@@ -97,6 +101,7 @@ function deleteWarehourseOrder(tid) {
     param = buildWorderParam({id:tid})
     url = "/warehourseOrder/delete";
     console.log("Delete Worder : ", param);
+    $.ajaxSettings.async = false;
     return sendWOrderJsonAjax(url, param);
 }
 
@@ -108,6 +113,7 @@ function applyWarehourseOrder(tid) {
     param = buildWorderParam({id:tid});
     url = "/warehourseOrder/apply";
     console.log("Apply Worder : ", param);
+    $.ajaxSettings.async = false;
     return sendWOrderJsonAjax(url, param);
 }
 
@@ -119,6 +125,7 @@ function passWarehourseOrder(tid) {
     param = buildWorderParam({id:tid});
     url = "/warehourseOrder/pass";
     console.log("Passs Worder : ", param);
+    $.ajaxSettings.async = false;
     return sendWOrderJsonAjax(url, param);
 }
 

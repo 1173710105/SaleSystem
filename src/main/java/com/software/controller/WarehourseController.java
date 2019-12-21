@@ -2,6 +2,7 @@ package com.software.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,9 @@ public class WarehourseController
 	@RequestMapping("/query")
 	public List<Warehourse> queryWarehourse(@RequestBody Map<String, String> param){
 		Warehourse warehourse = new Warehourse();
-		warehourse.setId(Integer.valueOf(param.get("id")));
+		if (!(param.get("id").equals(""))) {
+			warehourse.setId(Integer.valueOf(param.get("id")));
+		}
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
 		warehourse.setLabel("valid");
@@ -46,9 +49,11 @@ public class WarehourseController
 	}
 	
 	@RequestMapping("/add")
-	public String addWarehourse(@RequestBody Map<String, String> param){
+	public Map<String, String> addWarehourse(@RequestBody Map<String, String> param){
 		Warehourse warehourse = new Warehourse();
-		warehourse.setId(Integer.valueOf(param.get("id")));
+		if (!(param.get("id").equals(""))) {
+			warehourse.setId(Integer.valueOf(param.get("id")));
+		}
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -56,13 +61,18 @@ public class WarehourseController
 		warehourse.setTime(date);
 		warehourse.setLabel("valid");
 		service.insertSelective(warehourse);
-		return "success";
+		
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "添加成功");
+		return result;
 	}
 	
 	@RequestMapping("/delete")
 	public String deleteWarehourse(@RequestBody Map<String, String> param){
 		Warehourse warehourse = new Warehourse();
-		warehourse.setId(Integer.valueOf(param.get("id")));
+		if (!(param.get("id").equals(""))) {
+			warehourse.setId(Integer.valueOf(param.get("id")));
+		}
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -74,9 +84,11 @@ public class WarehourseController
 	}
 	
 	@RequestMapping("/update")
-	public String updateWarehourse(@RequestBody Map<String, String> param){
+	public Map<String, String> updateWarehourse(@RequestBody Map<String, String> param){
 		Warehourse warehourse = new Warehourse();
-		warehourse.setId(Integer.valueOf(param.get("id")));
+		if (!(param.get("id").equals(""))) {
+			warehourse.setId(Integer.valueOf(param.get("id")));
+		}
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -84,9 +96,13 @@ public class WarehourseController
 		warehourse.setTime(date);
 		warehourse.setLabel("valid");
 		service.updateByPrimaryKeySelective(warehourse);
-		return "success";
+		
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "修改成功");
+		return result;
 	}
 	
+	@RequestMapping("/typemenu")
 	public Map<Integer, String> typeMenu()
 	{
 		return service.typeMenu();

@@ -65,4 +65,12 @@ public class Warehourse {
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Warehourse [id=" + id + ", name=" + name + ", location=" + location + ", time=" + time + ", label="
+				+ label + "]";
+	}
+    
+    
 }

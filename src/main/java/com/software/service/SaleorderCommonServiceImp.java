@@ -51,7 +51,7 @@ public class SaleorderCommonServiceImp implements SaleorderCommonService {
 
 	@Override
 	public void createNewTable(SaleorderCommon record) {
-		mapper.createTable(record.getTablename());
+		mapper.createNewTable(record.getTablename());
 	}
 
 	@Override
