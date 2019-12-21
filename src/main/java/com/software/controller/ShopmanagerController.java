@@ -1,6 +1,7 @@
 package com.software.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -156,5 +157,24 @@ public class ShopmanagerController
 		
 		StoreManager result = null;
 		return result.getHourseid();
+	}
+	
+	@RequestMapping("/assign")
+	public Map<String, String> assign(@RequestBody Map<String, String> param){
+		String id = param.get("id");
+		String name = param.get("name");
+		String hourseid = param.get("hourseid");
+		
+		StoreManager storemanager = new StoreManager();
+		storemanager.setId(id);
+		storemanager.setName(name);
+		storemanager.setLabel("valid");
+		storemanager.setHourseid(hourseid);
+		
+		
+		String infovalue = service.assign(storemanager);
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", infovalue);
+		return result;
 	}
 }

@@ -19,4 +19,6 @@ public class GeneralmanagerController {
 		GeneralManager result = null;
 		return result;
 	}
+	
+	
 }

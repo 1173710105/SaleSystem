@@ -70,6 +70,7 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 		// 查出门店信息
 		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
 		exampleMap.setWarehourseid(Integer.valueOf(record.getHourseid()));
+		exampleMap.setLabel("valid");
 		exampleMap = mapService.select(exampleMap).get(0);
 		if (exampleMap.getPrincipalid().equals(record.getId())) 
 		{
@@ -88,6 +89,7 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 				tempMap.setPrincipalid("");
 				tempMap.setPrincipalname("");
 				tempMap.setTime(record.getTime());
+				tempMap.setLabel("valid");
 				mapService.updateByPrimaryKeySelective(tempMap);
 			}
 			
@@ -96,6 +98,7 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 			exampleMap.setPrincipalid(record.getId());
 			exampleMap.setPrincipalname(record.getName());
 			exampleMap.setTime(record.getTime());
+			exampleMap.setLabel("valid");
 			mapService.updateByPrimaryKeySelective(exampleMap);
 			return "任命成功";
 		}
