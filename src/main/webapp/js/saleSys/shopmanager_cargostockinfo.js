@@ -115,6 +115,16 @@ function loadWarehourseOrderList(worderList) {
             detailButton.innerHTML = "详情";
             td8.appendChild(detailButton);
         }
+        //审核通过，源为其他子仓
+        else if (worderList[i].sourceid.toString() != "-1" && worderList[i].status == "4") {
+            var detailButton = document.createElement("button");
+            detailButton.type = "button";
+            detailButton.id = "detail-btn";
+            detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
+            detailButton.className = "btn btn-sm btn-primary";
+            detailButton.innerHTML = "详情";
+            td8.appendChild(detailButton);
+        }
 
         tr.appendChild(td0);
         tr.appendChild(td1);
@@ -369,6 +379,11 @@ $(document).on('click', "#check-btn", function () {
 
 //保存,编辑保存,插入保存
 $('#save-btn').click(function () {
+    //判断货源地与目的地是否相同
+    if($('#order-source-position').val() == getCookie("warehourseid")) {
+        alert("货源地与目的地不能为同一地址");
+        return;
+    }
     //统一将暂存列表中货品写入
     var cargoObjectList = [];
     var sump = 0;

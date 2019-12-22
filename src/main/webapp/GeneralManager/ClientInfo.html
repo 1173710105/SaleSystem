@@ -35,46 +35,55 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form id="client-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <caption>编号</caption>
+                            <input type="text" class="form-control" id="client-id">
+                        </div>
+                    </div>
+                   
                     <div class="row">
                         <div class="col-md-6">
                             <caption>姓名</caption>
-                            <input type="text" class="form-control" id="clientName">
+                            <input type="text" class="form-control" id="client-name">
                         </div>
                         <div class="col-md-6">
                             <caption>性别</caption>
-                            <select class="form-control" id="clientSex">
-                                <option>男</option>
-                                <option>女</option>
+                            <select class="form-control" id="client-gender">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <caption>联系电话</caption>
-                            <input type="text" class="form-control" id="clientPhone">
+                            <input type="text" class="form-control" id="client-phone">
                         </div>
                         <div class="col-md-6">
                             <caption>电子邮箱</caption>
-                            <input type="text" class="form-control" id="clientEmail">
+                            <input type="text" class="form-control" id="client-email">
                         </div>
                     </div>
                     <div>
                         <div class="col-md-4">
                             <caption>类型</caption>
-                            <select class="form-control" id="clientType">
-                                <option>零售</option>
-                                <option>批发</option>
+                            <select class="form-control" id="client-type">
+                                <option value="1">零售</option>
+                                <option value="2">批发</option>
                             </select>
                         </div>
                         <div class="col-md-8">
                             <caption>备注</caption>
-                            <input type="text" class="form-control" id="clientLabel">
+                            <input type="text" class="form-control" id="client-label">
                         </div>
                     </div>
+                </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-primary" id="save-btn">保存</button>
                 </div>
             </div>
         </div>
@@ -89,35 +98,39 @@
 
             </div>
             <div class="row">
-                <div class="col-md-5">
-                     <button type="button" class="btn btn-primary btn-sm form-inline" data-toggle="modal"
-                    data-target="#clientModal">
+                <div class="col-md-2">
+                     <button type="button" class="btn btn-primary btn-sm form-inline" id="add-btn">
                     添加客户
                 </button>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-10">
                         <div class="row">
                             <div class="col-md-2">
                                 <h6>姓名 </h6>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" id="search-client-name">
                             </div>
                             <div class="col-md-3">
                                 <h6>编号</h6>
-                                <input type="text" class="form-control input-sm">
+                                <input type="text" class="form-control input-sm" id="search-client-id">
                             </div>
-                            <div class="col-md-3">
-                                    <h6>手机号/电子邮箱</h6>
-                                    <input type="text" class="form-control input-sm">
+                            <div class="col-md-2">
+                                    <h6>手机号</h6>
+                                    <input type="text" class="form-control input-sm" id="search-phone">
+                                </div>
+                                <div class="col-md-2">
+                                    <h6>电子邮箱</h6>
+                                    <input type="text" class="form-control input-sm" id="search-email">
                                 </div>
                             <div class="col-md-2">
                                 <h6>类型</h6>
                                 <select class="form-control input-sm">
-                                        <option>零售</option>
-                                        <option>批发</option>
+                                    <option value="">任意</option>
+                                        <option value="1">零售</option>
+                                        <option value="2">批发</option>
                                     </select>
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-sm btn-default" type="button">查询</button>
+                                <button class="btn btn-sm btn-default" type="button" id="search-btn">查询</button>
                             </div>
                         </div>
                     </div>
@@ -127,7 +140,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>编号</th>
                             <th>姓名</th>
                             <th>性别</th>
                             <th>手机号</th>
@@ -136,44 +149,12 @@
                             <th>操作</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>张三</td>
-                            <td>男</td>
-                            <td>125xxx</td>
-                            <td>xxx@email</td>
-                            <td>零售</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#clientModal">编辑</button>
-                                <button id="delete_btn" type="button" class="btn btn-sm btn-danger">删除</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>李四</td>
-                            <td>男</td>
-                            <td>180xxx</td>
-                            <td>xxx@gmail</td>
-                            <td>批发</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#clientModal">编辑</button>
-                                <button id="delete_btn" type="button" class="btn btn-danger btn-sm">删除</button>
-                            </td>
-                        </tr>
+                    <tbody id="client-tbody">
                     </tbody>
                 </table>
             </div>
         </div>
 </body>
-
-<script>
-    $('#delete_btn').click(function () {
-        var r = confirm("是否删除？");
-        if (r == true) {
-            alert("删除成功");
-        }
-    });
-</script>
+<script type="text/javascript" src="../js/saleSys/cookie.js"></script>
+<script type="text/javascript" src="../js/saleSys/client.js"></script>
+<script type="text/javascript" src="../js/saleSys/generalmanager_clientinfo.js"></script>

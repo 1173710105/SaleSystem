@@ -1,62 +1,13 @@
 //保存盘点列表，{cargoId : cargo object}
 var checkStockMap = new Map();
 var tempStockMap = new Map();
+var preRep;
 
 window.onload = function () {
     this.document.getElementById('search-warehourse-id').innerHTML = this.buildWMenuOptionHTML(); 
+    this.preRep = this.queryWarehourseMenu();
     this.refreshStockList();
 }
-
-//搜索
-$('#search-btn').click(function () {
-    refreshStockList();
-});
-
-//更新盘点,（为0时删除/）
-$('#update-btn').click(function () {
-    if (confirm("是否更新盘点？")) {
-        templ = [];
-        checkStockMap.forEach(function(value, key){
-            var stock = {
-                hourseid: value.hourseid,
-                itemid: value.itemid,
-                itemname: value.itemname,
-                itemnum: value.itemnum
-            }
-            templ.push(stock);
-        });
-        alert(updateStock(templ).info);
-        refreshStockList();
-    }
-});
-
-//触发盘点文本框
-$(document).on('blur', '#check-input', function () {
-    var checknum = $(this).val();
-    var id = this.getAttribute("itemid");
-    if (checknum == "") {
-        if (checkStockMap.get(id) != null) {
-            delete checkStockMap[id];
-            for (var i = 0, len = checkStockMap.length; i < len; i++) {
-                if (!checkStockMap[i] || checkStockMap[i] == '') {
-                    checkStockMap.splice(i, 1);
-                    len--;
-                    i--;
-                }
-            }
-            return;
-        } else {
-            return;
-        }
-    }
-    checkStockMap.set(id.toString(), {
-        hourseid: tempStockMap.get(id).hourseid, //仓库id
-        itemid: id,
-        itemname: tempStockMap.get(id).itemname, //货品名称
-        itemnum: checknum
-    });
-    console.log("Add new check : " , checkStockMap.get(id));
-});
 
 //加载库存列表
 function loadStockList(sl) {
@@ -74,7 +25,7 @@ function loadStockList(sl) {
         var td3 = document.createElement("td");
         td3.innerHTML = sl[i].specification;
         var td4 = document.createElement("td");
-        td4.innerHTML = sl[i].hourseid;
+        td4.innerHTML = preRep.get(sl[i].hourseid);
         var td5 = document.createElement("td");
         td5.innerHTML = sl[i].itemnum;
         var td6 = document.createElement("td");
@@ -113,3 +64,50 @@ function refreshStockList() {
         hourseid: $('#search-warehourse-id').val()  //获取仓库id
     }));
 }
+
+//搜索
+$('#search-btn').click(function () {
+    refreshStockList();
+});
+
+//更新盘点,（为0时删除/）
+$('#update-btn').click(function () {
+    if (confirm("是否更新盘点？")) {
+        templ = [];
+        checkStockMap.forEach(function(value, key){
+            var stock = {
+                hourseid: value.hourseid,
+                itemid: value.itemid,
+                itemname: value.itemname,
+                itemnum: value.itemnum
+            }
+            templ.push(stock);
+        });
+        alert(updateStock(templ).info);
+        refreshStockList();
+    }
+});
+
+//触发盘点文本框
+$(document).on('blur', '#check-input', function () {
+    var checknum = $(this).val();
+    var id = this.getAttribute("itemid");
+    if (checknum == "") {
+        if (checkStockMap.get(id) != null) {
+            delete checkStockMap[id];
+            return;
+        } else {
+            return;
+        }
+    }
+    var obj = {
+        hourseid: tempStockMap.get(id).hourseid, //仓库id
+        itemid: id,
+        itemname: tempStockMap.get(id).itemname, //货品名称
+        itemnum: checknum
+    };
+    checkStockMap.set(id.toString(), obj);
+    console.log("Add new check : " , checkStockMap.get(id));
+});
+
+

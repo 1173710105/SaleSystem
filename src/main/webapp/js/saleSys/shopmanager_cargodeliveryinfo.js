@@ -434,6 +434,10 @@ $(document).on('click', '#check-btn', function() {
 
 //保存,编辑保存,插入保存
 $('#save-btn').click(function () {
+    if($('#order-target-position').val() == getCookie("warehourseid")) {
+        alert("货源地与目的地不能为同一地址");
+        return;
+    }
     //统一将暂存列表中货品写入
     var cargoObjectList = [];
     var sump = 0;
