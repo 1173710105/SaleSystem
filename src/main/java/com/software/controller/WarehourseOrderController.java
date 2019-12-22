@@ -38,20 +38,23 @@ public class WarehourseOrderController
 	
 	@RequestMapping("/insert")
 	public Map<String, String> insertWarehourseOrder(@RequestBody List<ReceiveWarehourseOrder> param){
-		if (param.size()==0) 
-		{
-			return null;
-		}
-		param.get(0).setStatus(1+"");
-		System.out.println("订单号："+param.get(0).getId());
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-		String time = df.format(new Date());// new Date()为获取当前系统时间
-		for(ReceiveWarehourseOrder s: param){
-			s.setCreatetime(time);
-		}
 		Map<String, String> result = new HashMap<String, String>();
-		result.put("info", "添加成功");
-		service.insert(param);
+		if(param.get(0).getSourceid().equals(param.get(0).getTargetid())){
+			result.put("info", "不能我发我自己");
+		}else{
+			if (param.size() == 0) {
+				return null;
+			}
+			param.get(0).setStatus(1 + "");
+			System.out.println("订单号：" + param.get(0).getId());
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
+			String time = df.format(new Date());// new Date()为获取当前系统时间
+			for (ReceiveWarehourseOrder s : param) {
+				s.setCreatetime(time);
+			}
+			result.put("info", "添加成功");
+			service.insert(param);
+		}
 		return result;
 	}
 	
@@ -89,13 +92,15 @@ public class WarehourseOrderController
 	}
 	
 	@RequestMapping("/pass")
-	public String passWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
+	public Map<String, String> passWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
 		// check
 		param.setStatus(4+"");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String time = df.format(new Date());// new Date()为获取当前系统时间
 		param.setChecktime(time);
-		String result = service.checkOrder(param);
+		String infovalue = service.checkOrder(param);
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("info", infovalue);
 		return result;
 	}
 }
