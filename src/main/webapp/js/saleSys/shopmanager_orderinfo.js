@@ -535,6 +535,10 @@ $('#temp-add-btn').click(function () {
 
 //保存订单
 $('#save-btn').click(function () {
+    if(tempcargoMap.size == 0) {
+        alert("出货单货品列表不能为空");
+        return;
+    }
     //计算总价
     var sump = 0;
     for (var k in tempcargoMap) {

@@ -100,6 +100,10 @@ $('#submit-btn').click(function() {
         alert("请填写客户");
         return;
     }
+    if(cargoList.length == 0) {
+        alert("POS货品列表不能为空");
+        return;
+    }
     //整合订单
     //订单基本信息
     var s_clientid = $('#client-id').val();

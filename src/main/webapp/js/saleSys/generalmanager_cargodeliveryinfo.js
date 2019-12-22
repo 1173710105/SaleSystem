@@ -1,4 +1,4 @@
-//总经理出货页面
+//店长出货页面
 window.onload = function () {
 	this.document.getElementById('order-stock-position').innerHTML = this.buildWMenuOptionHTML(); 
 	this.document.getElementById('search-order-target').innerHTML = '<option value="">任意</option>' + this.buildWMenuOptionHTML(); 
@@ -69,9 +69,10 @@ function loadWarehourseOrderList(worderList) {
             deleButton.innerHTML = "删除";
             td8.appendChild(deleButton);
         }
-        //审核中，目的地为总仓一律总经理审核
+        //审核中且目的为对方子仓（包括总仓）发起的申请（对方：进货申请--》我方：出货审核）
         //添加详情 审核按钮
-        else if(worderList[i].targetid != "-1" && worderList[i].status == "2" && worderList[i].principalid != getCookie("principalid")) {
+        //若是对方发起请求，则负责人id与我方店长id不同
+        else if(worderList[i].status == "2" && worderList[i].principalid != getCookie("principalid")) {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";
@@ -88,9 +89,10 @@ function loadWarehourseOrderList(worderList) {
             applyButton.innerHTML = "审核";
             td8.appendChild(applyButton);
         }
-        //审核中且源/目的地均为子仓
+        //审核中且目的为对方子仓（包括总仓）我方发起的申请（我方：出货申请--》对方：进货审核）
         //添加详情
-        else if(worderList[i].targetid != "-1" && worderList[i].status == "2" && worderList[i].principalid == getCookie("principalid")) {
+        //若是我方发起请求，则负责人id与我方店长id相同
+        else if(worderList[i].status == "2" && worderList[i].principalid == getCookie("principalid")) {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";

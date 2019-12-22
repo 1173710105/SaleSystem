@@ -69,10 +69,10 @@ function loadWarehourseOrderList(worderList) {
             deleButton.innerHTML = "删除";
             td8.appendChild(deleButton);
         }
-        //审核中且目的为对方子仓（非总仓）发起的申请（对方：进货申请--》我方：出货审核）
+        //审核中且目的为对方子仓（包括总仓）发起的申请（对方：进货申请--》我方：出货审核）
         //添加详情 审核按钮
         //若是对方发起请求，则负责人id与我方店长id不同
-        else if(worderList[i].targetid != "-1" && worderList[i].status == "2" && worderList[i].principalid != getCookie("principalid")) {
+        else if(worderList[i].status == "2" && worderList[i].principalid != getCookie("principalid")) {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";
@@ -89,21 +89,10 @@ function loadWarehourseOrderList(worderList) {
             applyButton.innerHTML = "审核";
             td8.appendChild(applyButton);
         }
-        //审核中且目的为对方子仓（非总仓）我方发起的申请（我方：出货申请--》对方：进货审核）
+        //审核中且目的为对方子仓（包括总仓）我方发起的申请（我方：出货申请--》对方：进货审核）
         //添加详情
         //若是我方发起请求，则负责人id与我方店长id相同
-        else if(worderList[i].targetid != "-1" && worderList[i].status == "2" && worderList[i].principalid == getCookie("principalid")) {
-            var detailButton = document.createElement("button");
-            detailButton.type = "button";
-            detailButton.id = "detail-btn";
-            detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
-            detailButton.className = "btn btn-sm btn-primary";
-            detailButton.innerHTML = "详情";
-            td8.appendChild(detailButton);
-        }
-        //审核中且目的为总仓的申请
-        //添加详情
-        else if(worderList[i].status == "2" && worderList[i].targetid == "-1") {
+        else if(worderList[i].status == "2" && worderList[i].principalid == getCookie("principalid")) {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";
@@ -436,6 +425,10 @@ $(document).on('click', '#check-btn', function() {
 $('#save-btn').click(function () {
     if($('#order-target-position').val() == getCookie("warehourseid")) {
         alert("货源地与目的地不能为同一地址");
+        return;
+    }
+    if(cargoMap.size == 0) {
+        alert("出货单货品列表不能为空");
         return;
     }
     //统一将暂存列表中货品写入

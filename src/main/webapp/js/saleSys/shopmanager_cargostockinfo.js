@@ -71,10 +71,9 @@ function loadWarehourseOrderList(worderList) {
             deleButton.innerHTML = "删除";
             td8.appendChild(deleButton);
         }
-        //审核中 已通过
+        //审核中且源地址为子仓（包括总仓），我方发起的申请
         //添加详情按钮
-        //源为总仓
-        else if (worderList[i].sourceid.toString() == "-1" && (worderList[i].status == "2" || worderList[i].status == "4")) {
+        else if (worderList[i].status == "2" && worderList[i].principalid.toString() == getCookie("warehourseid")) {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";
@@ -83,9 +82,8 @@ function loadWarehourseOrderList(worderList) {
             detailButton.innerHTML = "详情";
             td8.appendChild(detailButton);
         }
-        //审核中
+        //审核中且源地址为子仓（包括总仓），对方发起的申请
         //添加详情，审核
-        //源为其他子仓
         else if (worderList[i].status == "2" && worderList[i].principalid.toString() != getCookie("principalid")) {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
@@ -103,20 +101,9 @@ function loadWarehourseOrderList(worderList) {
             detailButton.innerHTML = "审核";
             td8.appendChild(detailButton);
         }
-        //审核中
-        //添加详情，审核
-        //源为其他子仓，且为自己发起的
-        else if (worderList[i].status == "2" && worderList[i].principalid.toString() == getCookie("principalid")) {
-            var detailButton = document.createElement("button");
-            detailButton.type = "button";
-            detailButton.id = "detail-btn";
-            detailButton.setAttribute("value", worderList[i].id); //将货品id封装在value中
-            detailButton.className = "btn btn-sm btn-primary";
-            detailButton.innerHTML = "详情";
-            td8.appendChild(detailButton);
-        }
-        //审核通过，源为其他子仓
-        else if (worderList[i].sourceid.toString() != "-1" && worderList[i].status == "4") {
+        //审核通过
+        //添加详情按钮
+        else if (worderList[i].status == "4") {
             var detailButton = document.createElement("button");
             detailButton.type = "button";
             detailButton.id = "detail-btn";
@@ -382,6 +369,10 @@ $('#save-btn').click(function () {
     //判断货源地与目的地是否相同
     if($('#order-source-position').val() == getCookie("warehourseid")) {
         alert("货源地与目的地不能为同一地址");
+        return;
+    }
+    if(cargoMap.size == 0) {
+        alert("进货单货品列表不能为空");
         return;
     }
     //统一将暂存列表中货品写入
