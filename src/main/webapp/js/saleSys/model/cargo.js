@@ -27,9 +27,14 @@ function sendCargoJsonAjax(url, param) {
             	tempdata = data;
                 //return data;
             }
-            return null;
+            else {
+            	console.log("receive null");
+            	tempdata = data;
+            }
+            
         },
         error: function () {
+        	console.log("receive failed");
         }
     });
     return tempdata;
@@ -82,9 +87,7 @@ function sendCargoJsonAjax(url, param) {
     url = "/cargo/query";
     $.ajaxSettings.async = false;
     console.log("QueryCargo : ", param);
-    var data = sendCargoJsonAjax(url, param);
-    console.log("query cargo : " , data);
-    return data;
+    return sendCargoJsonAjax(url, param);
  }
 
  //添加货品

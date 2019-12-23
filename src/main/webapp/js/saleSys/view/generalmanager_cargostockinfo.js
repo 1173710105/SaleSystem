@@ -18,6 +18,7 @@ var cargoMap = new Map();
 var cargoNumMap = new Map();
 var tempCargo;
 var preCargoId; //保存之前在货品框中货品id
+var tempRep;
 
 
 //加载进货信息
@@ -33,9 +34,9 @@ function loadWarehourseOrderList(worderList) {
         var td1 = document.createElement("td");
         td1.innerHTML = worderList[i].sumprice;
         var td2 = document.createElement("td");
-        td2.innerHTML = worderList[i].targetname;
+        td2.innerHTML = tempRep.get(worderList[i].targetid.toString());
         var td3 = document.createElement("td");
-        td3.innerHTML = worderList[i].sourcename;
+        td3.innerHTML = tempRep.get(worderList[i].sourceid.toString());
         var td4 = document.createElement("td");
         td4.innerHTML = worderList[i].principalname;
         var td5 = document.createElement("td");
@@ -320,6 +321,11 @@ $('#cargo-num').blur(function () {
         parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
 })
 
+$('#cargo-purchase-price').blur(function () {
+    $('#cargo-total-price').val(
+        parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
+})
+
 //类型变动处理，当为进货类型时，允许填写进货价
 $("#order-type").change(function () {
     if ($(this).val() == "1") {
@@ -353,13 +359,24 @@ $('#add-cargo-btn').click(function () {
         }
     } else {
         //不存在对应货品，新增记录插入到map中
-    	var object = {
-                itemid: tempcargo.id,
-                itemname: tempcargo.name,
-                itemnum: $('#cargo-num').val(),
-                perprice: tempcargo.purchaseprice,
-                sumprice: $('#cargo-total-price').val()
-            };
+    	var object;
+    	if($('#order-type').val() == "1") {
+    		object = {
+                    itemid: tempcargo.id,
+                    itemname: tempcargo.name,
+                    itemnum: $('#cargo-num').val(),
+                    perprice: $('#cargo-purchase-price').val(),
+                    sumprice: $('#cargo-total-price').val()
+                };
+    	} else if ($('#order-type').val() == "2"){
+    		object = {
+                    itemid: tempcargo.id,
+                    itemname: tempcargo.name,
+                    itemnum: $('#cargo-num').val(),
+                    perprice: tempcargo.purchaseprice,
+                    sumprice: $('#cargo-total-price').val()
+                };
+    	}
         cargoMap.set(tempcargo.id.toString(), object);
     }
 
@@ -387,11 +404,11 @@ $(document).on('click', '#apply-btn', function () {
 
 //审核申请
 $(document).on('click', "#check-btn", function () {
-    var r
-    if(tempWareOrderMap.get($(this).val().type.toString() == "1")) {
+    var r;
+    if(tempWareOrderMap.get($(this).val()).type.toString() == "1") {
         r = confirm("是否确认购入？");
     }
-    else if(tempWareOrderMap.get($(this).val().type.toString() == "2")) {
+    else if(tempWareOrderMap.get($(this).val()).type.toString() == "2") {
         r = confirm("是否同意转仓请求？");
     }
     if (r) {
@@ -463,8 +480,7 @@ function showCargo(cargo) {
 //******************************************************/
 //清除模态框内容
 $('body').on('hidden.bs.modal', '.modal', function () {
-    // $(this).removeData('bs.modal');
-    window.location.reload();
+	document.getElementById('stock-form').reset();
 });
 
 function cleanCargoStockList() {

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.validator.PublicClassValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +30,6 @@ public class OrderController
 	{
 		System.out.println(param.getClientid());
 		List<SendOrder> result = service.select(param);
-		for(SendOrder s:result){
-			System.out.println(s.toString());
-		}
 		return result;//返回查找结果
 	}
 	
@@ -112,4 +110,5 @@ public class OrderController
 		result.put("info", "退货成功");
 		return result;//返回成功/失败信息
 	}
+	
 }

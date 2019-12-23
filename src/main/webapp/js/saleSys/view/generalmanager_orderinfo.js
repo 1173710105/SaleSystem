@@ -6,7 +6,7 @@ var preCargoId;
 var tempRep;
 
 window.onload = function () {
-    this.document.getElementById('search-rep').innerHTML = '<option value="">任意</option>' + this.buildWMenuOptionHTML();
+    this.document.getElementById('search-rep').innerHTML = this.buildWMenuOptionHTML();
     tempRep = queryWarehourseMenu();
     refreshOrderList();
 }
@@ -91,7 +91,9 @@ function loadMadal(order) {
 function loadModalTable(items) {
     var editTable = document.getElementById("temp-cargo-tbody");
     editTable.innerHTML = "";
+    tempCargoMap.clear();
     for (var key in items) {
+    	tempCargoMap.set(items[key].itemid.toString(), items[key]);
         var tr = document.createElement("tr");
         tr.setAttribute("id", "temp-tr");
         tr.setAttribute("cid", items[key].itemid);
@@ -248,20 +250,14 @@ $(document).on('click', '#temp-tr', function () {
     var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
     console.log("行号：" + (td.parentElement.rowIndex) + "，列号：" + td.cellIndex);
     //填充订单参数
-    var itemid = $(this).attr("cid");
+    var itemid = this.getAttribute("cid");
     preCargoId = itemid;
-    var order;
-    if ($('#order-id').val() == "") {
-        order = tempOrderMap.get("temp");
-    } else {
-        order = tempOrderMap.get($('#order-id').val());
-    }
-    for (var i = 0; i < order.length; i++) {
-        if (order[i].get("itemid").toString() == itemid) {
-            showCargo(order[i]);
-            break;
-        }
-    }
+    var item = tempCargoMap.get(itemid);
+    $('#cargo-name').val(item.itemname);
+    $('#cargo-id').val(item.itemid);
+    $('#cargo-num').val(item.itemnum);
+    $('#cargo-perprice').val(item.perprice);
+    $('#cargo-total-price').val(item.sumprice);
 });
 
 $("#search-check-status").change(function () {
@@ -304,7 +300,7 @@ function showCargo(suborder) {
 
 //清除模态框内容
 $('body').on('hidden.bs.modal', '.modal', function () {
-    $('#order-form').reset();
+    document.getElementById('order-form').reset();
 });
 
 function getCheckStatus(order) {
