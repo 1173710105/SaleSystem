@@ -44,24 +44,10 @@ public class StaffManagerServiceImp implements StaffManagerService
 	{
 		record.filltablename();
 		List<Staff> result = staffService.select(record);
-		
-		/**
-		Warehourse hourse = new Warehourse();
-		Map<Integer, String> idToName = new HashMap<Integer, String>();
 		for (Staff staff : result) 
 		{
-			if (idToName.keySet().contains(staff.getHourseid())) 
-			{
-				staff.setHoursename(idToName.get(staff.getHourseid()));
-			}
-			else 
-			{
-				hourse.setId(Integer.valueOf(staff.getId()));
-				staff.setHoursename(hourseService.selectByPrimaryKey(hourse).getName());
-				idToName.put(hourse.getId(), staff.getHoursename());
-			}
+			staff.setPassword("");
 		}
-		*/
 		return result;
 	}
 

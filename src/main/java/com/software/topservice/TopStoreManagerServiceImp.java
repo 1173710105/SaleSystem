@@ -50,6 +50,7 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 				storeManager.setHoursename(exampleMap.getWarehoursename());
 				storeManager.setTime(exampleMap.getTime());
 			}
+			storeManager.setPassword("");
 		}
 		return resultList;
 	}
