@@ -3,6 +3,7 @@ package com.software.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,41 +41,47 @@ public class CargoController {
 			System.out.println(r.toString());
 		}
 		return result;
-		
-		
-		
 	}
 	
 	@RequestMapping("/add")
-	public String addCargo(@RequestBody ReceiveCargo param){
+	public Map<String, String> addCargo(@RequestBody ReceiveCargo param){
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String date = df.format(new Date());// new Date()为获取当前系统时间
 		
 		param.setLabel("valid");
 		param.setTime(date);
 		service.insertSelective(param);
-		return "success";
+		
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "添加成功");
+		return result;
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteCargo(@RequestBody ReceiveCargo param)
+	public Map<String, String> deleteCargo(@RequestBody ReceiveCargo param)
 	{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String date = df.format(new Date());// new Date()为获取当前系统时间
 		param.setTime(date);
 		param.setLabel("invalid");
-		service.deleteByPrimaryKey(param);
-		return "success";
+		
+		String infovalue = service.deleteByPrimaryKey(param);
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", infovalue);
+		return result;
 	}
 	
 	@RequestMapping("/update")
-	public String updateCargo(@RequestBody ReceiveCargo param){
+	public Map<String, String> updateCargo(@RequestBody ReceiveCargo param){
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String date = df.format(new Date());// new Date()为获取当前系统时间
 		param.setTime(date);
 		param.setLabel("valid");
 		service.updateByPrimaryKeySelective(param);
-		return "success";
+		
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "更新成功");
+		return result;
 	}
 	
 	public Map<Integer, String> typeMenu()

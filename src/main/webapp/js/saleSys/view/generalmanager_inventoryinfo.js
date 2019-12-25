@@ -5,6 +5,7 @@ var preRep;
 
 window.onload = function () {
     this.document.getElementById('search-warehourse-id').innerHTML = this.buildWMenuOptionHTML(); 
+    this.document.getElementById('search-warehourse-id').value = "-1";
     this.preRep = this.queryWarehourseMenu();
     this.refreshStockList();
 }

@@ -17,6 +17,7 @@ var cargoMap = new Map();
 var cargoNumMap = new Map();
 var tempCargo;
 var preCargoId; //保存之前在货品框中货品id
+var tempRep;
 
 
 //加载进货信息
@@ -32,9 +33,9 @@ function loadWarehourseOrderList(worderList) {
         var td1 = document.createElement("td");
         td1.innerHTML = worderList[i].sumprice;
         var td2 = document.createElement("td");
-        td2.innerHTML = worderList[i].targetname;
+        td2.innerHTML = tempRep.get(worderList[i].targetid.toString());
         var td3 = document.createElement("td");
-        td3.innerHTML = worderList[i].sourcename;
+        td3.innerHTML = tempRep.get(worderList[i].sourceid.toString());
         var td4 = document.createElement("td");
         td4.innerHTML = worderList[i].principalname;
         var td5 = document.createElement("td");

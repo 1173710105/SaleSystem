@@ -30,7 +30,7 @@ function loadWarehourseOrderList(worderList) {
         var td1 = document.createElement("td");
         td1.innerHTML = worderList[i].sumprice;
         var td2 = document.createElement("td");
-        td2.innerHTML = worderList[i].sourcename;
+        td2.innerHTML = tempRep.get(worderList[i].sourceid.toString());
         var td3 = document.createElement("td");
         td3.innerHTML = tempRep.get(worderList[i].targetid.toString());
         var td4 = document.createElement("td");

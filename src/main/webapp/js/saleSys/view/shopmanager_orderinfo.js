@@ -3,8 +3,11 @@
 var tempOrderMap = new Map();
 var tempCargoMap = new Map();
 var preCargoId;
+var tempCargo;
+var tempStatus
 
 window.onload = function () {
+	 $('#order-type').val("2");
     refreshOrderList();
 }
 
@@ -149,7 +152,7 @@ function loadOrderList(ol) {
 //刷新模态框，传入list对象,这里对象是转化后的map
 function loadMadal(order) {
     var status = order.status.toString();
-    $('#status').val(status);
+    tempStatus = status;
     $('#order-id').val(order.id);
     $('#client-id').val(order.clientid);
     $('#client-name').val(order.clientname);
@@ -207,7 +210,7 @@ function loadModalTable(items) {
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
-        if ($('#status').val() == "1") {
+        if (tempStatus == "1") {
             tr.appendChild(td5);
         }
         editTable.appendChild(tr);
@@ -305,6 +308,7 @@ $('#add-order-btn').click(function () {
     $('.return-note')[0].setAttribute("style", "display:none;");
     $('#principal-name').val(getCookie("principalname"));
     $('#order-postion').val(getCookie("warehoursename")); //获得仓库
+    tempStatus = "1";
 });
 
 
@@ -369,20 +373,13 @@ $(document).on('click', '#delete-btn', function () {
 
 //货品删除
 $(document).on('click', '#temp-delete-btn', function () {
-    var cl;
-    if ($('#order-id').val() == "") {
-        cl = tempOrderMap.get("temp");
-    } else {
-        cl = tempOrderMap.get($('#order-id').val());
-    }
     var itemid = $(this).val();
-    for (var i = 0; i < cl.length; i++) {
-        if (cl[i].get("itemid") == itemid) {
-            cl.splice(i, 1);
-        }
-    }
-    console.log("aaa", cl);
-    loadMadal(cl);
+    tempCargoMap.delete(itemid);
+    var cl;
+    tempCargoMap.forEach(function(value, key){
+    	cl.push(value);
+    })
+    loadModalTable(cl);
 });
 
 
@@ -483,6 +480,7 @@ $('#cargo-id').blur(function () {
         alert("货品不存在");
         return;
     }
+    tempCargo = item;
     $('#cargo-name').val(item.name);
     $('#cargo-id').val(item.id);
     $('#cargo-num').val("");
@@ -504,14 +502,14 @@ $('#temp-add-btn').click(function () {
     //暂存列表里有对应货品
     if(tempCargoMap.has(cargoid)) {
         if(cargoid == preCargoId) {
-            tempcargoMap.get(cargoid).itemnum = $('#cargo-num').val();
-            tempcargoMap.get(cargoid).perprice = $('#cargo-perprice').val();
-            tempcargoMap.get(cargoid).sumprice = $('#cargo-total-price').val();
+            tempCargoMap.get(cargoid).itemnum = $('#cargo-num').val();
+            tempCargoMap.get(cargoid).perprice = $('#cargo-perprice').val();
+            tempCargoMap.get(cargoid).sumprice = $('#cargo-total-price').val();
             
         } else {
-            tempcargoMap.get(cargoid).itemnum = $('#cargo-num').val();
-            tempcargoMap.get(cargoid).perprice = $('#cargo-perprice').val();
-            tempcargoMap.get(cargoid).sumprice = $('#cargo-total-price').val();
+            tempCargoMap.get(cargoid).itemnum = $('#cargo-num').val();
+            tempCargoMap.get(cargoid).perprice = $('#cargo-perprice').val();
+            tempCargoMap.get(cargoid).sumprice = $('#cargo-total-price').val();
             tempCargoMap.delete(preCargoId);
         }
     } 
@@ -519,15 +517,15 @@ $('#temp-add-btn').click(function () {
     else {
         tempCargoMap.set(cargoid, {
             itemid: cargoid,
-            itemname: tempcargo.name,
+            itemname: tempCargo.name,
             itemnum: $('#cargo-num').val(),
-            perprice: tempcargo.wholesaleprice,
+            perprice: tempCargo.wholesaleprice,
             sumprice: $('#cargo-total-price').val()
             });
     }
-    console.log("Modify cargo : ", tempcargoMap.get(cargoid));
+    console.log("Modify cargo : ", tempCargoMap.get(cargoid));
     var l = [];
-    tempcargoMap.forEach(function(value, key){
+    tempCargoMap.forEach(function(value, key){
         l.push(value);
     })
     loadModalTable(l);
@@ -535,43 +533,51 @@ $('#temp-add-btn').click(function () {
 
 //保存订单
 $('#save-btn').click(function () {
-    if(tempcargoMap.size == 0) {
+    if(tempCargoMap.size == 0) {
         alert("出货单货品列表不能为空");
         return;
     }
+    if($('#client-id').val() == "") {
+    	alert("客户不能为空");
+    	return;
+    }
     //计算总价
     var sump = 0;
-    for (var k in tempcargoMap) {
-        sump += parseFloat(tempcargoMap[k].sumprice);
+    for (var k in tempCargoMap) {
+        sump += parseFloat(tempCargoMap[k].sumprice);
     }
     var cargoObjectList = [];
     //新建订单
-    for (var k in tempscargoMap) {
-        cargoObjectList.push({
-            id: $('#order-id').val(),  //仓库单id
-            warehourseid: getCookie("warehourseid"),
-            warehoursename: getCookie("warehoursename"),                                 //填充名称
-            principalid: getCookie("principalid"),
-            principalname: getCookie("principalname"),
-            type: 2,
-            createtime: '',
-            checktime: '',
-            status: 1,
-            ordersumprice: sump,
+    tempCargoMap.forEach(function(value, key) {
+    	var obj = {
+                id: $('#order-id').val(),  //仓库单id
+                warehourseid: getCookie("warehourseid"),
+                warehoursename: getCookie("warehoursename"),                                 //填充名称
+                principalid: getCookie("principalid"),
+                principalname: getCookie("principalname"),
+                clientid : $('#client-id').val(),
+                clientname :$('#client-name').val(),
+                type: 2,
+                createtime: '',
+                checktime: '',
+                status: 1,
+                ordersumprice: sump,
 
-            itemid: tempcargoMap[k].itemid,
-            itemnum: tempcargoMap[k].itemnum,
-            itemname: tempcargoMap[k].itemname,
-            perprice: tempcargoMap[k].perprice,
-            sumprice: tempcargoMap[k].sumprice
-        })
-    }
+                itemid: value.itemid,
+                itemnum: value.itemnum,
+                itemname: value.itemname,
+                perprice: value.perprice,
+                sumprice: value.sumprice
+            };
+        cargoObjectList.push(obj);
+    });
     $('#orderModifyModal').modal('hide');
     if ($('#order-id').val() == "") {
         alert(insertOrder(cargoObjectList).info);
     } else {
         alert(updateOrder(cargoObjectList).info);
     }
+    refreshOrderList();
 });
 
 //获取模态框内点选单元格的值,更新货品信息栏
@@ -636,7 +642,7 @@ function showCargo(suborder) {
 
 //清除模态框内容
 $('body').on('hidden.bs.modal', '.modal', function () {
-    $('#order-form').reset();
+    document.getElementById('order-form').reset();
 });
 
 function getCheckStatus(order) {

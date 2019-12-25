@@ -1,18 +1,28 @@
 window.onload = function () {
+	this.document.getElementById('search-warehourse').innerHTML = this.buildWMenuOptionHTML();
     this.refreshCargoList();
 }
 
 var cargoMap = new Map();
 
+
+function cleanList() {
+	document.getElementById("cargo-tbody").innerHTML = "";
+    cargoMap.clear();
+}
+
 function refreshCargoList() {
     cleanList();
     var qlist;
-    if ((qlist = queryCargo({
-        id: $('#search-cargo-id').val(),
-        name: $('#search-cargo-name').val(),
-        type: $('#search-cargo-type').val(),
-        tablename : $('#search-warehourse').val()
-    })) == null) {
+    var obj = {
+            id: $('#search-cargo-id').val(),
+            name: $('#search-cargo-name').val(),
+            type: $('#search-cargo-type').val(),
+            tablename : $('#search-warehourse').val()
+        };
+    qlist = queryCargo(obj);
+    console.log("aaa", qlist);
+    if (qlist == null) {
         return;
     }
     loadCargoList(qlist);
@@ -21,8 +31,8 @@ function refreshCargoList() {
     }
 }
 
-function loadCargoList() {
-    var editTable = $("#cargo-tbody");
+function loadCargoList(qlist) {
+    var editTable = document.getElementById("cargo-tbody");
     editTable.innerHTML = "";
     for (var i in qlist) {
         var tr = document.createElement('tr');
@@ -82,29 +92,27 @@ function loadModal(cargo) {
     $('#wholesale-price').val(cargo.wholesaleprice);
 }
 
-function cleanList() {
-    $("#cargo-tbody").innerHTML = "";
-    cargoMap.clear();
-}
 
 //**************************************/
 $('#save-btn').click(function() {
     $('#cargoModal').modal('hide');
     if($('#cargo-id').val() == "") {
-        alert(insertCargo({
-            name : $('#cargo-name').val(),
-            type : $('#cargo-type').val(),
-            specification : $('#cargo-format').val(),
-            tablename : getCookie("warehourseid")
-        }).info);
+    	var obj = {
+                name : $('#cargo-name').val(),
+                type : $('#cargo-type').val(),
+                specification : $('#cargo-format').val(),
+                tablename : getCookie("warehourseid")
+            };
+        alert(insertCargo(obj).info);
     } else {
-        alert(updateCargo({
-            id : $('#cargo-id').val(),
-            name : $('#cargo-name').val(),
-            type : $('#cargo-type').val(),
-            specification : $('#cargo-format').val(),
-            tablename : getCookie("warehourseid")
-        }).info);
+    	var obj = {
+                id : $('#cargo-id').val(),
+                name : $('#cargo-name').val(),
+                type : $('#cargo-type').val(),
+                specification : $('#cargo-format').val(),
+                tablename : getCookie("warehourseid")
+            };
+        alert(updateCargo(obj).info);
     }
     refreshCargoList();
 });
@@ -117,9 +125,13 @@ $('#add-btn').click(function() {
     $('#cargoModal').modal('show');
 });
 
+$('#search-btn').click(function() {
+    refreshCargoList();
+});
+
 $(document).on('click', '#edit-btn', function() {
     $('#cargoModal').modal('show');
-    loadMadal(cargoMap.get($(this).val()));
+    loadModal(cargoMap.get($(this).val()));
 });
 
 $(document).on('click', '#delete-btn', function() {
