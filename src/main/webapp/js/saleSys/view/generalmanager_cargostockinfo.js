@@ -1,10 +1,10 @@
 //店长进货页面
 window.onload = function () {
-
-	this.document.getElementById('order-source-position').innerHTML = '<option value="-2">经销商</option>' + this.buildWMenuOptionHTML(); 
-	this.document.getElementById('search-order-source').innerHTML = '<option value="">任意</option>' + this.buildWMenuOptionHTML(); 
-	this.document.getElementById('order-stock-position').innerHTML = this.buildWMenuOptionHTML(); 
+    this.document.getElementById('order-source-position').innerHTML = this.buildWMenuOptionHTML();
+    this.document.getElementById('search-order-source').innerHTML = '<option value="">任意</option>' + this.buildWMenuOptionHTML();
+    this.document.getElementById('order-stock-position').innerHTML = this.buildWMenuOptionHTML();
     tempRep = queryWarehourseMenu();
+    tempProvider = queryProviderMenu();
     this.refreshCargoStockList();
 }
 
@@ -19,11 +19,12 @@ var cargoNumMap = new Map();
 var tempCargo;
 var preCargoId; //保存之前在货品框中货品id
 var tempRep;
+var tempProvider;
 
 
 //加载进货信息
 function loadWarehourseOrderList(worderList) {
-	console.log("woiweo", worderList);
+    console.log("woiweo", worderList);
     var editTable = document.getElementById("worder-tbody");
     for (var i = 0; i < worderList.length; i++) {
         //增加表格
@@ -36,7 +37,9 @@ function loadWarehourseOrderList(worderList) {
         var td2 = document.createElement("td");
         td2.innerHTML = tempRep.get(worderList[i].targetid.toString());
         var td3 = document.createElement("td");
-        td3.innerHTML = tempRep.get(worderList[i].sourceid.toString());
+        td3.innerHTML = (worderList[i].type.toString() == "1") ?
+            tempProvider.get(worderList[i].sourceid.toString())
+            : tempRep.get(worderList[i].sourceid.toString());
         var td4 = document.createElement("td");
         td4.innerHTML = worderList[i].principalname;
         var td5 = document.createElement("td");
@@ -150,6 +153,14 @@ function loadWarehourseOrderList(worderList) {
 //加载模态框
 function loadModal(type, order) {
     document.getElementById('cargo-purchase-price').setAttribute("readonly", "readonly");
+    if (order == null) {
+        
+    }
+    else if(order.type == "1") {
+        this.document.getElementById('order-source-position').innerHTML = this.buildPMenuOptionHTML();
+    } else if(order.type == "2") {
+        this.document.getElementById('order-source-position').innerHTML = this.buildWMenuOptionHTML();
+    }
     $('#type').val(type);
     var modal = $("#stockAddModal");
     console.log(modal);
@@ -159,7 +170,7 @@ function loadModal(type, order) {
             $('.modal-footer')[0].style.display = "";
             $('.save-btn')[0].style.display = "";
             modal.find('.modal-title').text("添加进货");
-            
+
             $('#order-stock-position').val(order.targetid);
             $('#order-principal').val(getCookie("principalname"));
             break;
@@ -295,8 +306,8 @@ $(document).on('click', '#temp-delete-btn', function () {
     var cargoid = $(this).val();
     cargoMap.delete(cargoid);
     var l = [];
-    cargoMap.forEach(function(value, key) {
-    	l.push(value);
+    cargoMap.forEach(function (value, key) {
+        l.push(value);
     })
     console.log("aaaddd", l);
     loadModalTable(l);
@@ -326,18 +337,20 @@ $('#cargo-purchase-price').blur(function () {
         parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
 })
 
-//类型变动处理，当为进货类型时，允许填写进货价
+//类型变动处理，当为进货类型时，允许填写进货价，同时更换货源地选项
 $("#order-type").change(function () {
     if ($(this).val() == "1") {
         document.getElementById('cargo-purchase-price').removeAttribute("readonly");
+        this.document.getElementById('order-source-position').innerHTML = this.buildPMenuOptionHTML();
     } else if ($(this).val() == "2") {
         document.getElementById('cargo-purchase-price').setAttribute("readonly", "readonly");
+        this.document.getElementById('order-source-position').innerHTML = this.buildWMenuOptionHTML();
     }
 });
 
 //添加货品到订货单
 $('#add-cargo-btn').click(function () {
-    if($('#cargo-purchase-price').val() == "") {
+    if ($('#cargo-purchase-price').val() == "") {
         alert("进货价不能为空");
         return;
     }
@@ -359,34 +372,34 @@ $('#add-cargo-btn').click(function () {
         }
     } else {
         //不存在对应货品，新增记录插入到map中
-    	var object;
-    	if($('#order-type').val() == "1") {
-    		object = {
-                    itemid: tempcargo.id,
-                    itemname: tempcargo.name,
-                    itemnum: $('#cargo-num').val(),
-                    perprice: $('#cargo-purchase-price').val(),
-                    sumprice: $('#cargo-total-price').val()
-                };
-    	} else if ($('#order-type').val() == "2"){
-    		object = {
-                    itemid: tempcargo.id,
-                    itemname: tempcargo.name,
-                    itemnum: $('#cargo-num').val(),
-                    perprice: tempcargo.purchaseprice,
-                    sumprice: $('#cargo-total-price').val()
-                };
-    	}
+        var object;
+        if ($('#order-type').val() == "1") {
+            object = {
+                itemid: tempcargo.id,
+                itemname: tempcargo.name,
+                itemnum: $('#cargo-num').val(),
+                perprice: $('#cargo-purchase-price').val(),
+                sumprice: $('#cargo-total-price').val()
+            };
+        } else if ($('#order-type').val() == "2") {
+            object = {
+                itemid: tempcargo.id,
+                itemname: tempcargo.name,
+                itemnum: $('#cargo-num').val(),
+                perprice: tempcargo.purchaseprice,
+                sumprice: $('#cargo-total-price').val()
+            };
+        }
         cargoMap.set(tempcargo.id.toString(), object);
     }
 
     //更新缓存
     var l = [];
-    cargoMap.forEach(function(value, key) {
-    	l.push(value);
+    cargoMap.forEach(function (value, key) {
+        l.push(value);
     })
     var sump;
-    cargoMap.forEach(function(value, key) {
+    cargoMap.forEach(function (value, key) {
         sump += parseFloat(value.perprice) * parseInt(value.itemnum);
     });
     $('#total-price').val("进货总价: " + sump);
@@ -405,18 +418,18 @@ $(document).on('click', '#apply-btn', function () {
 //审核申请
 $(document).on('click', "#check-btn", function () {
     var r;
-    if(tempWareOrderMap.get($(this).val()).type.toString() == "1") {
+    if (tempWareOrderMap.get($(this).val()).type.toString() == "1") {
         r = confirm("是否确认购入？");
     }
-    else if(tempWareOrderMap.get($(this).val()).type.toString() == "2") {
+    else if (tempWareOrderMap.get($(this).val()).type.toString() == "2") {
         r = confirm("是否同意转仓请求？");
     }
     if (r) {
-    	var worder = tempWareOrderMap.get($(this).val());
+        var worder = tempWareOrderMap.get($(this).val());
         alert(passWarehourseOrder({
-        	id : worder.id,
-        	sourceid : worder.sourceid,
-        	targetid : worder.targetid
+            id: worder.id,
+            sourceid: worder.sourceid,
+            targetid: worder.targetid
         }).info);
         refreshCargoStockList();
     }
@@ -425,19 +438,19 @@ $(document).on('click', "#check-btn", function () {
 //保存,编辑保存,插入保存
 $('#save-btn').click(function () {
     //判断货源地与目的地是否相同
-    if($('#order-source-position').val() == getCookie("warehourseid")) {
+    if ($('#order-source-position').val() == getCookie("warehourseid")) {
         alert("货源地与目的地不能为同一地址");
         return;
     }
     //统一将暂存列表中货品写入
     var cargoObjectList = [];
     var sump = 0;
-    cargoMap.forEach(function(value, key) {
-    	sump += parseFloat(value.perprice) * parseInt(value.itemnum);
+    cargoMap.forEach(function (value, key) {
+        sump += parseFloat(value.perprice) * parseInt(value.itemnum);
     });
     //新建订单
-    cargoMap.forEach(function(value, key) {
-    	cargoObjectList.push({
+    cargoMap.forEach(function (value, key) {
+        cargoObjectList.push({
             id: $('#order-id').val(),  //仓库单id
             sourceid: $('#order-source-position').val(),
             sourcename: '',                                 //填充名称
@@ -480,7 +493,7 @@ function showCargo(cargo) {
 //******************************************************/
 //清除模态框内容
 $('body').on('hidden.bs.modal', '.modal', function () {
-	document.getElementById('stock-form').reset();
+    document.getElementById('stock-form').reset();
 });
 
 function cleanCargoStockList() {
@@ -519,7 +532,7 @@ function getStatus(status) {
 function getType(type) {
     if (type.toString() == "1") {
         return "进货";
-    } else if(type.toString() == "2") {
+    } else if (type.toString() == "2") {
         return "转仓";
     }
 }
