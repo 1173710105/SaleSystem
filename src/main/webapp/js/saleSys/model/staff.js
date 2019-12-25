@@ -100,6 +100,17 @@ function updateStaff(staff) {
     return sendJsonAjax(url, param);
 }
 
+function changeCPwd(staff) {
+    param =
+    '{'
+    + '"id":"' + staff.id + '",'
+    + '"password":"' + staff.password + '"}';
+    var url = "";
+    $.ajaxSettings.async = false;
+    console.log("ChangePwd Clerk : ", param);
+    return sendJsonAjax(url, param);
+}
+
 function buildParam(staff) {
     combineStaff = $.extend({},defaultStaffSetting, staff);
     param = 

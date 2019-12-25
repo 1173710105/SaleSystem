@@ -140,6 +140,17 @@ function queryWareIdByManagerId(id) {
     return sendShopManagerJsonAjax(url, param);
 }
 
+function changeSPwd(manager) {
+    param =
+    '{'
+    + '"id":"' + manager.id + '",'
+    + '"password":"' + manager.password + '"}';
+    var url = "";
+    $.ajaxSettings.async = false;
+    console.log("ChangePwd SManager : ", param);
+    return sendShopManagerJsonAjax(url, param);
+}
+
 function assignManager(manager) {
     if (manager == null) {
         return null;

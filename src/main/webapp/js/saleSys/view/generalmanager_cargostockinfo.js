@@ -320,7 +320,7 @@ $('#cargo-num').blur(function () {
         parseFloat($('#cargo-purchase-price').val()) * parseInt($('#cargo-num').val()));
 })
 
-//类型变动处理，当为进货类型时，允许填写进货价
+//类型变动处理，当为进货类型时，允许填写进货价，同时将货源地列表替换为供应商列表，否则换为仓库列表
 $("#order-type").change(function () {
     if ($(this).val() == "1") {
         document.getElementById('cargo-purchase-price').removeAttribute("readonly");
