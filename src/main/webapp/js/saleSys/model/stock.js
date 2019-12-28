@@ -63,13 +63,19 @@ function updateStock(stockL) {
     if(stockL == null) {
         return;
     }
-    console.log("aaaa", stockL);
     param = buildParamList(stockL);
     url = "/stock/update";
     console.log("UpdataStock : ", param);
     $.ajaxSettings.async = false;
     return sendStockJsonAjax(url, param);
 }
+
+function getStockAmount(stock) {
+    param = buildParam(stock);
+    url = "";
+    $.ajaxSettings.async = false;
+    return sendStockJsonAjax(url, param);
+} 
 
 function buildParam(stock) {
     combineStock = $.extend({}, defaultStockSetting, stock);

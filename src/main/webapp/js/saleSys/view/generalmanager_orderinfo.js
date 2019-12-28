@@ -125,6 +125,12 @@ function cleanOrderList() {
 
 //刷新表格
 function refreshOrderList() {
+    var obj = {
+        warehourseid: $('#search-rep').val(),
+        warehoursename: tempRep.get($('#search-rep').val())
+    }
+    this.document.getElementById('sale-amount').text(getSaleAmount(obj));
+    this.document.getElementById('profit-amount').text(getProfitAmount(obj));
     cleanOrderList();
     var pays = $('#search-pay').val();
     var checks = $('#search-check-status').val();

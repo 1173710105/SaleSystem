@@ -1,5 +1,6 @@
 //店长进货页面
 window.onload = function () {
+    
 	this.document.getElementById('order-source-position').innerHTML = this.buildWMenuOptionHTML(); 
 	this.document.getElementById('search-order-source').innerHTML = '<option value="">任意</option>' + this.buildWMenuOptionHTML(); 
 	this.document.getElementById('order-stock-position').innerHTML = this.buildWMenuOptionHTML(); 
@@ -438,6 +439,11 @@ function cleanCargoStockList() {
 }
 
 function refreshCargoStockList() {
+    var obj = {
+        targetid: getCookie("warehourseid")
+    }
+    //加载进货金额信息
+    this.document.getElementById('stock-amount').text(this.getStockAmount(obj));
     cleanCargoStockList();
     worder = {
         id: $('#search-order-id').val(),

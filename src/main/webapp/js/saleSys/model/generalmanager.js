@@ -1,6 +1,6 @@
 //总经理对象操作
 
-defaultSetting = {
+defaultGManagerSetting = {
     id : '',
     password : '',
     hourseid : '',
@@ -10,22 +10,24 @@ defaultSetting = {
     email : ''
 }
 
-function sendJsonAjax(url, param) {
+function sendGeneralJsonAjax(url, param) {
+    var tempdata;
     $.ajax({
         url: url,
         data: param,
         type: "post",
-        dataType: "text",
+        dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
             if (data != null) {
-                return data;
+                console.log("Receive JSON general : ", data);
+                tempdata = data;
             }
-            return null;
         },
         error: function () {
         }
     });
+    return tempdata;
  }
 
 //通过id查找总经理
@@ -36,5 +38,44 @@ function queryGManagerById(id) {
     param = 
        '{"id":"' + id + '"}';
     url = "/generalmanager/queryById";
-    return sendJsonAjax(url, param);
+    $.ajaxSettings.async = false;
+    console.log("Query GManager : ", param);
+    return sendGeneralJsonAjax(url, param);
+}
+
+function updateGManager(manager) {
+    if(manager.id == "") {
+        return;
+    }
+    param = buildGManagerParam(manager);
+    url = "";
+    $.ajaxSettings.async = false;
+    console.log("updata Manager : ", param);
+    return sendGeneralJsonAjax(url, param);
+}
+
+function changeGPwd(manager) {
+    param =
+    '{'
+    + '"id":"' + manager.id + '",'
+    + '"password":"' + manager.password + '"}';
+    var url = "";
+    $.ajaxSettings.async = false;
+    console.log("ChangePwd Manager : ", param);
+    return sendGeneralJsonAjax(url, param);
+}
+
+function buildGManagerParam(manager) {
+    if (manager == null) {
+        return null;
+    }
+    combineGManager = $.extend({},defaultGManagerSetting, manager);
+    param = 
+    '{'
+    + '"id":"' + combineGManager.id + '",'
+    + '"name":"' + combineGManager.name + '",'
+    + '"gender":"' + combineGManager.gender + '",'
+    + '"phone":"' + combineGManager.phone + '",'
+    + '"email":"' + combineGManager.email + '"}'
+    return param;
 }
