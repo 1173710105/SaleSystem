@@ -1,6 +1,7 @@
 ﻿//客户对象操作
 
-defaultSetting = {
+defaultSetting = 
+{
     id : "",
     name : "",
     gender : "",

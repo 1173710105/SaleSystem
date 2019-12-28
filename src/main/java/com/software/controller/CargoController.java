@@ -16,7 +16,8 @@ import com.software.trans.ReceiveCargo;
 
 @RestController
 @RequestMapping("/cargo")
-public class CargoController {
+public class CargoController 
+{
 	
 	@Autowired
 	private ItemManagerSerivce service;
@@ -40,9 +41,6 @@ public class CargoController {
 			System.out.println(r.toString());
 		}
 		return result;
-		
-		
-		
 	}
 	
 	@RequestMapping("/add")

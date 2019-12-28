@@ -10,10 +10,13 @@ public class ReceiveWarehourseOrder
     private String id;
     private String sourceid;
     private String sourcename;
+    
     private String targetid;
     private String targetname;
+    
     private String principalid;
     private String principalname;
+    
     private String type;
     private String createtime;
     private String checktime;
@@ -22,6 +25,7 @@ public class ReceiveWarehourseOrder
 
     
     private String viceid;
+    
     private String itemid;
     private String itemname;
     private String itemnum;

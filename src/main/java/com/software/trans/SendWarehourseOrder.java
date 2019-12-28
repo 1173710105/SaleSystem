@@ -6,8 +6,8 @@ import com.software.domain.SaleorderCommon;
 import com.software.domain.WarehourseOrderCommon;
 import com.software.domain.WarehourseOrderItem;
 
-public class SendWarehourseOrder {
-	
+public class SendWarehourseOrder 
+{
     private Integer id;
     private Integer sourceid;
     private String sourcename;
