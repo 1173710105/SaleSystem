@@ -9,10 +9,22 @@ function fillTopInfo() {
     //判断职位,显示不同欢迎语
     var position = getCookie("position");
     if (position == "staff") {
-        $('#greeting').html("欢迎店员" + getCookie('name'));
+        $('#greeting').text("欢迎店员" + getCookie('principalname'));
     } else if(position == "shop-manager") {
-        $('#greeting').html("欢迎店长" + getCookie('name'));
+        $('#greeting').text("欢迎店长" + getCookie('principalname'));
     } else if (position == "general-manager") {
-        $('#greeting').html("欢迎经理" + getCookie('name'));
+        $('#greeting').text("欢迎经理" + getCookie('principalname'));
     }
 }
+
+function logout() {
+    if(confirm("确定退出登录？")) {
+        cleanCookie();
+        top.location.href = "http://localhost:8080/" + "login.html";
+    }
+}
+
+function profile() {
+    
+}
+

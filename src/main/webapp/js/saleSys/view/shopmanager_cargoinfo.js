@@ -47,7 +47,8 @@ $('#save-btn').click(function() {
             wholesaleprice :  $('#wholesale-price').val(),
             tablename : getCookie("warehourseid")
         }
-        insertCargo(newCargo);
+        $('#cargoModal').modal('hide');
+        alert(insertCargo(newCargo).info);
     } 
     //编辑货品
     else {
@@ -61,7 +62,8 @@ $('#save-btn').click(function() {
             wholesaleprice :  $('#wholesale-price').val(),
             tablename : getCookie("warehourseid")
         }
-        updateCargo(newCargo);
+        $('#cargoModal').modal('hide');
+        alert(updateCargo(newCargo).info);
     }
     refreshCargoList();
 });

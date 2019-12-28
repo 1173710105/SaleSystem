@@ -126,64 +126,64 @@
   <insert id="insertSelective" parameterType="com.software.domain.SaleorderCommon">
     insert into ${tablename}
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id!=''">
         ID,
       </if>
-      <if test="warehourseid != null">
+      <if test="warehourseid != null and warehourseid!=''">
         warehourseID,
       </if>
-      <if test="warehoursename != null">
+      <if test="warehoursename != null and warehoursename!=''">
         warehourseName,
       </if>
-      <if test="clientid != null">
+      <if test="clientid != null and clientid!=''">
         clientID,
       </if>
-      <if test="clientname != null">
+      <if test="clientname != null and clientname!=''">
         clientName,
       </if>
-      <if test="principalid != null">
+      <if test="principalid != null and principalid!=''">
         principalID,
       </if>
-      <if test="principalname != null">
+      <if test="principalname != null and principalname!=''">
         principalName,
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null and createtime!=''">
         createTime,
       </if>
-      <if test="checktime != null">
+      <if test="checktime != null and checktime!=''">
         checkTime,
       </if>
-      <if test="gathertime != null">
+      <if test="gathertime != null and gathertime!=''">
         gatherTime,
       </if>
-      <if test="returntime != null">
+      <if test="returntime != null and returntime!=''">
         returnTime,
       </if>
-      <if test="postime != null">
+      <if test="postime != null and postime!=''">
         posTime,
       </if>
-      <if test="status != null">
+      <if test="status != null and status!=''">
         status,
       </if>
-      <if test="sumprice != null">
+      <if test="sumprice != null and sumprice!=''">
         sumPrice,
       </if>
-      <if test="gather != null">
+      <if test="gather != null and gather!=''">
         gather,
       </if>
-      <if test="change != null">
+      <if test="change != null and change!=''">
         `change`,
       </if>
-      <if test="margin != null">
+      <if test="margin != null and margin!=''">
         margin,
       </if>
-      <if test="type != null">
+      <if test="type != null and type!=''">
         type,
       </if>
-      <if test="note != null">
+      <if test="note != null and note!=''">
         note,
       </if>
-      <if test="exception != null">
+      <if test="exception != null and exception!=''">
         exception,
       </if>
     </trim>

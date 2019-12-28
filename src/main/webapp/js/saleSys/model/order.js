@@ -180,6 +180,22 @@ function returnOrder(order) {
     return sendOrderJsonAjax(url, param);
 }
 
+function getSaleAmount(order) {
+    param = buildOrderParam(order);
+    url = "";
+    console.log("GetSaleAmount : ", param);
+    $.ajaxSettings.async = false;
+    return sendOrderJsonAjax(url, param);
+}
+
+function getProfitAmount(order) {
+    param = buildOrderParam(order);
+    url = "";
+    console.log("GetProfitAmount : ", param);
+    $.ajaxSettings.async = false;
+    return sendOrderJsonAjax(url, param);
+}
+
 function buildOrderParam(order) {
     combineOrder = $.extend({}, defaultOrderSetting, order);
     param =

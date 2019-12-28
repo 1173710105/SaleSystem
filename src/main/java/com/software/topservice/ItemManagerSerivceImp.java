@@ -107,8 +107,8 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 		ItemToPrice examplePrice = record.toPrice();
 		
 		List<Item> itemList = itemService.select(exampleItem);
-		
 		Map<Integer, ReceiveCargo> map = new HashMap<Integer, ReceiveCargo>();
+		
 		ReceiveCargo cargo;
 		for (Item item : itemList) 
 		{
@@ -121,8 +121,15 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 		List<ItemToPrice> prices = priceService.select(examplePrice);
 		for (ItemToPrice itemToPrice : prices) 
 		{
-			itemToPrice.setTablename(examplePrice.getTablename());
-			map.get(itemToPrice.getId()).initByPrice(itemToPrice);
+			try 
+			{
+				itemToPrice.setTablename(examplePrice.getTablename());
+				map.get(itemToPrice.getId()).initByPrice(itemToPrice);
+			} catch (Exception e) 
+			{
+				continue;
+			}
+			
 		}
 		
 		List<ReceiveCargo> result = new ArrayList<>();

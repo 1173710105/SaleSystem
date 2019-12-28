@@ -10,48 +10,45 @@
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    
+
 </head>
 
 <body>
-        <!-- 侧边栏标签页 -->
-        <ul class="nav nav-pills nav-stacked" >
-            <!-- 侧边栏选项 -->
-            <li role="presentation">
-                <!-- 选项控制data-target对应的显隐 -->
-                <a href="#" data-toggle="collapse" data-target="#list">货品管理</a>
-                <!-- 隐藏的详细菜单 -->
-                <ul id="list" class="collapse">
-                    <li role="presentation"><a class="collapse-item"  href="CargoInfo.html" target="main" >货品信息</a></li>
-                    <!-- <li role="presentation"><a class="collapse-item" href="CargoTransaction.html" target="main" >货品异动</a></li> -->
-                    <li role="presentation"><a class="collapse-item" href="CargoStockInfo.html" target="main">进货管理</a></li>
-                    <li role="presentation"><a class="collapse-item" href="CargoDeliveryInfo.html" target="main">出货管理</a></li>
-                    <li role="presentation">
-                            <a href="#" data-toggle="collapse" data-target="#repManagement" >仓库管理</a>
-                            <ul id="repManagement" class="collapse">
-                                <li role="presentation"><a class="collapse-item" href="RepInfo.html" target="main">仓库信息</a></li>
-                                <li role="presentation"><a class="collapse-item" href="InventoryInfo.html" target="main">库存管理</a></li>
-                            </ul>
-                        </li>
-                    
-                </ul>
-            </li>
-            
-            <li role="presentation">
-                <a href="#" data-toggle="collapse" data-target="#orderManagement" >订单管理</a>
-                <ul id="orderManagement" class="collapse">
-                    <li role="presentation"><a class="collapse-item" href="OrderInfo.html" target="main">订单处理</a></li>
-                    <!-- <li role="presentation"><a class="collapse-item" href="OrderReturn.html" target="main">退货处理</a></li> -->
-                </ul>
-            </li>
-            <li role="presentation">
-                <a href="#" data-toggle="collapse" data-target="#peopleManagement" >人员管理</a>
-                <ul id="peopleManagement" class="collapse">
-                    <li role="presentation"><a class="collapse-item" href="ClientInfo.html" target="main">客户信息</a></li>
-                    <li role="presentation"><a class="collapse-item" href="ClerkInfo.html" target="main">店员信息</a></li>
-                </ul>
-            </li>
-        </ul>
+    <!-- 侧边栏标签页 -->
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation">
+            <a href="#" data-toggle="collapse" data-target="#baseManagement">仓储基本信息管理</a>
+            <ul id="baseManagement" class="collapse">
+                <li role="presentation"><a class="collapse-item" href="CargoInfo.html" target="main">货品信息</a></li>
+                <li role="presentation"><a class="collapse-item" href="ProviderInfo.html" target="main">供应商信息</a></li>
+                <li role="presentation"><a class="collapse-item" href="RepInfo.html" target="main">仓库信息</a></li>
+            </ul>
+        </li>
+        <li role="presentation">
+            <a href="#" data-toggle="collapse" data-target="#peopleManagement">人员基本信息管理</a>
+            <ul id="peopleManagement" class="collapse">
+                <li role="presentation"><a class="collapse-item" href="ClientInfo.html" target="main">客户信息</a></li>
+                <li role="presentation"><a class="collapse-item" href="ClerkInfo.html" target="main">员工信息</a></li>
+            </ul>
+        </li>
+        <li role="presentation">
+            <a href="#" data-toggle="collapse" data-target="#stockManagement">库存管理</a>
+            <ul id="stockManagement" class="collapse">
+                <li role="presentation"><a class="collapse-item" href="InventoryInfo.html" target="main">库存统计</a></li>
+                <li role="presentation"><a class="collapse-item" href="CargoStockInfo.html" target="main">进货管理</a></li>
+                <li role="presentation"><a class="collapse-item" href="CargoDeliveryInfo.html" target="main">出货管理</a>
+                </li>
+            </ul>
+        </li>
+        <li role="presentation">
+            <a href="#" data-toggle="collapse" data-target="#orderManagement">销售管理</a>
+            <ul id="orderManagement" class="collapse">
+                <li role="presentation"><a class="collapse-item" href="OrderInfo.html" target="main">订单管理</a></li>
+                <li role="presentation"><a class="collapse-item" href="" target="main">销售财务</a></li>
+            </ul>
+        </li>
+
+    </ul>
 </body>
 
 </html>

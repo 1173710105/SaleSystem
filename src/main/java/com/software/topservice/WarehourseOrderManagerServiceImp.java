@@ -138,6 +138,9 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		// common 最后才更新
 		WarehourseOrderCommon exampleCommon = order.toWarehourseOrderCommon();
 		String date = exampleCommon.getChecktime();
+		WarehourseOrderCommon resultCommon = commonService.selectByPrimaryKey(exampleCommon);
+		resultCommon.setChecktime(date);
+		resultCommon.setStatus(exampleCommon.getStatus());
 		
 		// 获取订单的商品
 		WarehourseOrderItem exampleItem = order.toWarehourseOrderItem();
@@ -145,8 +148,8 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		List<WarehourseOrderItem> itemList = itemService.select(exampleItem);
 		
 		// 用于初始化商品数量信息表，获取源和目的表名
-		String sourceTableName = getWarehourseDetailTable(exampleCommon.getSourceid());
-		String targetTableName = getWarehourseDetailTable(exampleCommon.getTargetid());
+		String sourceTableName = getWarehourseDetailTable(resultCommon.getSourceid());
+		String targetTableName = getWarehourseDetailTable(resultCommon.getTargetid());
 		
 		// 用于保存变化后商品数量信息
 		List<WarehourseDetail> sourceItemList = new ArrayList<>();
@@ -207,11 +210,12 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		}
 		
 		// 初始化所有仓库的进货价 
-		if (exampleCommon.getType().equals("1")) 
+		if (resultCommon.getType().equals("1")) 
 		{
-			 initPurchasePrice(order);
+			System.out.println("i am here");
+			initPurchasePrice(order);
 		}
-		commonService.updateByPrimaryKeySelective(exampleCommon);
+		commonService.updateByPrimaryKeySelective(resultCommon);
 		return "true";
 	}
 	

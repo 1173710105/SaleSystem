@@ -79,10 +79,6 @@ $("#login-btn").click(
                     //会话 sessionid
                     //账号 id
                     //职位 position
-                	console.log("data : ", data);
-                	console.log("data type : ", typeof(data));
-                	console.log("wid" + data.warehourseid );
-                	console.log("wid",data.warehourseid);
                 	
                     setCookie("id", data.principalid);
                     setCookie("position", type);
@@ -97,9 +93,6 @@ $("#login-btn").click(
                     setCookie("warehoursedetailtable", data.warehoursedetailtable);
                     setCookie("itemtable", data.itemtable);
                     setCookie("time", data.time);
-                    console.log("principalid", getCookie("principalid"));
-                    console.log("pname", getCookie("principalname"));
-                    console.log("wid", getCookie("warehourseid"));
                 } else {
                     alert("请求失败");
                     return;
