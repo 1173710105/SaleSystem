@@ -36,6 +36,8 @@ public class OrderController
 	@RequestMapping("/insert")
 	public Map<String,String> insertOrder(@RequestBody List<ReceiveOrder> param)
 	{
+		System.out.println("insert");
+		System.out.println(param);
 		if (param.size()==0) 
 		{
 			return null;
