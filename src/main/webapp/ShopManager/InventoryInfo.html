@@ -21,78 +21,83 @@
         }
 
         .middle {
-        float: none;
-        display: inline-block;
-        vertical-align: middle;
-        }                    
-
+            float: none;
+            display: inline-block;
+            vertical-align: middle;
+        }
     </style>
 </head>
 
 <body>
-        <div class="content">
-            <div class="row">
-                <div class="col-md-4">
-                    <caption>
-                        当前位置>库存管理
-                    </caption>
-                </div>
-
+    <div class="content">
+        <div class="row">
+            <div class="col-md-4">
+                <caption>
+                    当前位置>库存管理
+                </caption>
             </div>
-            <div class="row">
-                <div class="col-md-5">
-                        <button type="button" class="btn btn-primary btn-sm" id="update-btn">更新盘点</button>
-                </div>
-                <div class="col-md-7">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h6>货品名称 </h6>
-                            <input type="text" class="form-control input-sm" id="search-cargo-name">
-                        </div>
-                        <div class="col-md-4">
-                            <h6>货品编号</h6>
-                            <input type="text" class="form-control input-sm" id="search-cargo-id">
-                        </div>
-                        <div class="col-md-2">
-                            <h6>货品种类</h6>
-                            <select class="form-control input-sm" id="search-cargo-type">
-                                    <option value="任意">任意</option>
-                                    <option value="五金类">五金类</option>
-                                    <option value="生活用品类">生活用品类</option>
-                                    <option value="家具类">家具类</option>
-                                    <option value="图书类">图书类</option>
-                                    <option value="体育健身类">体育健身类</option>
-                                    <option value="摄影器材类">摄影器材类</option>
-                                    <option value="服装内衣类">服装内衣类</option>
-                                    <option value="食品类">食品类</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-sm btn-default" type="button" id="search-btn">查询</button>
-                        </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <button type="button" class="btn btn-primary btn-sm" id="update-btn">更新盘点</button>
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>货品名称 </h6>
+                        <input type="text" class="form-control input-sm" id="search-cargo-name">
+                    </div>
+                    <div class="col-md-4">
+                        <h6>货品编号</h6>
+                        <input type="text" class="form-control input-sm" id="search-cargo-id">
+                    </div>
+                    <div class="col-md-2">
+                        <h6>货品种类</h6>
+                        <select class="form-control input-sm" id="search-cargo-type">
+                            <option value="任意">任意</option>
+                            <option value="五金类">五金类</option>
+                            <option value="生活用品类">生活用品类</option>
+                            <option value="家具类">家具类</option>
+                            <option value="图书类">图书类</option>
+                            <option value="体育健身类">体育健身类</option>
+                            <option value="摄影器材类">摄影器材类</option>
+                            <option value="服装内衣类">服装内衣类</option>
+                            <option value="食品类">食品类</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-sm btn-default" type="button" id="search-btn">查询</button>
                     </div>
                 </div>
+            </div>
 
-            </div>
-            <hr>
-            <div align="center">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>编号</th>
-                            <th>名称</th>
-                            <th>种类</th>
-                            <th>规格</th>
-                            <th>数量</th>
-                            <th>盘点</th>
-                            <th>更新时间</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inventory-tbody">
-                    </tbody>
-                </table>
-            </div>
         </div>
+        <hr>
+        <form class="form-group form-inline">
+            <label for="overstock-amount">库存积压金额 </label>
+            <label id="overstock-amount"></label>
+        </form>
+        <hr>
+        <div align="center">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>种类</th>
+                        <th>规格</th>
+                        <th>数量</th>
+                        <th>积压资金额</th>
+                        <th>盘点</th>
+                        <th>更新时间</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 <script type="text/javascript" src="../js/saleSys/cookie.js"></script>
 <script type="text/javascript" src="../js/saleSys/model/stock.js"></script>

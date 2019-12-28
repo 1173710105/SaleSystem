@@ -225,6 +225,12 @@ function cleanOrderList() {
 
 //刷新表格
 function refreshOrderList() {
+    var obj = {
+        warehourseid: getCookie("warehourseid"),
+            warehoursename: getCookie("warehoursename")
+    }
+    this.document.getElementById('sale-amount').text(getSaleAmount(obj));
+    this.document.getElementById('profit-amount').text(getProfitAmount(obj));
     cleanOrderList();
     var pays = $('#search-pay').val();
     var checks = $('#search-check-status').val();
