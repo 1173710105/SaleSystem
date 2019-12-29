@@ -36,6 +36,8 @@ public class OrderController
 	@RequestMapping("/insert")
 	public Map<String,String> insertOrder(@RequestBody List<ReceiveOrder> param)
 	{
+		System.out.println("insert");
+		System.out.println(param);
 		if (param.size()==0) 
 		{
 			return null;
@@ -110,5 +112,4 @@ public class OrderController
 		result.put("info", "退货成功");
 		return result;//返回成功/失败信息
 	}
-	
 }

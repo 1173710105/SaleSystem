@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.software.topservice.ItemManagerSerivce;
 import com.software.trans.ReceiveCargo;
+import com.software.trans.SendCargo2Andr;
 
 @RestController
 @RequestMapping("/cargo")
@@ -24,6 +25,7 @@ public class CargoController {
 	@RequestMapping("/queryById")
 	public ReceiveCargo queryCargoById(@RequestBody ReceiveCargo param)
 	{
+		System.out.println("hhh"+param.toString());
 		param.setLabel("valid");
 		ReceiveCargo result = service.selectByPrimaryKey(param);
 		return result;
@@ -32,14 +34,15 @@ public class CargoController {
 	@RequestMapping("/query")
 	public List<ReceiveCargo> queryCargo(@RequestBody ReceiveCargo param)
 	{
-		System.out.println("ID    "+param.getId());
-		System.out.println("hourseID"+ param.getTablename());
+//		System.out.println("ID    "+param.getId());
+//		System.out.println("hourseID"+ param.getTablename());
+		System.out.println(param);
 		param.setLabel("valid");
 		List<ReceiveCargo> result = service.select(param);
 		System.out.println(result.size());
-		for(ReceiveCargo r:result){
-			System.out.println(r.toString());
-		}
+//		for(ReceiveCargo r:result){
+//			System.out.println(r.toString());
+//		}
 		return result;
 	}
 	
@@ -81,6 +84,22 @@ public class CargoController {
 		
 		Map<String,String> result = new HashMap<String,String>();
 		result.put("info", "更新成功");
+		return result;
+	}
+	
+	@RequestMapping("/query2")
+	public SendCargo2Andr queryCargo2(@RequestBody ReceiveCargo param)
+	{
+//		System.out.println("ID    "+param.getId());
+//		System.out.println("hourseID"+ param.getTablename());
+		System.out.println(param);
+		param.setLabel("valid");
+		List<ReceiveCargo> list = service.select(param);
+		SendCargo2Andr result = new SendCargo2Andr(list);
+//		System.out.println(result.size());
+		for(ReceiveCargo r:list){
+			System.out.println(r.toString());
+		}
 		return result;
 	}
 	
