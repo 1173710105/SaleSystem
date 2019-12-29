@@ -42,30 +42,30 @@
   <insert id="insertSelective" parameterType="com.software.domain.VIPLevel">
     insert into viplevel
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id!=''">
         ID,
       </if>
-      <if test="vipname != null">
+      <if test="vipname != null and vipname!=''">
         VIPname,
       </if>
-      <if test="pointtoprice != null">
+      <if test="pointtoprice != null and pointtoprice!=''">
         pointToPrice,
       </if>
-      <if test="pricetopoint != null">
+      <if test="pricetopoint != null and pricetopoint!=''">
         priceToPoint,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="id != null and id!=''">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="vipname != null">
+      <if test="vipname != null and vipname!=''">
         #{vipname,jdbcType=VARCHAR},
       </if>
-      <if test="pointtoprice != null">
+      <if test="pointtoprice != null and pointtoprice!=''">
         #{pointtoprice,jdbcType=REAL},
       </if>
-      <if test="pricetopoint != null">
+      <if test="pricetopoint != null and pricetopoint!=''">
         #{pricetopoint,jdbcType=REAL},
       </if>
     </trim>
@@ -73,13 +73,13 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.VIPLevel">
     update viplevel
     <set>
-      <if test="vipname != null">
+      <if test="vipname != null and vipname!=''">
         VIPname = #{vipname,jdbcType=VARCHAR},
       </if>
-      <if test="pointtoprice != null">
+      <if test="pointtoprice != null and pointtoprice!=''">
         pointToPrice = #{pointtoprice,jdbcType=REAL},
       </if>
-      <if test="pricetopoint != null">
+      <if test="pricetopoint != null and pricetopoint!=''">
         priceToPoint = #{pricetopoint,jdbcType=REAL},
       </if>
     </set>
