@@ -22,6 +22,38 @@
 </head>
 
 <body>
+    <div class="modal fade" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">整单折扣</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <caption>gen</caption>
+                            <input type="text" class="form-control" id="clerk-name">
+                        </div>
+                        <div class="col-md-6">
+                            <caption>性别</caption>
+                            <select class="form-control" id="clerk-gender">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="save-btn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="card">
             <div class="card-body">
@@ -65,33 +97,41 @@
                     </div>
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <h3>客户编号</h3>
                                 <input id="client-id" class="form-control input-md">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <h3>客户名称</h3>
                                 <input id="client-name" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <h3>会员积分</h3>
+                                <input id="client-score" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <h3>预存款</h3>
+                                <input id="client-deposit" class="form-control input-md">
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-md-12">
                                 <div style="height:250px; overflow:scroll;">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>货品名称</th>
-                                            <th>货品编码</th>
-                                            <th>数量</th>
-                                            <th>单价</th>
-                                            <th>总价</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="temp-cargo-list">
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>货品名称</th>
+                                                <th>货品编码</th>
+                                                <th>数量</th>
+                                                <th>单价</th>
+                                                <th>总价</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="temp-cargo-list">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>
@@ -115,6 +155,35 @@
                         <input id="total-price" class="form-control input-lg">
                     </div>
                     <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>/</h2>
+                                <form class="form-inline" role="form">
+                                    <div class="form-group">
+                                        <label for="inputfile">积分支付</label>
+                                        <input id="client-socre-pay" class="form-control input-md">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputfile">预存款支付</label>
+                                        <input id="client-deposit" class="form-control input-md">
+                                    </div>
+                                </form>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">赊账
+                                    </label>
+                                </div>
+                                <button id="discount-btn" class="btn btn-sm btn-primary">整单折扣</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <button id="submit-btn" class="btn btn-lg btn-primary">结清</button>
                         <button id="clear-btn" class="btn btn-lg btn-primary">取消</button>
                     </div>
