@@ -26,6 +26,7 @@ public class CargoController
 	@RequestMapping("/queryById")
 	public ReceiveCargo queryCargoById(@RequestBody ReceiveCargo param)
 	{
+		System.out.println("hhh"+param.toString());
 		param.setLabel("valid");
 		ReceiveCargo result = service.selectByPrimaryKey(param);
 		return result;

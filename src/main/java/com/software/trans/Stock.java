@@ -19,7 +19,14 @@ public class Stock
     private String itemnum;
     private String afterstock;
     private String time;
+    private String overstock;
     
+	public String getOverstock() {
+		return overstock;
+	}
+	public void setOverstock(String overstock) {
+		this.overstock = overstock;
+	}
 	public String getHourseid() {
 		return hourseid;
 	}

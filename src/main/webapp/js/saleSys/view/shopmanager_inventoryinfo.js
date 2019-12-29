@@ -75,15 +75,17 @@ function loadStockList(sl) {
         var td4 = document.createElement("td");
         td4.innerHTML = sl[i].itemnum;
         var td5 = document.createElement("td");
+        td5.innerHTML = sl[i].overstock;
+        var td6 = document.createElement("td");
         checkinput = document.createElement('input');
         checkinput.className = "form-control";
         checkinput.setAttribute("placeholder", "最新盘点");
         checkinput.setAttribute("id", "check-input");
         checkinput.setAttribute("itemid", sl[i].itemid);
         checkinput.setAttribute("hourseid", sl[i].hourseid);
-        td5.appendChild(checkinput);
-        var td6 = document.createElement("td");
-        td6.innerHTML = sl[i].time;
+        td6.appendChild(checkinput);
+        var td7 = document.createElement("td");
+        td7.innerHTML = sl[i].time;
 
         tr.appendChild(td0);
         tr.appendChild(td1);
@@ -92,6 +94,7 @@ function loadStockList(sl) {
         tr.appendChild(td4);
         tr.appendChild(td5);
         tr.appendChild(td6);
+        tr.appendChild(td7);
         editTable.appendChild(tr);
     }
 }
@@ -101,10 +104,7 @@ function cleanStockList() {
 }
 
 function refreshStockList() {
-    var obj = {
-        hourseid: getCookie("warehourseid")
-    }
-    this.document.getElementById('overstock-amount').text(this.getOverStockAmount(obj));
+    this.document.getElementById('overstock-amount').text = this.getOverStockAmount(getCookie("warehourseid"));
     cleanStockList();
     var stype = $('#search-cargo-type').val();
     if (stype == "任意") {

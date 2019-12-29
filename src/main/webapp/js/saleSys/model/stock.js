@@ -70,11 +70,14 @@ function updateStock(stockL) {
     return sendStockJsonAjax(url, param);
 }
 
-function getStockAmount(stock) {
-    param = buildParam(stock);
-    url = "";
-    $.ajaxSettings.async = false;
-    return sendStockJsonAjax(url, param);
+//获取该仓库总积压金额
+function getStockAmount(hourseid) {
+    stocklist = queryStockByWarehourseId(hourseid);
+    var sum = 0;
+    for (i in stocklist) {
+        sum += parseFloat(stocklist[i].overstock);
+    }
+    return sum;
 } 
 
 function buildParam(stock) {
