@@ -1,7 +1,10 @@
 package com.software.topservice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +58,19 @@ public class SupplierManagerServiceImp implements SupplierManagerService
 	{
 		service.updateByPrimaryKey(record);
 	}
+
+	@Override
+	public Map<Integer, String> supplierMenu() 
+	{
+		List<Supplier> list = service.select(null);
+		Map<Integer, String> idToName = new HashMap<Integer, String>();
+		for (Supplier supplier : list) 
+		{
+			idToName.put(supplier.getId(), supplier.getName());
+		}
+		return idToName;
+	}
+	
+	
 
 }

@@ -1,6 +1,7 @@
 package com.software.topservice;
 
 import java.util.List;
+import java.util.Map;
 
 import com.software.domain.Supplier;
 
@@ -19,4 +20,6 @@ public interface SupplierManagerService
     public void updateByPrimaryKeySelective(Supplier record);
 
     public void updateByPrimaryKey(Supplier record);
+    
+    public Map<Integer, String> supplierMenu();
 }

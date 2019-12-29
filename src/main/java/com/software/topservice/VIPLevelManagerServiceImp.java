@@ -1,6 +1,8 @@
 package com.software.topservice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,4 +52,15 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 		service.updateByPrimaryKey(record);
 	}
 
+	@Override
+	public Map<Integer, String> vipMenu()
+	{
+		List<VIPLevel> list = service.select(null);
+		Map<Integer, String> idToName = new HashMap<Integer, String>();
+		for (VIPLevel vipLevel : list) 
+		{
+			idToName.put(vipLevel.getId(), vipLevel.getVipname());
+		}
+		return idToName;
+	}
 }
