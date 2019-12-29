@@ -107,14 +107,11 @@ public class SupplierController {
 		receive.setAccount(param.get("account"));
 		receive.setAddress(param.get("address"));
 		receive.setName(param.get("name"));
-		receive.setPrincipalname(param.get("principalName"));
+		receive.setPrincipalname(param.get("principalname"));
 		receive.setTime(param.get("time"));
 		receive.setLabel("valid");
 		if(!param.get("id").equals("")){
 			receive.setId(Integer.valueOf(param.get("id")));
-		}else
-		{
-			receive.setId(-1);
 		}
 	}
 }
