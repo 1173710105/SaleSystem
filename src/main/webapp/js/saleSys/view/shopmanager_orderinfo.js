@@ -296,9 +296,15 @@ function refreshOrderList() {
         }
     }
     console.log("Build queryList : ", queryList);
+    var saleAmount;
+    var profitAmount;
     for (var i = 0; i < queryList.length; i++) {
+        saleAmount += parseFloat(queryList[i].sumprice);
+        profitAmount += parseFloat(queryList[i].margin);
         tempOrderMap.set(queryList[i].id.toString(), queryList[i]);
     }
+    this.document.getElementById('sale-amount').text = saleAmount;
+    this.document.getElementById('profit-amount').text = profitAmount;
     console.log("Build temporder Map : ", tempOrderMap);
     loadOrderList(queryList);
 }

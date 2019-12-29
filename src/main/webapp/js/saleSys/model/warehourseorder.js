@@ -129,6 +129,17 @@ function passWarehourseOrder(worder) {
     return sendWOrderJsonAjax(url, param);
 }
 
+function getCargoStockAmount(housrseid) {
+    qlist = queryWarehourseOrderById(housrseid);
+    var stockAmount;
+    for(i in qlist) {
+        if(qlist[i].type == "1") {
+            stockAmount += parseFloat(stockAmount[i].sumprice);
+        }
+    }
+    return stockAmount;
+}
+
 function buildWorderParam(worder) {
     combineWorder = $.extend({}, defaultWareHourseOrderSetting, worder);
     param = 
