@@ -153,9 +153,7 @@ function loadWarehourseOrderList(worderList) {
 //加载模态框
 function loadModal(type, order) {
     document.getElementById('cargo-purchase-price').setAttribute("readonly", "readonly");
-    if (order == null) {
-        
-    }
+    if (order == null) return;
     else if(order.type == "1") {
         this.document.getElementById('order-source-position').innerHTML = this.buildPMenuOptionHTML();
     } else if(order.type == "2") {
@@ -348,6 +346,15 @@ $("#order-type").change(function () {
     }
 });
 
+//搜索类型变动时，更换货源地列表
+$('#search-type').change(function () {
+    if ($(this).val() == "1") {
+        this.document.getElementById('search-order-source').innerHTML = this.buildPMenuOptionHTML();
+    } else if ($(this).val() == "2") {
+        this.document.getElementById('search-order-source').innerHTML = this.buildWMenuOptionHTML();
+    }
+});
+
 //添加货品到订货单
 $('#add-cargo-btn').click(function () {
     if ($('#cargo-purchase-price').val() == "") {
@@ -503,16 +510,14 @@ function cleanCargoStockList() {
 }
 
 function refreshCargoStockList() {
-    var obj = {
-        targetid: getCookie("warehourseid")
-    }
     //加载进货金额信息
-    this.document.getElementById('stock-amount').text(this.getStockAmount(obj));
+    this.document.getElementById('stock-amount').text = this.getCargoStockAmount(getCookie("warehourseid"));
     cleanCargoStockList();
     worder = {
         id: $('#search-order-id').val(),
         sourceid: $('#search-order-source').val(),
         status: $('#search-status').val(),
+        type : $('#search-type').val(),
         targetid: getCookie("warehourseid")
     }
     var queryList = queryWarehourseOrder(worder);
@@ -536,7 +541,7 @@ function getStatus(status) {
 
 function getType(type) {
     if (type.toString() == "1") {
-        return "进货";
+        return "采购";
     } else if (type.toString() == "2") {
         return "转仓";
     }

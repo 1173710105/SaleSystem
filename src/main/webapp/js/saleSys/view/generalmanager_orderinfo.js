@@ -125,12 +125,7 @@ function cleanOrderList() {
 
 //刷新表格
 function refreshOrderList() {
-    var obj = {
-        warehourseid: $('#search-rep').val(),
-        warehoursename: tempRep.get($('#search-rep').val())
-    }
-    this.document.getElementById('sale-amount').text(getSaleAmount(obj));
-    this.document.getElementById('profit-amount').text(getProfitAmount(obj));
+    
     cleanOrderList();
     var pays = $('#search-pay').val();
     var checks = $('#search-check-status').val();
@@ -193,9 +188,15 @@ function refreshOrderList() {
         }
     }
     console.log("Build queryList : ", queryList);
+    var saleAmount;
+    var profitAmount;
     for (var i = 0; i < queryList.length; i++) {
+        saleAmount += parseFloat(queryList[i].sumprice);
+        profitAmount += parseFloat(queryList[i].margin);
         tempOrderMap.set(queryList[i].id.toString(), queryList[i]);
     }
+    this.document.getElementById('sale-amount').text = saleAmount;
+    this.document.getElementById('profit-amount').text = profitAmount;
     console.log("Build temporder Map : ", tempOrderMap);
     loadOrderList(queryList);
 }

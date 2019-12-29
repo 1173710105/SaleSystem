@@ -56,7 +56,7 @@
                                 <caption>类型</caption>
                                 <select class="form-control input-sm" id="order-type">
                                     <option value="2">转仓</option>
-                                    <option value="1">购入</option>
+                                    <option value="1">采购</option>
                                 </select>
                             </div>
                                 <div class="col-md-3">
@@ -122,7 +122,7 @@
                     </form>
                 </div>
                 </div>
-                <div class="modal-footer modal-foot" id="modal-foot">
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" id="save-btn">保存</button>
                 </div>
@@ -145,13 +145,21 @@
             </div>
             <div class="col-md-9">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h6>进货批次编号 </h6>
                         <input type="text" class="form-control input-sm" id="search-order-id">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h6>货品编号</h6>
                         <input type="text" class="form-control input-sm" id="search-cargo-id">
+                    </div>
+                    <div class="col-md-2">
+                        <h6>类型</h6>
+                        <select class="form-control input-sm" id="search-type">
+                            <option value="">任意</option>
+                                <option value="1">采购</option>
+                                <option value="2">转仓</option>
+                            </select>
                     </div>
                     <div class="col-md-2">
                         <h6>货源地</h6>
@@ -204,6 +212,7 @@
 </body>
 <script type="text/javascript" src="../js/saleSys/cookie.js"></script>
 <script type="text/javascript" src="../js/saleSys/model/cargo.js"></script>
+<script type="text/javascript" src="../js/saleSys/model/provider.js"></script>
 <script type="text/javascript" src="../js/saleSys/model/warehourse.js"></script>
 <script type="text/javascript" src="../js/saleSys/model/warehourseorder.js"></script>
 <script type="text/javascript" src="../js/saleSys/view/generalmanager_cargostockinfo.js"></script>
