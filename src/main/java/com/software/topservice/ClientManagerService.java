@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.software.domain.Client;
 
+
 public interface ClientManagerService 
 {
 	public void deleteByPrimaryKey(Client record);

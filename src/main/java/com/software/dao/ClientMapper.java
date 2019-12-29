@@ -8,7 +8,6 @@ import com.software.domain.Client;
 @Mapper
 public interface ClientMapper 
 {
-
 	int deleteByPrimaryKey(Client record);
 
     int insert(Client record);

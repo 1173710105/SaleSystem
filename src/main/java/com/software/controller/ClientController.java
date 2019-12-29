@@ -15,7 +15,8 @@ import com.software.trans.ReceiveClient;
 
 @RestController
 @RequestMapping("/client")
-public class ClientController {
+public class ClientController 
+{
 	
 	@Autowired
 	private ClientManagerService service;
