@@ -63,7 +63,7 @@
                             <input type="text" class="form-control" id="client-email">
                         </div>
                     </div>
-                    <div>
+                    <div class="row">
                         <div class="col-md-4">
                             <caption>类型</caption>
                             <select class="form-control" id="client-type">
@@ -84,6 +84,57 @@
             </div>
         </div>
     </div>
+    <!-- 充值模态框 -->
+    <div class="modal fade" id="rechargeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">预存充值</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <caption>编号</caption>
+                                <input type="text" readonly="readonly" class="form-control" id="client-id">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <caption>姓名</caption>
+                            <input type="text" class="form-control" id="client-name">
+                        </div>
+                        <div class="col-md-3">
+                            <caption>联系电话</caption>
+                            <input type="text" class="form-control" id="client-phone">
+                        </div>
+                        <div class="col-md-4">
+                            <caption>电子邮箱</caption>
+                            <input type="text" class="form-control" id="client-email">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <caption>当前预存款</caption>
+                            <input  readonly="readonly" type="text" class="form-control" id="client-deposit">
+                        </div>
+                        <div class="col-md-4">
+                            <caption>充值金额</caption>
+                            <input type="text" class="form-control" id="client-recharge">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="recharge-save-btn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- modal end -->
         <div class="content">
             <div class="row">
@@ -92,12 +143,14 @@
                         当前位置>客户信息
                     </caption>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-md-5">
                      <button type="button" class="btn btn-primary btn-sm form-inline" id="add-btn">
                     添加客户
+                </button>
+                <button type="button" class="btn btn-primary btn-sm form-inline" id="recharge-btn" data-toggle="modal" data-target="#rechargeModal">
+                    预存充值
                 </button>
                 </div>
                 <div class="col-md-7">
@@ -137,12 +190,14 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>编号</th>
                             <th>姓名</th>
                             <th>性别</th>
                             <th>手机号</th>
                             <th>电子邮件</th>
                             <th>类型</th>
+                            <th>预存金额</th>
+                            <th>欠款金额</th>
                             <th>操作</th>
                         </tr>
                     </thead>
