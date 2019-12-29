@@ -18,7 +18,8 @@ import com.software.trans.SendCargo2Andr;
 
 @RestController
 @RequestMapping("/cargo")
-public class CargoController {
+public class CargoController 
+{
 	
 	@Autowired
 	private ItemManagerSerivce service;

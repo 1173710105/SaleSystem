@@ -3,49 +3,15 @@ package com.software.domain;
 public class Staff 
 {
 	private String tablename;
-    /**
-     * 员工ID ID
-     */
+
     private String id;
-
-    /**
-     * 密码 password
-     */
     private String password;
-
-    /**
-     * 员工所属子仓库ID hourseID
-     */
     private Integer hourseid;
-
-    /**
-     * 仓库名字 hourseName
-     */
     private String hoursename;
-
-    /**
-     * 员工姓名 name
-     */
     private String name;
-
-    /**
-     * 员工性别 gender
-     */
     private String gender;
-
-    /**
-     * 员工手机 phone
-     */
     private String phone;
-
-    /**
-     * 员工电子邮件 email
-     */
     private String email;
-
-    /**
-     * 标志是否有效 label
-     */
     private String label;
 
     public String getId() {

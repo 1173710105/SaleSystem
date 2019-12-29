@@ -6,14 +6,18 @@ import com.software.domain.ItemToPrice;
 public class ReceiveCargo 
 {
 	private String tablename;  
+	
 	private String id;
 	private String name;
 	private String type;
 	private String specification;
+	
 	private String picture;
+	
 	private String retailprice;
 	private String wholesaleprice;
 	private String purchaseprice;
+	
 	private String time;
 	private String label;
 	

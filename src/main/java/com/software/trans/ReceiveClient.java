@@ -1,6 +1,7 @@
 package com.software.trans;
 
-public class ReceiveClient {
+public class ReceiveClient 
+{
 	private String id;
 	private String name;
 	private String gender;
@@ -9,6 +10,7 @@ public class ReceiveClient {
 	private String note;
 	private String type;
 	private String label;
+
 	public String getId() {
 		return id;
 	}

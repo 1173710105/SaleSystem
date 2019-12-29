@@ -1,29 +1,10 @@
 package com.software.domain;
 
 public class Warehourse {
-    /**
-     *  ID
-     */
     private Integer id;
-
-    /**
-     *  name
-     */
     private String name;
-
-    /**
-     *  location
-     */
     private String location;
-
-    /**
-     *  time
-     */
     private String time;
-
-    /**
-     *  label
-     */
     private String label;
 
     public Integer getId() {
