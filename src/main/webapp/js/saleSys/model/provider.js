@@ -94,7 +94,7 @@ function updateProvider(provider) {
 
 //请求id与供应商映射
 function queryProviderMenu() {
-	url = "";
+	url = "/provider/providermenu";
 	param = "";
     console.log("QueryMenu Provider : ", param);
     $.ajaxSettings.async = false;
