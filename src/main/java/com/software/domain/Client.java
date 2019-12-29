@@ -2,45 +2,33 @@ package com.software.domain;
 
 public class Client 
 {
-	/**
-     * 客户ID ID
-     */
     private Integer id;
 
-    /**
-     * 客户名字 name
-     */
     private String name;
 
-    /**
-     * 客户性别 gender
-     */
     private String gender;
 
-    /**
-     * 客户电话号码 phone
-     */
     private String phone;
 
-    /**
-     * 客户邮件 email
-     */
     private String email;
 
-    /**
-     *  note
-     */
     private String note;
 
-    /**
-     *  type
-     */
     private String type;
 
-    /**
-     * 客户标签 label
-     */
     private String label;
+
+    private String authority;
+
+    private Float remain;
+
+    private Float debt;
+
+    private Float point;
+
+    private Float pricetopoint;
+
+    private Float pointtoprice;
 
     public Integer getId() {
         return id;
@@ -106,10 +94,51 @@ public class Client
         this.label = label == null ? null : label.trim();
     }
 
-	@Override
-	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", email=" + email
-				+ ", note=" + note + ", type=" + type + ", label=" + label + "]";
-	}
-    
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority == null ? null : authority.trim();
+    }
+
+    public Float getRemain() {
+        return remain;
+    }
+
+    public void setRemain(Float remain) {
+        this.remain = remain;
+    }
+
+    public Float getDebt() {
+        return debt;
+    }
+
+    public void setDebt(Float debt) {
+        this.debt = debt;
+    }
+
+    public Float getPoint() {
+        return point;
+    }
+
+    public void setPoint(Float point) {
+        this.point = point;
+    }
+
+    public Float getPricetopoint() {
+        return pricetopoint;
+    }
+
+    public void setPricetopoint(Float pricetopoint) {
+        this.pricetopoint = pricetopoint;
+    }
+
+    public Float getPointtoprice() {
+        return pointtoprice;
+    }
+
+    public void setPointtoprice(Float pointtoprice) {
+        this.pointtoprice = pointtoprice;
+    }
 }

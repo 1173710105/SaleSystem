@@ -1,9 +1,11 @@
 package com.software.trans;
 
-public class ReceiveUser {
+public class ReceiveUser 
+{
 	private String id;
 	private String password;
 	private String type;
+	
 	public String getId() {
 		return id;
 	}
