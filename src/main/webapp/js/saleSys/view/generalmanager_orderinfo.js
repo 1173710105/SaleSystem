@@ -188,15 +188,17 @@ function refreshOrderList() {
         }
     }
     console.log("Build queryList : ", queryList);
-    var saleAmount;
-    var profitAmount;
+    var saleAmount = 0;
+    var profitAmount = 0;
     for (var i = 0; i < queryList.length; i++) {
-        saleAmount += parseFloat(queryList[i].sumprice);
-        profitAmount += parseFloat(queryList[i].margin);
+    	if(queryList[i].sumprice != null) {
+    		saleAmount += parseFloat(queryList[i].sumprice.toString());
+            profitAmount += parseFloat(queryList[i].margin.toString());
+    	}
         tempOrderMap.set(queryList[i].id.toString(), queryList[i]);
     }
-    this.document.getElementById('sale-amount').text = saleAmount;
-    this.document.getElementById('profit-amount').text = profitAmount;
+    this.document.getElementById('sale-amount').innerHTML = saleAmount;
+    this.document.getElementById('profit-amount').innerHTML = profitAmount;
     console.log("Build temporder Map : ", tempOrderMap);
     loadOrderList(queryList);
 }

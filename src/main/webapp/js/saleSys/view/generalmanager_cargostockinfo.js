@@ -511,7 +511,7 @@ function cleanCargoStockList() {
 
 function refreshCargoStockList() {
     //加载进货金额信息
-    this.document.getElementById('stock-amount').text = this.getCargoStockAmount(getCookie("warehourseid"));
+    this.document.getElementById('stock-amount').innerHTML = this.getCargoStockAmount(getCookie("warehourseid"));
     cleanCargoStockList();
     worder = {
         id: $('#search-order-id').val(),

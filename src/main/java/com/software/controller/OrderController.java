@@ -3,6 +3,7 @@ package com.software.controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.software.domain.SaleorderItem;
 import com.software.topservice.SaleOrderManagerService;
 import com.software.trans.ReceiveOrder;
 import com.software.trans.SendOrder;
@@ -24,11 +26,56 @@ public class OrderController
 {
 	@Autowired
 	private	SaleOrderManagerService service;
+	@RequestMapping("/query3")
+	public List<String> queryOrder3()
+	{
+		Map<String,List<String>> result2 = new HashMap<String,List<String>>();
+		ReceiveOrder r = new ReceiveOrder();
+		r.setWarehourseid("15");
+		r.setPrincipalid("200010003");
+		r.setOrderid("");
+		r.setClientid("");
+		r.setStatus("");
+		r.setSumprice("");
+		r.setGather("");
+		r.setChange("");
+		r.setMargin("");
+		List<SendOrder> result = service.select(r);
+		List<String> strings=new ArrayList<String>() ;
+		for(SendOrder i:result){
+			strings.add(i.getCreatetime());
+		}
+		System.out.println("query3 : "+strings);
+		//result2.put("info", strings);
+		return strings;//返回查找结果
+	}
+	@RequestMapping("/query4")
+	public List<SaleorderItem> queryOrder4(@RequestBody Map<String, Integer> param)
+	{
+		//System.out.println(param);
+		int x = param.get("x");
+		
+		ReceiveOrder r = new ReceiveOrder();
+		r.setWarehourseid("15");
+		r.setPrincipalid("200010003");
+		r.setOrderid("");
+		r.setClientid("");
+		r.setStatus("");
+		r.setSumprice("");
+		r.setGather("");
+		r.setChange("");
+		r.setMargin("");
+		
+		List<SendOrder> result = service.select(r);
+		System.out.println(result.get(x));
+		return result.get(x).getItems();//返回查找结果
+	}
+	
 	
 	@RequestMapping("/query")
 	public List<SendOrder> queryOrder(@RequestBody ReceiveOrder param)
 	{
-		System.out.println(param.getClientid());
+		System.out.println(param.toString());
 		List<SendOrder> result = service.select(param);
 		return result;//返回查找结果
 	}
