@@ -45,14 +45,32 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 	}
 
 	@Override
-	public Map<Integer, String> vipMenu()
+	public Map<Integer, VIPLevel> vipMenu()
 	{
 		List<VIPLevel> list = service.select(null);
-		Map<Integer, String> idToName = new HashMap<Integer, String>();
+		Map<Integer, VIPLevel> idToVIP = new HashMap<Integer, VIPLevel>();
 		for (VIPLevel vipLevel : list) 
 		{
-			idToName.put(vipLevel.getId(), vipLevel.getVipname());
+			idToVIP.put(vipLevel.getId(), vipLevel);
 		}
-		return idToName;
+		return idToVIP;
+	}
+
+	@Override
+	public void updateclient(String cID, String vID) 
+	{
+		Integer vipID = Integer.valueOf(vID);
+		Integer clientID = Integer.valueOf(cID);
+		
+		VIPLevel exampleVIP = new VIPLevel();
+		exampleVIP.setId(vipID);
+		VIPLevel resultVIP = service.selectByPrimaryKey(exampleVIP);
+		
+		Client client = new Client();
+		client.setId(clientID);
+		client.setAuthority(resultVIP.getVipname());
+		client.setPointtoprice(resultVIP.getPointtoprice());
+		client.setPricetopoint(resultVIP.getPricetopoint());
+		clientService.updateByPrimaryKeySelective(client);
 	}
 }

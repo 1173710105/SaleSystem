@@ -44,7 +44,7 @@ public class VIPLevelManagerServiceTest
 	@Test
 	public void testMenu()
 	{
-		Map<Integer, String> menu = service.vipMenu();
+		Map<Integer, VIPLevel> menu = service.vipMenu();
 		for (Integer index : menu.keySet()) 
 		{
 			System.out.println(index+"  "+menu.get(index));

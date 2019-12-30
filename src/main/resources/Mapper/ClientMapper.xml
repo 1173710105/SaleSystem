@@ -168,43 +168,43 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.domain.Client">
     update client
     <set>
-      <if test="name != null">
+      <if test="name != null and name!=''">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
+      <if test="gender != null and gender!=''">
         gender = #{gender,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
+      <if test="phone != null and phone!=''">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
+      <if test="email != null email!=''">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
+      <if test="note != null and note!=''">
         note = #{note,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
+      <if test="type != null and type!=''">
         type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="label != null">
+      <if test="label != null and label!=''">
         label = #{label,jdbcType=VARCHAR},
       </if>
-      <if test="authority != null">
+      <if test="authority != null and authority!=''">
         authority = #{authority,jdbcType=VARCHAR},
       </if>
-      <if test="remain != null">
+      <if test="remain != null and remain!=''">
         remain = #{remain,jdbcType=REAL},
       </if>
-      <if test="debt != null">
+      <if test="debt != null and debt!=''">
         debt = #{debt,jdbcType=REAL},
       </if>
-      <if test="point != null">
+      <if test="point != null and point!=''">
         point = #{point,jdbcType=REAL},
       </if>
-      <if test="pricetopoint != null">
+      <if test="pricetopoint != null and pricetopoint!=''">
         priceToPoint = #{pricetopoint,jdbcType=REAL},
       </if>
-      <if test="pointtoprice != null">
+      <if test="pointtoprice != null and pointtoprice!=''">
         pointToPrice = #{pointtoprice,jdbcType=REAL},
       </if>
     </set>

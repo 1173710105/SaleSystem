@@ -110,9 +110,11 @@ public class OrderController
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteOrder(@RequestBody ReceiveOrder param){
-		service.delete(param);;
-		return "success";//返回成功/失败信息
+	public Map<String,String> deleteOrder(@RequestBody ReceiveOrder param){
+		service.delete(param);
+		Map<String,String> result = new HashMap<String,String>();
+		result.put("info", "删除成功");
+		return result;//返回成功/失败信息
 	}
 	
 	@RequestMapping("/check")

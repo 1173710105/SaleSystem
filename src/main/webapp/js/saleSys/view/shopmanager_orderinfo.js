@@ -372,11 +372,10 @@ $(document).on('click', '#delete-btn', function () {
     var r = confirm("是否删除？");
     if (r == true) {
         var orderid = $(this).val();
-        deleteOrder({
+        alert(deleteOrder({
             orderid: orderid,
             warehourseid: getCookie("warehourseid")
-        });
-        alert("删除成功");
+        }).info);
         refreshOrderList();
     }
 });

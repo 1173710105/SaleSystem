@@ -1,12 +1,15 @@
 package com.software.topservice;
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +18,13 @@ import com.software.domain.ItemToPrice;
 import com.software.domain.SaleorderItem;
 import com.software.domain.SubBranchDetailMap;
 import com.software.domain.WarehourseDetail;
+import com.software.domain.WarehourseOrderItem;
 import com.software.service.ItemService;
 import com.software.service.ItemToPriceService;
 import com.software.service.SaleorderItemService;
 import com.software.service.SubBranchDetailMapService;
 import com.software.service.WarehourseDetailService;
+import com.software.service.WarehourseOrderItemService;
 import com.software.trans.ReceiveCargo;
 
 @Service
@@ -39,6 +44,9 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	
 	@Autowired
 	private SaleorderItemService saleorderItemSerivce;
+	
+	@Autowired
+	private WarehourseOrderItemService warehourseItemService;
 	
 	@Override
 	public ReceiveCargo selectByPrimaryKey(ReceiveCargo record) 
@@ -202,9 +210,13 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 			if (!subBranchDetailMap.getWarehoursename().equals("总仓库")) 
 			{
 				// 看看商品是否被引用
-				if (isCited(Integer.valueOf(record.getId()), subBranchDetailMap.getSaleorderitemtable())) 
+				if (isCitedBySaleOrder(Integer.valueOf(record.getId()), subBranchDetailMap.getSaleorderitemtable())) 
 				{
-					return "删除失败,商品"+record.getName()+"被引用";
+					return "删除失败,商品"+record.getName()+"销售单引用";
+				}
+				if (isCitedByWarehourseOrder(Integer.valueOf(record.getId()))) 
+				{
+					return "删除失败,商品"+record.getName()+"仓库单引用";
 				}
 			}
 		}
@@ -244,7 +256,7 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	}
 	
 	// 判断商品是否被引用
-	private boolean isCited(Integer itemid, String saleorderitemtablename)
+	private boolean isCitedBySaleOrder(Integer itemid, String saleorderitemtablename)
 	{
 		SaleorderItem exampleItem = new SaleorderItem();
 		exampleItem.setTablename(saleorderitemtablename);
@@ -257,5 +269,20 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 		{
 			return true;
 		}
+	}
+	
+	private boolean isCitedByWarehourseOrder(Integer itemid)
+	{
+		WarehourseOrderItem exampleItem = new WarehourseOrderItem();
+		exampleItem.setItemid(itemid);
+		if (warehourseItemService.select(exampleItem).size()==0) 
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+			
 	}
 }
