@@ -1,7 +1,7 @@
 var tempClientMap = new Map();
 
 window.onload = function () {
-    // this.refreshClientList();
+    this.refreshClientList();
 }
 
 //搜索
@@ -87,11 +87,12 @@ $('#recharge-save-btn').click(function() {
     var recharge = parseFloat($('#client-recharge').val());
     var remain = parseFloat(client.remain);
     var debt = parseFloat(client.debt);
-    if (debt > 0 && recharge - debt < 0) {
-        debt = recharge - debt;
-    } else if(debt > 0 && recharge - debt > 0){
+    if (debt > 0 && remian + recharge - debt < 0) {
+        debt = remain + recharge - debt;
+        remain = 0;
+    } else if(debt > 0 && remain + recharge - debt > 0){
         debt = 0;
-        reamin = recharge - debt;
+        reamin = remain - (debt - recharge);
     } else if(debt == 0) {
         remain = remain + recharge;
     }

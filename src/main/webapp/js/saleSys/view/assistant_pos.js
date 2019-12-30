@@ -64,7 +64,7 @@ $('#add-btn').click(function () {
 //更新总价格
 function updateHistoryTotalPrice() {
     var totalPrice = 0;
-    for(var i = 0; i < cargoList.length; i++) {
+    for (var i = 0; i < cargoList.length; i++) {
         totalPrice += parseFloat(cargoList[i].retailprice) * cargoNum[i];
     }
     document.getElementById('total-price').value = totalPrice.toString();
@@ -75,7 +75,7 @@ $("#actual-recive").blur(function () {
     var totalPrice = parseFloat(document.getElementById('total-price').value);
     var actualPrice = parseFloat(document.getElementById('actual-recive').value);
     var change = actualPrice - totalPrice;
-    if (change < 0) {
+    if ($('#client-deposit-pay').val() == "" && $('#client-score-pay').val() == "" && change < 0) {
         alert("实收价格不得低于总价");
         return;
     }
@@ -92,7 +92,7 @@ $("#client-id").blur(function () {
     }
     tempclient = client;
     document.getElementById('client-name').value = client.name;
-    if(client.authority == "无") {
+    if (client.authority == "-1") {
         $('#client-score').val("非会员");
     } else {
         $('#client-score').val(client.point);
@@ -103,49 +103,93 @@ $("#client-id").blur(function () {
 /**
  * 结清功能,发送订单数据,清空界面
  */
-$('#submit-btn').click(function() {
+$('#submit-btn').click(function () {
     if ($('#client-id').val() == "") {
         //提示
         alert("请填写客户");
         return;
     }
-    if(cargoList.length == 0) {
+    if (cargoList.length == 0) {
         alert("POS货品列表不能为空");
         return;
     }
-    if($('#client-score').val() != "非会员") {
-        if($('#client-score-pay').val() != "" && parseFloat($('#client-score-pay').val()) > parseFloat(client.point)) {
-        alert("客户积分不足");
-        return;
+    if ($('#client-score').val() != "非会员") {
+        if ($('#client-score-pay').val() != "" && parseFloat($('#client-score-pay').val()) > parseFloat(client.point)) {
+            alert("客户积分不足");
+            return;
+        }
     }
-    }
-    
-    if($('#client-deposit-pay').val() != "" && parseFloat($('#client-deposit-pay').val()) > parseFloat(client.remain)) {
+    if ($('#client-deposit-pay').val() != "" && parseFloat($('#client-deposit-pay').val()) > parseFloat(client.remain)) {
         alert("客户预存款不足");
         return;
     }
 
     if ($(this).is(':checked')) {
-        if(confirm("确定进行赊账？")) {
-            
+        if (confirm("确定进行赊账？")) {
+            //更新用户欠款
+            $("#actual-recive").val("");
+            $('#change').val("");
+            client = {
+                id : tempclient.id,
+                debt : $("#total-price").val()
+            }
+            updateClient(client);
+            if(tempclient.authority != "-1")
+            var pricetopoint = parseFloat($('#total-price').val()) * parseFloat(client.pricetopoint);
+            client = {
+                id : tempclient.id,
+                point : parseFloat(client.point) + pricetopoint
+            }
+            updateMember(client);
         }
-    } else {
-        //计算余额加积分是否足够
+    }
+    //使用现金+预存+积分付款 
+    else {
+        //计算余额+积分+现金是否足够
+        var pointPay = 0;
         var convertprice = 0;
-        if($('#client-score').val() != "非会员" && $('#client-score-pay').val() != "") {
-           convertprice = parseFloat($('#client-score-pay').val()) * parseFloat(client.pointtoprice);
-        }
         var depositPay = 0;
-        if($('#client-deposit-pay').val() != "") {
-            depositPay = parseFloat($('#client-deposit-pay').val());
+        var actualReceive = 0;
+        var usedeposit = false;
+        var usescore = false;
+        var usecash = false;
+        if (tempclient.authority != "-1" && $('#client-score-pay').val() != "") {
+            pointPay = parseFloat($('#client-score-pay').val());
+            convertprice = pointPay * parseFloat(client.pointtoprice);
+            usescore = true;
         }
-        if(convertprice + depositPay < $('#total-price')) {
-            alert("积分和预存金额不足");
+        if ($('#client-deposit-pay').val() != "") {
+            depositPay = parseFloat($('#client-deposit-pay').val());
+            usedeposit = true;
+        }
+        if ($('#actual-receive').val() != "") {
+            actualReceive = parseFloat($('#actual-receive').val());
+            usecash = true;
+        }
+        if (convertprice + depositPay + actualReceive < $('#total-price')) {
+            alert("积分和预存金额和现金不足");
+            var usedeposit = false;
+            var usescore = false;
+            var usecash = false;
             return;
         }
         //更新预存款
-        //整单折扣
+        if (usedeposit) {
+            alert(updateClient({
+                id: tempclient.id,
+                remain: parseFloat(tempclient.remain) - parseFloat($('#client-deposit-pay').val())
+            }).info);
+        }
         //更新积分
+        if(usesocre) {
+            var pricetopoint = parseFloat($('#total-price').val()) * parseFloat(client.pricetopoint);
+            var pdelta = parseFloat(client.point) - pointPay + pricetopoint;
+            client = {
+                id : tempclient.id,
+                point : pdelta
+            }
+            updateMember(client);
+        }
     }
     //整合订单
     //订单基本信息
@@ -160,23 +204,23 @@ $('#submit-btn').click(function() {
     //货品信息
     for (var i = 0; i < cargoList.length; i++) {
         c = {
-            clientid : s_clientid,
-            clientname : s_clientname,
-            warehourseid : getCookie("warehourseid"),
-            warehoursename : getCookie("warehoursename"),
-            principalid : getCookie("principalid"),
-            principalname : getCookie("principalname"),
-            ordersumprice : s_sumprice,
-            gather : s_gather,
-            change : s_change,
-            type : s_type,
-            status : s_status,
+            clientid: s_clientid,
+            clientname: s_clientname,
+            warehourseid: getCookie("warehourseid"),
+            warehoursename: getCookie("warehoursename"),
+            principalid: getCookie("principalid"),
+            principalname: getCookie("principalname"),
+            ordersumprice: s_sumprice,
+            gather: s_gather,
+            change: s_change,
+            type: s_type,
+            status: s_status,
             //货品
-            itemid : cargoList[i].id,
-            itemname : cargoList[i].name,
-            itemnum : cargoNum[i],
-            perprice : cargoList[i].retailprice,
-            sumprice : cargoNum[i] * parseFloat(cargoList[i].retailprice)
+            itemid: cargoList[i].id,
+            itemname: cargoList[i].name,
+            itemnum: cargoNum[i],
+            perprice: cargoList[i].retailprice,
+            sumprice: cargoNum[i] * parseFloat(cargoList[i].retailprice)
         }
         orderTempL.push(c);
     }
@@ -185,23 +229,43 @@ $('#submit-btn').click(function() {
     clearPosTerminal();
 });
 
-$('#clear-btn').click(function() {
+$('#clear-btn').click(function () {
     clearPosTerminal();
 });
 
-$('#client-socre-pay').change(function() {
-    if(tempclient == null || $(this).val() == "") {
+$('#client-socre-pay').change(function () {
+    if (tempclient == null || $(this).val() == "") {
+        document.getElementById('client-socre-convert').innerHTML = "";
         return;
     }
     var convertprice = parseFloat($(this).val()) * parseFloat(client.pointtoprice);
-    $('#client-socre-convert').innerHTML = "可兑换" + convertprice + "元";
+    document.getElementById('client-socre-convert').innerHTML = "可兑换" + convertprice + "元";
+})
+
+$('#discount-btn').click(function() {
+    $('#discountModal').modal('show');
+    $('#discount-ratio').val('10');
+    $('#discount-price').val(parseFloat($('#total-price').val()) * (parseFloat($('#discount-ratio').val())/10));
+})
+
+$('#discount-ratio').blur(function() {
+    $('#discount-price').val(parseFloat($('#total-price').val()) * (parseFloat($('#discount-ratio').val())/10));
+});
+
+$('#discount-save-btn').click(function() {
+    if(parseFloat($('#discount-ratio').val()) > 10 || parseFloat($('#discount-ratio').val()) < 0) {
+        alert("折扣系数应在0-10之间");
+        return;
+    }
+    $('#discountModal').modal('hide');
+    $('#total-price').val($('#discount-price').val());
 })
 
 //赊账
-$('#own').change(function() {
-    if($(this).is(':checked')) {
+$('#own').change(function () {
+    if ($(this).is(':checked')) {
         $('#client-socre-pay').val("");
-        $('#client-deposit-pay').val("");   
+        $('#client-deposit-pay').val("");
     }
 });
 

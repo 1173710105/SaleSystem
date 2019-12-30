@@ -34,22 +34,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
-                            <caption>gen</caption>
-                            <input type="text" class="form-control" id="clerk-name">
+                        <div class="col-md-6">
+                            <caption>折扣系数(0-10)</caption>
+                            <input type="text" class="form-control" id="discount-ratio">
                         </div>
                         <div class="col-md-6">
-                            <caption>性别</caption>
-                            <select class="form-control" id="clerk-gender">
-                                <option value="男">男</option>
-                                <option value="女">女</option>
-                            </select>
+                            <caption>折后价</caption>
+                            <input type="text" readonly="readonly" class="form-control" id="discount-price">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="save-btn">保存</button>
+                    <button type="button" class="btn btn-primary" id="discount-save-btn">保存</button>
                 </div>
             </div>
         </div>
@@ -164,7 +161,7 @@
                                         <input id="client-socre-pay" class="form-control input-sm">
                                     </div>
                                     <div class="form-group">
-                                        <label id="client-socre-convert" for="inputfile"></label>
+                                        <label id="client-socre-convert"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputfile">预存款支付</label>

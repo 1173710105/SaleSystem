@@ -148,6 +148,7 @@ function deleteMember(client) {
 function updateMemberRatio(ratio) {
     param = 
         '{"id":"' + ratio.id + '",'
+        + '"vipname":"' + ratio.name + '",'
         + '"pointtoprice":"' + ratio.pointtoprice + '",'
         + '"pricetopoint":"' + ratio.pricetopoint + '"}';
     url="";
@@ -156,7 +157,7 @@ function updateMemberRatio(ratio) {
     return sendClientJsonAjax(url, param);
 }
 
-function queryRationMenu() {
+function queryRatioMenu() {
     url = "";
 	param = "";
     console.log("QueryMenu Ratio : ", param);
