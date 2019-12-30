@@ -1,6 +1,6 @@
 ﻿//客户对象操作
 
-var defaultSetting = 
+var defaultClientSetting = 
 {
     id : "",
     name : "",
@@ -181,7 +181,8 @@ function buildRMenuOptionHTML() {
 }
 
 function buildClientParam(client) {
-    combineClient = $.extend({},defaultSetting, client);
+    combineClient = $.extend({},defaultClientSetting, client);
+    console.log(combineClient)
     param = 
        '{'
         + '"id":"' + combineClient.id + '",'

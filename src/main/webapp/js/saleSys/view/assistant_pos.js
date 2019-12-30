@@ -72,6 +72,10 @@ function updateHistoryTotalPrice() {
 
 //更新实收
 $("#actual-recive").blur(function () {
+	if($(this).val() == "") {
+		$('#change').val("");
+		return;
+	}
     var totalPrice = parseFloat(document.getElementById('total-price').value);
     var actualPrice = parseFloat(document.getElementById('actual-recive').value);
     var change = actualPrice - totalPrice;
@@ -114,17 +118,17 @@ $('#submit-btn').click(function () {
         return;
     }
     if ($('#client-score').val() != "非会员") {
-        if ($('#client-score-pay').val() != "" && parseFloat($('#client-score-pay').val()) > parseFloat(client.point)) {
+        if ($('#client-score-pay').val() != "" && (parseFloat($('#client-score-pay').val()) > parseFloat(tempclient.point))) {
             alert("客户积分不足");
             return;
         }
     }
-    if ($('#client-deposit-pay').val() != "" && parseFloat($('#client-deposit-pay').val()) > parseFloat(client.remain)) {
+    if ($('#client-deposit-pay').val() != "" && (parseFloat($('#client-deposit-pay').val()) > parseFloat(tempclient.remain))) {
         alert("客户预存款不足");
         return;
     }
 
-    if ($(this).is(':checked')) {
+    if ($('#own').is(':checked')) {
         if (confirm("确定进行赊账？")) {
             //更新用户欠款
             $("#actual-recive").val("");
@@ -134,13 +138,16 @@ $('#submit-btn').click(function () {
                 debt : $("#total-price").val()
             }
             updateClient(client);
-            if(tempclient.authority != "-1")
-            var pricetopoint = parseFloat($('#total-price').val()) * parseFloat(client.pricetopoint);
+            if(tempclient.authority != "-1") {
+            	var pricetopoint = parseFloat($('#total-price').val()) * parseFloat(tempclient.pricetopoint);
             client = {
                 id : tempclient.id,
-                point : parseFloat(client.point) + pricetopoint
+                authority : tempclient.authority,
+                point : parseFloat(tempclient.point) + pricetopoint
             }
             updateMember(client);
+            }
+            
         }
     }
     //使用现金+预存+积分付款 
@@ -166,7 +173,7 @@ $('#submit-btn').click(function () {
             actualReceive = parseFloat($('#actual-receive').val());
             usecash = true;
         }
-        if (convertprice + depositPay + actualReceive < $('#total-price')) {
+        if (convertprice + depositPay + actualReceive < parseFloat($('#total-price').val())) {
             alert("积分和预存金额和现金不足");
             var usedeposit = false;
             var usescore = false;
@@ -175,17 +182,18 @@ $('#submit-btn').click(function () {
         }
         //更新预存款
         if (usedeposit) {
-            alert(updateClient({
+        	updateClient({
                 id: tempclient.id,
                 remain: parseFloat(tempclient.remain) - parseFloat($('#client-deposit-pay').val())
-            }).info);
+            });
         }
         //更新积分
-        if(usesocre) {
-            var pricetopoint = parseFloat($('#total-price').val()) * parseFloat(client.pricetopoint);
-            var pdelta = parseFloat(client.point) - pointPay + pricetopoint;
+        if(usescore) {
+            var pricetopoint = parseFloat($('#total-price').val()) * parseFloat(tempclient.pricetopoint);
+            var pdelta = parseFloat(tempclient.point) - pointPay + pricetopoint;
             client = {
                 id : tempclient.id,
+                authority : tempclient.authority,
                 point : pdelta
             }
             updateMember(client);
@@ -233,12 +241,12 @@ $('#clear-btn').click(function () {
     clearPosTerminal();
 });
 
-$('#client-socre-pay').change(function () {
+$('#client-score-pay').change(function () {
     if (tempclient == null || $(this).val() == "") {
         document.getElementById('client-socre-convert').innerHTML = "";
         return;
     }
-    var convertprice = parseFloat($(this).val()) * parseFloat(client.pointtoprice);
+    var convertprice = parseFloat($(this).val()) * parseFloat(tempclient.pointtoprice);
     document.getElementById('client-socre-convert').innerHTML = "可兑换" + convertprice + "元";
 })
 
@@ -276,6 +284,8 @@ function clearPosTerminal() {
     document.getElementById('cargo-name').value = "";
     document.getElementById('cargo-retail-price').value = "";
     document.getElementById('cargo-num').value = "";
+    document.getElementById('client-deposit').value = "";
+    document.getElementById('client-score').value = "";
     document.getElementById('temp-cargo-list').innerHTML = "";
 
     $('#total-price').val("");

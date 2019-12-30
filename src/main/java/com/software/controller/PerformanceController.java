@@ -62,6 +62,7 @@ public class PerformanceController
 	@RequestMapping("/staffperformance")
 	public List<WarehoursePerformance> queryStaffPerformance(@RequestBody WarehoursePerformance performance)
 	{
+		System.out.println(performance);
 		return performanceService.calStaffPerformance(performance);
 	}
 

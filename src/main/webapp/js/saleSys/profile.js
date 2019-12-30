@@ -6,34 +6,35 @@ window.onload = function () {
 var tempPerson;
 
 function refreshProfile() {
-    $('#name').val(getCookie("principalname"));
-    if (getCookie("type") == "clerk") {
+	console.log(getCookie("position"))
+    document.getElementById('name').innerHTML = getCookie("principalname");
+    if (getCookie("position") == "clerk") {
         var staff = queryStaffById(getCookie("principalid"));
         tempPerson = staff;
-        $('#gender').val(staff.gender);
-        $('#id').val(staff.id);
-        $('#position').val((getCookie("type") == "clerk") ? "店员" : (getCookie("type") == "shop-manager") ? "店长" : "总经理");
-        $('#rep').val(getCookie("#warehoursename"));
-        $('#phone').val(staff.phone);
-        $('#email').val(staff.email);
-    } else if (getCookie("type") == "shop-manager") {
+        document.getElementById('gender').innerHTML = staff.gender;
+        document.getElementById('id').innerHTML = staff.id;
+        document.getElementById('position').innerHTML = (getCookie("position") == "clerk") ? "店员" : (getCookie("position") == "shop-manager") ? "店长" : "总经理";
+        document.getElementById('rep').innerHTML = getCookie("#warehoursename");
+        document.getElementById('phone').innerHTML = staff.phone;
+        document.getElementById('email').innerHTML = staff.email;
+    } else if (getCookie("position") == "shop-manager") {
         var shopmanager = queryManagerById(getCookie("principalid"));
         tempPerson = shopmanager;
-        $('#gender').val(shopmanager.gender);
-        $('#id').val(shopmanager.id);
-        $('#position').val((getCookie("type") == "clerk") ? "店员" : (getCookie("type") == "shop-manager") ? "店长" : "总经理");
-        $('#rep').val(getCookie("#warehoursename"));
-        $('#phone').val(shopmanager.phone);
-        $('#email').val(shopmanager.email);
-    } else if (getCookie("type") == "general-manager") {
+        document.getElementById('gender').innerHTML = shopmanager.gender;
+        document.getElementById('id').innerHTML = shopmanager.id;
+        document.getElementById('position').innerHTML = (getCookie("position") == "clerk") ? "店员" : (getCookie("position") == "shop-manager") ? "店长" : "总经理";
+        document.getElementById('rep').innerHTML = getCookie("#warehoursename");
+        document.getElementById('phone').innerHTML = shopmanager.phone;
+        document.getElementById('email').innerHTML = shopmanager.email;
+    } else if (getCookie("position") == "general-manager") {
         var general = queryGManagerById(getCookie("principalid"));
         tempPerson = general;
-        $('#gender').val(general.gender);
-        $('#id').val(general.id);
-        $('#position').val((getCookie("type") == "clerk") ? "店员" : (getCookie("type") == "shop-manager") ? "店长" : "总经理");
-        $('#rep').val(getCookie("#warehoursename"));
-        $('#phone').val(general.phone);
-        $('#email').val(general.email);
+        document.getElementById('gender').innerHTML = general.gender;
+        document.getElementById('id').innerHTML = general.id;
+        document.getElementById('position').innerHTML = (getCookie("position") == "clerk") ? "店员" : (getCookie("position") == "shop-manager") ? "店长" : "总经理";
+        document.getElementById('rep').innerHTML = getCookie("#warehoursename");
+        document.getElementById('phone').innerHTML = general.phone;
+        document.getElementById('email').innerHTML = general.email;
     }
 }
 

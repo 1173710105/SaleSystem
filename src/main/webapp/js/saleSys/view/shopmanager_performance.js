@@ -73,9 +73,13 @@ function loadClientList(cl) {
         var td4 = document.createElement("td");
         td4.innerHTML = cl[i].clientnum;
         var td5 = document.createElement("td");
-        td5.innerHTML = "";
+        td5.innerHTML = cl[i].sumPrice;
         var td6 = document.createElement("td");
         td6.innerHTML = cl[i].performancedetail;
+        var td8 = document.createElement("td");
+        td8.innerHTML = cl[i].starttime;
+        var td9 = document.createElement("td");
+        td9.innerHTML = cl[i].endtime;
 
         tr.appendChild(td0);
         tr.appendChild(td1);
@@ -85,7 +89,8 @@ function loadClientList(cl) {
         tr.appendChild(td4);
         tr.appendChild(td5);
         tr.appendChild(td6);
-        
+        tr.appendChild(td8);
+        tr.appendChild(td9);
         editTable.appendChild(tr);
     }
 }

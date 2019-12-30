@@ -34,7 +34,7 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 		service.updateByPrimaryKeySelective(record);
 		
 		Client exampleClient = new Client();
-		exampleClient.setAuthority(record.getVipname());
+		exampleClient.setAuthority(record.getId()+"");
 		List<Client> clientList = clientService.select(exampleClient);
 		for (Client client : clientList) 
 		{
@@ -73,7 +73,7 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 		
 		Client client = new Client();
 		client.setId(clientID);
-		client.setAuthority(resultVIP.getVipname());
+		client.setAuthority(vID);
 		client.setPointtoprice(resultVIP.getPointtoprice());
 		client.setPricetopoint(resultVIP.getPricetopoint());
 		client.setPoint(pointNum);
