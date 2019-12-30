@@ -98,10 +98,12 @@ public class SupplierController {
 		return result;
 	}
 	
-//	@RequestMapping("/providermenu")
-//	public Map<Integer, String> providerMenu(){
-//		
-//	}
+	@RequestMapping("/providermenu")
+	public Map<Integer, String> providerMenu()
+	{
+		return service.supplierMenu();
+	}
+	
 	
 	private void initReceive(Supplier receive,Map<String, String> param){
 		receive.setAccount(param.get("account"));
