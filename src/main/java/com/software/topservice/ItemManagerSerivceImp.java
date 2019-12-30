@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.software.domain.Item;
 import com.software.domain.ItemToPrice;
+import com.software.domain.SaleorderItem;
 import com.software.domain.SubBranchDetailMap;
 import com.software.domain.WarehourseDetail;
 import com.software.service.ItemService;
 import com.software.service.ItemToPriceService;
+import com.software.service.SaleorderItemService;
 import com.software.service.SubBranchDetailMapService;
 import com.software.service.WarehourseDetailService;
 import com.software.trans.ReceiveCargo;
@@ -34,6 +36,9 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	
 	@Autowired
 	private SubBranchDetailMapService branchService;
+	
+	@Autowired
+	private SaleorderItemService saleorderItemSerivce;
 	
 	@Override
 	public ReceiveCargo selectByPrimaryKey(ReceiveCargo record) 
@@ -175,6 +180,7 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 		List<WarehourseDetail> deleteDetail = new ArrayList<>();
 		List<ItemToPrice> deletePrice = new ArrayList<>();
 		
+		
 		// 遍历 总仓库和子仓库，判断是否还存在该商品
 		for (SubBranchDetailMap subBranchDetailMap : mapList) 
 		{
@@ -192,6 +198,15 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 			resultPrice.setId(Integer.valueOf(record.getId()));
 			resultPrice.setTablename(subBranchDetailMap.getItemtable());
 			deletePrice.add(resultPrice);
+			
+			if (!subBranchDetailMap.getWarehoursename().equals("总仓库")) 
+			{
+				// 看看商品是否被引用
+				if (isCited(Integer.valueOf(record.getId()), subBranchDetailMap.getSaleorderitemtable())) 
+				{
+					return "删除失败,商品"+record.getName()+"被引用";
+				}
+			}
 		}
 		
 		// 删除子仓库的price 和 数量信息
@@ -226,5 +241,21 @@ public class ItemManagerSerivceImp implements ItemManagerSerivce
 	{
 		Random random = new Random();
 		return random.nextInt(100000000);
+	}
+	
+	// 判断商品是否被引用
+	private boolean isCited(Integer itemid, String saleorderitemtablename)
+	{
+		SaleorderItem exampleItem = new SaleorderItem();
+		exampleItem.setTablename(saleorderitemtablename);
+		exampleItem.setItemid(itemid);
+		if (saleorderItemSerivce.select(exampleItem).size()==0) 
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }

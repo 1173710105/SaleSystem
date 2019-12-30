@@ -94,6 +94,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		List<WarehourseDetail> detailList = new ArrayList<WarehourseDetail>();
 		WarehourseDetail tempDetail;
 		
+		float sumPurchase = 0;
 		float margin = 0;
 		for (ReceiveOrder receiveOrder : orderList) 
 		{
@@ -119,11 +120,11 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 			}
 			// 算利润
 			tempPrice.setId(tempItem.getItemid());
-			margin += calMargin(priceService.selectByPrimaryKey(tempPrice), example.getType())*tempItem.getItemnum();
-			
+			sumPurchase += priceService.selectByPrimaryKey(tempPrice).getPurchaseprice();
 		}
 		
 		//更新利润
+		margin = Float.valueOf(example.getSumprice()) - sumPurchase;
 		resultCommon.setMargin(margin);
 		commonService.updateByPrimaryKeySelective(resultCommon);
 		
@@ -166,6 +167,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		ItemToPrice tempPrice = new ItemToPrice();
 		tempPrice.setTablename(example.getItemtopricetable());
 		float margin = 0;
+		float sumPurchase = 0;
 		for (ReceiveOrder receiveOrder : orderList) 
 		{
 			// 重新插入商品
@@ -175,10 +177,11 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 			itemService.insertSelective(tempItem);
 			// 算利润
 			tempPrice.setId(tempItem.getItemid());
-			margin += calMargin(priceService.selectByPrimaryKey(tempPrice), example.getType());
+			sumPurchase += priceService.selectByPrimaryKey(tempPrice).getPurchaseprice();
 		}
 		
 		// 重新更新common
+		margin = Float.valueOf(example.getSumprice()) - sumPurchase;
 		exampleCommon.setMargin(margin);
 		commonService.updateByPrimaryKeySelective(exampleCommon);
 		return "修改订单成功";
@@ -204,7 +207,6 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		
 		// 更改库存, 查看库存商品个数
 		List<WarehourseDetail> detailList = new ArrayList<>();
-		WarehourseDetail tempDetail = new WarehourseDetail();
 		WarehourseDetail resultDetail;
 		
 		for (SaleorderItem saleorderItem : itemList) 
@@ -217,24 +219,6 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 				return "商品数量不足";
 			}
 			detailList.add(resultDetail);
-			
-//			tempDetail.setTablename(order.getWarehoursedetailtablename());
-//			tempDetail.setItemid(saleorderItem.getItemid());
-//			resultDetail = detailService.selectByPrimaryKey(tempDetail);
-//			
-//			if (resultDetail==null) 
-//			{
-//				System.out.println("逻辑错误，订单里的商品，仓库没有");
-//				return "false";
-//			}
-//			if (resultDetail.getItemnum()<saleorderItem.getItemnum()) 
-//			{
-//				
-//			}
-//			//更新商品数量
-//			resultDetail.setTablename(order.getWarehoursedetailtablename());
-//			resultDetail.setItemnum(resultDetail.getItemnum()-saleorderItem.getItemnum());
-//			detailList.add(resultDetail);
 		}
 		
 		// 更改共同信息

@@ -63,6 +63,19 @@ public class WarehoursePerformance
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
+	
+	public String getClientnum() {
+		return clientnum;
+	}
+	public void setClientnum(String clientnum) {
+		this.clientnum = clientnum;
+	}
+	public String getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
+	}
 	@Override
 	public String toString() {
 		return "WarehoursePerformance [warehourseid=" + warehourseid + ", warehoursename=" + warehoursename
