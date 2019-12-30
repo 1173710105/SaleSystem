@@ -34,6 +34,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form id="client-form">
                     <div class="row">
                         <div class="col-md-12">
                                 <caption>编号</caption>
@@ -76,6 +77,7 @@
                             <input type="text" class="form-control" id="client-label">
                         </div>
                     </div>
+                </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -96,24 +98,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form id="recharge-form">
                     <div class="row">
                         <div class="col-md-12">
                                 <caption>编号</caption>
-                                <input type="text" readonly="readonly" class="form-control" id="client-id">
+                                <input type="text" readonly="readonly" class="form-control" id="rclient-id">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <caption>姓名</caption>
-                            <input type="text" class="form-control" id="client-name">
+                            <input type="text" class="form-control" id="rclient-name">
                         </div>
                         <div class="col-md-3">
                             <caption>联系电话</caption>
-                            <input type="text" class="form-control" id="client-phone">
+                            <input type="text" class="form-control" id="rclient-phone">
                         </div>
                         <div class="col-md-4">
                             <caption>电子邮箱</caption>
-                            <input type="text" class="form-control" id="client-email">
+                            <input type="text" class="form-control" id="rclient-email">
                         </div>
                     </div>
                     <hr>
@@ -127,6 +130,7 @@
                             <input type="text" class="form-control" id="client-recharge">
                         </div>
                     </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -148,9 +152,6 @@
                 <div class="col-md-5">
                      <button type="button" class="btn btn-primary btn-sm form-inline" id="add-btn">
                     添加客户
-                </button>
-                <button type="button" class="btn btn-primary btn-sm form-inline" id="recharge-btn" data-toggle="modal" data-target="#rechargeModal">
-                    预存充值
                 </button>
                 </div>
                 <div class="col-md-7">

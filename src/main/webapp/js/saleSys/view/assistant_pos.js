@@ -13,6 +13,8 @@ var cargoList = [];
 //订单货品数量暂存列表
 var cargoNum = [];
 var tempcargo;
+var tempclient;
+var totalDiscountRatio = 10;
 
 $("#cargo-id").blur(function () {
     var cargoId = $(this).val();
@@ -88,7 +90,14 @@ $("#client-id").blur(function () {
         alert("客户不存在");
         return;
     }
+    tempclient = client;
     document.getElementById('client-name').value = client.name;
+    if(client.authority == "无") {
+        $('#client-score').val("非会员");
+    } else {
+        $('#client-score').val(client.point);
+    }
+    $('#client-deposit').val(client.remain);
 });
 
 /**
@@ -103,6 +112,40 @@ $('#submit-btn').click(function() {
     if(cargoList.length == 0) {
         alert("POS货品列表不能为空");
         return;
+    }
+    if($('#client-score').val() != "非会员") {
+        if($('#client-score-pay').val() != "" && parseFloat($('#client-score-pay').val()) > parseFloat(client.point)) {
+        alert("客户积分不足");
+        return;
+    }
+    }
+    
+    if($('#client-deposit-pay').val() != "" && parseFloat($('#client-deposit-pay').val()) > parseFloat(client.remain)) {
+        alert("客户预存款不足");
+        return;
+    }
+
+    if ($(this).is(':checked')) {
+        if(confirm("确定进行赊账？")) {
+            
+        }
+    } else {
+        //计算余额加积分是否足够
+        var convertprice = 0;
+        if($('#client-score').val() != "非会员" && $('#client-score-pay').val() != "") {
+           convertprice = parseFloat($('#client-score-pay').val()) * parseFloat(client.pointtoprice);
+        }
+        var depositPay = 0;
+        if($('#client-deposit-pay').val() != "") {
+            depositPay = parseFloat($('#client-deposit-pay').val());
+        }
+        if(convertprice + depositPay < $('#total-price')) {
+            alert("积分和预存金额不足");
+            return;
+        }
+        //更新预存款
+        //整单折扣
+        //更新积分
     }
     //整合订单
     //订单基本信息
@@ -144,6 +187,22 @@ $('#submit-btn').click(function() {
 
 $('#clear-btn').click(function() {
     clearPosTerminal();
+});
+
+$('#client-socre-pay').change(function() {
+    if(tempclient == null || $(this).val() == "") {
+        return;
+    }
+    var convertprice = parseFloat($(this).val()) * parseFloat(client.pointtoprice);
+    $('#client-socre-convert').innerHTML = "可兑换" + convertprice + "元";
+})
+
+//赊账
+$('#own').change(function() {
+    if($(this).is(':checked')) {
+        $('#client-socre-pay').val("");
+        $('#client-deposit-pay').val("");   
+    }
 });
 
 function clearPosTerminal() {

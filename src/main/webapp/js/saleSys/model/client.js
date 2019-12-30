@@ -1,6 +1,6 @@
 ﻿//客户对象操作
 
-defaultSetting = 
+var defaultSetting = 
 {
     id : "",
     name : "",
@@ -9,7 +9,13 @@ defaultSetting =
     email : "",
     type : "",
     note : "",
-    label : ""
+    label : "",
+    authority : "",
+    remain : "",  //余额
+    debt : "",   //欠款
+    point : "",  //积分
+    pricetopoint : "",
+    pointtoprice : ""
 }
 
 function sendClientJsonAjax(url, param) {
@@ -17,7 +23,6 @@ function sendClientJsonAjax(url, param) {
     $.ajax({
         url: url,
         data: param,
-        
         type: "post",
         dataType: "JSON",
         contentType: "application/json;charset=UTF-8",
@@ -108,6 +113,72 @@ function updateClient(client) {
     return sendClientJsonAjax(url, param);
 }
 
+function insertMember(client) {
+    param = buildClientParam(client);
+    url="";
+    console.log("InsertMember : ", param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
+}
+
+function updateMember(client) {
+    param = buildClientParam(client);
+    url="";
+    console.log("UpdateMember : ", param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
+}
+
+function queryMember(client) {
+    param = buildClientParam(client);
+    url="";
+    console.log("QueryMember : ", param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
+}
+
+function deleteMember(client) {
+    param = buildClientParam(client);
+    url="";
+    console.log("DeleteMember : ", param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
+}
+
+function updateMemberRatio(ratio) {
+    param = 
+        '{"id":"' + ratio.id + '",'
+        + '"pointtoprice":"' + ratio.pointtoprice + '",'
+        + '"pricetopoint":"' + ratio.pricetopoint + '"}';
+    url="";
+    console.log("UpdateMemberRatio : ", param);
+    $.ajaxSettings.async = false;
+    return sendClientJsonAjax(url, param);
+}
+
+function queryRationMenu() {
+    url = "";
+	param = "";
+    console.log("QueryMenu Ratio : ", param);
+    $.ajaxSettings.async = false;
+    var map = new Map();
+    var obj = sendClientJsonAjax(url, param);
+    var keys = Object.keys(obj);
+    for(var i in keys) {
+    	map.set(keys[i].toString(), obj[keys[i]]);
+    }
+    return map;
+}
+
+function buildRMenuOptionHTML() {
+    var html;
+    var map = queryRationMenu();
+    map.forEach(function(value, key) {
+        html += '<option value="' + key + '">' + value + '</option>';
+    })
+    return html;
+}
+
 function buildClientParam(client) {
     combineClient = $.extend({},defaultSetting, client);
     param = 
@@ -119,6 +190,12 @@ function buildClientParam(client) {
         + '"email":"' + combineClient.email + '",'
         + '"type":"' + combineClient.type + '",'
         + '"label":"' + combineClient.label + '",'
-        + '"note":"' + combineClient.note + '"}';
+        + '"note":"' + combineClient.note + '",'
+        + '"authority":"' + combineClient.authority + '",'
+        + '"remain":"' + combineClient.remain + '",'
+        + '"debt":"' + combineClient.debt + '",'
+        + '"point":"' + combineClient.point + '",'
+        + '"pricetopoint":"' + combineClient.pricetopoint + '",'
+        + '"pointtoprice":"' + combineClient.pointtoprice + '"}'
     return param;
 }
