@@ -41,4 +41,11 @@ public class VIPLevel
     public void setPricetopoint(Float pricetopoint) {
         this.pricetopoint = pricetopoint;
     }
+
+	@Override
+	public String toString() {
+		return "VIPLevel [id=" + id + ", vipname=" + vipname + ", pointtoprice=" + pointtoprice + ", pricetopoint="
+				+ pricetopoint + "]";
+	}
+    
 }
