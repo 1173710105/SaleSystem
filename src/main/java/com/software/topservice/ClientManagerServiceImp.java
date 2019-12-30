@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.software.domain.Client;
 import com.software.domain.SaleorderCommon;
+import com.software.domain.SubBranchDetailMap;
 import com.software.domain.WarehourseOrderCommon;
 import com.software.service.ClientService;
 import com.software.service.SaleorderCommonService;
+import com.software.service.SubBranchDetailMapService;
 import com.software.service.WarehourseOrderCommonService;
 
 @Service
@@ -22,6 +24,8 @@ public class ClientManagerServiceImp implements ClientManagerService {
 	@Autowired
 	private SaleorderCommonService saleCommonService;
 	
+	@Autowired
+	private SubBranchDetailMapService mapService;
 	
 	@Override
 	public String deleteByPrimaryKey(Client record) 
@@ -71,14 +75,18 @@ public class ClientManagerServiceImp implements ClientManagerService {
 	
 	private boolean isCited(Integer clientid)
 	{
+		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
+		exampleMap.setLabel("valid");
 		SaleorderCommon exampleCommon = new SaleorderCommon();
 		exampleCommon.setClientid(clientid);
-		if(saleCommonService.select(exampleCommon).size()>=1) 
+		for (SubBranchDetailMap map : mapService.select(exampleMap)) 
 		{
-			return true;
+			exampleCommon.setTablename(map.getSaleordercommontable());
+			if(saleCommonService.select(exampleCommon).size()>=1) 
+			{
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 }
