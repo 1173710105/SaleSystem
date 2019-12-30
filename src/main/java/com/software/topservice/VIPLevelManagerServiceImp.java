@@ -7,49 +7,41 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.software.domain.Client;
 import com.software.domain.VIPLevel;
+import com.software.service.ClientService;
 import com.software.service.VIPLevelService;
 
 @Service
 public class VIPLevelManagerServiceImp implements VIPLevelManagerService 
 {
-
 	@Autowired
 	private VIPLevelService service;
 	
+	@Autowired
+	private ClientService clientService;
+	
 	@Override
-	public void deleteByPrimaryKey(VIPLevel record) {
-		service.deleteByPrimaryKey(record);
-	}
-
-	@Override
-	public void insert(VIPLevel record) {
-		service.insert(record);
-	}
-
-	@Override
-	public void insertSelective(VIPLevel record) {
-		service.insertSelective(record);
-	}
-
-	@Override
-	public VIPLevel selectByPrimaryKey(VIPLevel record) {
-		return service.selectByPrimaryKey(record);
-	}
-
-	@Override
-	public List<VIPLevel> select(VIPLevel record) {
+	public List<VIPLevel> select(VIPLevel record) 
+	{
 		return service.select(record);
 	}
 
 	@Override
-	public void updateByPrimaryKeySelective(VIPLevel record) {
-		service.updateByPrimaryKeySelective(record);
-	}
-
-	@Override
-	public void updateByPrimaryKey(VIPLevel record) {
+	public void updateByPrimaryKey(VIPLevel record) 
+	{
+		// 更新VIP信息，还需要更新客人信息
 		service.updateByPrimaryKey(record);
+		
+		Client exampleClient = new Client();
+		exampleClient.setAuthority(record.getVipname());
+		List<Client> clientList = clientService.select(exampleClient);
+		for (Client client : clientList) 
+		{
+			client.setPointtoprice(record.getPointtoprice());
+			client.setPricetopoint(record.getPricetopoint());
+			clientService.updateByPrimaryKeySelective(client);
+		}
 	}
 
 	@Override
