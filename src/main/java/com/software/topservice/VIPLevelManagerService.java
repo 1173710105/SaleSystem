@@ -12,7 +12,7 @@ public interface VIPLevelManagerService
     
     public void updateByPrimaryKey(VIPLevel record);
     
-	public void updateclient(String cID, String vID);
+	public void updateclient(String cID, String vID, String point);
     
     public Map<Integer, VIPLevel> vipMenu();
 }

@@ -10,7 +10,14 @@ public class ReceiveClient
 	private String note;
 	private String type;
 	private String label;
-
+	private String authority;
+    private String remain;
+    private String debt;
+    private String point;
+    private String pricetopoint;
+    private String pointtoprice;
+	
+	
 	public String getId() {
 		return id;
 	}
@@ -47,11 +54,6 @@ public class ReceiveClient
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	@Override
-	public String toString() {
-		return "ReceiveClient [id=" + id + ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", email="
-				+ email + ", note=" + note + ", type=" + type + ", label=" + label + "]";
-	}
 	public String getNote() {
 		return note;
 	}
@@ -63,6 +65,49 @@ public class ReceiveClient
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+	public String getRemain() {
+		return remain;
+	}
+	public void setRemain(String remain) {
+		this.remain = remain;
+	}
+	public String getDebt() {
+		return debt;
+	}
+	public void setDebt(String debt) {
+		this.debt = debt;
+	}
+	public String getPoint() {
+		return point;
+	}
+	public void setPoint(String point) {
+		this.point = point;
+	}
+	public String getPricetopoint() {
+		return pricetopoint;
+	}
+	public void setPricetopoint(String pricetopoint) {
+		this.pricetopoint = pricetopoint;
+	}
+	public String getPointtoprice() {
+		return pointtoprice;
+	}
+	public void setPointtoprice(String pointtoprice) {
+		this.pointtoprice = pointtoprice;
+	}
+	@Override
+	public String toString() {
+		return "ReceiveClient [id=" + id + ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", email="
+				+ email + ", note=" + note + ", type=" + type + ", label=" + label + ", authority=" + authority
+				+ ", remain=" + remain + ", debt=" + debt + ", point=" + point + ", pricetopoint=" + pricetopoint
+				+ ", pointtoprice=" + pointtoprice + "]";
 	}
 	
 }

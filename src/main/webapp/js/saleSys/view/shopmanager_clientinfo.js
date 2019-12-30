@@ -74,16 +74,17 @@ $(document).on('click', '#save-btn', function() {
         type : $('#client-type').val(),
         note : $('#client-label').val()
     }
+    $('#clientModal').modal('hide');
     if($('#client-id').val() == "") {
-        insertClient(client);
+        alert(insertClient(client).info);
     } else {
-        updateClient(client);
+        alert(updateClient(client).info);
     }
     refreshClientList();
 });
 
 $('#recharge-save-btn').click(function() {
-    var client = tempClientMap.get($(this).val());
+    var client = tempClientMap.get($('#rclient-id').val());
     var recharge = parseFloat($('#client-recharge').val());
     var remain = parseFloat(client.remain);
     var debt = parseFloat(client.debt);
@@ -97,12 +98,13 @@ $('#recharge-save-btn').click(function() {
         remain = remain + recharge;
     }
     client = {
-        id : $('#client-id').val(),
+        id : $('#rclient-id').val(),
         debt : debt,
         remain : remain
     }
     $('#rechargeModal').modal('hide');
     alert(updateClient(client).info);
+    refreshClientList();
 });
 
 //删除
@@ -188,13 +190,13 @@ function loadClientList(cl) {
         editButton.className = "btn btn-sm btn-primary";
         editButton.innerHTML = "编辑";
         td8.appendChild(editButton);
-        var editButton = document.createElement("button");
-        editButton.type = "button";
-        editButton.id = "recharge-btn";
-        editButton.setAttribute("value", cl[i].id); //将货品id封装在value中
-        editButton.className = "btn btn-sm btn-primary";
-        editButton.innerHTML = "充值";
-        td8.appendChild(editButton);
+        var rechargeButton = document.createElement("button");
+        rechargeButton.type = "button";
+        rechargeButton.id = "recharge-btn";
+        rechargeButton.setAttribute("value", cl[i].id); //将货品id封装在value中
+        rechargeButton.className = "btn btn-sm btn-primary";
+        rechargeButton.innerHTML = "充值";
+        td8.appendChild(rechargeButton);
         var deleButton = document.createElement("button");
         deleButton.type = "button";
         deleButton.id = "delete-btn";

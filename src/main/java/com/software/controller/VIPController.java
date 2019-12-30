@@ -1,9 +1,12 @@
 package com.software.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +14,7 @@ import com.software.domain.Client;
 import com.software.domain.VIPLevel;
 import com.software.topservice.ClientManagerService;
 import com.software.topservice.VIPLevelManagerService;
+import com.software.trans.ReceiveClient;
 
 @RestController
 @RequestMapping("/vip")
@@ -22,16 +26,17 @@ public class VIPController {
 	@Autowired
 	private ClientManagerService clientService;
 	
+	// 设定积分规则
 	@RequestMapping("/updatevip")
-	public Map<String, String> updatevip()
+	public Map<String, String> updatevip(@RequestBody Map<String, String> param)
 	{
 		Map<String, String> result = new HashMap<String, String>();
 		try
 		{
-			Integer vipid = Integer.valueOf("");
-			String vipname = "";
-			Float pointtoprice = Float.valueOf("");
-			Float pricetopoint = Float.valueOf("");
+			Integer vipid = Integer.valueOf(param.get("id"));
+			String vipname = param.get("name");
+			Float pointtoprice = Float.valueOf(param.get("pointtoprice"));
+			Float pricetopoint = Float.valueOf(param.get("pricetopoint"));
 			if (pointtoprice<0) 
 			{
 				result.put("info", "积分兑换系数不正确");
@@ -58,11 +63,12 @@ public class VIPController {
 		}
 	}
 	
+	// 取消会员
 	@RequestMapping("/cancel")
-	public Map<String, String> cancelAuthority()
+	public Map<String, String> cancelAuthority(@RequestBody Map<String, String> param)
 	{
 		Client client = new Client();
-		client.setId(111);
+		client.setId(Integer.valueOf(param.get("id")));
 		client.setAuthority("-1");
 		clientService.updateByPrimaryKeySelective(client);
 		Map<String, String> result = new HashMap<String, String>();
@@ -70,12 +76,14 @@ public class VIPController {
 		return result;
 	}
 
-	@RequestMapping("/updateclient")
-	public Map<String, String> updateclient()
+	// 将一个用户注册成会员， 编辑用户会员信息
+	@RequestMapping("/updateclientinvip")
+	public Map<String, String> updateclient(@RequestBody Map<String, String> param)
 	{
-		String clientid ="";
-		String vipid = "";
-		vipService.updateclient(clientid, vipid);
+		String clientid = param.get("id");
+		String vipid = param.get("authority");
+		String point = param.get("point");
+		vipService.updateclient(clientid, vipid, point);
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("info", "更新成功");
 		return result;
@@ -85,5 +93,32 @@ public class VIPController {
 	public Map<Integer, VIPLevel> vipMenu()
 	{
 		return vipService.vipMenu();
+	}
+
+	@RequestMapping("/query")
+	public List<com.software.domain.Client> queryClient(@RequestBody ReceiveClient param){
+		com.software.domain.Client client = new com.software.domain.Client();
+		if (!param.getId().equals("")) 
+		{
+			client.setId(Integer.valueOf(param.getId()));
+		}
+		client.setName(param.getName());
+		client.setGender(param.getGender());
+		client.setPhone(param.getPhone());
+		client.setNote(param.getNote());
+		client.setEmail(param.getEmail());
+		client.setType(param.getType());
+		client.setLabel("valid");
+		System.out.println(client);
+		List<Client> result = clientService.select(client);
+		List<Client> resultAfterFilter = new ArrayList<Client>();
+		for (Client client2 : result) 
+		{
+			if (!client2.getAuthority().equals("-1")) 
+			{
+				resultAfterFilter.add(client2);
+			}
+		}
+		return resultAfterFilter;
 	}
 }

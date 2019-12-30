@@ -57,10 +57,15 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 	}
 
 	@Override
-	public void updateclient(String cID, String vID) 
+	public void updateclient(String cID, String vID, String point) 
 	{
 		Integer vipID = Integer.valueOf(vID);
 		Integer clientID = Integer.valueOf(cID);
+		Float pointNum = null;
+		if (!point.equals("")) 
+		{
+			pointNum = Float.valueOf(point);
+		}
 		
 		VIPLevel exampleVIP = new VIPLevel();
 		exampleVIP.setId(vipID);
@@ -71,6 +76,7 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 		client.setAuthority(resultVIP.getVipname());
 		client.setPointtoprice(resultVIP.getPointtoprice());
 		client.setPricetopoint(resultVIP.getPricetopoint());
+		client.setPoint(pointNum);
 		clientService.updateByPrimaryKeySelective(client);
 	}
 }

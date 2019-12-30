@@ -141,4 +141,14 @@ public class Client
     public void setPointtoprice(Float pointtoprice) {
         this.pointtoprice = pointtoprice;
     }
+
+	@Override
+	public String toString() {
+		return "Client [id=" + id + ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", email=" + email
+				+ ", note=" + note + ", type=" + type + ", label=" + label + ", authority=" + authority + ", remain="
+				+ remain + ", debt=" + debt + ", point=" + point + ", pricetopoint=" + pricetopoint + ", pointtoprice="
+				+ pointtoprice + "]";
+	}
+    
+    
 }
