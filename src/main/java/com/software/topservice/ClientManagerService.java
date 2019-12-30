@@ -7,7 +7,7 @@ import com.software.domain.Client;
 
 public interface ClientManagerService 
 {
-	public void deleteByPrimaryKey(Client record);
+	public String deleteByPrimaryKey(Client record);
 
     public void insert(Client record);
 

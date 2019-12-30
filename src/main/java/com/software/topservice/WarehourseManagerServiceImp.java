@@ -1,5 +1,7 @@
 ﻿package com.software.topservice;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +17,14 @@ import com.software.domain.Staff;
 import com.software.domain.SubBranchDetailMap;
 import com.software.domain.Warehourse;
 import com.software.domain.WarehourseDetail;
+import com.software.domain.WarehourseOrderCommon;
 import com.software.service.ItemToPriceService;
 import com.software.service.SaleorderCommonService;
 import com.software.service.SaleorderItemService;
 import com.software.service.StaffService;
 import com.software.service.SubBranchDetailMapService;
 import com.software.service.WarehourseDetailService;
+import com.software.service.WarehourseOrderCommonService;
 import com.software.service.WarehourseService;
 
 @Service
@@ -47,10 +51,18 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 	@Autowired
 	private WarehourseDetailService detailService;
 	
+	@Autowired
+	private WarehourseOrderCommonService warehourseCommonService;
+	
 	@Override
-	public void deleteByPrimaryKey(Warehourse record) 
+	public String deleteByPrimaryKey(Warehourse record) 
 	{
 		Integer hourseid = record.getId();
+		if (isCited(hourseid)) 
+		{
+			return "仓库被引用，无法删除";
+		}
+		
 		// warehourse delete
 		hourseService.deleteByPrimaryKey(record);
 		
@@ -91,6 +103,8 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		WarehourseDetail exampleDetail = new WarehourseDetail();
 		exampleDetail.setTablename(warehourseDetailTableName);
 		detailService.dropTable(exampleDetail);
+		
+		return "删除成功";
 	}
 
 	@Override
@@ -207,4 +221,20 @@ public class WarehourseManagerServiceImp implements WarehourseManagerService {
 		return resultMap;
 	}
 	
+	private boolean isCited(Integer warehourseid)
+	{
+		WarehourseOrderCommon exampleCommon = new WarehourseOrderCommon();
+		exampleCommon.setTargetid(warehourseid);
+		if (warehourseCommonService.select(exampleCommon).size()>=1) 
+		{
+			return true;
+		}
+		exampleCommon.setTargetid(null);
+		exampleCommon.setSourceid(warehourseid);
+		if (warehourseCommonService.select(exampleCommon).size()>=1) 
+		{
+			return true;
+		}
+		return false;
+	}
 }
