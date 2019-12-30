@@ -1,8 +1,7 @@
 var tempClientMap = new Map();
 
 window.onload = function () {
-    this.console.log("onload client");
-    this.refreshClientList();
+    // this.refreshClientList();
 }
 
 //搜索
@@ -34,7 +33,19 @@ $(document).on('click', '#add-btn', function() {
 	console.log("client add-btn");
 	cleanModal();
     $('#clientModal').modal('show'); //show modal
-    $('#modal-title').innerHTML = "用户添加";
+    document.getElementsByClassName('modal-title')[0].innerHTML = "用户添加";
+});
+
+$(document).on('click', '#recharge-btn', function(){
+    $('#rechargeModal').modal('show');
+    var client = tempClientMap.get($(this).val());
+    $('#rclient-id').val(client.id);
+    $('#rclient-name').val(client.name);
+    $('#rclient-gender').val(client.gender);
+    $('#rclient-phone').val(client.phone);
+    $('#rclient-email').val(client.email);
+    $('#client-deposit').val(client.remain);
+    $('#client-recharge').val("");
 });
 
 //编辑填充信息
@@ -69,6 +80,28 @@ $(document).on('click', '#save-btn', function() {
         updateClient(client);
     }
     refreshClientList();
+});
+
+$('#recharge-save-btn').click(function() {
+    var client = tempClientMap.get($(this).val());
+    var recharge = parseFloat($('#client-recharge').val());
+    var remain = parseFloat(client.remain);
+    var debt = parseFloat(client.debt);
+    if (debt > 0 && recharge - debt < 0) {
+        debt = recharge - debt;
+    } else if(debt > 0 && recharge - debt > 0){
+        debt = 0;
+        reamin = recharge - debt;
+    } else if(debt == 0) {
+        remain = remain + recharge;
+    }
+    client = {
+        id : $('#client-id').val(),
+        debt : debt,
+        remain : remain
+    }
+    $('#rechargeModal').modal('hide');
+    alert(updateClient(client).info);
 });
 
 //删除
@@ -141,20 +174,33 @@ function loadClientList(cl) {
         var td5 = document.createElement("td");
         td5.innerHTML = cl[i].type;
         var td6 = document.createElement("td");
+        td6.innerHTML = cl[i].remain;
+        td6.setAttribute("style","color: green;")
+        var td7 = document.createElement("td");
+        td7.innerHTML = cl[i].debt;
+        td7.setAttribute("style","color:firebrick;")
+        var td8 = document.createElement("td");
         var editButton = document.createElement("button");
         editButton.type = "button";
         editButton.id = "edit-btn";
         editButton.setAttribute("value", cl[i].id); //将货品id封装在value中
         editButton.className = "btn btn-sm btn-primary";
         editButton.innerHTML = "编辑";
-        td6.appendChild(editButton);
+        td8.appendChild(editButton);
+        var editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.id = "recharge-btn";
+        editButton.setAttribute("value", cl[i].id); //将货品id封装在value中
+        editButton.className = "btn btn-sm btn-primary";
+        editButton.innerHTML = "充值";
+        td8.appendChild(editButton);
         var deleButton = document.createElement("button");
         deleButton.type = "button";
         deleButton.id = "delete-btn";
         deleButton.setAttribute("value", cl[i].id); //将货品id封装在value中
         deleButton.className = "btn btn-sm btn-danger";
         deleButton.innerHTML = "删除";
-        td6.appendChild(deleButton);
+        td8.appendChild(deleButton);
 
         tr.appendChild(td0);
         tr.appendChild(td1);
@@ -163,12 +209,14 @@ function loadClientList(cl) {
         tr.appendChild(td4);
         tr.appendChild(td5);
         tr.appendChild(td6);
+        tr.appendChild(td7);
+        tr.appendChild(td8);
         editTable.appendChild(tr);
     }
 }
 
 //清除模态框内容
 $('body').on('hidden.bs.modal', '.modal', function () {
-    // $(this).removeData('bs.modal');
-    window.location.reload();
+    document.getElementById('client-form').reset();
+    document.getElementById('recharge-form').reset();
 });
