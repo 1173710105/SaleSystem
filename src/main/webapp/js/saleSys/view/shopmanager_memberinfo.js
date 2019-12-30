@@ -1,6 +1,7 @@
 var tempClientMap = new Map();
-
+var tempVip;
 window.onload = function () {
+    this.tempVip = this.queryRatioMenu();
     this.document.getElementById("set-member-rank").innerHTML = this.buildRMenuOptionHTML();
     this.document.getElementById("member-rank").innerHTML = this.buildRMenuOptionHTML();
     this.refreshClientList();
@@ -166,6 +167,7 @@ $('#rule-save-btn').click(function() {
     var pricetopoint = parseFloat($('#price-point').val()) / 100;
     var ratio = {
         id : $('#set-member-rank').val(),
+        name : tempVip.get($('#set-member-rank').val()).vipname,
         pointtoprice : pointtoprice,
         pricetopoint : pricetopoint
     }

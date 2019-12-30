@@ -148,7 +148,7 @@ function deleteMember(client) {
 function updateMemberRatio(ratio) {
     param = 
         '{"id":"' + ratio.id + '",'
-        + '"name":"' + ratio.name + '",'
+        + '"vipname":"' + ratio.name + '",'
         + '"pointtoprice":"' + ratio.pointtoprice + '",'
         + '"pricetopoint":"' + ratio.pricetopoint + '"}';
     url="";
