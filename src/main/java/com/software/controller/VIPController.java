@@ -31,11 +31,11 @@ public class VIPController {
 	public Map<String, String> updatevip(@RequestBody Map<String, String> param)
 	{
 		Map<String, String> result = new HashMap<String, String>();
-		
+
 		try
 		{
 			Integer vipid = Integer.valueOf(param.get("id"));
-			String vipname = param.get("name");
+			String vipname = param.get("vipname");
 			Float pointtoprice = Float.valueOf(param.get("pointtoprice"));
 			Float pricetopoint = Float.valueOf(param.get("pricetopoint"));
 			if (pointtoprice<0) 
@@ -53,6 +53,7 @@ public class VIPController {
 			vipLevel.setVipname(vipname);
 			vipLevel.setPointtoprice(pointtoprice);
 			vipLevel.setPricetopoint(pricetopoint);
+			System.out.println(vipLevel);
 			vipService.updateByPrimaryKey(vipLevel);
 			result.put("info", "更新成功");
 			return result;
@@ -86,7 +87,7 @@ public class VIPController {
 		String point = param.get("point");
 		vipService.updateclient(clientid, vipid, point);
 		Map<String, String> result = new HashMap<String, String>();
-		result.put("info", "更新成功");
+		result.put("info", "操作成功");
 		return result;
 	}
 	

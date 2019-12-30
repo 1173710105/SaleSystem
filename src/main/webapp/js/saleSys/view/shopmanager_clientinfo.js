@@ -1,6 +1,7 @@
 var tempClientMap = new Map();
-
+var tempVip = 
 window.onload = function () {
+    this.tempVip = this.queryRatioMenu();
     this.refreshClientList();
 }
 
@@ -88,12 +89,12 @@ $('#recharge-save-btn').click(function() {
     var recharge = parseFloat($('#client-recharge').val());
     var remain = parseFloat(client.remain);
     var debt = parseFloat(client.debt);
-    if (debt > 0 && remian + recharge - debt < 0) {
+    if (debt > 0 && remain + recharge - debt < 0) {
         debt = remain + recharge - debt;
         remain = 0;
     } else if(debt > 0 && remain + recharge - debt > 0){
-        debt = 0;
-        reamin = remain - (debt - recharge);
+        remain = remain - (debt - recharge);
+    	debt = 0;
     } else if(debt == 0) {
         remain = remain + recharge;
     }

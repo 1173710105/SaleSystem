@@ -26,29 +26,29 @@ public class VIPLevelManagerServiceTest
 		VIPLevel vip = new VIPLevel();
 		vip.setId(1);
 		vip.setVipname("VIP1");
-		vip.setPricetopoint(0.1f);
-		vip.setPointtoprice(2.0f);
+		vip.setPricetopoint(+0.0f);
+		vip.setPointtoprice(+0.0f);
 		service.updateByPrimaryKey(vip);
 	}
-	
-	@Test
-	public void testSelect() 
-	{
-		List<VIPLevel> vipLevels = service.select(null);
-		for (VIPLevel vipLevel : vipLevels) 
-		{
-			System.out.println(vipLevel);
-		}
-	}
-	
-	@Test
-	public void testMenu()
-	{
-		Map<Integer, VIPLevel> menu = service.vipMenu();
-		for (Integer index : menu.keySet()) 
-		{
-			System.out.println(index+"  "+menu.get(index));
-		}
-	}
+//	
+//	@Test
+//	public void testSelect() 
+//	{
+//		List<VIPLevel> vipLevels = service.select(null);
+//		for (VIPLevel vipLevel : vipLevels) 
+//		{
+//			System.out.println(vipLevel);
+//		}
+//	}
+//	
+//	@Test
+//	public void testMenu()
+//	{
+//		Map<Integer, VIPLevel> menu = service.vipMenu();
+//		for (Integer index : menu.keySet()) 
+//		{
+//			System.out.println(index+"  "+menu.get(index));
+//		}
+//	}
 
 }

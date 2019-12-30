@@ -83,16 +83,20 @@ public class OrderController
 	@RequestMapping("/insert")
 	public Map<String,String> insertOrder(@RequestBody List<ReceiveOrder> param)
 	{
-		System.out.println("insert");
-		System.out.println(param);
 		if (param.size()==0) 
 		{
 			return null;
 		}
 		System.out.println(param.get(0).toString());
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-		String createtime = df.format(new Date());// new Date()为获取当前系统时间
-		param.get(0).setCreatetime(createtime);
+		String date = df.format(new Date());// new Date()为获取当前系统时间
+		param.get(0).setCreatetime(date);
+		if (param.get(0).getStatus().equals("5")) 
+		{
+			param.get(0).setChecktime(date);
+			param.get(0).setGathertime(date);
+			param.get(0).setPostime(date);
+		}
 		String infovalue = service.insert(param);
 		Map<String,String> result = new HashMap<String,String>();
 		result.put("info", infovalue);

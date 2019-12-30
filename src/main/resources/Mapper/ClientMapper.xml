@@ -189,22 +189,22 @@
       <if test="label != null and label!=''">
         label = #{label,jdbcType=VARCHAR},
       </if>
-      <if test="authority != null and authority!=''">
+      <if test="authority != null and authority !=''">
         authority = #{authority,jdbcType=VARCHAR},
       </if>
-      <if test="remain != null and remain!=''">
+      <if test="remain != null">
         remain = #{remain,jdbcType=REAL},
       </if>
-      <if test="debt != null and debt!=''">
+      <if test="debt != null">
         debt = #{debt,jdbcType=REAL},
       </if>
-      <if test="point != null and point!=''">
+      <if test="point != null">
         point = #{point,jdbcType=REAL},
       </if>
-      <if test="pricetopoint != null and pricetopoint!=''">
+      <if test="pricetopoint != null">
         priceToPoint = #{pricetopoint,jdbcType=REAL},
       </if>
-      <if test="pointtoprice != null and pointtoprice!=''">
+      <if test="pointtoprice != null">
         pointToPrice = #{pointtoprice,jdbcType=REAL},
       </if>
     </set>

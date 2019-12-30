@@ -59,7 +59,7 @@ function loadClientList(cl) {
         var td1 = document.createElement("td");
         td1.innerHTML = cl[i].name;
         var td2 = document.createElement("td");
-        td2.innerHTML = cl[i].authority;
+        td2.innerHTML = tempVip.get(cl[i].authority).vipname;
         var td3 = document.createElement("td");
         td3.innerHTML = cl[i].point;
         var td4 = document.createElement("td");

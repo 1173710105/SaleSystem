@@ -1,10 +1,11 @@
 //店长进货页面
 window.onload = function () {
-    this.document.getElementById('order-source-position').innerHTML = this.buildWMenuOptionHTML();
-    this.document.getElementById('search-order-source').innerHTML = '<option value="">任意</option>' + this.buildWMenuOptionHTML();
-    this.document.getElementById('order-stock-position').innerHTML = this.buildWMenuOptionHTML();
+    document.getElementById('order-source-position').innerHTML = buildWMenuOptionHTML();
+    document.getElementById('search-order-source').innerHTML = '<option value="">任意</option>' + buildWMenuOptionHTML();
+    document.getElementById('order-stock-position').innerHTML = buildWMenuOptionHTML();
     tempRep = queryWarehourseMenu();
     tempProvider = queryProviderMenu();
+    console.log("aaa", tempProvider);
     this.refreshCargoStockList();
 }
 
@@ -20,11 +21,10 @@ var tempCargo;
 var preCargoId; //保存之前在货品框中货品id
 var tempRep;
 var tempProvider;
-
+var _type;
 
 //加载进货信息
 function loadWarehourseOrderList(worderList) {
-    console.log("woiweo", worderList);
     var editTable = document.getElementById("worder-tbody");
     for (var i = 0; i < worderList.length; i++) {
         //增加表格
@@ -150,16 +150,19 @@ function loadWarehourseOrderList(worderList) {
     }
 }
 
+
 //加载模态框
 function loadModal(type, order) {
     document.getElementById('cargo-purchase-price').setAttribute("readonly", "readonly");
-    if (order == null) return;
-    else if(order.type == "1") {
-        this.document.getElementById('order-source-position').innerHTML = this.buildPMenuOptionHTML();
-    } else if(order.type == "2") {
-        this.document.getElementById('order-source-position').innerHTML = this.buildWMenuOptionHTML();
+    if (order == null){
+    	
     }
-    $('#type').val(type);
+    else if(order.type == "1") {
+        document.getElementById('order-source-position').innerHTML = buildPMenuOptionHTML();
+    } else if(order.type == "2") {
+        document.getElementById('order-source-position').innerHTML = buildWMenuOptionHTML();
+    }
+    _type = type;
     var modal = $("#stockAddModal");
     console.log(modal);
     switch (type) {
@@ -169,7 +172,7 @@ function loadModal(type, order) {
             $('.save-btn')[0].style.display = "";
             modal.find('.modal-title').text("添加进货");
 
-            $('#order-stock-position').val(order.targetid);
+            $('#order-stock-position').val(getCookie("warehourseid"));
             $('#order-principal').val(getCookie("principalname"));
             break;
         }
@@ -231,8 +234,8 @@ function loadModalTable(items) {
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
-        if ($('#type').val() == "add"
-            || $('#type').val() == "edit") {
+        console.log(_type)
+        if (_type == "add" || _type == "edit") {
             var td5 = document.createElement("td");
             deleButton = document.createElement("button");
             deleButton.type = "button";
@@ -281,9 +284,6 @@ $(document).on('click', '#temp-tr', function () {
     //填充订单参数
     var cargoid = this.getAttribute("value");
     preCargoId = cargoid;
-    console.log("qqqqqq", cargoMap);
-    console.log("eee", cargoid);
-    console.log("23232", cargoMap.get(cargoid));
     showCargo(cargoMap.get(cargoid));
 });
 
@@ -339,19 +339,19 @@ $('#cargo-purchase-price').blur(function () {
 $("#order-type").change(function () {
     if ($(this).val() == "1") {
         document.getElementById('cargo-purchase-price').removeAttribute("readonly");
-        this.document.getElementById('order-source-position').innerHTML = this.buildPMenuOptionHTML();
+        document.getElementById('order-source-position').innerHTML = buildPMenuOptionHTML();
     } else if ($(this).val() == "2") {
         document.getElementById('cargo-purchase-price').setAttribute("readonly", "readonly");
-        this.document.getElementById('order-source-position').innerHTML = this.buildWMenuOptionHTML();
+        document.getElementById('order-source-position').innerHTML = buildWMenuOptionHTML();
     }
 });
 
 //搜索类型变动时，更换货源地列表
 $('#search-type').change(function () {
     if ($(this).val() == "1") {
-        this.document.getElementById('search-order-source').innerHTML = this.buildPMenuOptionHTML();
+        document.getElementById('search-order-source').innerHTML = buildPMenuOptionHTML();
     } else if ($(this).val() == "2") {
-        this.document.getElementById('search-order-source').innerHTML = this.buildWMenuOptionHTML();
+        document.getElementById('search-order-source').innerHTML = buildWMenuOptionHTML();
     }
 });
 
@@ -479,7 +479,7 @@ $('#save-btn').click(function () {
         })
     });
     $('#stockAddModal').modal('hide');
-    if ($('#type').val() == "add") {
+    if (_type == "add") {
         alert(insertWarehourseOrder(cargoObjectList).info);
     } else if ($("#type").val() == "edit") {
         alert(updateWarehourseOrder(cargoObjectList).info);
@@ -511,7 +511,7 @@ function cleanCargoStockList() {
 
 function refreshCargoStockList() {
     //加载进货金额信息
-    this.document.getElementById('stock-amount').innerHTML = this.getCargoStockAmount(getCookie("warehourseid"));
+    document.getElementById('stock-amount').innerHTML = getCargoStockAmount(getCookie("warehourseid"));
     cleanCargoStockList();
     worder = {
         id: $('#search-order-id').val(),
@@ -521,7 +521,6 @@ function refreshCargoStockList() {
         targetid: getCookie("warehourseid")
     }
     var queryList = queryWarehourseOrder(worder);
-    console.log("23e89er", queryList);
     for (var i = 0; i < queryList.length; i++) {
         tempWareOrderMap.set(queryList[i].id.toString(), queryList[i]);
     }
