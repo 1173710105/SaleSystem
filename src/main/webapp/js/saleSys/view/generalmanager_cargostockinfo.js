@@ -424,6 +424,7 @@ $(document).on('click', '#apply-btn', function () {
 
 //审核申请
 $(document).on('click', "#check-btn", function () {
+	console.log("llll");
     var r;
     if (tempWareOrderMap.get($(this).val()).type.toString() == "1") {
         r = confirm("是否确认购入？");
@@ -435,6 +436,7 @@ $(document).on('click', "#check-btn", function () {
         var worder = tempWareOrderMap.get($(this).val());
         alert(passWarehourseOrder({
             id: worder.id,
+            type : worder.type,
             sourceid: worder.sourceid,
             targetid: worder.targetid
         }).info);
@@ -511,7 +513,7 @@ function cleanCargoStockList() {
 
 function refreshCargoStockList() {
     //加载进货金额信息
-    document.getElementById('stock-amount').innerHTML = getCargoStockAmount(getCookie("warehourseid"));
+    document.getElementById('stock-amount').innerHTML = getCargoStockAmount(getCookie("warehourseid")).in;
     cleanCargoStockList();
     worder = {
         id: $('#search-order-id').val(),
