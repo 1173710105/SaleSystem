@@ -157,7 +157,7 @@ function updateMemberRatio(ratio) {
     return sendClientJsonAjax(url, param);
 }
 
-function queryRationMenu() {
+function queryRatioMenu() {
     url = "";
 	param = "";
     console.log("QueryMenu Ratio : ", param);

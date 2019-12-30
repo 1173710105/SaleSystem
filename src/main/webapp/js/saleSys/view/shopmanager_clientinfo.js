@@ -1,7 +1,7 @@
 var tempClientMap = new Map();
 
 window.onload = function () {
-    // this.refreshClientList();
+    this.refreshClientList();
 }
 
 //搜索
