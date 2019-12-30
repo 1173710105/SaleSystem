@@ -14,6 +14,11 @@ $("#start-date input").datetimepicker({
     format: 'yyyy-mm-dd'
 });
 
+$("#end-date input").datetimepicker({
+    language: "zh-CN",
+    format: 'yyyy-mm-dd'
+});
+
 
 function cleanList() {
 	var editTable = document.getElementById("per-tbody");
@@ -23,15 +28,24 @@ function cleanList() {
 //刷新页面
 function refreshPerformanceList() {
     cleanList();
+    var st = "";
+    var et = "";
+    console.log($('#start-date').val())
+    if($('#search-start-date').val()!="") {
+    	st = $('#search-start-date').val() + " 00:00:00"
+    }
+    if($('#search-end-date').val()!="") {
+    	et = $('#search-end-date').val() + " 00:00:00";
+    }
     per = {
         warehourseid: getCookie("warehourseid"),
         warehoursename: getCookie("warehoursename"),
         principalid : $('#search-staff-id').val(),
         principalname : $('#search-staff-name').val(),
-        starttime : $('#start-date').val() + " 00:00:00",
-        endtime : $('#end-date').val() + " 00:00:00"
+        starttime : st,
+        endtime : et
     }
-    var perList = this.queryClient(client);
+    var perList = this.querySMPerformance(per);
     console.log("refresh clientlist : ", perList);
     console.log("refresh clientType : ", typeof(perList));
     for (var i = 0; i < perList.length; i++) {
@@ -42,7 +56,7 @@ function refreshPerformanceList() {
 
 //加载列表
 function loadClientList(cl) {
-    var editTable = document.getElementById("client-tbody");
+    var editTable = document.getElementById("per-tbody");
     for (var i = 0; i < cl.length; i++) {
         var tr = document.createElement("tr");
         tr.setAttribute("id", cl[i].id);
@@ -50,6 +64,8 @@ function loadClientList(cl) {
         td0.innerHTML = cl[i].principalid;
         var td1 = document.createElement("td");
         td1.innerHTML = cl[i].principalname;
+        var td7 = document.createElement("td");
+        td7.innerHTML = "店员";
         var td2 = document.createElement("td");
         td2.innerHTML = cl[i].warehoursename;
         var td3 = document.createElement("td");
@@ -63,11 +79,13 @@ function loadClientList(cl) {
 
         tr.appendChild(td0);
         tr.appendChild(td1);
+        tr.appendChild(td7);
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
         tr.appendChild(td5);
         tr.appendChild(td6);
+        
         editTable.appendChild(tr);
     }
 }

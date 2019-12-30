@@ -45,7 +45,6 @@ public class ClientController
 		client.setEmail(param.getEmail());
 		client.setType(param.getType());
 		client.setLabel("valid");
-		System.out.println(client);
 		List<com.software.domain.Client> result = service.select(client);
 		return result;
 	}
@@ -64,7 +63,6 @@ public class ClientController
 		client.setEmail(param.getEmail());
 		client.setType(param.getType());
 		client.setLabel("valid");
-		System.out.println(client.toString());
 		service.insertSelective(client);
 
 		Map<String, String> result = new HashMap<String, String>();

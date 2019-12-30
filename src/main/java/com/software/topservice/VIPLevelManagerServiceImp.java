@@ -31,7 +31,7 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 	public void updateByPrimaryKey(VIPLevel record) 
 	{
 		// 更新VIP信息，还需要更新客人信息
-		service.updateByPrimaryKey(record);
+		service.updateByPrimaryKeySelective(record);
 		
 		Client exampleClient = new Client();
 		exampleClient.setAuthority(record.getVipname());

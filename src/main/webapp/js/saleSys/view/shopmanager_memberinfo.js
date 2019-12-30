@@ -1,7 +1,13 @@
 var tempClientMap = new Map();
 var tempVip;
+var potopr;
+var prtopo;
 window.onload = function () {
     this.tempVip = this.queryRatioMenu();
+    $('#point-price').val(tempVip.get("1").pointtoprice * 100);
+	$('#price-point').val(tempVip.get("1").pricetopoint * 100);
+	potopr = $('#point-price').val();
+	prtopo = $('#price-point').val();
     this.document.getElementById("set-member-rank").innerHTML = this.buildRMenuOptionHTML();
     this.document.getElementById("member-rank").innerHTML = this.buildRMenuOptionHTML();
     this.refreshClientList();
@@ -44,7 +50,7 @@ function refreshClientList() {
 
 //加载列表
 function loadClientList(cl) {
-    var editTable = document.getElementById("client-tbody");
+    var editTable = document.getElementById("member-tbody");
     for (var i = 0; i < cl.length; i++) {
         var tr = document.createElement("tr");
         tr.setAttribute("id", cl[i].id);
@@ -95,9 +101,9 @@ $('#search-btn').click(function () {
     refreshClientList();
 });
 
-$('#rule-save-btn').click(function() {
+$('#set-rule-btn').click(function() {
     cleanModal();
-    $('#ruleModal').modal('show'); //show modal
+	tempVip = queryRatioMenu();
 });
 
 //添加
@@ -140,16 +146,17 @@ $(document).on('click', '#save-btn', function() {
         authority : $('#member-rank').val(),
         point  : $('#client-point').val()
     }
+    $('#clientModal').modal('hide');
     if($('#client-id').val() == "") {
-        insertMember(client);
+        alert(insertMember(client).info);
     } else {
-        updateMember(client);
+        alert(updateMember(client).info);
     }
     refreshClientList();
 });
 
 $('#client-id').blur(function() {
-    var client = queryClientById(this.val());
+    var client = queryClientById($(this).val());
     if(client == null) {
         alert("客户不存在");
         return;
@@ -161,26 +168,42 @@ $('#client-id').blur(function() {
     $('#client-email').val(client.email);
 });
 
+$('#set-member-rank').change(function() {
+	$('#point-price').val(tempVip.get($(this).val()).pointtoprice * 100);
+	$('#price-point').val(tempVip.get($(this).val()).pricetopoint * 100);
+	potopr = $('#point-price').val();
+	prtopo = $('#price-point').val();
+})
+
+$('#point-price').change(function() {
+	potopr = $(this).val();
+})
+
+$('#price-point').change(function() {
+	prtopo = $(this).val();
+})
+
 //保存兑换比例
 $('#rule-save-btn').click(function() {
-    var pointtoprice = parseFloat($('#point-price').val()) / 100;
-    var pricetopoint = parseFloat($('#price-point').val()) / 100;
+    var pointtoprice = parseFloat(potopr) / 100;
+    var pricetopoint = parseFloat(prtopo) / 100;
     var ratio = {
         id : $('#set-member-rank').val(),
         name : tempVip.get($('#set-member-rank').val()).vipname,
         pointtoprice : pointtoprice,
         pricetopoint : pricetopoint
     }
-    updateMemberRatio(ratio);
+    $('#ruleModal').modal('hide');
+    alert(updateMemberRatio(ratio).info);
+    
 });
 
 //删除
 $(document).on('click', '#delete-btn' , function() {
-    var r = confirm("是否删除？");
+    var r = confirm("是否取消？");
     if (r == true) {
         //实现
         alert(deleteMember({id : $(this).val()}).info);
-        alert("删除成功");
         refreshClientList();
     }
 });

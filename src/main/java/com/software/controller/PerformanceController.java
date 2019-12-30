@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,8 +27,9 @@ public class PerformanceController
 	
 	// 需要warehouseid，时间，全部查，warehouseid默认传""
 	@RequestMapping("/warehourseperformance")
-	public List<WarehoursePerformance> queryWarehoursePerformance(WarehoursePerformance performance)
+	public List<WarehoursePerformance> queryWarehoursePerformance(@RequestBody WarehoursePerformance performance)
 	{
+		System.out.println(performance);
 		List<WarehoursePerformance> result = new ArrayList<WarehoursePerformance>();
 		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
 		exampleMap.setLabel("valid");
@@ -58,7 +60,7 @@ public class PerformanceController
 	
 	// 需要warehouseid，warehousename， 时间，全部查principalid="" 
 	@RequestMapping("/staffperformance")
-	public List<WarehoursePerformance> queryStaffPerformance(WarehoursePerformance performance)
+	public List<WarehoursePerformance> queryStaffPerformance(@RequestBody WarehoursePerformance performance)
 	{
 		return performanceService.calStaffPerformance(performance);
 	}

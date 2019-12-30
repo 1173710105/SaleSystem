@@ -161,8 +161,8 @@ function queryRatioMenu() {
     url = "/vip/menu";
 	param = "";
     console.log("QueryMenu Ratio : ", param);
-    $.ajaxSettings.async = false;
     var map = new Map();
+    $.ajaxSettings.async = false;
     var obj = sendClientJsonAjax(url, param);
     var keys = Object.keys(obj);
     for(var i in keys) {
@@ -175,7 +175,7 @@ function buildRMenuOptionHTML() {
     var html;
     var map = queryRatioMenu();
     map.forEach(function(value, key) {
-        html += '<option value="' + key + '">' + value + '</option>';
+        html += '<option value="' + key + '">' + value.vipname + '</option>';
     })
     return html;
 }

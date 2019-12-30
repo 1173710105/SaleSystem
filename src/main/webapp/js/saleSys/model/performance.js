@@ -31,9 +31,17 @@ function sendPerJsonAjax(url, param) {
     return tempdata;
  }
 
-function queryPerformance(per) {
+function querySMPerformance(per) {
     param = buildPerformanceParam(per);
-    url = "";
+    url = "/performance/staffperformance";
+    console.log("QueryPerformance : ", param);
+    $.ajaxSettings.async = false;
+    return sendPerJsonAjax(url, param);
+}
+
+function queryGMPerformance(per) {
+    param = buildPerformanceParam(per);
+    url = "/performance/warehourseperformance";
     console.log("QueryPerformance : ", param);
     $.ajaxSettings.async = false;
     return sendPerJsonAjax(url, param);
