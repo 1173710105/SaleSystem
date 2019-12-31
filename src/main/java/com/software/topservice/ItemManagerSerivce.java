@@ -2,8 +2,6 @@ package com.software.topservice;
 
 import java.util.List;
 import java.util.Map;
-
-import com.software.domain.Item;
 import com.software.trans.ReceiveCargo;
 
 public interface ItemManagerSerivce 

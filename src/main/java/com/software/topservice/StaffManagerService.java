@@ -3,7 +3,6 @@ package com.software.topservice;
 import java.util.List;
 
 import com.software.domain.Staff;
-import com.software.domain.StoreManager;
 
 public interface StaffManagerService 
 {

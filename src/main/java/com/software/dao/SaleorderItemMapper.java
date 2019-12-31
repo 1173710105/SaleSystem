@@ -3,8 +3,6 @@ package com.software.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-
-import com.software.domain.SaleorderCommon;
 import com.software.domain.SaleorderItem;
 
 

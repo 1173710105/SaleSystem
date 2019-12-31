@@ -1,11 +1,7 @@
 package com.software.topservice;
 
 import java.util.List;
-import java.util.Map;
-
-import com.software.trans.ReceiveOrder;
 import com.software.trans.ReceiveWarehourseOrder;
-import com.software.trans.SendOrder;
 import com.software.trans.SendWarehourseOrder;
 
 public interface WarehourseOrderManagerService 

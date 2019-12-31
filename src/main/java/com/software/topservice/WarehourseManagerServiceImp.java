@@ -1,6 +1,5 @@
 ﻿package com.software.topservice;
 
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +7,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.software.dao.WarehourseMapper;
 import com.software.domain.ItemToPrice;
 import com.software.domain.SaleorderCommon;
 import com.software.domain.SaleorderItem;

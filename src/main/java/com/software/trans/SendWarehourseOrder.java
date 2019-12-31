@@ -1,8 +1,6 @@
 package com.software.trans;
 
 import java.util.List;
-
-import com.software.domain.SaleorderCommon;
 import com.software.domain.WarehourseOrderCommon;
 import com.software.domain.WarehourseOrderItem;
 

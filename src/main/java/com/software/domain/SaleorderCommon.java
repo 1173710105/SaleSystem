@@ -1,7 +1,5 @@
 package com.software.domain;
 
-import java.util.List;
-
 public class SaleorderCommon 
 {
 	private String tablename;

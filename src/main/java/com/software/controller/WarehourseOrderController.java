@@ -15,7 +15,6 @@ import com.software.domain.WarehourseOrderCommon;
 import com.software.topservice.WarehourseOrderManagerService;
 import com.software.trans.ReceiveWarehourseOrder;
 import com.software.trans.SendWarehourseOrder;
-import com.software.trans.Stock;
 
 @RestController
 @RequestMapping("/warehourseOrder")
