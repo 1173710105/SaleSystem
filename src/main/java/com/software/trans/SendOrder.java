@@ -5,8 +5,6 @@ import java.util.List;
 import com.software.domain.SaleorderCommon;
 import com.software.domain.SaleorderItem;
 
-import net.bytebuddy.asm.Advice.This;
-
 
 public class SendOrder 
 {

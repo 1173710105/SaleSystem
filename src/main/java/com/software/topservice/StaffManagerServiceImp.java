@@ -1,16 +1,10 @@
 package com.software.topservice;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.core.sym.Name;
 import com.software.domain.Staff;
-import com.software.domain.StoreManager;
-import com.software.domain.Warehourse;
 import com.software.service.StaffService;
 import com.software.service.WarehourseService;
 

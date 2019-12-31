@@ -4,8 +4,6 @@ package com.software.trans;
 import com.software.domain.Item;
 import com.software.domain.WarehourseDetail;
 
-import net.bytebuddy.asm.Advice.This;
-
 public class Stock 
 {
     private String hourseid;

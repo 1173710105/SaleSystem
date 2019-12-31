@@ -1,9 +1,5 @@
 package com.software.domain;
 
-import static org.mockito.Mockito.ignoreStubs;
-
-import org.codehaus.plexus.util.dag.TopologicalSorter;
-
 public class WarehourseDetail 
 {
 	private String tablename;
