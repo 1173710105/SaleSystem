@@ -400,7 +400,7 @@ $('#ack-return-btn').click(function () {
         warehourseid: getCookie("warehourseid"),
         principalid: getCookie("principalid"),
         //        note : $('#return-note').val(),
-        note: "testnote",
+        note: document.getElementById('return-note').value,
         exception: ""
     }).info);
     $('#saleReturnModal').modal('hide');
@@ -426,26 +426,25 @@ $(document).on('click', '#pay-btn', function () {
     $('#orderPayModal').modal('show');
     var orderid = $(this).val();
     var order = tempOrderMap.get(orderid);
-    console.log("zzzzz : ", order);
     $('#pay-order-id').val(orderid);
-    $('#pay-client-name').val(order[0].get("clientname"));
-    $('#pay-pricinpal-name').val(order[0].get("principalname"));
-    $('#pay-total-price').val(order[0].get("sumprice"));
+    $('#pay-client-name').val(order.clientname);
+    $('#pay-pricinpal-name').val(order.principalname);
+    $('#pay-total-price').val(order.sumprice);
     var editTable = document.getElementById("temp-pay-cargo-tbody");
     editTable.innerHTML = "";
-    for (var i = 0; i < order.length; i++) {
+    for (var i = 0; i < order.items.length; i++) {
         var tr = document.createElement("tr");
-        tr.setAttribute("id", order[i].get("id"));
+        tr.setAttribute("id", order.items[i].itemid);
         var td0 = document.createElement("td");
-        td0.innerHTML = order[i].get("itemname");
+        td0.innerHTML = order.items[i].itemname;
         var td1 = document.createElement("td");
-        td1.innerHTML = order[i].get("itemid");
+        td1.innerHTML = order.items[i].itemid;
         var td2 = document.createElement("td");
-        td2.innerHTML = order[i].get("itemnum");
+        td2.innerHTML = order.items[i].itemnum;
         var td3 = document.createElement("td");
-        td3.innerHTML = order[i].get("perprice");
+        td3.innerHTML = order.items[i].perprice;
         var td4 = document.createElement("td");
-        td4.innerHTML = order[i].get("sumprice");
+        td4.innerHTML = order.items[i].sumprice;
         tr.appendChild(td0);
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -459,16 +458,16 @@ $(document).on('click', '#pay-btn', function () {
 $(document).on('click', '#return-btn', function () {
     var orderid = $(this).val();
     $('#saleReturnModal').modal('show');
-    $('#return-order-id').val(tempOrderMap.get(orderid)[0].get("orderid"));
-    $('#return-client-name').val(tempOrderMap.get(orderid)[0].get("clientname"));
-    $('#return-pricipal-name').val(tempOrderMap.get(orderid)[0].get("principalname"));
+    $('#return-order-id').val(tempOrderMap.get(orderid).id);
+    $('#return-client-name').val(tempOrderMap.get(orderid).clientname);
+    $('#return-pricipal-name').val(tempOrderMap.get(orderid).principalname);
     //判断是否付款
-    if (tempOrderMap.get(orderid)[0].get("status") == '3') {
+    if (tempOrderMap.get(orderid).status.toString() == '3') {
         $('#payed-state').val("0");
-    } else if (tempOrderMap.get(orderid)[0].get("status") == '4') {
+    } else if (tempOrderMap.get(orderid).status.toString() == '4') {
         $('#payed-state').val("1");
     }
-    $('#return-total-price').val(tempOrderMap.get(orderid)[0].get("totalprice"));
+    $('#return-total-price').val(tempOrderMap.get(orderid.toString()).sumprice);
 });
 
 $('#client-id').blur(function () {
@@ -552,9 +551,9 @@ $('#save-btn').click(function () {
     }
     //计算总价
     var sump = 0;
-    for (var k in tempCargoMap) {
-        sump += parseFloat(tempCargoMap[k].sumprice);
-    }
+    tempCargoMap.forEach(function(value, key){
+    	sump += parseFloat(value.sumprice);
+    });
     var cargoObjectList = [];
     //新建订单
     tempCargoMap.forEach(function(value, key) {
@@ -580,6 +579,7 @@ $('#save-btn').click(function () {
             };
         cargoObjectList.push(obj);
     });
+    console.log("111", cargoObjectList);
     $('#orderModifyModal').modal('hide');
     if ($('#order-id').val() == "") {
         alert(insertOrder(cargoObjectList).info);
