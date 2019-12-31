@@ -35,21 +35,9 @@ public class StockController
 	}
 	
 	@RequestMapping("/query")
-	public List<Stock> queryStock(@RequestBody Stock param){
+	public List<Stock> queryStock(@RequestBody Stock param)
+	{
 		List<Stock> result = service.select(param);
-		ReceiveCargo tmp1 = new ReceiveCargo();
-		ReceiveCargo tmp2 = new ReceiveCargo();
-		for(Stock s:result){
-			tmp1.setRetailprice("");
-			tmp1.setPurchaseprice("");
-			tmp1.setWholesaleprice("");
-			tmp1.setTablename(s.getHourseid());
-			tmp1.setId(s.getItemid());
-			tmp1.setLabel("valid");
-			tmp2 = service2.selectByPrimaryKey(tmp1);
-			s.setOverstock(String.valueOf(Integer.valueOf(s.getItemnum())*Double.valueOf(tmp2.getPurchaseprice())));
-			System.out.println(s.getOverstock());
-		}
 		return result;
 	}
 	

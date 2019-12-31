@@ -67,8 +67,7 @@ public class ShopmanagerController
 		storemanager.setEmail(email);
 		storemanager.setLabel("valid");
 		storemanager.setHourseid(hourseid);
-
-		
+		System.out.println(storemanager);	
 		List<StoreManager> result = service.select(storemanager);
 		return result;
 	}

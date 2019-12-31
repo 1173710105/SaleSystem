@@ -73,4 +73,12 @@ public class StoreManager {
 	public void setTime(String time) {
 		this.time = time;
 	}
+	@Override
+	public String toString() {
+		return "StoreManager [id=" + id + ", password=" + password + ", name=" + name + ", gender=" + gender
+				+ ", phone=" + phone + ", email=" + email + ", label=" + label + ", hourseid=" + hourseid
+				+ ", hoursename=" + hoursename + ", time=" + time + "]";
+	}
+	
+	
 }
