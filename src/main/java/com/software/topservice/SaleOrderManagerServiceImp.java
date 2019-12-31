@@ -1,7 +1,5 @@
 package com.software.topservice;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

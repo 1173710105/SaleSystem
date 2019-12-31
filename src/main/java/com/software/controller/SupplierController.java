@@ -1,7 +1,5 @@
 package com.software.controller;
 
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
