@@ -1,6 +1,8 @@
-package com.software.topservice;
+﻿package com.software.topservice;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,30 +30,53 @@ public class TopStoreManagerServiceImp implements TopStoreManagerService
 	@Override
 	public List<StoreManager> select(StoreManager record) 
 	{
-		List<StoreManager> resultList = managerService.select(record);
-		SubBranchDetailMap exampleMap = new SubBranchDetailMap();
+		SubBranchDetailMap exampleMap;
 		List<SubBranchDetailMap> resultMap;
-		for (StoreManager storeManager : resultList) 
+		List<StoreManager> resultList;
+		if (record.getHourseid().equals("")) 
 		{
+			resultList = managerService.select(record);
 			exampleMap = new SubBranchDetailMap();
-			exampleMap.setPrincipalid(storeManager.getId());
-			resultMap = mapService.select(exampleMap);
-			if (resultMap.size()==0) 
+			for (StoreManager storeManager : resultList) 
 			{
-				storeManager.setHourseid("");
-				storeManager.setHoursename("");
-				storeManager.setTime("");
+				exampleMap = new SubBranchDetailMap();
+				exampleMap.setPrincipalid(storeManager.getId());
+				resultMap = mapService.select(exampleMap);
+				if (resultMap.size()==0) 
+				{
+					storeManager.setHourseid("");
+					storeManager.setHoursename("");
+					storeManager.setTime("");
+				}
+				else
+				{
+					exampleMap = resultMap.get(0);
+					storeManager.setHourseid(exampleMap.getWarehourseid()+"");
+					storeManager.setHoursename(exampleMap.getWarehoursename());
+					storeManager.setTime(exampleMap.getTime());
+				}
+				storeManager.setPassword("");
 			}
-			else
-			{
-				exampleMap = resultMap.get(0);
-				storeManager.setHourseid(exampleMap.getWarehourseid()+"");
-				storeManager.setHoursename(exampleMap.getWarehoursename());
-				storeManager.setTime(exampleMap.getTime());
-			}
-			storeManager.setPassword("");
+			return resultList;
 		}
-		return resultList;
+		else
+		{
+			resultList = new ArrayList<StoreManager>();
+			exampleMap = new SubBranchDetailMap();
+			exampleMap.setWarehourseid(Integer.valueOf(record.getHourseid()));
+			resultMap = mapService.select(exampleMap);
+			StoreManager manager;
+			StoreManager exampleManager = new StoreManager();
+			for (SubBranchDetailMap indexMap : resultMap) 
+			{
+				exampleManager.setId(indexMap.getPrincipalid());
+				manager = managerService.selectByPrimaryKey(exampleManager);
+				manager.setHourseid(indexMap.getWarehourseid()+"");
+				manager.setHoursename(indexMap.getWarehoursename());
+				resultList.add(manager);
+			}
+			return resultList;
+		}
 	}
 
 	@Override

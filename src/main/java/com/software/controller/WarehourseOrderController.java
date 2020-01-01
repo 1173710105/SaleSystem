@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.software.domain.WarehourseOrderCommon;
 import com.software.topservice.WarehourseOrderManagerService;
 import com.software.trans.ReceiveWarehourseOrder;
 import com.software.trans.SendWarehourseOrder;
@@ -24,7 +25,6 @@ public class WarehourseOrderController
 	
 	@RequestMapping("/queryById")
 	public SendWarehourseOrder queryWarehourseOrderById(@RequestBody ReceiveWarehourseOrder param){
-		
 		SendWarehourseOrder result = service.select(param).get(0);
 		return result;
 	}
@@ -91,15 +91,29 @@ public class WarehourseOrderController
 	}
 	
 	@RequestMapping("/pass")
-	public Map<String, String> passWarehourseOrder(@RequestBody ReceiveWarehourseOrder param){
+	public Map<String, String> passWarehourseOrder(@RequestBody ReceiveWarehourseOrder param)
+	{
 		// check
 		param.setStatus(4+"");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String time = df.format(new Date());// new Date()为获取当前系统时间
 		param.setChecktime(time);
+		
+		System.out.println(param);
+		
 		String infovalue = service.checkOrder(param);
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("info", infovalue);
 		return result;
+	}
+	
+	@RequestMapping("/inoutmoney")
+	public Map<String, String> inoutMoney(@RequestBody Map<String, String> param)
+	{
+		
+		Integer warehourseid = Integer.valueOf(param.get("warehourseid"));
+		
+		return service.inoutMoney(warehourseid);
+		
 	}
 }

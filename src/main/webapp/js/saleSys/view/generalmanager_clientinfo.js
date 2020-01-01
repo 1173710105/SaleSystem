@@ -117,7 +117,7 @@ $('#search-btn').click(function () {
 $(document).on('click', '#add-btn', function() {
 	cleanModal();
     $('#clientModal').modal('show'); //show modal
-    $('.modal-title')[0].text("用户添加");
+    $('.modal-title').innerHTML = "用户添加";
 });
 
 //编辑填充信息
@@ -146,7 +146,7 @@ $(document).on('click', '#save-btn', function() {
         type : $('#client-type').val(),
         note : $('#client-label').val()
     }
-    $('#clientModal').mmodal('hide');
+    $('#clientModal').modal('hide');
     if($('#client-id').val() == "") {
         alert(insertClient(client).info);
     } else {

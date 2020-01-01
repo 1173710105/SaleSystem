@@ -1,8 +1,10 @@
-package com.software.topservice;
+﻿package com.software.topservice;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,8 +147,13 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 		List<WarehourseOrderItem> itemList = itemService.select(exampleItem);
 		
 		// 用于初始化商品数量信息表，获取源和目的表名
-		String sourceTableName = getWarehourseDetailTable(resultCommon.getSourceid());
-		String targetTableName = getWarehourseDetailTable(resultCommon.getTargetid());
+		String sourceTableName = null;
+		String targetTableName;
+
+		if (!order.getType().equals("1")) {
+			sourceTableName = getWarehourseDetailTable(resultCommon.getSourceid());
+		}
+		targetTableName = getWarehourseDetailTable(resultCommon.getTargetid());
 		
 		// 用于保存变化后商品数量信息
 		List<WarehourseDetail> sourceItemList = new ArrayList<>();
@@ -177,7 +184,7 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 				if (sourceDetail.getItemnum()<warehourseOrderItem.getItemnum()) 
 				{
 					// 商品数量不够，审核失败
-					return "false";
+					return "商品数量不够，审核失败";
 				}
 				// 源仓库，减
 				sourceDetail.setTablename(sourceTableName);
@@ -213,7 +220,7 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 			initPurchasePrice(order);
 		}
 		commonService.updateByPrimaryKeySelective(resultCommon);
-		return "true";
+		return "审核成功";
 	}
 	
 	private String getWarehourseDetailTable(Integer hourseid)
@@ -273,5 +280,50 @@ public class WarehourseOrderManagerServiceImp implements WarehourseOrderManagerS
 	{
 		WarehourseOrderCommon exampleCommon = order.toWarehourseOrderCommon();
 		commonService.updateByPrimaryKeySelective(exampleCommon);
+	}
+
+	@Override
+	public Map<String, String> inoutMoney(Integer warehourseid) 
+	{
+		WarehourseOrderCommon example = new WarehourseOrderCommon();
+		float inMoney = 0;
+		float outMoney = 0;
+		if (warehourseid==-1) 
+		{
+			// 总仓库
+			example.setTargetid(warehourseid);
+			example.setType("1");
+			inMoney = calSumPrice(example);
+			
+			example.setTargetid(null);
+			example.setType("2");
+			example.setSourceid(warehourseid);
+			outMoney = calSumPrice(example);
+		}
+		else
+		{
+			// 总仓库
+			example.setTargetid(warehourseid);
+			example.setType("2");
+			inMoney = calSumPrice(example);
+			
+			example.setTargetid(null);
+			example.setType("2");
+			example.setSourceid(warehourseid);
+			outMoney = calSumPrice(example);
+		}
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("in", String.format("%.2f", inMoney));
+		result.put("out", String.format("%.2f", outMoney));
+		return result;
+	}
+	
+	private float calSumPrice(WarehourseOrderCommon record)
+	{
+		float sumPrice = 0;
+		for (WarehourseOrderCommon common : commonService.select(record)) {
+			sumPrice += common.getSumprice();
+		}
+		return sumPrice;
 	}
 }

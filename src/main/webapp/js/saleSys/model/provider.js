@@ -94,7 +94,7 @@ function updateProvider(provider) {
 
 //请求id与供应商映射
 function queryProviderMenu() {
-	url = "";
+	url = "/provider/providermenu";
 	param = "";
     console.log("QueryMenu Provider : ", param);
     $.ajaxSettings.async = false;
@@ -123,7 +123,7 @@ function buildProviderParam(provider) {
         + '"id":"' + combineProvider.id + '",'
         + '"name":"' + combineProvider.name + '",'
         + '"address":"' + combineProvider.address + '",'
-        + '"principalName":"' + combineProvider.principalname + '",'
+        + '"principalname":"' + combineProvider.principalname + '",'
         + '"account":"' + combineProvider.account + '",'
         + '"time":"' + combineProvider.time + '"}';
     return param;

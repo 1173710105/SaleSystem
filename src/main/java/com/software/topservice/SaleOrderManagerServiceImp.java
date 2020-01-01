@@ -66,6 +66,7 @@ public class SaleOrderManagerServiceImp implements SaleOrderManagerService
 		}
 		// 插入的时候是没有ID的，插入，查出来， 这样可以后去ID
 		ReceiveOrder example =  orderList.get(0);
+		System.out.println("i am here "+example);
 		example.fillTablename();
 		
 		SaleorderCommon exampleCommon = example.toCommon();

@@ -73,6 +73,10 @@ $('#add-btn').click(function () {
     $('#repModal').modal('show');
 })
 
+$('#search-btn').click(function () {
+	refreshRepList();
+})
+
 $('#save-btn').click(function () {
     $('#repModal').modal('hide');
     if ($('#rep-id').val() == "") {

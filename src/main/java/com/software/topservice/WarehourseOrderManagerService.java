@@ -1,6 +1,8 @@
 package com.software.topservice;
 
 import java.util.List;
+import java.util.Map;
+
 import com.software.trans.ReceiveWarehourseOrder;
 import com.software.trans.SendWarehourseOrder;
 
@@ -17,5 +19,7 @@ public interface WarehourseOrderManagerService
 	public String checkOrder(ReceiveWarehourseOrder order);
 	
 	public void updateStatus(ReceiveWarehourseOrder order);
+	
+	public Map<String, String> inoutMoney(Integer warehourseid);
 	
 }

@@ -95,10 +95,9 @@ $(document).on('click', '#delete-btn', function () {
     var r = confirm("是否删除？");
     if (r == true) {
         //实现
-        deleteCargo({
+        alert(deleteCargo({
             id : $(this).val(),
-            tablename : getCookie("warehourseid")});
-        alert("删除成功");
+            tablename : getCookie("warehourseid")}).info);
         refreshCargoList();
     }
 });

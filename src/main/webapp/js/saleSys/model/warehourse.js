@@ -91,13 +91,6 @@ function updateWarehourse(warehourse) {
     return sendWarehourseJsonAjax(url, param);
 }
 
-function getOverStockAmount(warehourse) {
-    param = buildWarehourseParam(warehourse);
-    url = "";
-    console.log("OverStockAmount : ", param);
-    $.ajaxSettings.async = false;
-    return sendWarehourseJsonAjax(url, param);
-}
 
 //请求id与仓库映射
 function queryWarehourseMenu() {

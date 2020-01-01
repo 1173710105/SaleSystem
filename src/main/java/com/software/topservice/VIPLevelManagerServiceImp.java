@@ -31,10 +31,10 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 	public void updateByPrimaryKey(VIPLevel record) 
 	{
 		// 更新VIP信息，还需要更新客人信息
-		service.updateByPrimaryKey(record);
+		service.updateByPrimaryKeySelective(record);
 		
 		Client exampleClient = new Client();
-		exampleClient.setAuthority(record.getVipname());
+		exampleClient.setAuthority(record.getId()+"");
 		List<Client> clientList = clientService.select(exampleClient);
 		for (Client client : clientList) 
 		{
@@ -45,14 +45,38 @@ public class VIPLevelManagerServiceImp implements VIPLevelManagerService
 	}
 
 	@Override
-	public Map<Integer, String> vipMenu()
+	public Map<Integer, VIPLevel> vipMenu()
 	{
 		List<VIPLevel> list = service.select(null);
-		Map<Integer, String> idToName = new HashMap<Integer, String>();
+		Map<Integer, VIPLevel> idToVIP = new HashMap<Integer, VIPLevel>();
 		for (VIPLevel vipLevel : list) 
 		{
-			idToName.put(vipLevel.getId(), vipLevel.getVipname());
+			idToVIP.put(vipLevel.getId(), vipLevel);
 		}
-		return idToName;
+		return idToVIP;
+	}
+
+	@Override
+	public void updateclient(String cID, String vID, String point) 
+	{
+		Integer vipID = Integer.valueOf(vID);
+		Integer clientID = Integer.valueOf(cID);
+		Float pointNum = null;
+		if (!point.equals("")) 
+		{
+			pointNum = Float.valueOf(point);
+		}
+		
+		VIPLevel exampleVIP = new VIPLevel();
+		exampleVIP.setId(vipID);
+		VIPLevel resultVIP = service.selectByPrimaryKey(exampleVIP);
+		
+		Client client = new Client();
+		client.setId(clientID);
+		client.setAuthority(vID);
+		client.setPointtoprice(resultVIP.getPointtoprice());
+		client.setPricetopoint(resultVIP.getPricetopoint());
+		client.setPoint(pointNum);
+		clientService.updateByPrimaryKeySelective(client);
 	}
 }

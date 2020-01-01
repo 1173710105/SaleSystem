@@ -42,6 +42,7 @@ public class WarehourseController
 		warehourse.setName(param.get("name"));
 		warehourse.setLocation(param.get("location"));
 		warehourse.setLabel("valid");
+		System.out.println(warehourse);
 		List<Warehourse> result = service.select(warehourse);
 		return result;
 	}

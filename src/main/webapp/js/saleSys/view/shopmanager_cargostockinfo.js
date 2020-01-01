@@ -439,11 +439,8 @@ function cleanCargoStockList() {
 }
 
 function refreshCargoStockList() {
-    // var obj = {
-    //     targetid: getCookie("warehourseid")
-    // }
-    // //加载进货金额信息
-    // this.document.getElementById('stock-amount').text(this.getStockAmount(obj));
+	document.getElementById('stock-amount').innerHTML = getCargoStockAmount(getCookie("warehourseid")).in;
+	document.getElementById('stock-deliver-amount').innerHTML = getCargoStockAmount(getCookie("warehourseid")).out;
     cleanCargoStockList();
     worder = {
         id: $('#search-order-id').val(),

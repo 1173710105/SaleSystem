@@ -76,10 +76,10 @@
       <if test="vipname != null and vipname!=''">
         VIPname = #{vipname,jdbcType=VARCHAR},
       </if>
-      <if test="pointtoprice != null and pointtoprice!=''">
+      <if test="pointtoprice != null">
         pointToPrice = #{pointtoprice,jdbcType=REAL},
       </if>
-      <if test="pricetopoint != null and pricetopoint!=''">
+      <if test="pricetopoint != null">
         priceToPoint = #{pricetopoint,jdbcType=REAL},
       </if>
     </set>
