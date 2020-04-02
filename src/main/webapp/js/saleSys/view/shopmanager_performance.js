@@ -17,7 +17,8 @@ $("#start-date input").datetimepicker({
 
 function cleanList() {
 	var editTable = document.getElementById("per-tbody");
-	editTable.innerHTML = "";
+    editTable.innerHTML = "";
+    
 }
 
 //刷新页面
