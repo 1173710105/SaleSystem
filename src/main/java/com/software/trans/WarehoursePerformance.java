@@ -9,6 +9,7 @@ public class WarehoursePerformance
 	private String performancedetail;
 	private String clientnum;
 	private String orderNum;
+	private String sumPrice;
 	private String starttime;
 	private String endtime;
 	
@@ -76,10 +77,17 @@ public class WarehoursePerformance
 	public void setOrderNum(String orderNum) {
 		this.orderNum = orderNum;
 	}
+	public String getSumPrice() {
+		return sumPrice;
+	}
+	public void setSumPrice(String sumPrice) {
+		this.sumPrice = sumPrice;
+	}
 	@Override
 	public String toString() {
 		return "WarehoursePerformance [warehourseid=" + warehourseid + ", warehoursename=" + warehoursename
 				+ ", principalid=" + principalid + ", principalname=" + principalname + ", performancedetail="
-				+ performancedetail + ", starttime=" + starttime + ", endtime=" + endtime + "]";
+				+ performancedetail + ", clientnum=" + clientnum + ", orderNum=" + orderNum + ", sumPrice=" + sumPrice
+				+ ", starttime=" + starttime + ", endtime=" + endtime + "]";
 	}
 }

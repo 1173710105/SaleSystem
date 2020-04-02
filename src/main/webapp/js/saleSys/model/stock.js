@@ -71,8 +71,10 @@ function updateStock(stockL) {
 }
 
 //获取该仓库总积压金额
-function getStockAmount(hourseid) {
-    stocklist = queryStockByWarehourseId(hourseid);
+function getOverStockAmount(hourseid) {
+    stocklist = queryStock({
+    	hourseid : hourseid
+    });
     var sum = 0;
     for (i in stocklist) {
         sum += parseFloat(stocklist[i].overstock);

@@ -60,7 +60,7 @@ function cleanStockList() {
 }
 
 function refreshStockList() {
-    this.document.getElementById('overstock-amount').text = this.getOverStockAmount($('#search-warehourse-id').val());
+    this.document.getElementById('overstock-amount').innerHTML = this.getOverStockAmount($('#search-warehourse-id').val());
     cleanStockList();
     loadStockList(queryStock({
         itemid: $('#search-cargo-id').val(),

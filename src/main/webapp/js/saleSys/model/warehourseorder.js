@@ -118,7 +118,7 @@ function applyWarehourseOrder(tid) {
 }
 
 //将仓库单设置为通过状态
-function passWarehourseOrder(worder) {
+passWarehourseOrder = function(worder) {
     if(worder.id == "") {
         return;
     }
@@ -129,15 +129,13 @@ function passWarehourseOrder(worder) {
     return sendWOrderJsonAjax(url, param);
 }
 
-function getCargoStockAmount(housrseid) {
-    qlist = queryWarehourseOrderById(housrseid);
-    var stockAmount;
-    for(i in qlist) {
-        if(qlist[i].type == "1") {
-            stockAmount += parseFloat(stockAmount[i].sumprice);
-        }
-    }
-    return stockAmount;
+function getCargoStockAmount(hourseid) {
+    param = JSON.stringify({
+    	warehourseid : hourseid.toString()
+    });
+    url = "/warehourseOrder/inoutmoney";
+    $.ajaxSettings.async = false;
+    return sendWOrderJsonAjax(url, param);
 }
 
 function buildWorderParam(worder) {

@@ -123,7 +123,7 @@ function buildProviderParam(provider) {
         + '"id":"' + combineProvider.id + '",'
         + '"name":"' + combineProvider.name + '",'
         + '"address":"' + combineProvider.address + '",'
-        + '"principalName":"' + combineProvider.principalname + '",'
+        + '"principalname":"' + combineProvider.principalname + '",'
         + '"account":"' + combineProvider.account + '",'
         + '"time":"' + combineProvider.time + '"}';
     return param;

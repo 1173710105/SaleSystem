@@ -21,8 +21,8 @@ function refreshProviderList() {
     provider = {
         id: $('#search-provider-id').val(),
         name: $('#search-provider-name').val(),
-        phone: $('#search-principalname').val(),
-        email: $('#search-account').val(),
+        principalname : $('#search-principalname').val(),
+        account : $('#search-account').val(),
     }
     var providerList = this.queryProvider(provider);
     for (var i = 0; i < providerList.length; i++) {
@@ -78,7 +78,7 @@ function loadProviderList(cl) {
 
 //清除模态框内容
 $('body').on('hidden.bs.modal', '.modal', function () {
-    $('#provider-form').reset();
+    document.getElementById('provider-form').reset();
 });
 
 //搜索
@@ -90,7 +90,8 @@ $('#search-btn').click(function () {
 $(document).on('click', '#add-btn', function() {
 	cleanModal();
     $('#providerModal').modal('show'); //show modal
-    $('.modal-title')[0].text("供应商添加");
+    console.log(document.getElementsByClassName('modal-title')[0]);
+    document.getElementsByClassName('modal-title')[0].innerHTML = "供应商添加";
 });
 
 //编辑填充信息
@@ -111,10 +112,11 @@ $(document).on('click', '#save-btn', function() {
     provider = {
         id : $('#provider-id').val(),
         name : $('#provider-name').val(),
+        principalname : $('#provider-principalname').val(),
         address : $('#provider-address').val(),
         account : $('#provider-account').val(),
     }
-    $('#providerModal').mmodal('hide');
+    $('#providerModal').modal('hide');
     if($('#provider-id').val() == "") {
         alert(insertProvider(provider).info);
     } else {

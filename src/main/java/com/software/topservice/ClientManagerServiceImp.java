@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.software.domain.Client;
+import com.software.domain.SaleorderCommon;
+import com.software.domain.WarehourseOrderCommon;
 import com.software.service.ClientService;
+import com.software.service.SaleorderCommonService;
+import com.software.service.WarehourseOrderCommonService;
 
 @Service
 public class ClientManagerServiceImp implements ClientManagerService {
@@ -15,10 +19,19 @@ public class ClientManagerServiceImp implements ClientManagerService {
 	@Autowired
 	private ClientService service;
 	
+	@Autowired
+	private SaleorderCommonService saleCommonService;
+	
+	
 	@Override
-	public void deleteByPrimaryKey(Client record) 
+	public String deleteByPrimaryKey(Client record) 
 	{
+		if (isCited(record.getId())) 
+		{
+			return "删除失败，客户被引用";
+		}
 		service.deleteByPrimaryKey(record);
+		return "删除成功";
 	}
 
 	@Override
@@ -28,7 +41,8 @@ public class ClientManagerServiceImp implements ClientManagerService {
 	}
 
 	@Override
-	public void insertSelective(Client record) {
+	public void insertSelective(Client record) 
+	{
 		service.insertSelective(record);
 	}
 
@@ -54,5 +68,17 @@ public class ClientManagerServiceImp implements ClientManagerService {
 	{
 		service.updateByPrimaryKey(record);
 	}
-
+	
+	private boolean isCited(Integer clientid)
+	{
+		SaleorderCommon exampleCommon = new SaleorderCommon();
+		exampleCommon.setClientid(clientid);
+		if(saleCommonService.select(exampleCommon).size()>=1) 
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }

@@ -7,7 +7,7 @@ import com.software.domain.Warehourse;
 
 public interface WarehourseManagerService 
 {
-	public void deleteByPrimaryKey(Warehourse record);
+	public String deleteByPrimaryKey(Warehourse record);
     
 	public void insertSelective(Warehourse record);
 

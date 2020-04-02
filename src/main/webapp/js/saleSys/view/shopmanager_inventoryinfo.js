@@ -104,7 +104,7 @@ function cleanStockList() {
 }
 
 function refreshStockList() {
-    this.document.getElementById('overstock-amount').text = this.getOverStockAmount(getCookie("warehourseid"));
+    this.document.getElementById('overstock-amount').innerHTML = (this.getOverStockAmount(getCookie("warehourseid")));
     cleanStockList();
     var stype = $('#search-cargo-type').val();
     if (stype == "任意") {

@@ -64,11 +64,12 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 		exampleCommon.setStatus(5);
 		List<SaleorderCommon> commonList = commonService.select(exampleCommon);
 		
-		// 读取客户数目，订单数，利润
+		// 读取客户数目，订单数，利润, 总销售金额
 		Set<Integer> clientIDSet = new HashSet<Integer>();
 		float sumMargin = 1.0f;
 		float tempMargin;
 		float orderNum = 0.0f;
+		float sumPrice = 0.0f; 
 		for (SaleorderCommon saleorderCommon : commonList) 
 		{
 			orderTime = dateToInstant(saleorderCommon.getGathertime());
@@ -82,6 +83,7 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 					tempMargin = 0.0f;
 				}
 				sumMargin += tempMargin;
+				sumPrice += saleorderCommon.getSumprice();
 			}
 			else
 			{
@@ -100,6 +102,7 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 		warehoursePerformance.setPerformancedetail(String.format("%.2f", performance));
 		warehoursePerformance.setClientnum(String.valueOf(clientNum));
 		warehoursePerformance.setOrderNum(String.valueOf(orderNum));
+		warehoursePerformance.setSumPrice(String.format("%.2f", sumPrice));
 		warehoursePerformance.setStarttime(instantToDate(startTime));
 		warehoursePerformance.setEndtime(instantToDate(endTime));
 		return warehoursePerformance;
@@ -128,6 +131,7 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 		Map<String, HashSet<Integer>> idToClienNum = new HashMap<String, HashSet<Integer>>();
 		Map<String, Integer> idToOrderNum = new HashMap<String, Integer>();
 		Map<String, Float> idToMargin = new HashMap<String, Float>();
+		Map<String, Float> idToSumPrice = new HashMap<String, Float>();
 		Map<String, WarehoursePerformance> idToPerformance = new HashMap<String, WarehoursePerformance>();
 		WarehoursePerformance tempPerformance;
 		
@@ -191,6 +195,10 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 			{
 				idToMargin.put(principalid, 1.0f);
 			}
+			if (!idToSumPrice.containsKey(principalid)) 
+			{
+				idToSumPrice.put(principalid, 0.0f);
+			}
 			orderTime = dateToInstant(saleorderCommon.getGathertime());
 			if (orderTime.isBefore(endTime)&&orderTime.isAfter(startTime)) 
 			{
@@ -200,6 +208,7 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 				{
 					idToMargin.put(principalid, idToMargin.get(principalid)+saleorderCommon.getMargin());
 				}
+				idToSumPrice.put(principalid, idToSumPrice.get(principalid)+saleorderCommon.getSumprice());
 			}
 		}
 		
@@ -207,6 +216,7 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 		float clientNum;
 		float orderNum;
 		float sumMargin;
+		float sumPrice;
 		float performance;
 		for (String index : idToClienNum.keySet()) 
 		{
@@ -215,9 +225,12 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 			orderNum = idToOrderNum.get(index);
 			sumMargin = idToMargin.get(index);
 			performance = (clientNum+orderNum+1)*sumMargin-1;
+			sumPrice = idToSumPrice.get(index);
+			
 			tempPerformance.setClientnum(String.valueOf(clientNum));
 			tempPerformance.setOrderNum(String.valueOf(orderNum));
 			tempPerformance.setPerformancedetail(String.format("%.2f", performance));
+			tempPerformance.setSumPrice(String.format("%.2f", sumPrice));
 		}
 		
 		for (String index : idToPerformance.keySet()) 
@@ -264,7 +277,7 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 			tempPerformance.setClientnum("0");
 			tempPerformance.setOrderNum("0");
 			tempPerformance.setPerformancedetail("0.0");
-			
+			tempPerformance.setSumPrice("0");
 			tempPerformance.setStarttime(startTime);
 			tempPerformance.setEndtime(endTime);
 			
@@ -286,6 +299,7 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 		tempPerformance.setClientnum("0");
 		tempPerformance.setOrderNum("0");
 		tempPerformance.setPerformancedetail("0.0");
+		tempPerformance.setSumPrice("0");
 		tempPerformance.setStarttime(startTime);
 		tempPerformance.setEndtime(endTime);
 		idToPerformance.put(resultMap.getPrincipalid(), tempPerformance);
@@ -315,7 +329,8 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 			tempPerformance.setClientnum("0");
 			tempPerformance.setOrderNum("0");
 			tempPerformance.setPerformancedetail("0.0");
-			
+			tempPerformance.setSumPrice("0");
+
 			tempPerformance.setStarttime(startTime);
 			tempPerformance.setEndtime(endTime);
 			
@@ -351,7 +366,8 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 			tempPerformance.setClientnum("0");
 			tempPerformance.setOrderNum("0");
 			tempPerformance.setPerformancedetail("0.0");
-			
+			tempPerformance.setSumPrice("0");
+
 			tempPerformance.setStarttime(startTime);
 			tempPerformance.setEndtime(endTime);
 			
@@ -363,5 +379,4 @@ public class PerformanceManagerServiceImp implements PerformanceManagerService
 			return;
 		}
 	}
-
 }

@@ -70,6 +70,7 @@ public class CargoController
 		param.setLabel("invalid");
 		
 		String infovalue = service.deleteByPrimaryKey(param);
+		System.out.println(infovalue);
 		Map<String,String> result = new HashMap<String,String>();
 		result.put("info", infovalue);
 		return result;

@@ -1,6 +1,6 @@
 ﻿//客户对象操作
 
-var defaultSetting = 
+var defaultClientSetting = 
 {
     id : "",
     name : "",
@@ -115,7 +115,7 @@ function updateClient(client) {
 
 function insertMember(client) {
     param = buildClientParam(client);
-    url="";
+    url="/vip/updateclientinvip";
     console.log("InsertMember : ", param);
     $.ajaxSettings.async = false;
     return sendClientJsonAjax(url, param);
@@ -123,7 +123,7 @@ function insertMember(client) {
 
 function updateMember(client) {
     param = buildClientParam(client);
-    url="";
+    url="/vip/updateclientinvip";
     console.log("UpdateMember : ", param);
     $.ajaxSettings.async = false;
     return sendClientJsonAjax(url, param);
@@ -131,7 +131,7 @@ function updateMember(client) {
 
 function queryMember(client) {
     param = buildClientParam(client);
-    url="";
+    url="/vip/query";
     console.log("QueryMember : ", param);
     $.ajaxSettings.async = false;
     return sendClientJsonAjax(url, param);
@@ -139,7 +139,7 @@ function queryMember(client) {
 
 function deleteMember(client) {
     param = buildClientParam(client);
-    url="";
+    url="/vip/cancel";
     console.log("DeleteMember : ", param);
     $.ajaxSettings.async = false;
     return sendClientJsonAjax(url, param);
@@ -151,18 +151,18 @@ function updateMemberRatio(ratio) {
         + '"vipname":"' + ratio.name + '",'
         + '"pointtoprice":"' + ratio.pointtoprice + '",'
         + '"pricetopoint":"' + ratio.pricetopoint + '"}';
-    url="";
+    url="/vip/updatevip";
     console.log("UpdateMemberRatio : ", param);
     $.ajaxSettings.async = false;
     return sendClientJsonAjax(url, param);
 }
 
 function queryRatioMenu() {
-    url = "";
+    url = "/vip/menu";
 	param = "";
     console.log("QueryMenu Ratio : ", param);
-    $.ajaxSettings.async = false;
     var map = new Map();
+    $.ajaxSettings.async = false;
     var obj = sendClientJsonAjax(url, param);
     var keys = Object.keys(obj);
     for(var i in keys) {
@@ -173,15 +173,16 @@ function queryRatioMenu() {
 
 function buildRMenuOptionHTML() {
     var html;
-    var map = queryRationMenu();
+    var map = queryRatioMenu();
     map.forEach(function(value, key) {
-        html += '<option value="' + key + '">' + value + '</option>';
+        html += '<option value="' + key + '">' + value.vipname + '</option>';
     })
     return html;
 }
 
 function buildClientParam(client) {
-    combineClient = $.extend({},defaultSetting, client);
+    combineClient = $.extend({},defaultClientSetting, client);
+    console.log(combineClient)
     param = 
        '{'
         + '"id":"' + combineClient.id + '",'

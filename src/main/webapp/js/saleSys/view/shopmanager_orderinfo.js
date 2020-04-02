@@ -225,12 +225,6 @@ function cleanOrderList() {
 
 //刷新表格
 function refreshOrderList() {
-    var obj = {
-        warehourseid: getCookie("warehourseid"),
-            warehoursename: getCookie("warehoursename")
-    }
-    this.document.getElementById('sale-amount').text(getSaleAmount(obj));
-    this.document.getElementById('profit-amount').text(getProfitAmount(obj));
     cleanOrderList();
     var pays = $('#search-pay').val();
     var checks = $('#search-check-status').val();
@@ -296,15 +290,19 @@ function refreshOrderList() {
         }
     }
     console.log("Build queryList : ", queryList);
-    var saleAmount;
-    var profitAmount;
+    var saleAmount = 0;
+    var profitAmount = 0;
     for (var i = 0; i < queryList.length; i++) {
-        saleAmount += parseFloat(queryList[i].sumprice);
-        profitAmount += parseFloat(queryList[i].margin);
+        if(queryList[i].sumprice != null) {
+    		saleAmount += parseFloat(queryList[i].sumprice.toString());
+            profitAmount += parseFloat(queryList[i].margin.toString());
+    	}
         tempOrderMap.set(queryList[i].id.toString(), queryList[i]);
     }
-    this.document.getElementById('sale-amount').text = saleAmount;
-    this.document.getElementById('profit-amount').text = profitAmount;
+    console.log("wwe", saleAmount);
+    console.log("eklj", profitAmount);
+    this.document.getElementById('sale-amount').innerHTML = saleAmount;
+    this.document.getElementById('profit-amount').innerHTML = profitAmount;
     console.log("Build temporder Map : ", tempOrderMap);
     loadOrderList(queryList);
 }
@@ -374,11 +372,10 @@ $(document).on('click', '#delete-btn', function () {
     var r = confirm("是否删除？");
     if (r == true) {
         var orderid = $(this).val();
-        deleteOrder({
+        alert(deleteOrder({
             orderid: orderid,
             warehourseid: getCookie("warehourseid")
-        });
-        alert("删除成功");
+        }).info);
         refreshOrderList();
     }
 });
